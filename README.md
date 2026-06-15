@@ -29,6 +29,7 @@ Open `index.html` in a browser.
 - Emma Woods Studio splash screen
 - Current background assets wired to the code paths
 - City map day / afternoon / night templates
+- Interactive city map UI with clickable location pins and mini descriptions
 - Apartment and bedroom day / sunset / night variations
 - Glitched bedroom Algorithm boss background
 - Dream World Pattern boss background
