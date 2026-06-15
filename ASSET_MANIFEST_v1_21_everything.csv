@@ -1,0 +1,41 @@
+type,output_relpath,source_path,inferred_label
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_day_v20_a.png,/mnt/data/ghostwriter_images/context/9467831e-7de5-54fd-aebf-d8cce8db2714.png,park day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_sunset_v20_a.png,/mnt/data/ghostwriter_images/context/8e76bd8b-ac37-5787-bae8-5b23ac901d00.png,park sunset
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_night_v20_a.png,/mnt/data/ghostwriter_images/context/a9e4c8c4-d829-59a8-aeac-c209bf0b04c0.png,park night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/scene_room_day_a.png,/mnt/data/ghostwriter_images/context/c307293e-5e10-54a3-a281-087ec2c0738c.png,cozy room / apartment or library day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/scene_room_sunset_a.png,/mnt/data/ghostwriter_images/context/65d45f33-797f-5514-af07-2af109333f67.png,cozy room / apartment or library sunset
+raw_background_upload,assets/backgrounds/chat_raw_uploads/scene_room_night_a.png,/mnt/data/ghostwriter_images/context/7e4efe85-749a-5e5c-838b-a042ed86c25e.png,cozy room / apartment or library night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/scene_room_day_b.png,/mnt/data/ghostwriter_images/context/e8be5982-d1c3-556c-a8e7-e10ad6f3bfa9.png,additional room scene day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/scene_room_sunset_b.png,/mnt/data/ghostwriter_images/context/5b3046da-f3c8-5d58-8bec-70a8c2113ef6.png,additional room scene sunset
+raw_background_upload,assets/backgrounds/chat_raw_uploads/scene_room_night_b.png,/mnt/data/ghostwriter_images/context/df299c3b-8a00-5062-a29a-7b2f0f998db4.png,additional room scene night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_day_v20_b.png,/mnt/data/ghostwriter_images/context/58d46109-c4d3-5c47-8d74-c3ebb1d016da.png,park day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_sunset_v20_b.png,/mnt/data/ghostwriter_images/context/e81f9ebf-b07f-5753-b6f7-059dcd49ab08.png,park sunset
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_night_v20_b.png,/mnt/data/ghostwriter_images/context/e8bd19b5-ca44-597c-bbc7-9bf9dd0340d0.png,park night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/library_day_v20.png,/mnt/data/ghostwriter_images/context/b9ad9ac5-84ae-5d8f-b796-f1ca6948c275.png,library day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/library_afternoon_v20.png,/mnt/data/ghostwriter_images/context/31a95b5b-e7fa-5bc4-8f77-5c2856b7e46e.png,library afternoon/sunset
+raw_background_upload,assets/backgrounds/chat_raw_uploads/bar_day_v20.png,/mnt/data/ghostwriter_images/context/c18c2cc1-01ac-5661-a59c-b95cfe8ef274.png,bar day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/restaurant_day_v20.png,/mnt/data/ghostwriter_images/context/2926365f-c620-5b28-8fcd-60cfb0a9d892.png,restaurant day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/bar_night_v20.png,/mnt/data/ghostwriter_images/context/edbef50c-101f-51de-9557-c1b496da0454.png,bar night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/restaurant_night_v20.png,/mnt/data/ghostwriter_images/context/0319473c-9bf5-5fcd-8684-fb35a3fbf8b9.png,restaurant night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/mall_day_v20.png,/mnt/data/ghostwriter_images/context/13d16dd2-f0db-5413-9f13-933829c41625.png,mall day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/bedroom_glitch_v20.png,/mnt/data/ghostwriter_images/context/e2033a06-28b1-583b-aef3-d09f8e3404dc.png,glitch bedroom
+raw_background_upload,assets/backgrounds/chat_raw_uploads/dream_world_pattern_v20.png,/mnt/data/ghostwriter_images/context/e3e8445c-a55f-5680-9af3-8ee670cdd35e.png,dream world / pattern realm
+raw_background_upload,assets/backgrounds/chat_raw_uploads/apartment_glitch_v20.png,/mnt/data/ghostwriter_images/context/9f87b41c-c761-5aad-a905-bbacf3e0eb94.png,glitch apartment
+raw_background_upload,assets/backgrounds/chat_raw_uploads/closet_v20.png,/mnt/data/ghostwriter_images/context/b2acd567-1993-5817-b8ae-8fa0733757cf.png,closet
+raw_background_upload,assets/backgrounds/chat_raw_uploads/spa_bright_v20.png,/mnt/data/ghostwriter_images/context/6049af31-b953-5c1c-82a1-8db46be0eb3d.png,spa
+raw_background_upload,assets/backgrounds/chat_raw_uploads/car_day_v20.png,/mnt/data/ghostwriter_images/context/2ac4e14e-a33c-5ef8-8096-9af7fe69b68a.png,car day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/car_sunset_v20.png,/mnt/data/ghostwriter_images/context/db8e2f7b-d9d9-5ef4-a500-396c9b42d654.png,car sunset
+raw_background_upload,assets/backgrounds/chat_raw_uploads/car_night_v20.png,/mnt/data/ghostwriter_images/context/621f0103-417e-5325-9fc7-04fcbb0162a8.png,car night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/parking_lot_night_v20.png,/mnt/data/ghostwriter_images/context/fd7c1358-6cb7-5957-9ed5-f8b166cc2bfc.png,parking lot night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/beach_day_v20.png,/mnt/data/ghostwriter_images/context/bbb8e17f-3766-50f5-b9bf-3b420b8ad9e5.png,beach day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/beach_night_v20.png,/mnt/data/ghostwriter_images/context/de23869a-f786-567c-97f2-ab31c4431714.png,beach night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/beach_sunset_v20.png,/mnt/data/ghostwriter_images/context/c1701d8f-4d3e-53c8-bcab-46c48e09f523.png,beach sunset
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_day_v20_final.png,/mnt/data/ghostwriter_images/context/0fb3b4de-9b1d-558f-848b-e12a392dfb9d.png,park day
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_sunset_v20_final.png,/mnt/data/ghostwriter_images/context/739f151f-ffc6-5731-a912-141b1ab165ac.png,park sunset
+raw_background_upload,assets/backgrounds/chat_raw_uploads/park_night_v20_final.png,/mnt/data/ghostwriter_images/context/5928544c-4bde-5353-a39d-b3e154266f0a.png,park night
+raw_background_upload,assets/backgrounds/chat_raw_uploads/office_day_v20.png,/mnt/data/ghostwriter_images/context/ad201cf5-a4ee-5521-9cba-8735732cd824.png,office day
+reference_sheet,assets/reference_sheets/contact_16x9.jpg,/mnt/data/contact_16x9.jpg,contact sheet / reference
+reference_sheet,assets/reference_sheets/contact_square.jpg,/mnt/data/contact_square.jpg,contact sheet / reference
+reference_sheet,assets/reference_sheets/contact_misc.jpg,/mnt/data/contact_misc.jpg,contact sheet / reference
+reference_sheet,assets/reference_sheets/latest_batch_contact_sheet.jpg,/mnt/data/latest_batch_contact_sheet.jpg,contact sheet / reference
+reference_sheet,assets/reference_sheets/latest_batch_contact_sheet.png,/mnt/data/latest_batch_contact_sheet.png,contact sheet / reference
