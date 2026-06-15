@@ -959,11 +959,6 @@ window.addEventListener("load",()=>{
   setActions([{label:"Start Prototype",fn:startGame,className:"primary"},{label:"Open Map",fn:()=>showScreen("mapScreen")},{label:"Villain Codex",fn:()=>showScreen("codexScreen")},{label:"Closet",fn:()=>showScreen("closetScreen")},{label:"Enter Cheat Code",fn:showEnterCheatScreen,className:"wide"},{label:"Unlocked Cheats",fn:showUnlockedCheatsScreen,className:"wide"}]);
 });
 
-</script>
-</body>
-</html>
-
-
 /* =========================
    v1.10 Beachside Cafe Sublocation Patch
    Keeps Beachside Cafe off the world map and makes it accessible from Beach.
@@ -1015,3 +1010,1554 @@ beachsideCafeActions=function(){
   }
   return arr;
 };
+
+
+
+/* =========================
+   v1.11 Localization + Peaceful Replay Cheat Patch
+   Adds EN/和 language scaffold, Beach => 海辺 in Japanese, and I LEARNED MY LESSON.
+   ========================= */
+
+// ---- Language toggle scaffold ----
+const V111_LANG_KEY="slts_language";
+state.lang = localStorage.getItem(V111_LANG_KEY) || "en";
+const V111_JA = {
+  "Swipe Left to Survive":"Swipe Left to Survive",
+  "Daytime":"昼",
+  "Golden Hour":"夕方",
+  "Night":"夜",
+  "Tap a pin":"ピンをタップ",
+  "Choose where Amy goes next.":"エイミーの行き先を選んでください。",
+  "Go":"行く",
+  "Back":"戻る",
+  "Back to Map":"マップへ戻る",
+  "Open City Map":"マップを開く",
+  "Choose Another Location":"別の場所を選ぶ",
+  "Amy’s Apartment":"エイミーのアパート",
+  "Bedroom":"寝室",
+  "Closet":"クローゼット",
+  "Office":"オフィス",
+  "Library":"図書館",
+  "Bar":"バー",
+  "Park":"公園",
+  "Mall":"モール",
+  "Restaurant":"レストラン",
+  "Villain Man Apartment":"ヤバい男の部屋",
+  "Beach":"海辺",
+  "Aquarium":"水族館",
+  "Beachside Cafe":"海辺のカフェ",
+  "Spa":"スパ",
+  "Car":"車",
+  "Visit Beachside Cafe":"海辺のカフェへ行く",
+  "Back to Beach":"海辺へ戻る",
+  "Order Cake":"ケーキを注文する",
+  "Sit by the Window":"窓辺に座る",
+  "Breathe by the Water":"水辺でひと息つく",
+  "Watch the Sunset Alone":"ひとりで夕日を見る",
+  "Not Yet. Go Somewhere Else.":"まだ。別の場所へ行く",
+  "Enter Cheat Code":"チートコード入力",
+  "Unlocked Cheats":"解放済みチート",
+  "Submit":"送信",
+  "Settings":"設定",
+  "Start Prototype":"プロトタイプ開始",
+  "Start Game":"ゲーム開始",
+  "Continue":"続きから",
+  "Gallery":"ギャラリー",
+  "Endings":"エンディング",
+  "Villain Codex":"ヴィラン図鑑",
+  "BESTIE ROUTES":"BESTIE ROUTES",
+  "GIRL ROUTE":"GIRL ROUTE",
+  "I LEARNED MY LESSON":"I LEARNED MY LESSON",
+  "Activate":"有効にする",
+  "Deactivate":"無効にする",
+  "Active":"有効",
+  "Unlocked, not active":"解放済み・未使用",
+  "Locked":"未解放",
+  "Complete":"完了",
+  "Peaceful Replay":"平和リプレイ",
+  "Return to Title":"タイトルへ戻る",
+  "Keep Looking at the Sunset":"夕日を眺め続ける"
+};
+function L111(s){return state.lang==="ja" ? (V111_JA[s] || s) : s;}
+function locLabel111(loc){return L111((loc && (loc.labelEn || loc.label)) || "");}
+function locDesc111(loc){return (loc && (loc.descEn || loc.desc)) || "";}
+locations.forEach(l=>{ if(!l.labelEn)l.labelEn=l.label; if(!l.descEn)l.descEn=l.desc; });
+
+let v111LastActions=[];
+const v111SetActionsBase=setActions;
+setActions=function(actions){
+  v111LastActions=actions||[];
+  return v111SetActionsBase((actions||[]).map(a=>Object.assign({},a,{label:L111(a.label)})));
+};
+
+function injectLanguageToggle111(){
+  const hud=document.querySelector('.hud');
+  if(!hud || document.getElementById('languageToggleBtn'))return;
+  const btn=document.createElement('button');
+  btn.id='languageToggleBtn';
+  btn.className='small-btn';
+  btn.style.padding='7px 10px';
+  btn.style.borderRadius='999px';
+  btn.onclick=toggleLanguage111;
+  hud.appendChild(btn);
+  updateLanguageToggle111();
+}
+function updateLanguageToggle111(){
+  const btn=document.getElementById('languageToggleBtn');
+  if(btn)btn.textContent=state.lang==='ja'?'和':'EN';
+}
+function toggleLanguage111(){
+  state.lang=state.lang==='ja'?'en':'ja';
+  localStorage.setItem(V111_LANG_KEY,state.lang);
+  updateLanguageToggle111();
+  if(document.getElementById('mapScreen') && !document.getElementById('mapScreen').classList.contains('hidden'))renderLocations();
+  if(document.getElementById('unlockedCheatsScreen') && !document.getElementById('unlockedCheatsScreen').classList.contains('hidden'))renderUnlockedCheats();
+  if(v111LastActions.length)setActions(v111LastActions);
+  updateHud();
+}
+
+// Re-render map with localized labels. This also preserves v1.10: Beachside Cafe is not a world-map pin.
+renderCityMap=function(){
+  const map=document.getElementById("cityMapUi"),chip=document.getElementById("mapTimeChip"),bgKey=getMapBgKey(),bgUrl=ASSETS.backgrounds[bgKey];
+  if(chip)chip.textContent=L111(state.time==="Night"?"Night":state.time==="Evening"?"Golden Hour":"Daytime");
+  map.style.backgroundImage=`linear-gradient(180deg,rgba(255,255,255,.03),rgba(24,10,34,.08)), url('${bgUrl}')`;
+  map.innerHTML="";
+  mapPins.filter(p=>!lockedBonusLocation(p.id)).forEach(p=>{
+    const loc=locations.find(l=>l.id===p.id);const btn=document.createElement("button");
+    btn.className=`map-pin ${state.location===p.id?"current":""}`;btn.style.left=`${p.x}%`;btn.style.top=`${p.y}%`;
+    const label=loc?locLabel111(loc):p.id;
+    btn.setAttribute("aria-label",`${L111("Go")} ${label}`);
+    btn.innerHTML=`<span class="map-pin-icon"></span><span class="map-pin-label">${label}</span>`;btn.onclick=()=>goLocation(p.id);map.appendChild(btn);
+  });
+  const legend=document.createElement("div");legend.className="map-legend";legend.innerHTML=`<b>${L111("Tap a pin")}</b><br>${L111("Choose where Amy goes next.")}`;map.appendChild(legend);
+};
+renderLocations=function(){
+  setBackground(getMapBgKey());renderCityMap();
+  const grid=document.getElementById("locationGrid");grid.innerHTML="";
+  locations
+    .filter(l=>!["spa","car","beachside_cafe"].includes(l.id)&&!lockedBonusLocation(l.id))
+    .forEach(l=>{
+      const card=document.createElement("div");card.className="location-card";
+      card.innerHTML=`<h3>${locLabel111(l)}</h3><div class="card-desc">${locDesc111(l)}</div><button class="map-btn" onclick="goLocation('${l.id}')">${L111("Go")}</button>`;
+      grid.appendChild(card);
+    });
+};
+
+const v111GoLocationBase=goLocation;
+goLocation=function(id){
+  const l=locations.find(x=>x.id===id);if(!l)return;
+  hideAllScreens();state.location=id;setBackground(l.bg());showAmy(true);showEnemy(false);document.getElementById("battleUi").classList.add("hidden");
+  if(id==="library")say("System",state.lang==="ja"?"図書館は静かだ。ザビエルが奥で本を戻している。":"The library is quiet. Xavier is in the background, reshelving books and minding his business.");
+  else if(id==="bar")say("System",state.lang==="ja"?"バーはあたたかい。ジェームズが気づいて、いつものようにグラスを磨いている。":"The bar is warm. James looks over like a concerned NPC and keeps polishing glasses.");
+  else if(id==="park")say("System",state.lang==="ja"?"公園は穏やかだ。アンドリューが背景でジョギングしている。":"The park feels peaceful. Andrew jogs by in the background like a green flag loading screen.");
+  else if(id==="beach")say("System",state.lang==="ja"?"海辺は静かだ。テストも、バトルもない。ただ波だけ。":"The beach is quiet. No tests. No battles. Just waves.");
+  else if(id==="beachside_cafe")say("System",state.lang==="ja"?"海辺のカフェに着いた。ケーキと海風と、かわいい余白がある。":"Arrived at the Beachside Cafe. Cake, ocean air, and cute bonus-route energy.");
+  else say("System",state.lang==="ja"?`${locLabel111(l)}に着いた。`:`Arrived at ${locLabel111(l)}.`);
+  setActions(l.actions());updateHud();
+};
+
+// ---- I LEARNED MY LESSON: earned peaceful replay cheat ----
+function normalizeCheatProgress111(){
+  if(!state.cheatProgress)state.cheatProgress=loadCheatProgress();
+  if(!state.cheatProgress.endings)state.cheatProgress.endings={};
+  if(!state.cheatProgress.unlocked)state.cheatProgress.unlocked={};
+  if(!state.cheatProgress.active)state.cheatProgress.active={};
+  if(state.cheatProgress.unlocked.learnedLesson===undefined)state.cheatProgress.unlocked.learnedLesson=false;
+  if(state.cheatProgress.active.learnedLesson===undefined)state.cheatProgress.active.learnedLesson=false;
+  saveCheatProgress();
+}
+normalizeCheatProgress111();
+const v111UpdateCheatUnlocksBase=updateCheatUnlocks;
+updateCheatUnlocks=function(){
+  normalizeCheatProgress111();
+  const newly=v111UpdateCheatUnlocksBase()||[];
+  if(state.cheatProgress.endings.mia && !state.cheatProgress.unlocked.learnedLesson){
+    state.cheatProgress.unlocked.learnedLesson=true;
+    newly.push("I LEARNED MY LESSON");
+  }
+  saveCheatProgress();
+  return newly;
+};
+const v111EarnEndingBase=earnEnding;
+earnEnding=function(id){
+  normalizeCheatProgress111();
+  if(state.cheatProgress.endings[id]!==undefined){state.cheatProgress.endings[id]=true;}
+  return updateCheatUnlocks();
+};
+
+function peacefulModeActive111(){return cheatActive("learnedLesson");}
+function peacefulModeMessage111(){
+  say("I LEARNED MY LESSON",state.lang==="ja"?"エイミーはもう学んだ。赤旗もボス戦も今日はなし。平和な予定だけ選べます。":"Amy learned her lesson. Red flag fights and boss fights are disabled. Peaceful plans only.");
+  setActions([{label:"Open City Map",fn:()=>showScreen("mapScreen"),className:"green"},{label:"Check Unlocked Cheats",fn:showUnlockedCheatsScreen,className:"wide"}]);
+}
+const v111StartBattleBase=startBattle;
+startBattle=function(id){
+  if(peacefulModeActive111()){
+    showAmy(true,"idle");showEnemy(false);document.getElementById("battleUi").classList.add("hidden");
+    popEffect("LESSON LEARNED");
+    return peacefulModeMessage111();
+  }
+  return v111StartBattleBase(id);
+};
+const v111StartRandomVillainBattleBase=startRandomVillainBattle;
+startRandomVillainBattle=function(){
+  if(peacefulModeActive111())return peacefulModeMessage111();
+  return v111StartRandomVillainBattleBase();
+};
+const v111OpenDatingAppBase=(typeof openDatingApp==='function')?openDatingApp:null;
+if(v111OpenDatingAppBase){
+  openDatingApp=function(){
+    if(peacefulModeActive111())return peacefulModeMessage111();
+    return v111OpenDatingAppBase();
+  };
+}
+const v111ShouldOfferAlgorithmBase=shouldOfferAlgorithm;
+shouldOfferAlgorithm=function(){return peacefulModeActive111()?false:v111ShouldOfferAlgorithmBase();};
+const v111BedroomActionsBase=bedroomActions;
+bedroomActions=function(){
+  const arr=v111BedroomActionsBase();
+  if(peacefulModeActive111())return arr.filter(a=>!/Dream World|Pattern|Sleep\.\.\./i.test(a.label));
+  return arr;
+};
+
+const v111RenderUnlockedCheatsBase=renderUnlockedCheats;
+renderUnlockedCheats=function(){
+  normalizeCheatProgress111();
+  const body=document.getElementById("unlockedCheatsBody");if(!body)return;
+  const e=state.cheatProgress.endings,u=state.cheatProgress.unlocked,a=state.cheatProgress.active;
+  const originalCount=["james","xavier","andrew","beach"].filter(k=>e[k]).length;
+  const bestieCount=["malik","min"].filter(k=>e[k]).length;
+  let html="";
+  html+=cheatStatusCard(L111("Original Endings"),`Earn all four intended endings first: James, Xavier, Andrew, and Choose Yourself. Progress: ${originalCount}/4.`,originalCount===4?L111("Complete"):"Locked progression",null);
+  html+=cheatStatusCard("BESTIE ROUTES","Unlocks Malik and Min as postgame cheat-only green flag date battles. Malik: Beach. Min: Aquarium.",u.bestieRoutes?(a.bestieRoutes?L111("Active"):L111("Unlocked, not active")):"Hidden until all 4 original endings",u.bestieRoutes?(a.bestieRoutes?L111("Deactivate"):L111("Activate")):L111("Locked"),"toggleCheat('bestieRoutes')",u.bestieRoutes);
+  html+=cheatStatusCard("Bestie Endings",`Complete Malik and Min after activating BESTIE ROUTES. Progress: ${bestieCount}/2.`,bestieCount===2?L111("Complete"):"Locked / In Progress",null);
+  html+=cheatStatusCard("GIRL ROUTE","Unlocks Mia as the ultra-postgame cheat-only route at the Beachside Cafe.",u.girlRoute?(a.girlRoute?L111("Active"):L111("Unlocked, not active")):"Hidden until Malik + Min are completed",u.girlRoute?(a.girlRoute?L111("Deactivate"):L111("Activate")):L111("Locked"),"toggleCheat('girlRoute')",u.girlRoute);
+  html+=cheatStatusCard("I LEARNED MY LESSON","Peaceful replay mode. Disables red flag fights and boss fights after Mia’s route proves Amy has absolutely learned the lesson.",u.learnedLesson?(a.learnedLesson?L111("Active"):L111("Unlocked, not active")):"Hidden until Mia’s route is completed",u.learnedLesson?(a.learnedLesson?L111("Deactivate"):L111("Activate")):L111("Locked"),"toggleCheat('learnedLesson')",u.learnedLesson);
+  body.innerHTML=html;
+};
+const v111ToggleCheatBase=toggleCheat;
+toggleCheat=function(name){
+  normalizeCheatProgress111();
+  if(name!=="learnedLesson")return v111ToggleCheatBase(name);
+  if(!cheatUnlocked(name))return;
+  state.cheatProgress.active[name]=!state.cheatProgress.active[name];saveCheatProgress();renderUnlockedCheats();
+  say("Cheat Menu",`I LEARNED MY LESSON ${state.cheatProgress.active[name]?"activated":"deactivated"}.`);
+};
+const v111SubmitCheatCodeBase=submitCheatCode;
+submitCheatCode=function(){
+  normalizeCheatProgress111();
+  const input=document.getElementById("cheatInput"),msg=document.getElementById("cheatMessage");
+  const raw=(input&&input.value||"").trim().toUpperCase().replace(/[’']/g,"'");
+  const norm=raw.replace(/[^A-Z0-9]+/g," ").trim();
+  if(["I LEARNED MY LESSON","LEARNED MY LESSON","LESSON LEARNED"].includes(norm)){
+    let response="";
+    if(cheatUnlocked("learnedLesson")){state.cheatProgress.active.learnedLesson=true;saveCheatProgress();response="I LEARNED MY LESSON activated. Red flag and boss fights are disabled.";}
+    else response="That cheat is still hidden. Complete Mia’s route first.";
+    if(msg)msg.textContent=response;say("Cheat Code",response);renderUnlockedCheats();return;
+  }
+  return v111SubmitCheatCodeBase();
+};
+
+const v111EnsureCheatScreensBase=ensureCheatScreens;
+ensureCheatScreens=function(){
+  v111EnsureCheatScreensBase();
+  const title=document.querySelector('#enterCheatScreen h2');if(title)title.textContent=L111('Enter Cheat Code');
+  const unlocked=document.querySelector('#unlockedCheatsScreen h2');if(unlocked)unlocked.textContent=L111('Unlocked Cheats');
+};
+
+window.addEventListener("load",()=>{
+  injectLanguageToggle111();
+  normalizeCheatProgress111();
+  updateLanguageToggle111();
+  if(document.getElementById("mapScreen") && !document.getElementById("mapScreen").classList.contains("hidden"))renderLocations();
+});
+
+
+/* =========================
+   v1.12 Arcade Mode + Date Fit Studio Patch
+   Adds command-based arcade scaffolding, dress-up/date Polaroid maker,
+   Dress-Up Gallery, and shopping unlock hooks.
+   ========================= */
+
+(function(){
+const STYLE112 = `
+  .v112-two-col{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(320px,1.1fr);gap:14px;align-items:start}
+  .v112-card{border-radius:18px;border:1px solid rgba(255,216,236,.42);background:rgba(255,255,255,.08);padding:14px;min-height:104px}
+  .light .v112-card{background:rgba(255,255,255,.55);border-color:rgba(113,68,105,.18)}
+  .v112-card h3{margin:0 0 8px;color:inherit!important}.v112-row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}.v112-pill{border:1px solid rgba(255,216,236,.45);background:rgba(255,124,199,.16);color:inherit;border-radius:999px;padding:7px 10px;cursor:pointer}.v112-pill.selected{background:linear-gradient(180deg,rgba(255,105,190,.88),rgba(132,48,173,.78));color:#fff;border-color:#ffd0ef}.v112-small{font-size:12px;opacity:.8;line-height:1.35}.datefit-preview{position:sticky;top:0;border-radius:24px;background:linear-gradient(145deg,#ffe8f5,#f8d7ff 52%,#d9f3ff);padding:16px;color:#2a172b;box-shadow:0 18px 36px rgba(42,23,43,.18)}.polaroid{margin:auto;width:min(360px,100%);background:#fff9f2;padding:16px 16px 48px;border-radius:8px;box-shadow:0 18px 36px rgba(42,23,43,.25);transform:rotate(-1deg);color:#2a172b}.polaroid-scene{height:260px;border-radius:6px;display:grid;place-items:end center;overflow:hidden;position:relative;background:linear-gradient(135deg,#ffb9dc,#9adcf5)}.polaroid-scene:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.55),transparent 22%),linear-gradient(180deg,rgba(255,255,255,.18),rgba(42,23,43,.18))}.polaroid-people{position:relative;z-index:1;display:flex;align-items:flex-end;gap:14px;margin-bottom:16px}.paper-doll,.paper-date{width:84px;height:170px;border-radius:42px 42px 18px 18px;display:grid;place-items:center;text-align:center;font-size:12px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.45);box-shadow:0 12px 22px rgba(42,23,43,.25)}.paper-doll{background:linear-gradient(180deg,#6b3a2e 0 25%,#ff7cc7 25% 68%,#5740a0 68%)}.paper-date{background:linear-gradient(180deg,#3b2d50,#7b2f87 55%,#1e1740)}.polaroid-caption{text-align:center;font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:900;margin-top:12px;line-height:1.25}.gallery-img{width:100%;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.22);background:#fff}.arcade-tag{display:inline-block;margin:4px 4px 0 0;padding:4px 8px;border-radius:999px;background:rgba(255,124,199,.18);border:1px solid rgba(255,216,236,.35);font-size:12px}.v112-disabled{opacity:.52;filter:grayscale(.25)}
+  @media(max-width:860px){.v112-two-col{grid-template-columns:1fr}.datefit-preview{position:relative}.polaroid-scene{height:220px}}
+`;
+function injectStyle112(){
+  if(document.getElementById('v112Style'))return;
+  const st=document.createElement('style');st.id='v112Style';st.textContent=STYLE112;document.head.appendChild(st);
+}
+
+Object.assign(state,{
+  arcadeQueue:[],
+  arcadeScore:0,
+  dateFit:{hairstyle:'Afro Puff',accessory:'Gold Hoops',top:'Pink Tank',bottom:'High-Waist Jeans',dress:'None',shoes:'Pink Boots',bag:'Mini Heart Bag',hat:'None',jewelry:'Gold Necklace',location:'beach',partner:'james'},
+  dateFitGallery:[]
+});
+
+const DATE_FIT_ITEMS={
+  hairstyle:['Afro Puff','Big Afro','Twist-Out','High Bun','Bantu Knots','Silk Press','Braided Ponytail','Soft Curls'],
+  accessory:['Gold Hoops','Heart Sunglasses','Pearl Clips','Pink Headband','Star Hair Pins','None'],
+  top:['Pink Tank','Cropped Cardigan','Off-Shoulder Top','Satin Blouse','Graphic Tee','Corset Top'],
+  bottom:['High-Waist Jeans','Pleated Skirt','Wide-Leg Pants','Mini Skirt','Tailored Shorts','None'],
+  dress:['None','Pink Slip Dress','Soft Lavender Dress','Beach Sundress','Black Date Dress','Sparkle Mini Dress'],
+  shoes:['Pink Boots','Strappy Sandals','White Sneakers','Platform Heels','Ballet Flats','Ankle Boots'],
+  bag:['Mini Heart Bag','Pearl Clutch','Tiny Backpack','Beach Tote','Crossbody Bag','None'],
+  hat:['None','Sun Hat','Beret','Baseball Cap','Fluffy Bucket Hat'],
+  jewelry:['Gold Necklace','Pearl Set','Charm Bracelet','Layered Chains','Statement Earrings','None']
+};
+const DATE_FIT_LOCATIONS=[
+  {id:'bar',label:'Bar',ja:'バー'}, {id:'library',label:'Library',ja:'図書館'}, {id:'park',label:'Park',ja:'公園'},
+  {id:'beach',label:'Beach / 海辺',ja:'海辺'}, {id:'beachside_cafe',label:'Beachside Cafe',ja:'海辺のカフェ'},
+  {id:'aquarium',label:'Aquarium',ja:'水族館'}, {id:'spa',label:'Spa',ja:'スパ'}, {id:'restaurant',label:'Restaurant',ja:'レストラン'},
+  {id:'mall',label:'Mall',ja:'モール'}, {id:'office',label:'Office',ja:'オフィス'}, {id:'apartment',label:'Apartment',ja:'アパート'},
+  {id:'dream_world',label:'Pattern Memory Space',ja:'記憶の空間'}, {id:'bedroom_glitch',label:'Algorithm Glitch Space',ja:'アルゴリズム空間'}
+];
+function dateFitPartners112(){
+  const base=[
+    {id:'james',label:'James',type:'Green Flag'}, {id:'xavier',label:'Xavier',type:'Green Flag'}, {id:'andrew',label:'Andrew',type:'Green Flag'},
+    {id:'malik',label:'Malik',type:'Bestie'}, {id:'min',label:'Min',type:'Bestie'}, {id:'mia',label:'Mia',type:'Friend'},
+    {id:'jade',label:'Jade',type:'Friend'}, {id:'chloe',label:'Chloe',type:'Friend'},
+    {id:'algorithm',label:'The Algorithm',type:'Concept'}, {id:'pattern',label:'The Pattern',type:'Concept'}
+  ];
+  Object.entries(villains).forEach(([id,v])=>{ if(!['algorithm','pattern'].includes(id))base.push({id,label:v.name,type:'Red Flag'}); });
+  base.push({id:'random',label:'Random',type:'Chaos'});
+  return base;
+}
+function L112(en,ja){return state.lang==='ja'?(ja||en):en;}
+function saveDateFitGallery112(){try{localStorage.setItem('slts_datefit_gallery_v1',JSON.stringify(state.dateFitGallery.slice(0,20)));}catch(e){console.warn(e)}}
+function loadDateFitGallery112(){try{state.dateFitGallery=JSON.parse(localStorage.getItem('slts_datefit_gallery_v1')||'[]')||[]}catch(e){state.dateFitGallery=[]}}
+function partnerLabel112(id){const p=dateFitPartners112().find(x=>x.id===id);return p?p.label:id;}
+function locationLabel112(id){const l=DATE_FIT_LOCATIONS.find(x=>x.id===id);return l?(state.lang==='ja'?(l.ja||l.label):l.label):id;}
+function getSnapshotCaption112(s){return `${s.partnerLabel||partnerLabel112(s.partner)} × Amy — ${s.locationLabel||locationLabel112(s.location)}`;}
+function ensureV112Screens(){
+  injectStyle112();
+  if(!document.getElementById('arcadeScreen')){
+    const sec=document.createElement('section');sec.className='screen hidden';sec.id='arcadeScreen';
+    sec.innerHTML=`<div class="panel"><h2>Arcade Mode</h2><p class="subtitle">Fast command-battle freeplay. Story stays turn-based; Arcade is for rematches, gauntlets, boss rushes, and chaos.</p><div id="arcadeBody" class="location-grid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('titleScreen')">Back</button></div></div>`;
+    document.getElementById('mainStage').appendChild(sec);
+  }
+  if(!document.getElementById('arcadeRosterScreen')){
+    const sec=document.createElement('section');sec.className='screen hidden';sec.id='arcadeRosterScreen';
+    sec.innerHTML=`<div class="panel"><h2 id="arcadeRosterTitle">Arcade Roster</h2><p class="subtitle" id="arcadeRosterSub">Choose a match.</p><div id="arcadeRosterBody" class="location-grid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('arcadeScreen')">Back to Arcade</button></div></div>`;
+    document.getElementById('mainStage').appendChild(sec);
+  }
+  if(!document.getElementById('dateFitScreen')){
+    const sec=document.createElement('section');sec.className='screen hidden';sec.id='dateFitScreen';
+    sec.innerHTML=`<div class="panel light"><h2>Date Fit Studio</h2><p class="subtitle">Dress Amy, choose the date/location, snap a Polaroid, and save it to the Dress-Up Gallery.</p><div class="v112-two-col"><div><div id="dateFitControls"></div></div><div class="datefit-preview"><div id="dateFitPreview"></div><div class="v112-row"><button class="small-btn green" onclick="makeDateFitSnapshot112()">Snap Polaroid</button><button class="small-btn" onclick="showScreen('dateFitGalleryScreen')">Dress-Up Gallery</button><button class="small-btn" onclick="showScreen('titleScreen')">Back</button></div><canvas id="dateFitCanvas" width="900" height="1100" class="hidden"></canvas></div></div></div>`;
+    document.getElementById('mainStage').appendChild(sec);
+  }
+  if(!document.getElementById('dateFitGalleryScreen')){
+    const sec=document.createElement('section');sec.className='screen hidden';sec.id='dateFitGalleryScreen';
+    sec.innerHTML=`<div class="panel"><h2>Dress-Up Gallery</h2><p class="subtitle">Saved Date Fit Studio snapshots. Browser share/email support depends on the device.</p><div id="dateFitGalleryBody" class="location-grid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('dateFitScreen')">Back to Date Fit Studio</button><button class="small-btn" onclick="showScreen('titleScreen')">Title</button></div></div>`;
+    document.getElementById('mainStage').appendChild(sec);
+  }
+  injectV112MenuButtons();
+}
+function injectV112MenuButtons(){
+  const grid=document.querySelector('#titleScreen .menu-grid');if(!grid)return;
+  const items=[
+    ['v112ArcadeBtn','Arcade Mode',()=>showScreen('arcadeScreen'),'primary'],
+    ['v112DateFitBtn','Date Fit Studio',()=>showScreen('dateFitScreen'),''],
+    ['v112GalleryBtn','Dress-Up Gallery',()=>showScreen('dateFitGalleryScreen'),'']
+  ];
+  items.forEach(([id,label,fn,cls])=>{
+    let b=document.getElementById(id);
+    if(!b){b=document.createElement('button');b.id=id;b.className=`action-btn ${cls}`;grid.appendChild(b)}
+    b.textContent=label;b.onclick=fn;
+  });
+}
+
+function renderArcadeScreen112(){
+  const body=document.getElementById('arcadeBody');if(!body)return;
+  const cards=[
+    {title:'Quick Date Battle',desc:'Pick one red flag, boss, or green flag and jump straight into a command battle.',btn:'Choose Opponent',fn:()=>showArcadeRoster112('all')},
+    {title:'Red Flag Gauntlet',desc:'Fight a chain of red flags with quick Arcade pacing. Great for testing balance.',btn:'Start Gauntlet',fn:startArcadeGauntlet112},
+    {title:'Boss Rush',desc:'Algorithm → Pattern. Concepts only. Feelings not included in the warranty.',btn:'Start Boss Rush',fn:startArcadeBossRush112},
+    {title:'Green Flag Dates',desc:'Replay green flag fake battles without story restrictions.',btn:'Choose Green Flag',fn:()=>showArcadeRoster112('green')},
+    {title:'Concept Chaos',desc:'Battle or photo-date the Algorithm and The Pattern because freeplay has no shame.',btn:'Open Concepts',fn:()=>showArcadeRoster112('concept')},
+    {title:'Random Match',desc:'Let chaos choose the opponent.',btn:'Randomize',fn:startArcadeRandom112}
+  ];
+  body.innerHTML=cards.map(c=>`<div class="v112-card"><h3>${c.title}</h3><div class="card-desc">${c.desc}</div><button class="map-btn">${c.btn}</button></div>`).join('');
+  [...body.querySelectorAll('button')].forEach((b,i)=>b.onclick=cards[i].fn);
+}
+function showArcadeRoster112(mode='all'){
+  ensureV112Screens();
+  const title=document.getElementById('arcadeRosterTitle'),sub=document.getElementById('arcadeRosterSub'),body=document.getElementById('arcadeRosterBody');
+  title.textContent=mode==='green'?'Green Flag Dates':mode==='concept'?'Concept Chaos':'Quick Date Battle';
+  sub.textContent=mode==='green'?'Choose a green flag fake battle.':mode==='concept'?'Choose an entity/concept.':'Choose anybody. Arcade ignores story logic.';
+  const entries=[];
+  if(mode==='all'||mode==='red')Object.entries(villains).forEach(([id,v])=>entries.push({id,name:v.name,desc:v.className,kind:'villain',fn:()=>startArcadeBattle112(id)}));
+  if(mode==='all'||mode==='green')Object.entries(greenFlags).forEach(([id,g])=>entries.push({id,name:g.name,desc:g.role,kind:'green',fn:()=>startArcadeGreen112(id)}));
+  if(mode==='concept') ['algorithm','pattern'].forEach(id=>{const v=villains[id];entries.push({id,name:v.name,desc:v.className,kind:'villain',fn:()=>startArcadeBattle112(id)});});
+  body.innerHTML=entries.map(e=>`<div class="v112-card"><h3>${e.name}</h3><div class="card-desc"><span class="arcade-tag">${e.kind}</span><br>${e.desc}</div><button class="map-btn">Start</button></div>`).join('');
+  [...body.querySelectorAll('button')].forEach((b,i)=>b.onclick=entries[i].fn);
+  showScreen('arcadeRosterScreen');
+}
+function startArcadeBattle112(id){state.arcadeQueue=[];state.arcadeScore=0;state.hp=state.maxHp;state.delusion=10;say('Arcade Mode',`Starting quick command battle: ${villains[id].name}.`);startBattle(id)}
+function startArcadeGreen112(id){state.arcadeQueue=[];state.arcadeScore=0;say('Arcade Mode',`Starting green flag date: ${greenFlags[id].name}.`);startGreenFlagBattle(id)}
+function startArcadeGauntlet112(){state.arcadeQueue=['preference','house_date','demon','millionaire','normal_fake'];state.arcadeScore=0;const first=state.arcadeQueue.shift();say('Arcade Mode','Red Flag Gauntlet started. Story logic is off. Receipts are on.');startBattle(first)}
+function startArcadeBossRush112(){state.arcadeQueue=['pattern'];state.arcadeScore=0;state.hp=state.maxHp;state.delusion=10;say('Arcade Mode','Boss Rush started: Algorithm then Pattern.');startBattle('algorithm')}
+function startArcadeRandom112(){const ids=[...Object.keys(villains),...Object.keys(greenFlags)];const id=ids[Math.floor(Math.random()*ids.length)];if(villains[id])startArcadeBattle112(id);else startArcadeGreen112(id)}
+const v112WinBattleBase=winBattle;
+winBattle=function(){
+  const b=state.currentBattle;
+  v112WinBattleBase();
+  if(b&&b.type==='villain'&&Array.isArray(state.arcadeQueue)&&state.arcadeQueue.length){
+    const next=state.arcadeQueue.shift();state.arcadeScore+=100;
+    setActions([{label:`Next Arcade Match: ${villains[next].name}`,fn:()=>startBattle(next),className:'primary wide'},{label:'End Arcade Run',fn:()=>showScreen('arcadeScreen')}]);
+  }else if(b&&b.type==='villain'&&state.arcadeScore){
+    state.arcadeScore+=100;
+    setActions([{label:`Arcade Results: ${state.arcadeScore} pts`,fn:()=>say('Arcade Results',`Run complete. Score: ${state.arcadeScore}. Amy remains undefeated by nonsense.`),className:'green wide'},{label:'Back to Arcade',fn:()=>showScreen('arcadeScreen')},{label:'Title',fn:()=>showScreen('titleScreen')}]);
+  }
+};
+
+function renderDateFitStudio112(){
+  const controls=document.getElementById('dateFitControls');if(!controls)return;
+  let html='';
+  Object.entries(DATE_FIT_ITEMS).forEach(([cat,items])=>{
+    html+=`<div class="v112-card"><h3>${cat.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}</h3><div class="v112-row">`;
+    html+=items.map(item=>`<button class="v112-pill ${state.dateFit[cat]===item?'selected':''}" onclick="setDateFitItem112('${cat}',${JSON.stringify(item).replace(/"/g,'&quot;')})">${item}</button>`).join('');
+    html+='</div></div>';
+  });
+  html+=`<div class="v112-card"><h3>Location</h3><div class="v112-row">${DATE_FIT_LOCATIONS.map(l=>`<button class="v112-pill ${state.dateFit.location===l.id?'selected':''}" onclick="setDateFitLocation112('${l.id}')">${state.lang==='ja'?(l.ja||l.label):l.label}</button>`).join('')}</div></div>`;
+  html+=`<div class="v112-card"><h3>Date / Photo Partner</h3><div class="v112-small">Freeplay toy-box mode: Jade, Chloe, besties, red flags, bosses, and concepts are all allowed here.</div><div class="v112-row">${dateFitPartners112().map(p=>`<button class="v112-pill ${state.dateFit.partner===p.id?'selected':''}" onclick="setDateFitPartner112('${p.id}')">${p.label}</button>`).join('')}</div></div>`;
+  controls.innerHTML=html;renderDateFitPreview112();
+}
+window.setDateFitItem112=function(cat,item){state.dateFit[cat]=item;renderDateFitStudio112();};
+window.setDateFitLocation112=function(id){state.dateFit.location=id;renderDateFitStudio112();};
+window.setDateFitPartner112=function(id){state.dateFit.partner=id==='random'?dateFitPartners112().filter(p=>p.id!=='random')[Math.floor(Math.random()*(dateFitPartners112().length-1))].id:id;renderDateFitStudio112();};
+function outfitSummary112(){const d=state.dateFit;return d.dress&&d.dress!=='None'?`${d.dress}, ${d.shoes}, ${d.bag}, ${d.jewelry}`:`${d.top}, ${d.bottom}, ${d.shoes}, ${d.bag}, ${d.jewelry}`;}
+function renderDateFitPreview112(){
+  const p=document.getElementById('dateFitPreview');if(!p)return;
+  p.innerHTML=`<div class="polaroid"><div class="polaroid-scene"><div class="polaroid-people"><div class="paper-doll">AMY<br><small>${state.dateFit.hairstyle}</small></div><div class="paper-date">${partnerLabel112(state.dateFit.partner)}</div></div></div><div class="polaroid-caption">${partnerLabel112(state.dateFit.partner)} × Amy<br><small>${locationLabel112(state.dateFit.location)}</small></div></div><p class="v112-small" style="margin-top:12px"><b>Fit:</b> ${outfitSummary112()}<br><b>Extras:</b> ${state.dateFit.accessory}, ${state.dateFit.hat}</p>`;
+}
+function drawDateFitCanvas112(canvas,snap){
+  const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+  ctx.fillStyle='#fff8ef';ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='#2a172b';ctx.globalAlpha=.08;ctx.fillRect(38,38,w-76,h-76);ctx.globalAlpha=1;
+  const g=ctx.createLinearGradient(70,70,w-70,h-210);g.addColorStop(0,'#ffd4eb');g.addColorStop(.48,'#c9f0ff');g.addColorStop(1,'#8b5cf6');ctx.fillStyle=g;ctx.fillRect(70,70,w-140,h-300);
+  const g2=ctx.createRadialGradient(180,150,20,180,150,330);g2.addColorStop(0,'rgba(255,255,255,.65)');g2.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=g2;ctx.fillRect(70,70,w-140,h-300);
+  ctx.fillStyle='rgba(42,23,43,.20)';ctx.fillRect(70,h-410,w-140,180);
+  function doll(x,name,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.roundRect(x,360,190,360,55);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 42px Trebuchet MS';ctx.textAlign='center';ctx.fillText(name,x+95,520);ctx.font='24px Trebuchet MS';wrapText112(ctx,name==='AMY'?snap.hairstyle:snap.partnerLabel,x+95,565,150,30);} 
+  doll(240,'AMY','#d85fb2');doll(470,(snap.partnerLabel||'DATE').slice(0,6).toUpperCase(),'#423080');
+  ctx.fillStyle='#2a172b';ctx.textAlign='center';ctx.font='bold 46px Trebuchet MS';ctx.fillText(`${snap.partnerLabel} × Amy`,w/2,h-170);
+  ctx.font='30px Trebuchet MS';ctx.fillText(snap.locationLabel,w/2,h-124);
+  ctx.font='22px Trebuchet MS';wrapText112(ctx,`Fit: ${snap.fit}`,w/2,h-86,w-180,27);
+  ctx.font='18px Trebuchet MS';ctx.fillText('Swipe Left to Survive — Date Fit Studio',w/2,h-34);
+}
+function wrapText112(ctx,text,x,y,maxWidth,lineHeight){const words=String(text).split(' ');let line='';for(let n=0;n<words.length;n++){const test=line+words[n]+' ';if(ctx.measureText(test).width>maxWidth&&n>0){ctx.fillText(line,x,y);line=words[n]+' ';y+=lineHeight}else line=test}ctx.fillText(line,x,y)}
+window.makeDateFitSnapshot112=function(){
+  const canvas=document.getElementById('dateFitCanvas');
+  const snap={id:'df_'+Date.now(),created:new Date().toISOString(),...state.dateFit,partnerLabel:partnerLabel112(state.dateFit.partner),locationLabel:locationLabel112(state.dateFit.location),fit:outfitSummary112()};
+  drawDateFitCanvas112(canvas,snap);snap.dataUrl=canvas.toDataURL('image/png');
+  state.dateFitGallery.unshift(snap);state.dateFitGallery=state.dateFitGallery.slice(0,20);saveDateFitGallery112();renderDateFitPreview112();say('Date Fit Studio',`Polaroid snapped: ${getSnapshotCaption112(snap)}. Saved to the Dress-Up Gallery.`);
+};
+function renderDateFitGallery112(){
+  const body=document.getElementById('dateFitGalleryBody');if(!body)return;loadDateFitGallery112();
+  if(!state.dateFitGallery.length){body.innerHTML='<div class="v112-card"><h3>No Polaroids Yet</h3><div class="card-desc">Make one in Date Fit Studio first.</div><button class="map-btn" onclick="showScreen(\'dateFitScreen\')">Open Date Fit Studio</button></div>';return;}
+  body.innerHTML=state.dateFitGallery.map((s,i)=>`<div class="v112-card"><img class="gallery-img" src="${s.dataUrl}" alt="${getSnapshotCaption112(s)}"><h3>${getSnapshotCaption112(s)}</h3><div class="v112-row"><button class="small-btn" onclick="downloadDateFitSnapshot112(${i})">Download PNG</button><button class="small-btn" onclick="printDateFitSnapshot112(${i})">Print</button><button class="small-btn" onclick="shareDateFitSnapshot112(${i})">Share</button><button class="small-btn" onclick="emailDateFitSnapshot112(${i})">Email</button><button class="small-btn danger" onclick="deleteDateFitSnapshot112(${i})">Delete</button></div></div>`).join('');
+}
+window.downloadDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const a=document.createElement('a');a.href=s.dataUrl;a.download=`date-fit-${s.partnerLabel||s.partner}-${s.location||'scene'}.png`.replace(/\s+/g,'-').toLowerCase();a.click();};
+window.printDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const w=window.open('','_blank');if(!w){say('Dress-Up Gallery','Pop-up blocked. Use Download PNG instead.');return}w.document.write(`<title>${getSnapshotCaption112(s)}</title><body style="margin:0;display:grid;place-items:center;min-height:100vh;background:#fff"><img src="${s.dataUrl}" style="max-width:96vw;max-height:96vh"></body>`);w.document.close();w.focus();setTimeout(()=>w.print(),300);};
+async function dataURLToFile112(dataUrl,name){const res=await fetch(dataUrl);const blob=await res.blob();return new File([blob],name,{type:'image/png'});}
+window.shareDateFitSnapshot112=async function(i){const s=state.dateFitGallery[i];if(!s)return;try{const file=await dataURLToFile112(s.dataUrl,'date-fit.png');if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:getSnapshotCaption112(s),text:'My Swipe Left to Survive Date Fit Studio Polaroid',files:[file]});}else if(navigator.share){await navigator.share({title:getSnapshotCaption112(s),text:'My Swipe Left to Survive Date Fit Studio Polaroid'});}else{downloadDateFitSnapshot112(i);say('Dress-Up Gallery','Sharing is not supported here, so I downloaded the PNG instead.');}}catch(e){say('Dress-Up Gallery','Share was cancelled or not supported. Download PNG still works.');}};
+window.emailDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const subject=encodeURIComponent(`Date Fit Studio: ${getSnapshotCaption112(s)}`);const body=encodeURIComponent('I made a Swipe Left to Survive Date Fit Studio Polaroid. Download the PNG from the gallery and attach it to this email.');window.location.href=`mailto:?subject=${subject}&body=${body}`;};
+window.deleteDateFitSnapshot112=function(i){state.dateFitGallery.splice(i,1);saveDateFitGallery112();renderDateFitGallery112();};
+
+// Shopping now seeds unlockable closet/Date Fit items without forcing them into Story Mode.
+const v112SpendFundsBase=spendFunds;
+spendFunds=function(cost,fn){
+  v112SpendFundsBase(cost,function(){fn();say('Shopping','Item purchased. New looks are best used in Date Fit Studio / Dress-Up Gallery mode.');});
+};
+
+const v112ShowScreenBase=showScreen;
+showScreen=function(id){ensureV112Screens();v112ShowScreenBase(id);if(id==='arcadeScreen')renderArcadeScreen112();if(id==='dateFitScreen')renderDateFitStudio112();if(id==='dateFitGalleryScreen')renderDateFitGallery112();};
+
+window.addEventListener('load',()=>{loadDateFitGallery112();ensureV112Screens();renderDateFitPreview112();injectV112MenuButtons();});
+window.showArcadeRoster112=showArcadeRoster112;
+window.startArcadeGauntlet112=startArcadeGauntlet112;
+window.startArcadeBossRush112=startArcadeBossRush112;
+window.startArcadeRandom112=startArcadeRandom112;
+})();
+
+
+/* =========================
+   v1.13 Cutscene Dialogue UI Patch
+   Adds manga/VN-style dialogue boxes with attached portrait tabs,
+   color-coded speaker categories, ??? unknown boss cards, and
+   stacked friend-group portrait mode for cutscene-style lines.
+   ========================= */
+(function(){
+const STYLE113 = `
+  .cutscene-dialogue-layer{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:min(980px,calc(100% - 44px));z-index:32;pointer-events:none;opacity:0;transition:opacity .18s ease,transform .18s ease;filter:drop-shadow(0 22px 34px rgba(0,0,0,.42))}.cutscene-dialogue-layer.visible{opacity:1;transform:translateX(-50%) translateY(-4px)}
+  .cs-wrap{position:relative;min-height:170px;padding-top:42px}.cs-box{position:relative;border-radius:28px 28px 24px 24px;border:2px solid var(--cs-border,#ffd4eb);background:linear-gradient(180deg,var(--cs-bg1,rgba(40,14,46,.94)),var(--cs-bg2,rgba(18,8,27,.96)));box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 0 28px var(--cs-glow,rgba(255,124,199,.22));padding:30px 34px 26px 34px;min-height:134px;overflow:visible}.cs-box:before{content:"";position:absolute;inset:10px;border-radius:20px;border:1px solid rgba(255,255,255,.15);pointer-events:none}.cs-speaker{font-size:13px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--cs-name,#fff);margin-bottom:9px;text-shadow:0 2px 6px rgba(0,0,0,.35)}.cs-line{font-size:clamp(18px,2.1vw,25px);line-height:1.32;color:#fffaf5;text-shadow:0 2px 6px rgba(0,0,0,.35);max-width:820px}.cs-portrait-tab{position:absolute;right:28px;top:0;width:130px;height:142px;border-radius:24px 24px 18px 18px;border:2px solid var(--cs-border,#ffd4eb);background:linear-gradient(160deg,var(--cs-card1,#ffb7df),var(--cs-card2,#643caa));display:grid;place-items:center;overflow:hidden;box-shadow:0 12px 28px rgba(0,0,0,.35),0 0 18px var(--cs-glow,rgba(255,124,199,.25));z-index:2}.cs-portrait-tab:before{content:"";position:absolute;inset:9px;border-radius:18px;border:1px dashed rgba(255,255,255,.55);background:radial-gradient(circle at 35% 20%,rgba(255,255,255,.42),transparent 24%),rgba(255,255,255,.08)}.cs-avatar{position:relative;z-index:1;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:rgba(18,8,27,.55);border:2px solid rgba(255,255,255,.52);font-weight:900;font-size:24px;color:#fff}.cs-avatar.unknown{border-radius:16px;font-size:30px;letter-spacing:.04em}.cs-avatar.algorithm{background:linear-gradient(145deg,#120b18,#661bb7 55%,#00d5ff)}.cs-avatar.pattern{background:linear-gradient(145deg,#1b1121,#ff5aba 55%,#ffd46c)}.cs-tab-label{position:absolute;bottom:10px;left:10px;right:10px;text-align:center;font-weight:900;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.55);z-index:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cs-friend-stack{position:absolute;left:24px;right:24px;top:0;height:88px;display:flex;align-items:flex-start;gap:8px;z-index:3;pointer-events:none}.cs-mini-tab{width:76px;height:86px;border-radius:18px;border:2px solid rgba(201,232,255,.86);background:linear-gradient(160deg,rgba(92,167,255,.92),rgba(40,54,154,.86));display:grid;place-items:center;box-shadow:0 10px 22px rgba(0,0,0,.32);transform:translateY(calc(var(--i,0)*6px)) rotate(calc((var(--i,0) - 2)*-2deg));opacity:.72}.cs-mini-tab.active{opacity:1;transform:translateY(-6px) scale(1.08);box-shadow:0 14px 28px rgba(0,0,0,.38),0 0 18px rgba(90,180,255,.55)}.cs-mini-tab span{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.56);font-weight:900}.cs-wrap.group{padding-top:78px}.cs-wrap.group .cs-portrait-tab{display:none}.cs-next-hint{position:absolute;right:26px;bottom:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.74;color:#fff}.cs-theme-amy{--cs-border:#ffb8eb;--cs-bg1:rgba(88,28,106,.94);--cs-bg2:rgba(43,13,62,.96);--cs-card1:#ffa6dc;--cs-card2:#8b5cf6;--cs-glow:rgba(255,124,199,.38);--cs-name:#ffe0f3}.cs-theme-redflag{--cs-border:#ff7c8e;--cs-bg1:rgba(91,24,36,.94);--cs-bg2:rgba(34,8,18,.97);--cs-card1:#ff7b73;--cs-card2:#5e1628;--cs-glow:rgba(255,76,102,.34);--cs-name:#ffd0d6}.cs-theme-unknown{--cs-border:#cbd2dd;--cs-bg1:rgba(16,16,24,.96);--cs-bg2:rgba(3,5,12,.98);--cs-card1:#3f4654;--cs-card2:#0c0d14;--cs-glow:rgba(180,196,221,.25);--cs-name:#f1f4ff}.cs-theme-concept{--cs-border:#c483ff;--cs-bg1:rgba(43,12,74,.96);--cs-bg2:rgba(10,8,30,.98);--cs-card1:#ff63c8;--cs-card2:#1a55d9;--cs-glow:rgba(155,100,255,.46);--cs-name:#f2dbff}.cs-theme-green{--cs-border:#91f0ac;--cs-bg1:rgba(18,84,53,.94);--cs-bg2:rgba(7,36,28,.97);--cs-card1:#9bf2b2;--cs-card2:#1e8d59;--cs-glow:rgba(126,224,131,.33);--cs-name:#dcffe7}.cs-theme-friend{--cs-border:#9ed9ff;--cs-bg1:rgba(26,62,128,.94);--cs-bg2:rgba(12,22,56,.97);--cs-card1:#8dd9ff;--cs-card2:#4655d8;--cs-glow:rgba(74,155,255,.34);--cs-name:#dbf1ff}.cs-theme-system{--cs-border:#f7c76b;--cs-bg1:rgba(70,48,24,.94);--cs-bg2:rgba(31,19,14,.98);--cs-card1:#ffd884;--cs-card2:#8b5a15;--cs-glow:rgba(247,199,107,.26);--cs-name:#ffe6a7}
+  #bottomPanel.cutscene-mode .dialogue-box{opacity:.28;filter:saturate(.6);transition:opacity .18s ease}#bottomPanel.cutscene-mode .action-box{box-shadow:0 0 22px rgba(255,124,199,.18)}
+  .support-cutin-113{position:absolute;inset:0;z-index:38;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .18s ease}.support-cutin-113.visible{opacity:1}.support-slice{width:min(900px,92%);height:168px;transform:skewX(-10deg);border:2px solid rgba(201,232,255,.95);background:linear-gradient(90deg,rgba(12,25,90,.1),rgba(38,94,220,.92),rgba(92,210,255,.82));box-shadow:0 0 42px rgba(83,191,255,.45),0 24px 45px rgba(0,0,0,.42);display:grid;grid-template-columns:170px 1fr;align-items:center;overflow:hidden}.support-face{height:100%;display:grid;place-items:center;font-size:48px;font-weight:900;color:#fff;background:rgba(255,255,255,.12);border-right:1px solid rgba(255,255,255,.28);text-shadow:0 2px 10px rgba(0,0,0,.5);transform:skewX(10deg)}.support-text{padding:18px 26px;color:#fff;font-size:clamp(20px,3vw,34px);font-weight:900;text-shadow:0 2px 12px rgba(0,0,0,.55);transform:skewX(10deg)}.support-small{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#dff7ff;margin-bottom:6px}.support-cutin-113.min .support-slice{background:linear-gradient(90deg,rgba(10,20,70,.16),rgba(36,84,190,.9),rgba(103,218,255,.78))}.support-cutin-113.malik .support-slice{background:linear-gradient(90deg,rgba(10,20,70,.16),rgba(38,100,230,.92),rgba(255,124,199,.74))}
+  @media(max-width:720px){.cutscene-dialogue-layer{width:calc(100% - 20px);bottom:8px}.cs-wrap{padding-top:34px}.cs-box{padding:24px 18px 22px;min-height:120px}.cs-portrait-tab{right:12px;width:96px;height:108px}.cs-avatar{width:58px;height:58px}.cs-line{font-size:17px}.cs-wrap.group{padding-top:72px}.cs-mini-tab{width:58px;height:68px}.support-slice{height:136px;grid-template-columns:112px 1fr}.support-text{font-size:22px;padding:12px 16px}}
+`;
+function injectStyle113(){ if(document.getElementById('v113Style'))return; const st=document.createElement('style'); st.id='v113Style'; st.textContent=STYLE113; document.head.appendChild(st); }
+function ensureCutsceneLayer113(){
+  injectStyle113();
+  let layer=document.getElementById('cutsceneDialogueLayer');
+  if(!layer){ layer=document.createElement('div'); layer.id='cutsceneDialogueLayer'; layer.className='cutscene-dialogue-layer'; document.getElementById('mainStage').appendChild(layer); }
+  let support=document.getElementById('supportCutin113');
+  if(!support){ support=document.createElement('div'); support.id='supportCutin113'; support.className='support-cutin-113'; support.innerHTML='<div class="support-slice"><div class="support-face">!</div><div class="support-text"><div class="support-small">Support</div><div id="supportCutinText113">Support entered.</div></div></div>'; document.getElementById('mainStage').appendChild(support); }
+  return layer;
+}
+function speakerKey113(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,''); }
+const FRIENDS113=['malik','min','jade','chloe','mia'];
+const GREEN113=['james','xavier','andrew'];
+const RED113=['jay','connor','terrence','dante','joey','reggie','evan','marquis','coworker','loveLoop','loveloop'];
+function classifySpeaker113(speaker){
+  const key=speakerKey113(speaker), raw=String(speaker||'');
+  if(raw==='???' || key==='unknown_boss' || key==='unknown_enemy')return 'unknown';
+  if(['the_algorithm','algorithm','the_pattern','pattern'].includes(key))return 'concept';
+  if(key==='amy')return 'amy';
+  if(FRIENDS113.includes(key) || key.includes('group_chat') || key==='friends')return 'friend';
+  if(GREEN113.includes(key))return 'green';
+  if(RED113.includes(key))return 'redflag';
+  if(['system','narrator','loveloop','shopping','arcade_mode','date_fit_studio','dress_up_gallery'].includes(key))return 'system';
+  return 'system';
+}
+function displaySpeaker113(s){ return String(s||'System'); }
+function initials113(s){
+  const raw=displaySpeaker113(s);
+  if(raw==='???')return '???';
+  if(raw.toLowerCase().includes('algorithm'))return 'ALG';
+  if(raw.toLowerCase().includes('pattern'))return 'PAT';
+  return raw.split(/\s+/).map(x=>x[0]).join('').slice(0,3).toUpperCase() || '?';
+}
+function avatarExtraClass113(speaker,theme){
+  const key=speakerKey113(speaker); if(theme==='unknown')return 'unknown'; if(key.includes('algorithm'))return 'algorithm'; if(key.includes('pattern'))return 'pattern'; return '';
+}
+function isFriendGroup113(speaker){ const key=speakerKey113(speaker); return key.includes('group_chat') || key==='friends' || key==='friend_group'; }
+function friendStack113(active){
+  const names=['Malik','Min','Jade','Chloe','Mia']; const activeKey=speakerKey113(active);
+  return `<div class="cs-friend-stack">${names.map((n,i)=>`<div class="cs-mini-tab ${speakerKey113(n)===activeKey?'active':''}" style="--i:${i}"><span>${initials113(n)}</span></div>`).join('')}</div>`;
+}
+function showCutsceneUi113(speaker,text){
+  const layer=ensureCutsceneLayer113();
+  const theme=classifySpeaker113(speaker); const group=isFriendGroup113(speaker); const name=displaySpeaker113(speaker);
+  const cardName = theme==='unknown' ? '???' : name;
+  layer.innerHTML=`<div class="cs-wrap ${group?'group':''} cs-theme-${theme}">${group?friendStack113(speaker):''}<div class="cs-portrait-tab"><div class="cs-avatar ${avatarExtraClass113(speaker,theme)}">${initials113(cardName)}</div><div class="cs-tab-label">${cardName}</div></div><div class="cs-box"><div class="cs-speaker">${name}</div><div class="cs-line">${String(text||'')}</div><div class="cs-next-hint">NEXT ▶</div></div></div>`;
+  layer.classList.add('visible'); document.getElementById('bottomPanel')?.classList.add('cutscene-mode');
+}
+function hideCutsceneUi113(){ const layer=document.getElementById('cutsceneDialogueLayer'); if(layer)layer.classList.remove('visible'); document.getElementById('bottomPanel')?.classList.remove('cutscene-mode'); }
+function showSupportCutin113(id,caption){
+  const el=ensureCutsceneLayer113() && document.getElementById('supportCutin113'); if(!el)return;
+  const f=(typeof friends!=='undefined' && friends[id])?friends[id]:{name:id};
+  el.className=`support-cutin-113 ${id||''} visible`;
+  el.querySelector('.support-face').textContent=initials113(f.name||id);
+  el.querySelector('.support-small').textContent=`${f.name||id} Support`;
+  el.querySelector('#supportCutinText113').textContent=caption || (id==='min'?'Min says nothing. It is somehow worse.':'Support entered.');
+  clearTimeout(el._timer); el._timer=setTimeout(()=>el.classList.remove('visible'),1050);
+}
+
+const v113SayBase=say;
+say=function(speaker,text){
+  v113SayBase(speaker,text);
+  if(state.currentCutscene || state.v113ForceCutsceneUi){ showCutsceneUi113(speaker,text); }
+  else { hideCutsceneUi113(); }
+};
+const v113StartDateCutsceneBase=startDateCutscene;
+startDateCutscene=function(id){ state.v113CutsceneId=id; return v113StartDateCutsceneBase(id); };
+const v113ContinueCutsceneBase=continueCutscene;
+continueCutscene=function(){ const result=v113ContinueCutsceneBase(); if(!state.currentCutscene){ setTimeout(hideCutsceneUi113,160); } return result; };
+const v113StartBattleBase=startBattle;
+startBattle=function(id){ hideCutsceneUi113(); return v113StartBattleBase(id); };
+if(typeof startGreenFlagBattle==='function'){
+  const v113StartGreenFlagBase=startGreenFlagBattle;
+  startGreenFlagBattle=function(id){ hideCutsceneUi113(); return v113StartGreenFlagBase(id); };
+}
+const v113ShowScreenBase=showScreen;
+showScreen=function(id){ hideCutsceneUi113(); return v113ShowScreenBase(id); };
+const v113UseFriendBase=useFriend;
+useFriend=function(id){
+  const captions={
+    min:['Min says nothing. It is somehow worse.','Min: “Amy.”','Min: “No.”','Min: “You heard him.”','Min: “That was the red flag.”'],
+    malik:['Malik: “Amy, be so f@&$ing for real!”','Malik: “Do not entertain this budget villain.”','Malik: “His red flags have a family tree.”','Malik: “Start seeing evidence.”'],
+    jade:['Jade: “Chin up. Standards higher.”','Jade: “No essays for men committed to misunderstanding.”'],
+    chloe:['Chloe brought receipts.','Chloe: “I highlighted the contradiction.”'],
+    mia:['Mia: “Hit him again. Respectfully.”','Mia: “I was about to become less cute.”']
+  };
+  const arr=captions[id]||['Support entered.']; showSupportCutin113(id,arr[Math.floor(Math.random()*arr.length)]);
+  return v113UseFriendBase(id);
+};
+window.showCutsceneUi113=showCutsceneUi113;
+window.hideCutsceneUi113=hideCutsceneUi113;
+window.showSupportCutin113=showSupportCutin113;
+window.addEventListener('load',()=>ensureCutsceneLayer113());
+})();
+
+
+/* =========================
+   v1.14 Life-Sim Expansion Patch
+   Adds Christy main-game green flag, richer NPC/friend dialogue, 1-2 friend scene system,
+   restaurant/bar/cafe item stats, library genre reading, office task variety,
+   and broader Japanese localization for new systems.
+   ========================= */
+(function(){
+const NPC_CHAT_114 = {"james": [["James", {"en": "You want the usual, or are we pretending you're going to look at the menu first?", "ja": "いつもの？ それとも一応メニューを見るふりする？"}], ["James", {"en": "Today's special is fries. Yesterday's special was also fries. I believe in consistency.", "ja": "今日のおすすめはフライドポテト。昨日もそうだった。安定感って大事だから。"}], ["James", {"en": "You look like you came in here to sit somewhere with background noise and no obligations.", "ja": "今日は、ほどよい雑音と義務ゼロの席を探しに来た顔してる。"}], ["James", {"en": "I changed the playlist because the last one sounded like a man apologizing badly.", "ja": "前のプレイリスト、謝り方が下手な男みたいだったから変えた。"}], ["James", {"en": "No crisis today? Just vibes? I respect that.", "ja": "今日は事件なし？ ただのチル？ いいと思う。"}], ["James", {"en": "I am not saying the fries fix everything. I am saying I have never seen them make a situation worse.", "ja": "ポテトが全部解決するとは言ってない。ただ、悪化させたところは見たことない。"}], ["James", {"en": "Someone tried to flirt by explaining cryptocurrency for forty minutes. She deserved financial compensation.", "ja": "さっき四十分も仮想通貨の説明で口説こうとしてた人がいた。彼女には慰謝料が必要だと思う。"}], ["James", {"en": "You're reading at a bar. That's either very peaceful or very ominous.", "ja": "バーで読書してるの、すごく平和か、すごく不穏かのどっちかだね。"}], ["James", {"en": "We got a new dessert. I trust your judgment more than the kitchen's confidence.", "ja": "新しいデザートが入った。厨房の自信より君の判断を信じてる。"}], ["James", {"en": "Water first. Not because you look bad. Because hydration is the only thing here with no agenda.", "ja": "先に水。具合悪そうとかじゃなくて、ここで一番下心ないのが水だから。"}], ["James", {"en": "The bar is quiet early. I like it before everybody starts performing their personality.", "ja": "早い時間のバーは静かでいい。みんなが自分のキャラを演じ始める前だから。"}], ["James", {"en": "I saved you the corner seat. It has the best escape route and the least small talk.", "ja": "角の席、取っておいた。逃げ道が一番よくて、雑談が一番少ない。"}], ["James", {"en": "If you want to sit quietly, I can pretend polishing this glass is urgent.", "ja": "静かにしたいなら、このグラス磨きが急務ってことにしておく。"}], ["James", {"en": "You have a 'do not ask me about work' aura today. Respect.", "ja": "今日は『仕事の話を聞くな』ってオーラが出てる。尊重する。"}], ["James", {"en": "I like regulars who know what they want. Even if what they want is mostly potatoes.", "ja": "自分の欲しいものがわかってる常連はいいね。たとえそれがほぼポテトでも。"}], ["James", {"en": "If the night gets weird, the exit is there, your water is here, and I can make fries happen fast.", "ja": "夜が変な方向に行ったら、出口はあそこ、水はここ、ポテトはすぐ出せる。"}]], "xavier": [["Xavier", {"en": "New arrivals are on the front table. I only judged two covers today, which is growth.", "ja": "新刊は正面のテーブルです。今日は表紙で判断したの二冊だけなので、成長です。"}], ["Xavier", {"en": "You want something comforting or something that will emotionally destroy you in a tasteful way?", "ja": "癒やされる本がいいですか？ それとも品よく心を壊してくる本？"}], ["Xavier", {"en": "The quiet section is unusually quiet today. I am suspicious.", "ja": "今日は静かな席が妙に静かです。怪しいですね。"}], ["Xavier", {"en": "I put aside that book you mentioned. No pressure. It just looked lonely.", "ja": "この前言ってた本、取っておきました。圧ではないです。本が寂しそうだったので。"}], ["Xavier", {"en": "A kid asked where we keep books with dragons. Honestly, the most sensible request of the day.", "ja": "子どもがドラゴンの本はどこか聞いてきました。正直、今日一番まともな質問でした。"}], ["Xavier", {"en": "Someone shelved a thriller in romance. Either a mistake or a warning.", "ja": "誰かがスリラーを恋愛棚に戻してました。間違いか、警告ですね。"}], ["Xavier", {"en": "You returned this one fast. Good fast or 'I hated every page' fast?", "ja": "返却が早いですね。面白すぎた早さですか、それとも全ページ嫌いだった早さですか？"}], ["Xavier", {"en": "I can recommend a book, but I cannot be held responsible for your sleep schedule.", "ja": "本のおすすめはできますが、睡眠時間については責任を負いません。"}], ["Xavier", {"en": "Rainy days make the library feel like the building is keeping a secret.", "ja": "雨の日の図書館って、建物が秘密を抱えてるみたいに感じます。"}], ["Xavier", {"en": "You seem like the kind of person who picks books by mood, not genre.", "ja": "あなたはジャンルより気分で本を選ぶタイプに見えます。"}], ["Xavier", {"en": "The printer is broken again. It has chosen violence.", "ja": "プリンターがまた壊れました。今日も戦闘態勢です。"}], ["Xavier", {"en": "This bookmark was left in a book of poetry. I am trying not to invent a whole story about it.", "ja": "詩集にしおりが挟まっていました。勝手に物語を作らないよう努力中です。"}], ["Xavier", {"en": "If you need quiet, the back table is free. If you need distraction, I have three dramatic book covers to show you.", "ja": "静けさが必要なら奥の席が空いてます。気分転換なら、かなりドラマチックな表紙を三冊見せられます。"}], ["Xavier", {"en": "I like seeing people leave with a book they did not expect to choose.", "ja": "予想外の本を持って帰る人を見るのが好きです。"}], ["Xavier", {"en": "The romance shelf is behaving today. No suspicious billionaires have fallen out yet.", "ja": "今日の恋愛棚はおとなしいです。怪しい億万長者はまだ落ちてきてません。"}], ["Xavier", {"en": "Sometimes the right book is just one that lets your brain unclench.", "ja": "正しい本って、ただ頭の力を抜かせてくれる本だったりします。"}]], "andrew": [["Andrew", {"en": "You picked a good time. The park is calmer before everyone remembers they own dogs.", "ja": "いい時間に来たね。みんなが犬の存在を思い出す前の公園は静かだから。"}], ["Andrew", {"en": "I run this loop when I need to think without looking like I am thinking.", "ja": "考えたい時にこのコースを走るんだ。考えてるように見えずに考えられるから。"}], ["Andrew", {"en": "Some days I run. Some days I wear running clothes and respect the idea of discipline from a distance.", "ja": "走る日もある。ランニングウェアだけ着て、遠くから自律心を尊敬する日もある。"}], ["Andrew", {"en": "Sitting somewhere pretty and not explaining yourself is underrated.", "ja": "きれいな場所に座って、何も説明しない時間って過小評価されてる。"}], ["Andrew", {"en": "I was going to say hi, but you looked peaceful. Interrupting peace feels rude.", "ja": "声かけようと思ったけど、平和そうだったから。平和の邪魔は失礼かなって。"}], ["Andrew", {"en": "You always seem like you are enjoying the park or negotiating with your thoughts. Maybe both.", "ja": "公園を楽しんでるようにも、考えごとと交渉してるようにも見える。たぶん両方。"}], ["Andrew", {"en": "I like this trail because it has shade and no motivational posters.", "ja": "この道、日陰があるし、妙な自己啓発ポスターがないから好き。"}], ["Andrew", {"en": "Do you come here to walk, think, or avoid your phone?", "ja": "ここには歩きに来てる？ 考えに？ それともスマホ避け？"}], ["Andrew", {"en": "I am still new enough to ask normal questions. Favorite park bench?", "ja": "まだ普通の質問していい距離感だと思うんだけど、お気に入りのベンチある？"}], ["Andrew", {"en": "There is a squirrel near the fountain with main-character energy.", "ja": "噴水の近くのリス、主人公感あるよね。"}], ["Andrew", {"en": "I like that you do not rush conversation. Some people treat silence like a fire alarm.", "ja": "会話を急がないところ、いいと思う。沈黙を火災報知器みたいに扱う人もいるから。"}], ["Andrew", {"en": "If I ever interrupt your peaceful sitting, you can revoke my waving privileges.", "ja": "もし平和に座ってる時間を邪魔したら、手を振る権利を剥奪していいよ。"}], ["Andrew", {"en": "I tried a new running app. It congratulated me like I survived a war. Honestly, I appreciated it.", "ja": "新しいランニングアプリ使ったら、戦争を生き抜いたみたいに褒められた。正直、嬉しかった。"}], ["Andrew", {"en": "The park has good timing. It lets people be alone without feeling isolated.", "ja": "公園ってタイミングがいいよね。一人でいさせてくれるけど、孤立はさせない。"}], ["Andrew", {"en": "I am trying to be normal about how nice this weather is.", "ja": "この天気の良さに対して、普通のテンションでいようとしてる。"}], ["Andrew", {"en": "Same time tomorrow? Not a plan. Just a friendly forecast.", "ja": "明日も同じ時間？ 予定じゃなくて、ただの友好的な予報。"}]], "christy": [["Christy", {"en": "You're back. Ocean view or people-watching table?", "ja": "また来てくれた。海が見える席？ それとも人間観察席？"}], ["Christy", {"en": "No rush. Some days the drink is the activity.", "ja": "急がなくていいよ。飲み物を頼むこと自体が今日の予定、って日もあるから。"}], ["Christy", {"en": "Passion fruit iced tea again? Dramatic, but refreshing. I respect it.", "ja": "またパッションフルーツアイスティー？ ドラマチックだけど爽やか。尊敬する。"}], ["Christy", {"en": "I saw you writing on your laptop last time. Work or secret novel?", "ja": "この前ノートパソコンで何か書いてたよね。仕事？ それとも秘密の小説？"}], ["Christy", {"en": "That table by the window gets the best light. I pretend I do not save it for regulars.", "ja": "窓際のあの席、光が一番きれいなの。常連さん用に取ってるわけじゃない、って顔はしてる。"}], ["Christy", {"en": "You always look like you are deciding whether to relax or solve your whole life.", "ja": "あなた、いつも『休むか人生全部解決するか』で迷ってる顔してる。"}], ["Christy", {"en": "The beach helps. Not with answers, usually. But with breathing.", "ja": "海辺って助けになるよ。答えはくれないことが多いけど、呼吸は戻してくれる。"}], ["Christy", {"en": "Your group was in here yesterday. The tall one looked personally offended by our small forks.", "ja": "昨日あなたたちのグループ来てたよ。背の高い子、小さいフォークに個人的な恨みがありそうだった。"}], ["Christy", {"en": "The quiet one stared at the pastry case like it had disappointed him.", "ja": "静かな子、ショーケースに裏切られたみたいな顔して見てた。"}], ["Christy", {"en": "You can sit as long as you want. I do not believe in rushing people who order cake.", "ja": "いくらでも座ってて。ケーキを頼む人を急かす主義じゃないの。"}], ["Christy", {"en": "The coconut drink looks unserious, but it has never failed morale.", "ja": "ココナッツのドリンク、見た目はふざけてるけど、士気回復には強いよ。"}], ["Christy", {"en": "I like customers who know how to be quiet without making the room feel cold.", "ja": "静かにできるのに、空気を冷たくしないお客さんって好き。"}], ["Christy", {"en": "If you need Wi-Fi, the password is on the receipt. If you need peace, that is free.", "ja": "Wi-Fiはレシートに書いてある。平和が必要なら、それは無料。"}], ["Christy", {"en": "The ocean is showing off today. I would be annoyed if it was not so good at it.", "ja": "今日の海、ちょっと見せびらかしてるね。上手すぎるから文句言えないけど。"}], ["Christy", {"en": "Your friends bring very different energies. Somehow the table survives.", "ja": "あなたの友達、みんな全然違う空気を持ってくるね。不思議とテーブルは耐えてるけど。"}], ["Christy", {"en": "You deserve a place where nothing is required of you except choosing a drink.", "ja": "あなたには、飲み物を選ぶ以外なにも求められない場所が必要だと思う。"}]]};
+const ITEMS_114 = {"cafe_drinks": [{"name": "Passion Fruit Iced Tea", "ja": "パッションフルーツアイスティー", "cost": 120, "effects": {"peace": 8, "clarity": 3}, "text": {"en": "Amy ordered passion fruit iced tea. Dramatic, refreshing, and emotionally correct.", "ja": "エイミーはパッションフルーツアイスティーを頼んだ。ドラマチックで爽やかで、感情的に正しい。"}}, {"name": "Iced Matcha", "ja": "アイス抹茶", "cost": 150, "effects": {"clarity": 8, "peace": 3}, "text": {"en": "Amy ordered iced matcha. Calm focus entered the chat.", "ja": "エイミーはアイス抹茶を頼んだ。落ち着いた集中力がログインした。"}}, {"name": "Classic Iced Tea", "ja": "アイスティー", "cost": 80, "effects": {"hp": 5, "peace": 3}, "text": {"en": "Amy ordered classic iced tea. Simple. Reliable. Not texting at 2 a.m.", "ja": "エイミーはアイスティーを頼んだ。シンプルで信頼できる。深夜二時に連絡してこない。"}}, {"name": "Boba", "ja": "ボバティー", "cost": 180, "effects": {"hp": 8, "peace": 5}, "text": {"en": "Amy ordered boba. Tiny tapioca joy restored morale.", "ja": "エイミーはボバティーを頼んだ。小さなタピオカの喜びが士気を回復した。"}}, {"name": "Coconut Drink", "ja": "ココナッツドリンク", "cost": 220, "effects": {"peace": 12, "selfRespect": 3}, "text": {"en": "Amy ordered a drink served in a coconut. Soft-life evidence acquired.", "ja": "エイミーはココナッツに入ったドリンクを頼んだ。ソフトライフの証拠を入手した。"}}], "cafe_food": [{"name": "Fruit Tart", "ja": "フルーツタルト", "cost": 250, "effects": {"hp": 10, "peace": 8}, "text": {"en": "Amy ordered a fruit tart. Regular joy is important.", "ja": "エイミーはフルーツタルトを頼んだ。普通の喜びは大事。"}}, {"name": "Croissant Sandwich", "ja": "クロワッサンサンド", "cost": 300, "effects": {"hp": 18, "clarity": 3}, "text": {"en": "Amy ordered a croissant sandwich. Flaky, buttery, and none of Amy's problem.", "ja": "エイミーはクロワッサンサンドを頼んだ。サクサクでバターたっぷり。エイミーの問題ではない。"}}, {"name": "Mango Cheesecake", "ja": "マンゴーチーズケーキ", "cost": 280, "effects": {"peace": 10, "hp": 8}, "text": {"en": "Amy ordered mango cheesecake. Peace came with a fork.", "ja": "エイミーはマンゴーチーズケーキを頼んだ。平和はフォークと一緒に来た。"}}, {"name": "Coconut Shrimp", "ja": "ココナッツシュリンプ", "cost": 360, "effects": {"hp": 18, "selfRespect": 4}, "text": {"en": "Amy ordered coconut shrimp. The plate understood the assignment.", "ja": "エイミーはココナッツシュリンプを頼んだ。皿が仕事を理解していた。"}}], "restaurant": [{"name": "Solo Pasta", "ja": "ひとりパスタ", "cost": 350, "effects": {"hp": 25, "peace": 5}, "text": {"en": "Amy ordered pasta alone. Romanticizing your own dinner is a valid strategy.", "ja": "エイミーはひとりでパスタを頼んだ。自分の夕食をロマンチックにするのは正しい戦略。"}}, {"name": "Fancy Salad", "ja": "おしゃれサラダ", "cost": 280, "effects": {"clarity": 8, "hp": 10}, "text": {"en": "Amy ordered a salad with ingredients that had full names. Clarity increased.", "ja": "エイミーは素材が全員フルネームを持っていそうなサラダを頼んだ。明晰度が上がった。"}}, {"name": "Steak Dinner", "ja": "ステーキディナー", "cost": 700, "effects": {"hp": 35, "selfRespect": 8}, "text": {"en": "Amy ordered steak. Standards looked expensive and tasted correct.", "ja": "エイミーはステーキを頼んだ。基準は高そうで、味も正しかった。"}}, {"name": "Seafood Plate", "ja": "シーフードプレート", "cost": 600, "effects": {"peace": 10, "hp": 25}, "text": {"en": "Amy ordered seafood. The plate had ocean energy without emotional undertow.", "ja": "エイミーはシーフードを頼んだ。皿には海の力があった。情緒の引き潮はなかった。"}}, {"name": "Dessert Sampler", "ja": "デザート盛り合わせ", "cost": 450, "effects": {"peace": 15, "selfRespect": 5}, "text": {"en": "Amy ordered the dessert sampler. Joy arrived in multiple fonts.", "ja": "エイミーはデザート盛り合わせを頼んだ。喜びが複数のフォントで届いた。"}}], "bar": [{"name": "Parmesan Fries", "ja": "パルメザンポテト", "cost": 250, "effects": {"hp": 15, "peace": 8}, "text": {"en": "Amy ordered Parmesan fries. The fries had more emotional availability than most matches.", "ja": "エイミーはパルメザンポテトを頼んだ。ポテトは大半のマッチより情緒的に頼れる。"}}, {"name": "Mocktail", "ja": "モクテル", "cost": 180, "effects": {"peace": 10}, "text": {"en": "Amy ordered a mocktail. Cute glass, clear decisions.", "ja": "エイミーはモクテルを頼んだ。かわいいグラス、クリアな判断。"}}, {"name": "Sparkling Water", "ja": "炭酸水", "cost": 80, "effects": {"clarity": 5, "hp": 5}, "text": {"en": "Amy ordered sparkling water. Hydration refused to be dramatic.", "ja": "エイミーは炭酸水を頼んだ。水分補給はドラマを拒否した。"}}, {"name": "Pink Cocktail", "ja": "ピンクカクテル", "cost": 300, "effects": {"peace": 12, "selfRespect": 3}, "text": {"en": "Amy ordered a pink cocktail. It matched the outfit and the boundary.", "ja": "エイミーはピンクのカクテルを頼んだ。服にも境界線にも合っていた。"}}, {"name": "Late-Night Sliders", "ja": "深夜スライダー", "cost": 400, "effects": {"hp": 25, "peace": 3}, "text": {"en": "Amy ordered sliders. Tiny burgers. Huge recovery.", "ja": "エイミーはスライダーを頼んだ。小さなバーガー、大きな回復。"}}]};
+const BOOK_GENRES_114 = [{"name": "Romance", "ja": "恋愛小説", "effects": {"peace": 10, "selfRespect": 3}, "text": {"en": "Amy read romance where nobody sent 'wyd' at midnight. Revolutionary.", "ja": "エイミーは深夜に『今何してる？』を送ってこない恋愛小説を読んだ。革命的。"}}, {"name": "Mystery", "ja": "ミステリー", "effects": {"clarity": 12}, "text": {"en": "Amy read a mystery. Unlike dating apps, the clues eventually made sense.", "ja": "エイミーはミステリーを読んだ。 dating app と違って、手がかりは最終的に筋が通った。"}}, {"name": "Self-Help", "ja": "セルフヘルプ", "effects": {"selfRespect": 12, "clarity": 5}, "text": {"en": "Amy read self-help and underlined a sentence hard enough to count as cardio.", "ja": "エイミーはセルフヘルプ本を読み、運動扱いできるほど強く線を引いた。"}}, {"name": "Fantasy", "ja": "ファンタジー", "effects": {"peace": 12, "hp": 5}, "text": {"en": "Amy read fantasy. Dragons were somehow less exhausting than men with podcasts.", "ja": "エイミーはファンタジーを読んだ。ドラゴンの方が、ポッドキャスト男より疲れない。"}}, {"name": "Poetry", "ja": "詩", "effects": {"peace": 8, "selfRespect": 5}, "text": {"en": "Amy read poetry and decided ambiguity is prettier when it is on purpose.", "ja": "エイミーは詩を読み、曖昧さは意図的なら美しいと判断した。"}}, {"name": "Let Xavier Choose", "ja": "ザビエルに選んでもらう", "effects": {"peace": 9, "clarity": 9, "selfRespect": 4}, "text": {"en": "Xavier chose something comforting and suspiciously devastating. Amy respected the range.", "ja": "ザビエルは癒やし系なのに妙に刺さる本を選んだ。エイミーはその振り幅を尊敬した。"}}];
+const OFFICE_TASKS_114 = [{"en": "Amy spends two hours making a PowerPoint that could have been one email.", "ja": "エイミーはメール一通で済む内容を二時間かけてPowerPointにした。", "effects": {"funds": 750, "clarity": -5}}, {"en": "Amy updates a spreadsheet with so many tabs it starts feeling sentient.", "ja": "エイミーはタブが多すぎて自我を持ちそうなスプレッドシートを更新した。", "effects": {"funds": 650, "clarity": 5}}, {"en": "Amy survives five meetings and says one sentence that somehow becomes an action item.", "ja": "エイミーは会議を五つ生き延び、一言だけ発言したらなぜかアクションアイテムになった。", "effects": {"funds": 800, "peace": -8}}, {"en": "Amy reformats a slide deck because someone said it needed to feel more strategic.", "ja": "『もっと戦略的に見せたい』と言われ、エイミーは資料の体裁を直した。", "effects": {"funds": 700, "selfRespect": 3}}, {"en": "Amy answers urgent emails from people who caused their own emergency.", "ja": "エイミーは自分で火事を起こした人たちの『至急』メールに対応した。", "effects": {"funds": 600, "peace": -5}}, {"en": "Amy makes a tracker to track the tracker that tracks the project.", "ja": "エイミーはプロジェクトを追跡するトラッカーを追跡するためのトラッカーを作った。", "effects": {"funds": 750, "clarity": 5}}, {"en": "Amy listens to someone say 'circle back' with the confidence of a war general.", "ja": "エイミーは『また確認しましょう』を将軍のような自信で言う人の話を聞いた。", "effects": {"funds": 650, "peace": -4}}, {"en": "Amy fixes a spreadsheet formula nobody admits they broke.", "ja": "エイミーは誰も壊したと認めない数式を直した。", "effects": {"funds": 700, "clarity": 8}}, {"en": "Amy attends a meeting where everyone agrees to schedule another meeting.", "ja": "全員が次の会議を設定することに合意する会議に、エイミーは参加した。", "effects": {"funds": 600, "peace": -6}}, {"en": "Amy turns raw chaos into a clean summary table. Nobody thanks her, but the table is beautiful.", "ja": "エイミーは生の混沌を美しい要約表にした。誰も感謝しない。でも表は美しい。", "effects": {"funds": 850, "selfRespect": 5}}, {"en": "Amy spends the morning in calendar combat.", "ja": "エイミーは午前中をカレンダー戦争に費やした。", "effects": {"funds": 650, "hp": -3}}, {"en": "Amy writes a status update so carefully neutral it should win an award.", "ja": "エイミーは表彰されてもいいくらい慎重に中立な進捗報告を書いた。", "effects": {"funds": 700, "clarity": 3}}, {"en": "Amy watches someone share their screen and slowly lose the file they were presenting.", "ja": "画面共有中の人が、発表するはずのファイルをゆっくり見失うのをエイミーは見守った。", "effects": {"funds": 600, "peace": -4}}, {"en": "Amy builds a dashboard and immediately gets asked if it can be exported to Excel.", "ja": "エイミーはダッシュボードを作り、すぐに『Excelに出せる？』と聞かれた。", "effects": {"funds": 850, "clarity": -2}}, {"en": "Amy finishes real work in thirty minutes, then spends three hours proving she did it.", "ja": "エイミーは本当の仕事を三十分で終わらせ、その後三時間かけてそれを証明した。", "effects": {"funds": 900, "selfRespect": 4}}];
+const FRIEND_SCENES_114 = {"bar": [{"participants": ["malik", "jade"], "lines": [["Malik", {"en": "This bar has fries and witnesses. That is community.", "ja": "このバーにはポテトと証人がいる。つまり共同体。"}], ["Jade", {"en": "And lighting good enough for a post-bad-date reset.", "ja": "しかもひどいデート後のリセットにちょうどいい照明。"}], ["Amy", {"en": "Why does that sound like a service package?", "ja": "なんでサービスプランみたいに聞こえるの？"}], ["Malik", {"en": "Because we are professionals.", "ja": "俺たちはプロだから。"}]]}, {"participants": ["chloe", "min"], "lines": [["Chloe", {"en": "I brought receipts, but I also ordered sliders. Balance.", "ja": "レシートは持ってきたけど、スライダーも頼んだ。バランス。"}], ["Min", {"en": "The sliders are doing more for morale.", "ja": "士気にはスライダーの方が効いてる。"}], ["Amy", {"en": "That was almost warm.", "ja": "今のちょっと優しかった。"}], ["Min", {"en": "Do not spread rumors.", "ja": "噂を流さないで。"}]]}, {"participants": ["mia", "jade"], "lines": [["Mia", {"en": "I am here for snacks and emotional containment.", "ja": "軽食と感情の封じ込めのために来た。"}], ["Jade", {"en": "And outfits. We always respect the outfit.", "ja": "あと服。服は常に尊重する。"}], ["Amy", {"en": "This is why I come here.", "ja": "だからここに来るんだよね。"}]]}], "beach": [{"participants": ["jade"], "lines": [["Jade", {"en": "This is exactly why you need more days outside.", "ja": "だから外に出る日がもっと必要なのよ。"}], ["Amy", {"en": "Because of the ocean?", "ja": "海があるから？"}], ["Jade", {"en": "Because nobody here is asking you to understand their childhood before appetizers.", "ja": "前菜の前に幼少期を理解してほしい男がいないから。"}], ["Amy", {"en": "That was still about men.", "ja": "結局男の話じゃん。"}], ["Jade", {"en": "Only spiritually.", "ja": "精神的にはね。"}]]}, {"participants": ["malik", "chloe"], "lines": [["Chloe", {"en": "I brought snacks.", "ja": "お菓子持ってきた。"}], ["Malik", {"en": "I brought emotional commentary.", "ja": "俺は感情コメントを持ってきた。"}], ["Amy", {"en": "One of those is more useful.", "ja": "どっちかは役に立つね。"}], ["Malik", {"en": "And yet you need both.", "ja": "でも両方必要だろ。"}]]}, {"participants": ["min", "mia"], "lines": [["Min", {"en": "The beach minds its business.", "ja": "海辺は余計なことを言わない。"}], ["Mia", {"en": "That is why we respect her.", "ja": "だから尊敬してる。"}], ["Amy", {"en": "The beach is a she?", "ja": "海辺って女の子なの？"}], ["Mia", {"en": "Today, yes.", "ja": "今日はそう。"}]]}], "library": [{"participants": ["min"], "lines": [["Min", {"en": "Good lighting. Low noise. Acceptable chairs.", "ja": "照明良し。騒音少なめ。椅子も許容範囲。"}], ["Amy", {"en": "That is basically a five-star review from you.", "ja": "それ、ミン的には星五レビューだよね。"}], ["Min", {"en": "Do not get greedy.", "ja": "調子に乗らないで。"}]]}, {"participants": ["chloe", "mia"], "lines": [["Chloe", {"en": "I found three books with emotionally available men.", "ja": "情緒が安定してる男性が出る本、三冊見つけた。"}], ["Mia", {"en": "Fiction is beautiful.", "ja": "フィクションって美しいね。"}], ["Amy", {"en": "Please let me enjoy the shelf.", "ja": "棚くらい楽しく見させて。"}], ["Chloe", {"en": "I am supporting you academically.", "ja": "学術的に支援してるの。"}]]}], "park": [{"participants": ["malik"], "lines": [["Malik", {"en": "Amy, I love you. I do. But where the hell are you finding these guys? Off the streets of Gotham?", "ja": "エイミー、愛してるよ。本当に。でもどこでそんな男見つけてるの？ ゴッサムの路地？"}], ["Amy", {"en": "Dating apps.", "ja": " dating app。"}], ["Malik", {"en": "No. These are escaped side quests.", "ja": "違う。こいつらは脱走したサイドクエストだよ。"}]]}, {"participants": ["jade", "mia"], "lines": [["Jade", {"en": "That jogger waved at you again.", "ja": "あのジョギングの人、また手振ってたよ。"}], ["Mia", {"en": "Normal behavior. Suspiciously refreshing.", "ja": "普通の行動。怪しいくらい爽やか。"}], ["Amy", {"en": "Can we not narrate my life?", "ja": "私の人生を実況しないでくれる？"}], ["Jade", {"en": "No.", "ja": "無理。"}]]}], "restaurant": [{"participants": ["jade", "chloe"], "lines": [["Jade", {"en": "Eat first. Spiral later.", "ja": "先に食べて。落ち込むのは後。"}], ["Chloe", {"en": "I categorized the appetizers by emotional value.", "ja": "前菜を感情的価値で分類した。"}], ["Amy", {"en": "Can dinner be normal?", "ja": "普通にご飯食べられない？"}], ["Jade", {"en": "We can try.", "ja": "努力はする。"}]]}, {"participants": ["mia"], "lines": [["Mia", {"en": "If someone ruins your appetite, I will take it personally.", "ja": "誰かが食欲を台無しにしたら、私が個人的に受け止める。"}], ["Amy", {"en": "That sounds comforting and threatening.", "ja": "安心するけど怖い。"}], ["Mia", {"en": "Good.", "ja": "よし。"}]]}], "mall": [{"participants": ["jade"], "lines": [["Jade", {"en": "Buy the outfit because you like it, not because a man might finally act right in it.", "ja": "男がまともに振る舞うかも、じゃなくて自分が好きだから服を買いな。"}], ["Amy", {"en": "That was a whole sermon.", "ja": "説教一個分あった。"}], ["Jade", {"en": "And free.", "ja": "しかも無料。"}]]}, {"participants": ["chloe", "mia"], "lines": [["Chloe", {"en": "The mall directory is wrong. I have feelings about it.", "ja": "モール案内図が間違ってる。感情がある。"}], ["Mia", {"en": "I can become a customer service incident if needed.", "ja": "必要なら接客トラブルになれるよ。"}], ["Amy", {"en": "Please do not.", "ja": "やめて。"}]]}], "spa": [{"participants": ["jade", "mia"], "lines": [["Jade", {"en": "The spa is not a reward. It is maintenance.", "ja": "スパはご褒美じゃない。メンテナンス。"}], ["Mia", {"en": "And maintenance can smell like eucalyptus.", "ja": "そしてメンテナンスはユーカリの香りがしていい。"}], ["Amy", {"en": "I support this policy.", "ja": "その方針を支持する。"}]]}, {"participants": ["chloe"], "lines": [["Chloe", {"en": "I budgeted for self-care and accidentally labeled it infrastructure.", "ja": "セルフケア予算を作ったら、うっかりインフラって分類しちゃった。"}], ["Amy", {"en": "Honestly? Correct.", "ja": "正直、正しい。"}]]}], "beachside_cafe": [{"participants": ["chloe"], "lines": [["Chloe", {"en": "This cafe has perfect lighting for pretending your life is together.", "ja": "このカフェ、人生が整ってるふりをするのに完璧な光。"}], ["Amy", {"en": "Pretending?", "ja": "ふり？"}], ["Chloe", {"en": "Manifesting with props.", "ja": "小道具ありの引き寄せ。"}]]}, {"participants": ["malik", "min"], "lines": [["Malik", {"en": "This place is cute. I hate when the aesthetic is right.", "ja": "ここ可愛いな。雰囲気が正しいと悔しい。"}], ["Min", {"en": "The cake is acceptable.", "ja": "ケーキは許容範囲。"}], ["Amy", {"en": "That is affection from both of you.", "ja": "二人ともそれ愛情表現だよね。"}], ["Malik", {"en": "Unfortunately.", "ja": "残念ながら。"}]]}]};
+const FRIEND_IDS_114 = ['malik','min','jade','chloe','mia'];
+const PUBLIC_FRIEND_LOCATIONS_114 = ['library','park','restaurant','mall','spa','beach','beachside_cafe'];
+function t114(x){ if(x && typeof x==='object')return state.lang==='ja'?(x.ja||x.en||''):(x.en||x.ja||''); return x==null?'':String(x); }
+function pick114(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function applyEffects114(effects={}){
+  Object.entries(effects).forEach(([k,v])=>{
+    if(k==='funds')state.funds=Math.max(0,state.funds+v);
+    else if(k==='hp')state.hp=clamp(state.hp+v,state.maxHp);
+    else if(k in state)state[k]=clamp(state[k]+v);
+  });
+  updateHud();
+}
+function itemName114(item){ return state.lang==='ja'?(item.ja||item.name):item.name; }
+function itemEffectText114(item){
+  const bits=[]; const e=item.effects||{};
+  Object.entries(e).forEach(([k,v])=>bits.push(`${k} ${v>=0?'+':''}${v}`));
+  return bits.join(' / ');
+}
+function showItemMenu114(title,items,backFn){
+  say(title,state.lang==='ja'?'何を選ぶ？':'Choose something cute and useful.');
+  setActions(items.map(item=>({label:`${itemName114(item)} — ${item.cost}`,fn:()=>buyItem114(title,item,()=>showItemMenu114(title,items,backFn)),className:'green'})).concat([{label:'Back',fn:backFn,className:'wide'}]));
+}
+function buyItem114(title,item,returnFn){
+  if(state.funds<item.cost){ say('System',state.lang==='ja'?'Soft Life Funds が足りない。':'Not enough Soft Life Funds.'); setActions([{label:'Back',fn:returnFn}]); return; }
+  state.funds-=item.cost; applyEffects114(item.effects||{});
+  say(title,`${t114(item.text)} (${itemEffectText114(item)})`);
+  setActions([{label:'Buy Something Else',fn:returnFn,className:'green'},{label:'Back to Location',fn:()=>goLocation(state.location)}]);
+}
+function readBookMenu114(){
+  say('Library',state.lang==='ja'?'ジャンルを選ぶ？ それともザビエルに任せる？':'Pick a genre, or let Xavier choose. Reading is free, but it eats time.');
+  setActions(BOOK_GENRES_114.map(g=>({label:state.lang==='ja'?(g.ja||g.name):g.name,fn:()=>readGenre114(g),className:'green'})).concat([{label:'Back',fn:()=>goLocation('library'),className:'wide'}]));
+}
+function readGenre114(g){
+  advanceTime(); applyEffects114(g.effects||{});
+  say(g.name==='Let Xavier Choose'?'Xavier':'Library',`${t114(g.text)} ${state.lang==='ja'?'時間が進んだ。':'Time advanced.'}`);
+  setActions([{label:'Read Another Book',fn:readBookMenu114,className:'green'},{label:'Back to Library',fn:()=>goLocation('library')}]);
+}
+function npcLine114(id){
+  if(!state.npcVisits)state.npcVisits={};
+  if(!state.npcVisits[id])state.npcVisits[id]=0;
+  const arr=NPC_CHAT_114[id]||[];
+  const line=arr[state.npcVisits[id] % arr.length] || [id,'...'];
+  state.npcVisits[id]++;
+  return [line[0],t114(line[1])];
+}
+function chatNpc114(id){
+  const [sp,txt]=npcLine114(id);
+  if(id==='james'){state.peace=clamp(state.peace+4);}
+  if(id==='xavier'){state.clarity=clamp(state.clarity+4);}
+  if(id==='andrew'){state.peace=clamp(state.peace+4);}
+  if(id==='christy'){state.peace=clamp(state.peace+4);state.selfRespect=clamp(state.selfRespect+2);}
+  say(sp,txt); if(typeof showCutsceneUi113==='function')showCutsceneUi113(sp,txt); updateHud();
+  const back=id==='james'?'bar':id==='xavier'?'library':id==='andrew'?'park':'beachside_cafe';
+  setActions([{label:`Chat More`,fn:()=>chatNpc114(id),className:'green'},{label:`Back`,fn:()=>goLocation(back)}]);
+}
+Object.assign(V111_JA, {
+  'Order Drinks':'ドリンクを注文する','Order Food':'食べ物を注文する','Order Snacks':'軽食を注文する','Order From James':'ジェームズに注文する','Chat With James':'ジェームズと話す','Chat With Xavier':'ザビエルと話す','Chat With Andrew':'アンドリューと話す','Chat With Christy':'クリスティと話す','Read a Book':'本を読む','Let Xavier Choose':'ザビエルに選んでもらう','Open Laptop':'ノートPCを開く','Relax by the Window':'窓辺でくつろぐ','Visit Beachside Cafe':'海辺のカフェへ行く','Ask Christy Out / Green Flag Battle':'クリスティを誘う／グリーンフラッグバトル','Meet Mia / Cheat Date Battle':'ミアと会う／チートデートバトル','Do Office Things':'オフィス仕事をする','Buy Something Else':'他にも買う','Back to Location':'場所へ戻る','Read Another Book':'別の本を読む','Back to Library':'図書館へ戻る','Meet a Friend':'友達に会う','Hang With Friends':'友達と過ごす','Meet Friends for Dinner':'友達と夕食','Order Dinner':'夕食を注文する','Order Drink/Snack':'飲み物／軽食を注文する','Choose Yourself / Beach':'自分を選ぶ／海辺','Ask Andrew Out / Green Flag Battle':'アンドリューを誘う／グリーンフラッグバトル','Ask Xavier Out / Green Flag Battle':'ザビエルを誘う／グリーンフラッグバトル','Ask James Out / Green Flag Battle':'ジェームズを誘う／グリーンフラッグバトル','Work on Notes':'ノートを書く','Back to Cafe':'カフェへ戻る'
+});
+Object.assign(ASSETS.backgrounds, { beachside_cafe: ASSETS.backgrounds.beachside_cafe || 'assets/backgrounds/beachside_cafe.png' });
+Object.assign(ENEMY_ART.greenFlags, { christy:'assets/characters/green_flags/christy_reference.png' });
+Object.assign(greenFlags, {
+  christy:{name:'Christy',role:'Beachside Cafe Owner',bg:'spa',ending:'Spa Date',quote:'I would like to take you somewhere with me. Not as a customer. Not as a regular. As a date.',attack:'Gentle Invitation'}
+});
+if(!state.npcVisits)state.npcVisits={};
+['james','xavier','andrew','christy'].forEach(k=>{ if(state.npcVisits[k]===undefined)state.npcVisits[k]=0; });
+if(state.cheatProgress && state.cheatProgress.endings && state.cheatProgress.endings.christy===undefined){state.cheatProgress.endings.christy=false; try{saveCheatProgress();}catch(e){}}
+function injectStyle114(){
+  if(document.getElementById('v114Style'))return;
+  const st=document.createElement('style'); st.id='v114Style'; st.textContent=`
+    .two-friend-114{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:min(980px,calc(100% - 28px));z-index:37;pointer-events:none;opacity:0;transition:opacity .16s ease}
+    .two-friend-114.visible{opacity:1}
+    .two-friend-wrap{position:relative;padding-top:70px}
+    .two-friend-tabs{position:absolute;top:0;left:28px;right:28px;display:flex;justify-content:center;gap:10px;z-index:2}
+    .two-friend-tab{width:112px;height:82px;border-radius:18px 18px 8px 8px;border:2px solid rgba(158,217,255,.9);background:linear-gradient(160deg,#8dd9ff,#4655d8);display:grid;place-items:center;color:#fff;font-size:28px;font-weight:900;box-shadow:0 12px 26px rgba(15,35,90,.32);opacity:.82;transform:translateY(10px)}
+    .two-friend-tab.active{opacity:1;transform:translateY(0) scale(1.05);box-shadow:0 0 24px rgba(117,211,255,.58),0 16px 34px rgba(15,35,90,.38)}
+    .two-friend-box{min-height:128px;border-radius:28px;border:2px solid rgba(158,217,255,.95);background:linear-gradient(180deg,rgba(26,62,128,.95),rgba(12,22,56,.98));box-shadow:0 18px 60px rgba(0,0,0,.45),0 0 30px rgba(74,155,255,.3);padding:26px 30px 30px;color:#fff}
+    .two-friend-speaker{color:#dbf1ff;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+    .two-friend-line{font-size:clamp(18px,2.2vw,24px);line-height:1.35}
+    .two-friend-next{position:absolute;right:34px;bottom:12px;font-size:12px;letter-spacing:.1em;opacity:.75}
+    @media(max-width:720px){.two-friend-tab{width:78px;height:62px;font-size:22px}.two-friend-wrap{padding-top:56px}.two-friend-box{padding:22px 18px 28px}}
+  `; document.head.appendChild(st);
+}
+function ensureTwoFriendLayer114(){
+  injectStyle114(); let el=document.getElementById('twoFriendCutscene114');
+  if(!el){ el=document.createElement('div'); el.id='twoFriendCutscene114'; el.className='two-friend-114'; document.getElementById('mainStage').appendChild(el); }
+  return el;
+}
+function initials114(name){return String(name||'?').split(/\s+/).map(x=>x[0]).join('').slice(0,3).toUpperCase();}
+function friendName114(id){return (friends[id]&&friends[id].name)||id;}
+function showTwoFriendUi114(speaker,text,participants){
+  const el=ensureTwoFriendLayer114(); const active=String(speaker||'').toLowerCase(); const tabs=['amy',...(participants||[])];
+  el.innerHTML=`<div class="two-friend-wrap"><div class="two-friend-tabs">${tabs.map(id=>{const name=id==='amy'?'Amy':friendName114(id); const act=name.toLowerCase()===active || id===active; return `<div class="two-friend-tab ${act?'active':''}"><span>${initials114(name)}</span></div>`;}).join('')}</div><div class="two-friend-box"><div class="two-friend-speaker">${speaker}</div><div class="two-friend-line">${text}</div><div class="two-friend-next">NEXT ▶</div></div></div>`;
+  el.classList.add('visible'); document.getElementById('bottomPanel')?.classList.add('cutscene-mode');
+}
+function hideTwoFriendUi114(){ const el=document.getElementById('twoFriendCutscene114'); if(el)el.classList.remove('visible'); }
+function startFriendScene114(location=state.location){
+  const scenes=FRIEND_SCENES_114[location]||FRIEND_SCENES_114.beach; const scene=pick114(scenes);
+  state.friendScene114={location,participants:scene.participants||[],lines:scene.lines||[],index:0};
+  hideAllScreens(); continueFriendScene114();
+}
+function continueFriendScene114(){
+  const fs=state.friendScene114; if(!fs)return;
+  if(fs.index>=fs.lines.length){
+    const count=fs.participants.length; state.friendScene114=null; hideTwoFriendUi114(); if(typeof hideCutsceneUi113==='function')hideCutsceneUi113();
+    state.peace=clamp(state.peace+(count>1?10:6)); state.groupChat=clamp(state.groupChat+8); updateHud();
+    say('Friends',state.lang==='ja'?'友達と過ごして少し気持ちが軽くなった。':'Amy spent time with friends. The day felt lighter.');
+    setActions([{label:'Meet a Friend',fn:()=>startFriendScene114(fs.location),className:'green'},{label:'Back to Location',fn:()=>goLocation(fs.location)}]); return;
+  }
+  const [speaker,msg]=fs.lines[fs.index++]; const txt=t114(msg);
+  say(speaker,txt);
+  if(fs.participants.length===2)showTwoFriendUi114(speaker,txt,fs.participants);
+  else if(typeof showCutsceneUi113==='function')showCutsceneUi113(speaker,txt);
+  setActions([{label:fs.index>=fs.lines.length?'Finish':'Continue',fn:continueFriendScene114,className:'primary wide'}]);
+}
+function friendSceneAvailable114(location){return PUBLIC_FRIEND_LOCATIONS_114.includes(location) || location==='bar';}
+const baseShowScreen114=showScreen; showScreen=function(id){ hideTwoFriendUi114(); return baseShowScreen114(id); };
+const baseStartBattle114=startBattle; startBattle=function(id){ hideTwoFriendUi114(); return baseStartBattle114(id); };
+function workOnLaptop114(){ advanceTime(); state.clarity=clamp(state.clarity+8); state.peace=clamp(state.peace+8); say('Beachside Cafe',state.lang==='ja'?'エイミーはノートPCを開いて、Soft Life Notesを書いた。海風で文章まで少し優しくなった。':'Amy opened her laptop and worked on Soft Life Notes. The ocean air made even the sentences softer.'); updateHud(); setActions([{label:'Back to Cafe',fn:()=>goLocation('beachside_cafe')}]); }
+// More precise green flag endings and Christy route.
+const baseEarnEnding114=typeof earnEnding==='function'?earnEnding:function(){return[]};
+function markEnding114(id){ if(state.cheatProgress && state.cheatProgress.endings){ if(state.cheatProgress.endings[id]===undefined)state.cheatProgress.endings[id]=false; } return baseEarnEnding114(id); }
+startGreenFlagBattle=function(id){
+  const gf=greenFlags[id]; if(!gf)return;
+  hideAllScreens(); hideTwoFriendUi114(); setBackground(gf.bg); state.currentBattle={id,type:'greenFlag'}; showAmy(true,'idle'); showEnemy(true,gf.name,`${gf.name}<br><small>${gf.role}</small>`,getEnemyArt('greenFlag',id)); document.getElementById('battleUi').classList.add('hidden'); popEffect('GREEN FLAG?');
+  const intro={
+    james:'For the record, you do not owe me a chance because I was nice to you. I just like talking to you. If you are interested, I would like to take you out. If not, I will still bring the fries.',
+    xavier:'I do not want to interrupt your peace. I would like to be invited into it, if you want. You can say no.',
+    andrew:'No pressure. Dinner, walk, or we keep waving at each other until retirement. You deserve options.',
+    christy:'Can I say something slightly selfish? I like when you come in here. Not as a customer. Not as a regular. I would like to take you somewhere as a date.',
+    malik:'I love being your friend. I am not trying to gamble that. But I would be lying if I said I never thought you were beautiful.',
+    min:'I wanted to ask you something without everyone yelling. I care about you. I would like to take you on a date, if you want.',
+    mia:'I like you. I like how soft you are even when you are pretending not to be. I would like to take you out properly.'
+  };
+  say(gf.name,intro[id]||`A familiar green flag appeared. “${gf.quote}”`);
+  setActions([{label:'Enter Fake Battle',fn:()=>greenFlagFakeFight(id),className:'green'},{label:'Politely Decline',fn:()=>rejectGreenFlag(id)},{label:'Back Away Slowly',fn:()=>showScreen('mapScreen')}]);
+};
+greenFlagFakeFight=function(id){
+  const gf=greenFlags[id]; state.peace=clamp(state.peace+12); state.selfRespect=clamp(state.selfRespect+8); popEffect('NO DAMAGE');
+  const line={
+    james:'James used Remembered Your Order. Green hearts floated across the battlefield. Amy took no damage.',
+    xavier:'Xavier used Quiet Presence. It was super effective against panic and pressure.',
+    andrew:'Andrew used Patient Wave. The battlefield did not know what to do with healthy pacing.',
+    christy:'Christy used You Are Still Welcome. The battlefield softened into spa light. Amy took no damage.',
+    malik:'Malik used Loud Honest Care. It was embarrassing, sincere, and super effective.',
+    min:'Min used Quiet Vulnerability. His face had boundaries, but his words did not dodge.',
+    mia:'Mia used Cute But Dangerous Honesty. Amy took no damage, but did blush.'
+  }[id]||`${gf.name} used ${gf.attack}. Amy took no damage.`;
+  say(gf.name,line); setActions([{label:`Accept ${gf.ending}`,fn:()=>greenFlagEnding(id),className:'green wide'},{label:'Reject Date',fn:()=>rejectGreenFlag(id)}]); updateHud();
+};
+greenFlagEnding=function(id){
+  const gf=greenFlags[id]; markEnding114(id==='beach'?'beach':id);
+  const lines={
+    xavier:'Xavier and Amy go to the planetarium. The stars are quiet, beautiful, and not asking her to explain her boundaries.',
+    james:'James and Amy go to the movies. No weird pressure, no secret agenda, just popcorn and peace.',
+    andrew:'Andrew and Amy go to dinner. The conversation is clear, kind, and refreshingly normal.',
+    christy:'Christy and Amy spend the day at the Spa. Warm robes, soft light, and hands held gently. Amy lets the yes feel easy.',
+    malik:'Malik and Amy go to the beach. It is funny, terrifying, and softer than either of them expected.',
+    min:'Min and Amy go to the aquarium. The fish mind their business. Min tries to do the same and fails quietly.',
+    mia:'Mia and Amy meet at the Beachside Cafe. Cake, ocean air, and bonus-route chaos behave beautifully.'
+  };
+  say(`${gf.ending} Ending`,lines[id]||`${gf.name} respected Amy. Green flag confirmed.`);
+  setActions([{label:'Return to Title',fn:()=>showScreen('titleScreen'),className:'primary'},{label:'Back to Map',fn:()=>showScreen('mapScreen')}]);
+};
+rejectGreenFlag=function(id){
+  const gf=greenFlags[id]; state.rejectedGreenFlags.add(id); state.peace=clamp(state.peace+10); state.selfRespect=clamp(state.selfRespect+10); showEnemy(false);
+  let text=`${gf.name} respected Amy’s answer. No guilt trip. No debate. Green flag confirmed.`;
+  if(id==='christy')text='Christy smiled softly. “You are still welcome here. Same table, same drink, no weirdness. You deserve to answer honestly.”';
+  if(id==='malik')text='Malik nodded. “Girl, yes. We are still besties. I survived your dating app screenshots; I can survive one honest conversation.”';
+  if(id==='min')text='Min looked embarrassed for half a second. “Still besties. Unfortunately, you are difficult to get rid of.”';
+  if(id==='mia')text='Mia smiled. “No hard feelings. I will still share cake. Selectively.”';
+  say(gf.name,text); setActions([{label:'Choose Another Location',fn:()=>showScreen('mapScreen'),className:'green'},{label:'Back to Location',fn:()=>goLocation(state.location||'beach')}]); updateHud();
+};
+// Override location action menus with richer life sim systems.
+libraryActions=function(){
+  const arr=[{label:'Read a Book',fn:readBookMenu114,className:'green'},{label:'Check Out a Book',fn:()=>chatNpc114('xavier'),className:'green'},{label:'Chat With Xavier',fn:()=>chatNpc114('xavier'),className:'green'},{label:'Meet a Friend',fn:()=>startFriendScene114('library')},{label:'Check Phone',fn:openDatingApp,className:'danger'},{label:'Back to Map',fn:()=>showScreen('mapScreen')}];
+  if(state.postPatternUnlocked&&!state.rejectedGreenFlags.has('xavier'))arr.unshift({label:'Ask Xavier Out / Green Flag Battle',fn:()=>startGreenFlagBattle('xavier'),className:'green wide'});
+  return arr;
+};
+barActions=function(){
+  const arr=[{label:'Order From James',fn:()=>showItemMenu114('Bar',ITEMS_114.bar,()=>goLocation('bar')),className:'green'},{label:'Chat With James',fn:()=>chatNpc114('james'),className:'green'},{label:'Hang With Friends',fn:()=>startFriendScene114('bar')},{label:'Check Phone',fn:openDatingApp,className:'danger'},{label:'Back to Map',fn:()=>showScreen('mapScreen')}];
+  if(state.postPatternUnlocked&&!state.rejectedGreenFlags.has('james'))arr.unshift({label:'Ask James Out / Green Flag Battle',fn:()=>startGreenFlagBattle('james'),className:'green wide'});
+  return arr;
+};
+restaurantActions=function(){return [{label:'Order Dinner',fn:()=>showItemMenu114('Restaurant',ITEMS_114.restaurant,()=>goLocation('restaurant')),className:'green'},{label:'Meet Friends for Dinner',fn:()=>startFriendScene114('restaurant')},{label:'Check Phone',fn:openDatingApp,className:'danger'},{label:'Back to Map',fn:()=>showScreen('mapScreen')}];};
+parkActions=function(){
+  const introLabel=(state.npcVisits&&state.npcVisits.andrew>=7)?'Chat With Andrew':'Notice / Talk to Cute Stranger';
+  const arr=[{label:'Sit on Bench',fn:()=>locationActivity('Park',state.lang==='ja'?'エイミーはベンチに座った。何も起こらないことが、ちゃんといい。':'Amy sat on a bench. Nothing happened, which was exactly the point.',{peace:14,stamina:5,delusion:-4}),className:'green'},{label:'Take a Walk',fn:()=>locationActivity('Park',state.lang==='ja'?'エイミーは散歩した。神経系が少し整った。':'Amy took a walk. The nervous system recalibrated.',{peace:18,stamina:8,delusion:-5}),className:'green'},{label:introLabel,fn:interactAndrew,className:'green'},{label:'Meet a Friend',fn:()=>startFriendScene114('park')},{label:'Check Phone',fn:openDatingApp,className:'danger'},{label:'Back to Map',fn:()=>showScreen('mapScreen')}];
+  if(state.postPatternUnlocked&&!state.rejectedGreenFlags.has('andrew'))arr.unshift({label:'Ask Andrew Out / Green Flag Battle',fn:()=>startGreenFlagBattle('andrew'),className:'green wide'});
+  return arr;
+};
+beachActions=function(){
+  const base=[{label:'Visit Beachside Cafe',fn:()=>goLocation('beachside_cafe'),className:'green'},{label:'Meet a Friend',fn:()=>startFriendScene114('beach')},{label:'Back to Map',fn:()=>showScreen('mapScreen')}];
+  if(state.postPatternUnlocked)base.unshift({label:state.time==='Night'?'Sit Under the Moon Alone':'Watch the Water Alone',fn:beachEnding,className:'green wide'});
+  else base.unshift({label:'Sit by the Water',fn:()=>locationActivity('Beach',state.lang==='ja'?'波は穏やかだった。平和は勝ち取らなくてもいい。':'The waves are steady. Peace does not have to be earned.',{peace:25,clarity:10}),className:'green'});
+  return base;
+};
+beachsideCafeActions=function(){
+  const arr=[{label:'Order Drink/Snack',fn:()=>showItemMenu114('Beachside Cafe',[...ITEMS_114.cafe_drinks,...ITEMS_114.cafe_food],()=>goLocation('beachside_cafe')),className:'green'},{label:'Open Laptop',fn:workOnLaptop114,className:'green'},{label:'Relax by the Window',fn:()=>locationActivity('Beachside Cafe',state.lang==='ja'?'エイミーは窓辺で海を眺めた。返事を急がない時間。':'Amy sat by the window with ocean air and no obligation to answer her phone.',{peace:12,clarity:6}),className:'green'},{label:'Chat With Christy',fn:()=>chatNpc114('christy'),className:'green'},{label:'Meet a Friend',fn:()=>startFriendScene114('beachside_cafe')},{label:'Back to Beach',fn:()=>goLocation('beach')},{label:'Back to Map',fn:()=>showScreen('mapScreen')}];
+  if(state.postPatternUnlocked&&!state.rejectedGreenFlags.has('christy'))arr.unshift({label:'Ask Christy Out / Green Flag Battle',fn:()=>startGreenFlagBattle('christy'),className:'green wide'});
+  if(typeof canUseGirlRoute==='function' && canUseGirlRoute()&&!state.rejectedGreenFlags.has('mia'))arr.unshift({label:'Meet Mia / Cheat Date Battle',fn:()=>startGreenFlagBattle('mia'),className:'green wide'});
+  return arr;
+};
+mallActions=function(){return [{label:'Go Shopping',fn:()=>showScreen('shopScreen')},{label:'Visit Spa',fn:()=>goLocation('spa'),className:'green'},{label:'Grab Food Court Snack',fn:()=>spendFunds(75,()=>locationActivity('Food Court',state.lang==='ja'?'エイミーは軽食を買った。誰にも分けなかった。':'Amy got a snack and did not share it with anybody annoying.',{stamina:18,peace:5})),className:'green'},{label:'Meet Friends',fn:()=>startFriendScene114('mall')},{label:'Check Phone',fn:openDatingApp,className:'danger'},{label:'Back to Map',fn:()=>showScreen('mapScreen')}];};
+spaActions=function(){return [{label:'Steam Room',fn:()=>spendFunds(250,()=>locationActivity('Spa',state.lang==='ja'?'エイミーはスチームルームに座った。スマホは当然伏せた。':'Amy sat in the steam room. Her phone stayed face-down, as it should.',{peace:25,delusion:-10,selfRespect:5})),className:'green'},{label:'Facial',fn:()=>spendFunds(300,()=>locationActivity('Spa',state.lang==='ja'?'毛穴と判断ミスを洗い流す。':'Cleanse the pores and the poor decisions.',{peace:20,clarity:12,selfRespect:6})),className:'green'},{label:'Massage',fn:()=>spendFunds(500,()=>locationActivity('Spa',state.lang==='ja'?'エイミーは保湿され、ほぐれ、一時的に非常識からアクセス不能になった。':'Amy left moisturized, relaxed, and briefly unreachable by nonsense.',{hp:40,stamina:35,peace:20})),className:'green'},{label:'Meet a Friend',fn:()=>startFriendScene114('spa')},{label:'Back to Mall',fn:()=>goLocation('mall')},{label:'Back to Map',fn:()=>showScreen('mapScreen')}];};
+interactAndrew=function(){
+  if(!state.npcVisits)state.npcVisits={}; state.npcVisits.andrew=(state.npcVisits.andrew||0)+1; const n=state.npcVisits.andrew;
+  state.peace=clamp(state.peace+10); state.stamina=clamp(state.stamina+5);
+  let line;
+  if(n===1)line=['Narrator',state.lang==='ja'?'エイミーは噴水のそばを走るかわいい人に気づいた。……公園、やるじゃん。':'Amy noticed a cute stranger jogging past the fountain. Okay, park.'];
+  else if(n===2)line=['Narrator',state.lang==='ja'?'同じジョガーがまた通った。今度は小さく手を振った。エイミーも考えすぎる前に振り返した。':'The same jogger passed again. This time, he gave a small wave. Amy waved back before she could overthink it.'];
+  else if(n===3)line=['Amy',state.lang==='ja'?'「こんにちは」  ジョガー: 「どうも」  エイミー: 「はい、交流した」':'Hi.  Jogger: Hey.  Amy: That counts as socializing.'];
+  else if(n===4||n===5)line=['Amy',state.lang==='ja'?'目標を持って走ってる人を止めるのは失礼な気がする。':'I am not about to stop a man with a fitness goal. That feels rude.'];
+  else if(n===6)line=['Andrew',state.lang==='ja'?'「よくここにいるね」  エイミー: 「あなたもね」  Andrew: 「たしかに。Andrewです」  エイミー: 「Amy」':'You’re here a lot.  Amy: So are you.  Andrew: Fair. I’m Andrew.  Amy: Amy.'];
+  else if(n===7)line=['Amy',state.lang==='ja'?'楽しく走ってるの？ それとも責任に追われてる？  Andrew: 週によるかな。':'So do you run for fun or are you being chased by your responsibilities?  Andrew: Both, depending on the week.'];
+  else line=npcLine114('andrew');
+  say(line[0],line[1]); if(typeof showCutsceneUi113==='function')showCutsceneUi113(line[0],line[1]); updateHud();
+  setActions([{label:'Chat With Andrew',fn:interactAndrew,className:'green'},{label:'Back',fn:()=>goLocation('park')}]);
+};
+doOffice=function(){
+  if(typeof peacefulModeActive111==='function' && peacefulModeActive111()){ /* peaceful replay still allows work */ }
+  if(state.day>=4 && !state.defeated.has('coworker') && !state.officeCreeperTriggered && !(typeof peacefulModeActive111==='function' && peacefulModeActive111())){
+    state.officeCreeperTriggered=true; say('Office',state.lang==='ja'?'エイミーは遅くまで残って一つ仕事を終わらせた。その時、番号を教えていない相手からスマホに通知が来た。':'Amy stayed late to finish one more task. Then her phone lit up with a message from someone she had not given her number to.');
+    setActions([{label:'Read Message',fn:()=>startDateCutscene('coworker'),className:'danger wide'},{label:'Document Everything',fn:()=>{state.clarity=clamp(state.clarity+10);state.selfRespect=clamp(state.selfRespect+10);startDateCutscene('coworker');},className:'primary wide'}]); updateHud(); return;
+  }
+  const task=pick114(OFFICE_TASKS_114); applyEffects114(task.effects||{}); advanceTime();
+  const earned=(task.effects&&task.effects.funds)||0; say('Office',`${state.lang==='ja'?task.ja:task.en} +${earned} Soft Life Funds.`); updateHud();
+};
+const baseGoLocation114=goLocation; goLocation=function(id){
+  hideTwoFriendUi114();
+  if(id==='office' && state.day>=4 && !state.defeated.has('coworker') && !state.officeCreeperTriggered && !(typeof peacefulModeActive111==='function' && peacefulModeActive111())){
+    hideAllScreens(); state.location=id; const l=locations.find(x=>x.id===id); if(l)setBackground(l.bg()); showAmy(true); showEnemy(false); document.getElementById('battleUi').classList.add('hidden');
+    state.officeCreeperTriggered=true; say('Office',state.lang==='ja'?'エイミーは遅くまで残って一つ仕事を終わらせた。その時、番号を教えていない相手からスマホに通知が来た。':'Amy stayed late to finish one more task. Then her phone lit up with a message from someone she had not given her number to.');
+    setActions([{label:'Read Message',fn:()=>startDateCutscene('coworker'),className:'danger wide'},{label:'Document Everything',fn:()=>{state.clarity=clamp(state.clarity+10);state.selfRespect=clamp(state.selfRespect+10);startDateCutscene('coworker');},className:'primary wide'}]); updateHud(); return;
+  }
+  return baseGoLocation114(id);
+};
+// Update Date Fit Studio to include Christy.
+if(typeof dateFitPartners112==='function'){
+  const baseDateFitPartners114=dateFitPartners112;
+  dateFitPartners112=function(){
+    const arr=baseDateFitPartners114();
+    if(!arr.find(p=>p.id==='christy'))arr.splice(3,0,{id:'christy',label:'Christy',type:'Green Flag'});
+    return arr;
+  };
+}
+// Make v1.13 support cut-in explicitly cover all five friends.
+if(typeof showSupportCutin113==='function'){
+  const baseUseFriend114=useFriend;
+  useFriend=function(id){
+    const labels={
+      malik:['Malik: “Amy, be so f@&$ing for real!”','Malik: “Please stop dating literal villains.”'],
+      min:['Min says nothing. It is somehow worse.','Min: “Amy.”','Min: “No.”'],
+      jade:['Jade: “Cute is not a character reference.”','Jade: “Standards higher.”'],
+      chloe:['Chloe: “I made a timeline. It has tabs.”','Chloe brought receipts.'],
+      mia:['Mia: “Do you need comfort or an alibi?”','Mia: “Hit him again. Respectfully.”']
+    };
+    showSupportCutin113(id,pick114(labels[id]||['Support entered.']));
+    return baseUseFriend114(id);
+  };
+}
+
+// Keep Christy blue as an NPC, green only in her route.
+if(typeof classifySpeaker113==='function'){
+  const baseClassifySpeaker114=classifySpeaker113;
+  classifySpeaker113=function(speaker){
+    const key=typeof speakerKey113==='function'?speakerKey113(speaker):String(speaker||'').toLowerCase();
+    if(key==='christy')return (state.currentBattle && state.currentBattle.type==='greenFlag' && state.currentBattle.id==='christy')?'green':'friend';
+    return baseClassifySpeaker114(speaker);
+  };
+}
+window.startFriendScene114=startFriendScene114; window.continueFriendScene114=continueFriendScene114; window.chatNpc114=chatNpc114; window.readBookMenu114=readBookMenu114;
+window.addEventListener('load',()=>{ injectStyle114(); });
+})();
+
+
+/* =========================
+   v1.15 Red Flag Moveset + JP Localization Patch
+   Adds Dark Humor Guy, rewrites True Crime Date seriously, expands Old Guy,
+   and standardizes enemy move counts: red flags 4 normals + 1 special; bosses 4 normals + 2 specials.
+   ========================= */
+(function(){
+function tr115(x){
+  if(x && typeof x==='object') return state.lang==='ja' ? (x.ja || x.en || '') : (x.en || x.ja || '');
+  return x==null?'':String(x);
+}
+function villainName115(id){ const v=villains[id]||{}; return state.lang==='ja'?(v.jpName||v.name||id):(v.name||id); }
+function villainClass115(id){ const v=villains[id]||{}; return state.lang==='ja'?(v.jpClassName||v.className||''):(v.className||''); }
+function villainQuote115(id){ const v=villains[id]||{}; return state.lang==='ja'?(v.jpQuote||v.quote||''):(v.quote||''); }
+function villainWeakness115(id){ const v=villains[id]||{}; return state.lang==='ja'?(v.jpWeakness||v.weakness||''):(v.weakness||''); }
+function atk115(en,ja,damage,delusion,enText,jaText,type='normal'){
+  return {name:en,jaName:ja,damage,delusion,text:enText,jaText,moveType:type};
+}
+function atkName115(atk){return state.lang==='ja'?(atk.jaName||atk.name):atk.name;}
+function atkText115(atk){return state.lang==='ja'?(atk.jaText||atk.text):atk.text;}
+function isHostile115(id){return !!villains[id] && !String(id).startsWith('arcade_');}
+const RED_FLAG_IDS_115=['two_am','preference','coworker','broke_dreamer','house_date','millionaire','old_young','body_bag','dark_humor','demon','normal_fake'];
+
+Object.assign(V111_JA, {
+  'Amy':'エイミー','System':'システム','Narrator':'ナレーション','Victory':'勝利','Car':'車','Arcade Mode':'アーケードモード',
+  'Reply':'返信する','Ignore':'無視する','Send to Group Chat':'グルチャに送る','Block':'ブロック','Date Battle!':'デートバトル！','Block and Leave':'ブロックして帰る','Amy’s Turn':'エイミーのターン',
+  'Boundary Slash':'境界線スラッシュ','Phone Punch':'スマホパンチ','Kick of Discernment':'見極めキック','Check Receipts':'証拠チェック','Summon Friend':'友達を召喚','Girl, Stand Up!':'Girl, Stand Up!','Run / Block':'逃げる／ブロック',
+  'Dark Humor Guy':'ダークユーモア男','True Crime Date':'事件予感デート','Old Young-Girl Guy':'若い子コレクターおじさん','The Old Young-Girl Guy':'若い子コレクターおじさん',
+  'Parking Lot Menace':'駐車場の危険人物','Boundary Tester':'境界線テスター','Midlife Side Quest':'ミッドライフ寄り道男',
+  'Move List':'技リスト','Normal Moves':'通常技','Special Move':'必殺技','Special Moves':'必殺技'
+});
+
+Object.assign(ENEMY_ART.villains, {
+  dark_humor: ENEMY_ART.villains.body_bag || 'assets/characters/villains/body_bag_boy_reference.png'
+});
+
+villains.dark_humor = {
+  name:'Dark Humor Guy', jpName:'ダークユーモア男', className:'Boundary Tester', jpClassName:'境界線テスター', bg:'bar', maxHp:105,
+  quote:'Do you like dark humor?', jpQuote:'ブラックジョーク好き？', weakness:'Not debating the difference between jokes and threats.', jpWeakness:'冗談と脅しの違いを議論しないこと。',
+  attacks:[]
+};
+
+Object.assign(villains.body_bag, {
+  name:'True Crime Date', jpName:'事件予感デート', className:'Parking Lot Menace', jpClassName:'駐車場の危険人物', bg:'villain_apartment', maxHp:125,
+  quote:'I have a body bag and a straitjacket in my trunk. Which one do you want me to get?',
+  jpQuote:'トランクにボディバッグと拘束衣がある。どっち取ってくる？',
+  weakness:'Leaving immediately, trusting fear, and locking the car door.', jpWeakness:'すぐ離れること。怖さを信じること。車の鍵を閉めること。'
+});
+Object.assign(villains.old_young, {
+  name:'The Old Young-Girl Guy', jpName:'若い子コレクターおじさん', className:'Midlife Side Quest', jpClassName:'ミッドライフ寄り道男', bg:'bar', maxHp:108,
+  quote:'Got me a young girl.', jpQuote:'若い子ゲットしたな。', weakness:'Visible disgust and ordering his own drink.', jpWeakness:'露骨なドン引きと、自分の飲み物は自分で頼ませること。'
+});
+
+// Standardized red flag moves: 4 normal moves + 1 special move each.
+Object.assign(villains.two_am,{attacks:[
+  atk115('Wyd Wave','「今なにしてる？」波動',8,3,'The 2AM Summoner sent “wyd?” and disturbed the peace.','2AM召喚男は「今なにしてる？」を放った。平和が乱された。'),
+  atk115('You Up Beam','起きてる？ビーム',10,5,'He used “you up?” at an hour with no good intentions.','よくない意図しかない時間に「起きてる？」ビーム。'),
+  atk115('Come Through Curse','来なよの呪い',13,7,'A low-effort invitation tried to sound casual.','低努力の誘いが、なぜか自然体を装ってきた。'),
+  atk115('No Pressure Pressure','圧のない圧',14,8,'He said no pressure while applying pressure.','「無理しなくていいよ」と言いながら、しっかり圧をかけてきた。'),
+  atk115('Midnight Doorway','深夜の玄関',24,14,'SPECIAL: The clock froze at 2:14. Amy chose sleep as a boundary.','必殺技：時計が2:14で止まった。エイミーは睡眠を境界線として選んだ。','special')
+]});
+Object.assign(villains.preference,{attacks:[
+  atk115('You Look Like Beyoncé','ビヨンセっぽいビーム',12,4,'He used a celebrity comparison like a personality.','有名人比較を人格みたいに使ってきた。'),
+  atk115('Preference Not Fetish','フェチじゃなく好みです',13,6,'He tried to rebrand objectification as taste.','対象化を「好み」にリブランドしようとした。'),
+  atk115('I Grew Up Around It','俺はその文化で育った',12,5,'He presented proximity as a qualification.','近くにいただけの経験を資格みたいに出してきた。'),
+  atk115('Parents Would Never Accept You','親は絶対ムリ',22,12,'Cowardice arrived wearing family values.','臆病さが「家族の価値観」の顔をして現れた。'),
+  atk115('Exotic Compliment Chain','エキゾチック褒め鎖',28,16,'SPECIAL: Sticky compliments wrapped around Amy until she cut them off.','必殺技：「褒め言葉」の鎖が絡みつく。エイミーはそれを切り払った。','special')
+]});
+Object.assign(villains.coworker,{attacks:[
+  atk115('After-Hours Ping','時間外メッセージ',12,3,'A message arrived from someone Amy did not give her number to.','番号を教えていない相手からメッセージが届いた。'),
+  atk115('You’re Different','君は違うよ',12,4,'He disguised objectification as a compliment.','対象化を褒め言葉に偽装してきた。'),
+  atk115('I’m Just Curious','ただ興味あるだけ',16,7,'Curiosity arrived without consent or self-awareness.','同意も自覚もない「興味」が来た。'),
+  atk115('Don’t Make It Weird','変にしないでよ',18,8,'He made it weird, then assigned Amy the paperwork.','変にした本人が、処理をエイミーに押しつけた。'),
+  atk115('HR Poster Peels Off','無力な人事ポスター',26,14,'SPECIAL: HR posters whispered uselessly while Amy documented everything.','必殺技：人事ポスターが無力にささやく中、エイミーは全部記録した。','special')
+]});
+Object.assign(villains.broke_dreamer,{attacks:[
+  atk115('Unreleased Track','未発表曲',9,8,'He played a song that was somehow both a confession and a bill.','告白でもあり請求書でもある曲を流してきた。'),
+  atk115('Value Meal Serenade','バリューセット小夜曲',12,6,'The date became a parking lot concert with fries.','デートがポテト付き駐車場ライブになった。'),
+  atk115('Manifesting','引き寄せ中',12,8,'His five-year plan appears to be vibes.','5年計画がほぼ「雰囲気」だった。'),
+  atk115('Can You Spot Me?','ちょっと出してくれる？',17,-2,'Soft Life Funds felt threatened.','Soft Life Fundsが危機を察知した。'),
+  atk115('You Don’t Support Dreams','夢を応援してくれないの？',25,12,'SPECIAL: He tried to make basic standards sound like artistic betrayal.','必殺技：最低限の基準を「夢への裏切り」に変換してきた。','special')
+]});
+Object.assign(villains.house_date,{attacks:[
+  atk115('Couch Date Trap','ソファデート罠',12,4,'The battlefield became a couch with no plans.','戦場が「予定なしソファ」に変わった。'),
+  atk115('I Don’t Want To Be Used','利用されたくない',12,5,'He protected imaginary wealth.','存在未確認の財産を必死に守った。'),
+  atk115('You Pay Then','じゃあ君が払えば',18,-3,'The first date had not happened, but his audacity was early.','初デート前なのに、図々しさだけ先に到着した。'),
+  atk115('Coffee Is Expensive','コーヒー高い理論',15,8,'He treated coffee like a high-risk investment.','コーヒーを高リスク投資みたいに扱った。'),
+  atk115('Bare Minimum Audit','最低限監査',28,14,'SPECIAL: Amy audited the offer. The return on investment was negative.','必殺技：エイミーが提案を監査した。投資対効果はマイナス。','special')
+]});
+Object.assign(villains.millionaire,{attacks:[
+  atk115('Low-Key Millionaire Mirage','ひそかな億万長者の蜃気楼',13,6,'Gold coins rained down, then bounced like plastic tokens.','金貨が降ったが、プラスチックの景品みたいに跳ねた。'),
+  atk115('Believe In Me Barrage','俺を信じて連打',17,8,'He needed belief, housing, childcare, and applause.','必要なのは信頼、住居、育児、拍手だった。'),
+  atk115('Between Opportunities','機会の狭間',14,5,'His job status entered a fog machine.','職業状況がスモークに包まれた。'),
+  atk115('Do You Want My Kids?','俺の子ども欲しい？',24,-8,'Amy remembered they matched forty minutes ago.','マッチして40分しか経っていないことをエイミーは思い出した。'),
+  atk115('Real Woman Requirement','本物の女要件',30,16,'SPECIAL: He posted a job opening for a provider and called it love.','必殺技：提供者募集を「恋愛」と呼んできた。','special')
+]});
+Object.assign(villains.demon,{attacks:[
+  atk115('Fighting My Demons','悪魔と戦ってる',18,10,'He said he changed, but the demons were still in party formation.','変わったと言いながら、悪魔たちはまだ隊列を組んでいた。'),
+  atk115('Loyalty Test','忠誠心テスト',18,12,'He asked for loyalty before basic safety.','安全より先に忠誠を求めてきた。'),
+  atk115('Military School Flashback','矯正学校フラッシュバック',16,8,'A dramatic backstory tried to become Amy’s assignment.','壮絶な過去がエイミーの課題になろうとした。'),
+  atk115('Hot Disaster Aura','イケメン災害オーラ',24,18,'He was unfortunately attractive. Delusion surged.','残念ながら顔がよかった。錯覚が急上昇した。'),
+  atk115('Handle Me At My Worst','最悪の俺を受け止めろ',32,18,'SPECIAL: Amy declined the unpaid crisis-management role.','必殺技：エイミーは無給の危機管理役を辞退した。','special')
+]});
+Object.assign(villains.normal_fake,{attacks:[
+  atk115('Normal Guy Mask','普通の男マスク',18,10,'He sounded normal enough to be dangerous.','危険なくらい普通に聞こえた。'),
+  atk115('My Ex Was Crazy','元カノがヤバかった',20,12,'The red flag arrived beige and softly spoken.','赤旗はベージュ色で、やわらかい声をしていた。'),
+  atk115('Brutal Honesty','正直すぎるだけ',21,14,'He confused cruelty with honesty and asked for credit.','意地悪を正直さと勘違いして、評価まで求めてきた。'),
+  atk115('You’re Overthinking It','考えすぎだよ',24,16,'Self-trust took damage, then got back up annoyed.','自己信頼がダメージを受けたが、イラつきながら起き上がった。'),
+  atk115('Advanced Threat Reveal','高度脅威の正体',34,18,'SPECIAL: The pleasant café cracked. Behind it was a courtroom where he was judge and victim.','必殺技：心地よいカフェが割れ、彼が裁判官で被害者の法廷が現れた。','special')
+]});
+Object.assign(villains.dark_humor,{attacks:[
+  atk115('Just Kidding Jab','冗談だよジャブ',12,5,'He said it was obviously a joke. The joke did not contain the laughing part.','「冗談に決まってるじゃん」と言った。笑う部分は含まれていなかった。'),
+  atk115('Too Sensitive Slash','敏感すぎ斬り',15,7,'He tried to make a normal danger response sound embarrassing.','正常な危険反応を恥ずかしいことにしようとした。'),
+  atk115('Dark Humor Defense','ブラックジョーク防御',13,6,'He hid behind dark humor like it was a legal team.','ブラックジョークを弁護団みたいに使って隠れた。'),
+  atk115('Relax, I’m Playing','遊んでるだけ圧',16,8,'He described himself like a dog that bites people.','人を噛む犬みたいな自己紹介をしてきた。'),
+  atk115('Schrödinger’s Threat','シュレディンガーの脅し',30,16,'SPECIAL: If Amy laughed, it was a joke. If she didn’t, she was the problem. Amy rejected the premise.','必殺技：笑えば冗談、笑わなければエイミーが悪い。エイミーはその前提を拒否した。','special')
+]});
+Object.assign(villains.body_bag,{attacks:[
+  atk115('Choose One','どっちか選べ',18,8,'He said, “Body bag or straitjacket?” Amy chose the exit.','「ボディバッグと拘束衣、どっちがいい？」エイミーは出口を選んだ。'),
+  atk115('Trunk Click','トランクの音',20,10,'A sharp metallic sound echoed across the battlefield.','鋭い金属音が戦場に響いた。'),
+  atk115('Don’t Be Scared','怖がるなよ',18,8,'He tried to shame the fear that was keeping Amy alive.','生き延びるための恐怖を恥じさせようとした。'),
+  atk115('Empty Parking Lot','誰もいない駐車場',22,12,'The exit signs moved farther away. That was not comforting.','出口サインが遠ざかった。まったく安心できない。'),
+  atk115('Dateline Cold Open','事件番組の冒頭',36,18,'SPECIAL: “She thought it was just a bad date...” Amy listened to herself and left.','必殺技：「ただのひどいデートだと思っていた…」エイミーは自分の感覚を信じて離れた。','special')
+]});
+Object.assign(villains.old_young,{attacks:[
+  atk115('Young Girl Comment','若い子発言',16,6,'He said he liked younger women because they had less baggage. Amy heard “fewer witnesses.”','「若い女性は荷物が少ない」と言った。エイミーには「目撃者が少ない」に聞こえた。'),
+  atk115('Mature For Your Age','年の割に大人だね',16,8,'He called Amy mature for her age. Somehow, he was not mature for his.','年の割に大人だねと言った。なぜか彼は年の割に大人ではなかった。'),
+  atk115('Drink Theft','飲み物泥棒',14,-2,'He kept “tasting” Amy’s drink for fifteen minutes.','彼は15分間ずっとエイミーの飲み物を「一口」していた。'),
+  atk115('Women My Age Are Bitter','同年代の女は苦い',18,10,'He insulted women his own age and called it honesty.','同年代の女性を侮辱して、それを正直さと呼んだ。'),
+  atk115('Midlife Trophy Case','ミッドライフのトロフィーケース',32,16,'SPECIAL: Amy refused to become decoration for his identity crisis.','必殺技：エイミーは彼のアイデンティティ危機の飾りになることを拒否した。','special')
+]});
+
+// Bosses: 4 normal moves + 2 special moves each.
+Object.assign(villains.algorithm,{attacks:[
+  atk115('New Match Detected','新規マッチ検知',20,15,'The Algorithm flooded the room with matches holding fish and unresolved attachment wounds.','魚と未解決の執着を抱えたマッチが部屋にあふれた。'),
+  atk115('Boosted Bad Decision','悪い判断ブースト',24,18,'A cute profile appeared with perfect lighting and no consistency.','照明だけ完璧で一貫性ゼロのプロフィールが表示された。'),
+  atk115('Loneliness Spike','孤独レベル上昇',22,16,'Loneliness spike detected. Gym selfie deployed.','孤独レベル上昇を検知。ジム自撮りを投入。'),
+  atk115('Premium False Hope','プレミアム偽希望',24,18,'The app tried to monetize the word “maybe.”','アプリは「もしかしたら」を収益化しようとした。'),
+  atk115('Endless Swipe Spiral','無限スワイプ螺旋',36,24,'SPECIAL: The feed looped until every profile looked like a second chance.','必殺技：全プロフィールが「もう一回のチャンス」に見えるまでフィードがループした。','special'),
+  atk115('Engagement Trap','エンゲージメント罠',40,26,'SPECIAL: Peace decreased because the app noticed Amy was calm.','必殺技：エイミーが落ち着いていることをアプリが検知し、平和が減少した。','special')
+]});
+Object.assign(villains.pattern,{attacks:[
+  atk115('Maybe He’ll Change','今度こそ変わるかも',25,20,'The Pattern whispered familiar chaos in a nicer outfit.','パターンは見慣れた混沌を、少し良い服でささやいた。'),
+  atk115('At Least He Wants You','少なくとも求めてくれる',28,22,'Old fear tried to sound like logic.','昔の恐怖が論理のふりをした。'),
+  atk115('One More Chance','もう一回だけ',30,24,'The loop tried to close again.','ループがまた閉じようとした。'),
+  atk115('Closure Bait','区切りの餌',30,24,'Closure dressed reopening the wound as healing.','傷を開き直すことが「区切り」の顔をして現れた。'),
+  atk115('Familiar Ache','慣れた痛み',38,26,'SPECIAL: The old ache pretended to be love because Amy recognized it.','必殺技：知っている痛みが、愛のふりをした。','special'),
+  atk115('Choose the Old Wound','古い傷を選べ',42,28,'SPECIAL: The Pattern offered the familiar wound. Amy said no.','必殺技：パターンは慣れた傷を差し出した。エイミーは拒否した。','special')
+]});
+
+// Localized app notifications and cutscenes.
+if(!V18.villainOrder.includes('dark_humor')) V18.villainOrder.splice(Math.max(0,V18.villainOrder.indexOf('body_bag')),0,'dark_humor');
+Object.assign(V18.appNotifications,{
+  body_bag:{app:'LoveLoop',msg:{en:'Reggie sent you a message: “You like spontaneous dates?”',ja:'Reggieからメッセージ：「急なデートって好き？」'},battleBg:'villain_apartment'},
+  dark_humor:{app:'LoveLoop',msg:{en:'Derrick sent you a message: “Do you like dark humor?”',ja:'Derrickからメッセージ：「ブラックジョーク好き？」'},battleBg:'bar'},
+  old_young:{app:'LoveLoop',msg:{en:'Victor sent you a message: “Wow. You’re gorgeous. I’ve always had a thing for younger women.”',ja:'Victorからメッセージ：「綺麗だね。昔から若い子が好きなんだ。」'},battleBg:'bar'}
+});
+Object.assign(V18.cutscenes,{
+  dark_humor:[
+    ['Derrick',{en:'Do you like dark humor?',ja:'ブラックジョーク好き？'}],
+    ['Amy',{en:'That depends.',ja:'内容による。'}],
+    ['Derrick',{en:'Good. I need a woman who can take a joke.',ja:'よかった。冗談が通じる女がいいんだよね。'}],
+    ['Amy',{en:'Why did that feel like a warning label?',ja:'なんで注意書きみたいに聞こえるんだろう。'}],
+    ['Derrick',{en:'Like, if I said I’d kidnap you, obviously I’m joking.',ja:'例えば「誘拐するぞ」って言っても、普通に冗談じゃん。'}],
+    ['Amy',{en:'That is a normal face to make after someone says kidnapping.',ja:'誘拐って言われた後にこの顔になるのは普通です。'}],
+    ['Derrick',{en:'Wow. So now men can’t joke?',ja:'え、もう男は冗談も言えないわけ？'}],
+    ['Amy',{en:'Men can joke. You can’t threaten women and call it a personality.',ja:'冗談は言えるよ。女性を脅して、それを性格って呼ぶのは無理。'}],
+    ['Narrator',{en:'A distorted laugh track played from nowhere. Every red flag had a sticky note: JUST KIDDING.',ja:'どこからか歪んだ笑い声が流れた。赤旗には全部「冗談だよ」の付箋が貼られていた。'}]
+  ],
+  body_bag:[
+    ['Reggie',{en:'You ever do something just because it makes a good story?',ja:'「いい話のネタになるから」って理由で何かしたことある？'}],
+    ['Amy',{en:'I have gone to brunch with no reservation, yes.',ja:'予約なしでブランチに行ったことならある。'}],
+    ['Reggie',{en:'Nah. I mean getting in the car and seeing where the night takes us.',ja:'そうじゃなくて。車に乗って、夜がどこへ連れてくか見るとか。'}],
+    ['Amy',{en:'I prefer an address and a plan.',ja:'住所と予定がある方が好き。'}],
+    ['Reggie',{en:'I got a body bag and a straitjacket in my trunk. Which one you want me to get?',ja:'トランクにボディバッグと拘束衣がある。どっち取ってくる？'}],
+    ['Amy',{en:'Neither.',ja:'どっちも嫌。'}],
+    ['Reggie',{en:'No, pick one.',ja:'いや、選んで。'}],
+    ['Amy',{en:'I’m not picking one.',ja:'選ばない。'}],
+    ['Reggie',{en:'Fine. I’ll choose.',ja:'じゃあ俺が選ぶわ。'}],
+    ['Narrator',{en:'He pushed back from the table. The chair scraped the floor. Amy’s stomach dropped.',ja:'彼は椅子を引いた。床にこすれる音がした。エイミーの胃が沈んだ。'}],
+    ['Amy',{en:'Where are you going?',ja:'どこ行くの？'}],
+    ['Reggie',{en:'To get one.',ja:'取りに行く。'}],
+    ['Narrator',{en:'A parking lot appeared under one flickering streetlamp. In the distance, a trunk clicked open.',ja:'点滅する街灯の下に駐車場が現れた。遠くでトランクが開く音がした。'}]
+  ],
+  old_young:[
+    ['Victor',{en:'Wow. You’re gorgeous. I’ve always had a thing for younger women.',ja:'綺麗だね。昔から若い子が好きなんだ。'}],
+    ['Amy',{en:'That was not the compliment you thought it was.',ja:'それ、あなたが思ってるほど褒め言葉じゃないよ。'}],
+    ['Victor',{en:'Women my age are just so bitter.',ja:'同年代の女って、なんか苦いんだよ。'}],
+    ['Amy',{en:'Interesting way to describe women with experience.',ja:'経験のある女性をそう表現するんだ。'}],
+    ['Victor',{en:'You’re mature for your age.',ja:'君は年の割に大人だね。'}],
+    ['Amy',{en:'And somehow you’re not.',ja:'そしてあなたは年の割に大人じゃないね。'}],
+    ['Victor',{en:'Man. Look at me. Got me a young girl.',ja:'いやー、見てよ。若い子ゲットしたな。'}],
+    ['Amy',{en:'I’m sorry?',ja:'今なんて？'}],
+    ['Victor',{en:'It’s a compliment.',ja:'褒め言葉だよ。'}],
+    ['Amy',{en:'Being treated like a midlife achievement trophy is not a compliment.',ja:'ミッドライフの達成トロフィー扱いは褒め言葉じゃない。'}],
+    ['Narrator',{en:'A giant receipt appeared in the air. Somehow, Amy was being charged for his audacity.',ja:'空中に巨大なレシートが現れた。なぜか彼の図々しさの代金をエイミーが払わされていた。'}]
+  ]
+});
+Object.assign(V18.carLines,{
+  body_bag:{en:'Amy got into her car and locked the doors before she even let herself breathe. “My fear is not embarrassment. It is information.”',ja:'エイミーは息をする前に車に乗り、ドアをロックした。「怖いって感じるのは恥じゃない。情報だよ。」'},
+  dark_humor:{en:'Amy sat in the car and exhaled. “Jokes usually have the part where people laugh.”',ja:'エイミーは車の中で息を吐いた。「冗談って、普通は笑う部分があるんだけど。」'},
+  old_young:{en:'Amy sat in the car with the engine off. “I am not decoration for a midlife crisis.”',ja:'エイミーはエンジンを切った車内に座った。「ミッドライフ危機の飾りにはならない。」'}
+});
+
+// Arcade move data scaffold for friend/green-flag modes. These are story-sensible, not meta cheat jokes.
+window.ARCADE_MOVESETS_115={
+  friend:{
+    malik:{normal:['Be So For Real','Gotham Men Rant','Evidence Over Potential','Protective Roast'],special:['Reality Check Barrage'],jaNormal:['マジで現実見て','ゴッサム男批評','可能性より証拠','守護ロースト'],jaSpecial:['現実確認ラッシュ']},
+    min:{normal:['Side-Eye','No.','You Heard Him','Judging Supportively'],special:['Silent Devastation'],jaNormal:['横目','無理。','今の聞いたよね','支援的な審判'],jaSpecial:['無言の大ダメージ']},
+    jade:{normal:['Standards Check','Lip Gloss Confidence','No Essay Rule','Cute Is Not Character'],special:['Soft Life Crown'],jaNormal:['基準チェック','リップグロス自信','作文禁止ルール','可愛いは人格証明じゃない'],jaSpecial:['ソフトライフの王冠']},
+    chloe:{normal:['Receipts','Timeline Tabs','Contradiction Ping','Spreadsheet Calm'],special:['Full Evidence Drop'],jaNormal:['証拠','時系列タブ','矛盾通知','スプレッドシート平静'],jaSpecial:['証拠フル投下']},
+    mia:{normal:['Sweet Threat','Comfort or Alibi','Cute but Dangerous','Protective Smile'],special:['Less Cute Now'],jaNormal:['甘い脅し','慰めかアリバイ','可愛いけど危険','守護スマイル'],jaSpecial:['もう可愛くしてない']}
+  },
+  green:{
+    james:{normal:['Remembered Your Order','Water First','No Pressure Smile','Safe Check-In'],special:['Fries and Follow-Through'],jaNormal:['いつもの注文','まず水','圧なしの笑顔','安全確認'],jaSpecial:['ポテトと行動力']},
+    xavier:{normal:['Quiet Presence','Thoughtful Recommendation','Clear Exit','Listened Carefully'],special:['Planetarium Invitation'],jaNormal:['静かな存在感','思いやりの本選び','逃げ道を残す','ちゃんと聞く'],jaSpecial:['プラネタリウムへの誘い']},
+    andrew:{normal:['Patient Wave','Healthy Routine','Asked, Didn’t Push','Dinner Invitation'],special:['Steady Pace'],jaNormal:['気長な手振り','健康的な習慣','聞くけど押さない','夕食の誘い'],jaSpecial:['穏やかなペース']},
+    christy:{normal:['Saved Window Table','Passion Fruit Iced Tea','Gentle Noticing','Still Welcome'],special:['Spa Date Invitation'],jaNormal:['窓辺の席を確保','パッションフルーツアイスティー','やさしい気づき','いつでも歓迎'],jaSpecial:['スパデートの誘い']},
+    malik:{normal:['Beach Honesty','Steady Laugh','No-Pressure Promise','Bestie-Level Trust'],special:['Real Date Courage'],jaNormal:['海辺の本音','安定した笑い','圧なしの約束','親友級の信頼'],jaSpecial:['本気の誘い']},
+    min:{normal:['Aquarium Quiet','Soft Honesty','Jellyfish Deflection','Public Version Feelings'],special:['Quiet Confession'],jaNormal:['水族館の静けさ','やわらかい本音','クラゲでごまかす','外向け感情表現'],jaSpecial:['静かな告白']},
+    mia:{normal:['Beachside Cake','Soft Teasing','Hand-Holding Threat','Dessert Date Smile'],special:['Behave for Dessert'],jaNormal:['海辺のケーキ','やわらかいからかい','手つなぎ予告','デザートデートの笑顔'],jaSpecial:['デザートのためにお利口に']}
+  }
+};
+Object.entries(window.ARCADE_MOVESETS_115.green).forEach(([id,m])=>{ if(greenFlags[id]) greenFlags[id].arcadeMoves=m; });
+Object.entries(window.ARCADE_MOVESETS_115.friend).forEach(([id,m])=>{ if(friends[id]) friends[id].arcadeMoves=m; });
+
+// Ensure hostile order / algorithm trigger knows about the added red flag.
+nextVillainId=function(){ return V18.villainOrder.find(id=>villains[id] && !state.defeated.has(id)) || 'normal_fake'; };
+shouldOfferAlgorithm=function(){ return (typeof peacefulModeActive111==='function' && peacefulModeActive111()) ? false : RED_FLAG_IDS_115.filter(id=>state.defeated.has(id)).length>=6 && !state.defeated.has('algorithm'); };
+
+// Localize text objects globally when say() is called.
+const v115SayBase=say;
+say=function(speaker,text){
+  const sp = (state.lang==='ja' && typeof speaker==='string') ? (V111_JA[speaker]||speaker) : speaker;
+  return v115SayBase(sp,tr115(text));
+};
+
+// Localized cutscene progression.
+continueCutscene=function(){
+  const c=state.currentCutscene;if(!c)return;
+  if(c.index>=c.lines.length){const id=c.id;state.currentCutscene=null;startBattle(id);return;}
+  const [sp,txt]=c.lines[c.index++];say(sp,txt);
+  setActions([{label:c.index>=c.lines.length?'Date Battle!':'Continue',fn:continueCutscene,className:c.index>=c.lines.length?'danger wide':'primary wide'},{label:'Block and Leave',fn:()=>{const id=c.id;state.currentCutscene=null;state.defeated.add(id);goCarAfterDate(id);},className:'green wide'}]);
+};
+
+// Localize date app notifications.
+openDatingApp=function(){
+  if(typeof peacefulModeActive111==='function' && peacefulModeActive111())return peacefulModeMessage111();
+  state.appOpened=(state.appOpened||0)+1;
+  const id=nextVillainId();
+  const note=V18.appNotifications[id]||{app:'LoveLoop',msg:{en:'You have a new match.',ja:'新しいマッチがあります。'}};
+  say(note.app,note.msg);
+  setActions([
+    {label:'Reply',fn:()=>startDateCutscene(id),className:'danger'},
+    {label:'Ignore',fn:ignoreNotification,className:'green'},
+    {label:'Send to Group Chat',fn:sendScreenshotToGroup},
+    {label:'Block',fn:()=>blockNotification(id),className:'primary'},
+    {label:'Back',fn:()=>goLocation(state.location),className:'wide'}
+  ]);
+};
+
+// Localized hostile battle start and turn handling.
+startBattle=function(id){
+  if(typeof peacefulModeActive111==='function' && peacefulModeActive111() && isHostile115(id))return peacefulModeMessage111();
+  hideCutsceneUi113&&hideCutsceneUi113(); hideAllScreens(); const v=villains[id]; if(!v)return;
+  state.lastDateBattle=id;
+  const hpScale=['normal_fake','algorithm','pattern'].includes(id)?1.15:1.08;
+  state.currentBattle={id,type:'villain',enemyHp:Math.round(v.maxHp*hpScale),enemyMaxHp:Math.round(v.maxHp*hpScale)};
+  setBackground(v.bg); showAmy(true,'idle'); showEnemy(true,villainName115(id),`${villainName115(id)}<br><small>${villainClass115(id)}</small>`,getEnemyArt('villain',id),id);
+  document.getElementById('battleUi').classList.remove('hidden');
+  say(villainName115(id), state.lang==='ja'?`「${villainQuote115(id)}」`:`A wild ${villainName115(id)} appeared. “${villainQuote115(id)}”`);
+  setBattleActions(); updateHud();
+};
+updateBattleBars=function(){
+  document.getElementById('amyHpLabel').textContent=`${state.hp} / ${state.maxHp}`;
+  document.getElementById('amyHpFill').style.width=`${state.hp/state.maxHp*100}%`;
+  const b=state.currentBattle,n=b&&b.type==='villain'?villainName115(b.id):'Enemy',hp=b&&b.type==='villain'?b.enemyHp:0,max=b&&b.type==='villain'?b.enemyMaxHp:1;
+  document.getElementById('enemyNameLabel').textContent=n;
+  document.getElementById('enemyHpLabel').textContent=b&&b.type==='villain'?`${hp} / ${max}`:'';
+  document.getElementById('enemyHpFill').style.width=`${hp/max*100}%`;
+};
+enemyTurn=function(){
+  const b=state.currentBattle,v=villains[b.id],atk=v.attacks[Math.floor(Math.random()*v.attacks.length)]; setAmyPose('hurt');
+  if(b.id==='algorithm'){let pose=atk.moveType==='special'?'ultimate':'attack'; if(/Gym|Spike|Loneliness|孤独/.test(atk.name))pose='beam'; setEnemyPose('algorithm',pose,villainName115(b.id),`${villainName115(b.id)}<br><small>${villainClass115(b.id)}</small>`)}
+  if(b.id==='pattern'){let pose='attack'; if(/Wants|少なくとも/.test(atk.name))pose='heartBlast'; else if(/Chance|Closure|もう一回|区切り/.test(atk.name))pose='chainBarrage'; else if(atk.moveType==='special')pose='special'; setEnemyPose('pattern',pose,villainName115(b.id),`${villainName115(b.id)}<br><small>${villainClass115(b.id)}</small>`)}
+  let dmg=Math.max(8,Math.round(atk.damage*1.15)-Math.floor(state.selfRespect/28));
+  if(['normal_fake','algorithm','pattern'].includes(b.id))dmg+=3; if(state.delusion>55)dmg+=8;
+  state.hp=Math.max(0,state.hp-dmg); state.delusion=clamp(state.delusion+atk.delusion); state.peace=clamp(state.peace-Math.floor(dmg/2));
+  popEffect(atkName115(atk)); say(villainName115(b.id),atkText115(atk)); updateHud();
+  if(state.hp<=0||state.delusion>=100)return gameOver(b.id); setActions([{label:'Amy’s Turn',fn:setBattleActions}]);
+};
+winBattle=function(){
+  const b=state.currentBattle; if(!b||b.type!=='villain')return;
+  const id=b.id; setAmyPose('victory'); state.defeated.add(id); state.currentBattle=null; state.redFlagData++; state.groupChat=clamp(state.groupChat+12); state.clarity=clamp(state.clarity+8); state.selfRespect=clamp(state.selfRespect+12); state.peace=clamp(state.peace+6);
+  document.getElementById('battleUi').classList.add('hidden'); showEnemy(false);
+  say('Victory', state.lang==='ja'?`${villainName115(id)}を倒した。エイミーは経験値、明晰さ、証拠、自己尊重を得た。Soft Life Funds は0。感情労働は無給だから。`:`${villainName115(id)} was defeated. Amy gained XP, clarity, receipts, and self-respect. Soft Life Funds gained: 0, because Amy is not paid for emotional labor.`);
+  let acts=[{label:'Back to Map',fn:()=>showScreen('mapScreen'),className:'primary'}];
+  if(shouldOfferAlgorithm())acts.unshift({label:'Go Home and Face The Algorithm',fn:()=>startBattle('algorithm'),className:'danger wide'});
+  if(id==='algorithm')acts.unshift({label:'Sleep',fn:()=>goLocation('bedroom'),className:'danger wide'});
+  if(id==='pattern'){
+    state.postPatternUnlocked=true;
+    acts=[{label:'What do you want to do next?',fn:()=>showScreen('mapScreen'),className:'green wide'}];
+    say('Victory',state.lang==='ja'?'パターンはついに倒れた。サイクルは壊れた。エイミーはもう恐怖や古い癖で動かない。次はどうする？':'The Pattern has finally been defeated. The cycle is broken. Amy is no longer moving from fear, chaos, or old habits. What do you want to do next?');
+  }
+  setActions(acts); updateHud();
+};
+
+// Codex now shows localized identities and move structure.
+renderCodex=function(){
+  const grid=document.getElementById('codexGrid'); if(!grid)return; grid.innerHTML='';
+  Object.entries(villains).forEach(([k,v])=>{
+    if(v.arcadeOnly)return;
+    const normals=(v.attacks||[]).filter(x=>x.moveType!=='special').map(x=>atkName115(x)).slice(0,4).join(', ');
+    const specials=(v.attacks||[]).filter(x=>x.moveType==='special').map(x=>atkName115(x)).join(', ');
+    const card=document.createElement('div'); card.className='location-card';
+    card.innerHTML=`<h3>${villainName115(k)}</h3><div class="card-desc"><b>${villainClass115(k)}</b><br>“${villainQuote115(k)}”<br>${state.lang==='ja'?'弱点':'Weakness'}: ${villainWeakness115(k)}<br><br><b>${L111('Normal Moves')}</b>: ${normals}<br><b>${(k==='algorithm'||k==='pattern')?L111('Special Moves'):L111('Special Move')}</b>: ${specials}</div><button class="map-btn ${state.defeated.has(k)?'green':'danger'}" onclick="startBattle('${k}')">${state.defeated.has(k)?(state.lang==='ja'?'再戦':'Rematch'):(state.lang==='ja'?'戦う':'Fight')}</button>`;
+    grid.appendChild(card);
+  });
+};
+
+// Arcade roster labels now expose friend/green modes as data options, without changing Story canon.
+if(typeof showArcadeRoster112==='function'){
+  showArcadeRoster112=function(mode='all'){
+    ensureV112Screens();
+    const title=document.getElementById('arcadeRosterTitle'),sub=document.getElementById('arcadeRosterSub'),body=document.getElementById('arcadeRosterBody');
+    title.textContent=mode==='green'?L111('Green Flag Dates'):mode==='concept'?'Concept Chaos':'Quick Date Battle';
+    sub.textContent=mode==='green'?(state.lang==='ja'?'グリーンフラッグ／友達モードを選ぶ。':'Choose a green flag or friend-mode arcade battle.'):mode==='concept'?'Concept Chaos mode.':'Arcade ignores story logic.';
+    const entries=[];
+    if(mode==='all'||mode==='red')Object.entries(villains).forEach(([id,v])=>{if(!v.arcadeOnly)entries.push({id,name:villainName115(id),desc:villainClass115(id),kind:'red flag',fn:()=>startArcadeBattle112(id)});});
+    if(mode==='all'||mode==='green')Object.entries(greenFlags).forEach(([id,g])=>entries.push({id,name:g.name,desc:g.role,kind:'green flag',fn:()=>startArcadeGreen112(id)}));
+    if(mode==='all'||mode==='green')Object.entries(window.ARCADE_MOVESETS_115.friend).forEach(([id,m])=>entries.push({id,name:`${friends[id]?.name||id} — Friend Mode`,desc:(state.lang==='ja'?m.jaNormal:m.normal).join(', '),kind:'friend mode',fn:()=>say('Arcade Mode',state.lang==='ja'?`${friends[id]?.name||id} の友達モード技：${m.jaNormal.join('、')}。必殺技：${m.jaSpecial.join('、')}`:`${friends[id]?.name||id} Friend Mode moves: ${m.normal.join(', ')}. Special: ${m.special.join(', ')}`)}));
+    if(mode==='concept') ['algorithm','pattern'].forEach(id=>{const v=villains[id];entries.push({id,name:villainName115(id),desc:villainClass115(id),kind:'concept',fn:()=>startArcadeBattle112(id)});});
+    body.innerHTML=entries.map(e=>`<div class="v112-card"><h3>${e.name}</h3><div class="card-desc"><span class="arcade-tag">${e.kind}</span><br>${e.desc}</div><button class="map-btn">Start</button></div>`).join('');
+    [...body.querySelectorAll('button')].forEach((b,i)=>b.onclick=entries[i].fn);
+    showScreen('arcadeRosterScreen');
+  };
+  startArcadeGreen112=function(id){
+    state.arcadeQueue=[];state.arcadeScore=0;
+    const g=greenFlags[id]; const moves=g&&g.arcadeMoves;
+    if(moves){ say('Arcade Mode',state.lang==='ja'?`${g.name} のグリーンフラッグ技：${moves.jaNormal.join('、')}。必殺技：${moves.jaSpecial.join('、')}。アーケードではグリーンフラッグもダメージを出せる。`:`${g.name} Green Flag moves: ${moves.normal.join(', ')}. Special: ${moves.special.join(', ')}. In Arcade, green flags can deal damage.`); }
+    startGreenFlagBattle(id);
+  };
+}
+
+// Refresh title HUD/actions on load.
+window.addEventListener('load',()=>{try{renderCodex();}catch(e){}});
+})();
+
+
+/* v1.15b Arcade friend/green-flag damage mode + gauntlet compatibility */
+(function(){
+function j115(x){return state.lang==='ja' && x && x.ja ? x.ja : (x && x.en ? x.en : String(x||''));}
+function enemyNameB115(id){const v=villains[id]||{};return state.lang==='ja'?(v.jpName||v.name||id):(v.name||id);}
+function makeMoveAtk115(en,ja,damage,kind,actor){
+  const special=kind==='special';
+  return {name:en,jaName:ja,damage:damage,delusion:special?-10:-4,moveType:special?'special':'normal',text:`${actor} used ${en}. Arcade rules say healthy people can still do damage.`,jaText:`${actor}は「${ja}」を使った。アーケードルールでは、健全な人でもダメージを出せる。`};
+}
+function arcadeArt115(id){return ENEMY_ART.greenFlags[id]||ENEMY_ART.villains[id]||`assets/characters/friends/${id}_reference.png`;}
+function createArcadeOpponent115(mode,id){
+  const set=window.ARCADE_MOVESETS_115 && window.ARCADE_MOVESETS_115[mode] && window.ARCADE_MOVESETS_115[mode][id];
+  if(!set){ say('Arcade Mode',state.lang==='ja'?'このキャラクターの技データはまだありません。':'Move data is not ready for that character yet.'); return; }
+  const baseName=(mode==='friend'?(friends[id]?.name||id):(greenFlags[id]?.name||friends[id]?.name||id));
+  const jpMode=mode==='friend'?'友達モード':'グリーンフラッグモード';
+  const enMode=mode==='friend'?'Friend Mode':'Green Flag Mode';
+  const tempId=`arcade_${mode}_${id}`;
+  villains[tempId]={
+    arcadeOnly:true,
+    sourceId:id,
+    name:`${baseName} — ${enMode}`,
+    jpName:`${baseName} — ${jpMode}`,
+    className:mode==='friend'?'Arcade Reality-Check Support':'Arcade Green Flag',
+    jpClassName:mode==='friend'?'アーケード現実確認サポート':'アーケード・グリーンフラッグ',
+    bg:(greenFlags[id]&&greenFlags[id].bg)|| (id==='min'?'aquarium':id==='malik'?'beach':id==='mia'?'beachside_cafe':'bar'),
+    maxHp:mode==='friend'?105:115,
+    quote:mode==='friend'?'Friendly sparring. Emotional damage enabled.':'Green flag sparring. Respectful damage enabled.',
+    jpQuote:mode==='friend'?'友達スパーリング。精神ダメージ有効。':'グリーンフラッグ・スパーリング。思いやりダメージ有効。',
+    weakness:'Arcade Mode is non-canon.', jpWeakness:'アーケードモードは非公式。',
+    attacks:[]
+  };
+  const normals=state.lang==='ja'?set.jaNormal:set.normal;
+  const jaNormals=set.jaNormal||set.normal;
+  const enNormals=set.normal||set.jaNormal;
+  const enSpecial=(set.special||[])[0]||'Special Move';
+  const jaSpecial=(set.jaSpecial||[])[0]||enSpecial;
+  villains[tempId].attacks=enNormals.map((m,i)=>makeMoveAtk115(m,jaNormals[i]||m,12+i*2,'normal',baseName));
+  villains[tempId].attacks.push(makeMoveAtk115(enSpecial,jaSpecial,28,'special',baseName));
+  ENEMY_ART.villains[tempId]=arcadeArt115(id);
+  state.arcadeQueue=[]; state.arcadeScore=0; state.hp=state.maxHp; state.delusion=10;
+  startBattle(tempId);
+}
+window.startArcadeFriendMode115=function(id){createArcadeOpponent115('friend',id);};
+window.startArcadeGreenMode115=function(id){createArcadeOpponent115('green',id);};
+startArcadeGreen112=function(id){createArcadeOpponent115('green',id);};
+if(typeof showArcadeRoster112==='function'){
+  showArcadeRoster112=function(mode='all'){
+    ensureV112Screens();
+    const title=document.getElementById('arcadeRosterTitle'),sub=document.getElementById('arcadeRosterSub'),body=document.getElementById('arcadeRosterBody');
+    title.textContent=mode==='green'?(state.lang==='ja'?'グリーンフラッグ＆友達モード':'Green Flags & Friend Modes'):mode==='concept'?'Concept Chaos':'Quick Date Battle';
+    sub.textContent=mode==='green'?(state.lang==='ja'?'友達モードかグリーンフラッグモードを選ぶ。アーケードでは全員ダメージを出せます。':'Choose Friend Mode or Green Flag Mode. In Arcade, everyone can deal damage.'):mode==='concept'?'Concept Chaos mode.':'Arcade ignores story logic.';
+    const entries=[];
+    if(mode==='all'||mode==='red')Object.entries(villains).forEach(([id,v])=>{if(!v.arcadeOnly)entries.push({name:enemyNameB115(id),desc:state.lang==='ja'?(v.jpClassName||v.className):v.className,kind:'red flag',fn:()=>startArcadeBattle112(id)});});
+    if(mode==='all'||mode==='green')Object.keys(greenFlags).forEach(id=>{const g=greenFlags[id];entries.push({name:`${g.name} — Green Flag Mode`,desc:g.role,kind:'green flag',fn:()=>createArcadeOpponent115('green',id)});});
+    if(mode==='all'||mode==='green')Object.keys(window.ARCADE_MOVESETS_115.friend).forEach(id=>{entries.push({name:`${friends[id]?.name||id} — Friend Mode`,desc:state.lang==='ja'?'プラトニックな現実確認・保護系技':'Platonic protective/reality-check moves',kind:'friend mode',fn:()=>createArcadeOpponent115('friend',id)});});
+    if(mode==='concept') ['algorithm','pattern'].forEach(id=>{entries.push({name:enemyNameB115(id),desc:state.lang==='ja'?(villains[id].jpClassName||villains[id].className):villains[id].className,kind:'concept',fn:()=>startArcadeBattle112(id)});});
+    body.innerHTML=entries.map(e=>`<div class="v112-card"><h3>${e.name}</h3><div class="card-desc"><span class="arcade-tag">${e.kind}</span><br>${e.desc}</div><button class="map-btn">Start</button></div>`).join('');
+    [...body.querySelectorAll('button')].forEach((b,i)=>b.onclick=entries[i].fn);
+    showScreen('arcadeRosterScreen');
+  };
+}
+const v115bWinBattleBase=winBattle;
+winBattle=function(){
+  const b=state.currentBattle;
+  v115bWinBattleBase();
+  if(b&&b.type==='villain'&&Array.isArray(state.arcadeQueue)&&state.arcadeQueue.length){
+    const next=state.arcadeQueue.shift();
+    setActions([{label:`Next Arcade Match: ${enemyNameB115(next)}`,fn:()=>startBattle(next),className:'primary wide'},{label:'End Arcade Run',fn:()=>showScreen('arcadeScreen')}]);
+  } else if(b&&b.type==='villain'&&String(b.id).startsWith('arcade_')){
+    setActions([{label:state.lang==='ja'?'アーケードへ戻る':'Back to Arcade',fn:()=>showScreen('arcadeScreen'),className:'primary'},{label:state.lang==='ja'?'もう一戦':'Another Match',fn:()=>showArcadeRoster112('all'),className:'green'}]);
+  }
+};
+})();
+
+
+/* =========================
+   v1.16 Persistent Bag / Inventory Patch
+   Adds always-available Bag, item storage, consumables, battle item usage,
+   and English/Japanese item/menu localization.
+   ========================= */
+(function(){
+const V116_BAG_KEY='slts_inventory_v116';
+if(!state.inventory){
+  try{ state.inventory=JSON.parse(localStorage.getItem(V116_BAG_KEY)||'{}')||{}; }
+  catch(e){ state.inventory={}; }
+}
+
+Object.assign(V111_JA,{
+  'Bag':'バッグ',
+  'Inventory Bag':'持ち物バッグ',
+  'Open Bag':'バッグを開く',
+  'Use Item':'アイテムを使う',
+  'Use From Bag':'バッグから使う',
+  'Back to Battle':'バトルへ戻る',
+  'Back to Actions':'行動へ戻る',
+  'Add to Bag':'バッグに入れる',
+  'Added to Bag':'バッグに入れた',
+  'Buy':'買う',
+  'Cost':'値段',
+  'Count':'数',
+  'Empty Bag':'バッグは空っぽ',
+  'Snacks':'軽食',
+  'Drinks':'ドリンク',
+  'Beauty Items':'ビューティー用品',
+  'Safety Items':'安全グッズ',
+  'Special Items':'特別アイテム',
+  'Use Now':'今使う',
+  'Use':'使う',
+  'Keep in Bag':'バッグに入れておく',
+  'Pepper Spray':'ペッパースプレー',
+  'Compact Mirror':'コンパクトミラー',
+  'Lipstick':'リップスティック',
+  'Gemstone':'天然石',
+  'Face Mist':'フェイスミスト',
+  'Mini Perfume':'ミニ香水',
+  'Portable Charger':'モバイルバッテリー',
+  'Spa Voucher':'スパ券',
+  'Charm Bracelet':'チャームブレスレット',
+  'Silk Scrunchie':'シルクシュシュ',
+  'Emergency Chocolate':'緊急チョコ',
+  'No items yet. Buy snacks, drinks, and soft-life supplies first.':'まだアイテムがない。先に軽食、ドリンク、ソフトライフ用品を買おう。',
+  'Using an item takes Amy’s turn.':'アイテムを使うとエイミーのターンを消費します。',
+  'Pick an item to use.':'使うアイテムを選んでください。',
+  'Amy put it in her Bag for later.':'エイミーは後で使うためにバッグに入れた。',
+  'Item used.':'アイテムを使った。',
+  'The enemy was stunned.':'敵はひるんだ。',
+  'Enemy took damage.':'敵にダメージ。',
+  'Not enough Soft Life Funds.':'Soft Life Funds が足りない。'
+});
+
+const BAG_ITEMS_116={
+  passion_fruit_iced_tea:{name:'Passion Fruit Iced Tea',ja:'パッションフルーツアイスティー',category:'Drinks',effects:{peace:8,clarity:3},desc:{en:'Restores Peace and gives a little Clarity. Dramatic, refreshing, emotionally correct.',ja:'平和を回復し、少し明晰度も上がる。ドラマチックで爽やか、感情的に正しい。'}},
+  iced_matcha:{name:'Iced Matcha',ja:'アイス抹茶',category:'Drinks',effects:{clarity:8,peace:3},desc:{en:'Restores Clarity. Calm focus entered the chat.',ja:'明晰度を回復。落ち着いた集中力がログインする。'}},
+  classic_iced_tea:{name:'Classic Iced Tea',ja:'アイスティー',category:'Drinks',effects:{hp:5,peace:3},desc:{en:'Small HP and Peace recovery. Simple, reliable, not texting at 2 a.m.',ja:'HPと平和を少し回復。シンプルで信頼できる。深夜2時に連絡してこない。'}},
+  boba:{name:'Boba',ja:'ボバティー',category:'Drinks',effects:{hp:8,peace:5},desc:{en:'Restores HP and Peace. Tiny tapioca joy restores morale.',ja:'HPと平和を回復。小さなタピオカの喜びが士気を戻す。'}},
+  coconut_drink:{name:'Coconut Drink',ja:'ココナッツドリンク',category:'Drinks',effects:{peace:12,selfRespect:3},desc:{en:'Big Peace boost and a little Self-Respect. Soft-life evidence acquired.',ja:'平和を大きく回復し、自己尊重も少し上がる。ソフトライフの証拠を入手。'}},
+  fruit_tart:{name:'Fruit Tart',ja:'フルーツタルト',category:'Snacks',effects:{hp:10,peace:8},desc:{en:'Restores HP and Peace. Regular joy is important.',ja:'HPと平和を回復。普通の喜びは大事。'}},
+  croissant_sandwich:{name:'Croissant Sandwich',ja:'クロワッサンサンド',category:'Snacks',effects:{hp:18,clarity:3},desc:{en:'Solid HP recovery with a little Clarity. Flaky, buttery, none of Amy’s problem.',ja:'HPをしっかり回復し、少し明晰度も上がる。サクサクでバターたっぷり。エイミーの問題ではない。'}},
+  mango_cheesecake:{name:'Mango Cheesecake',ja:'マンゴーチーズケーキ',category:'Snacks',effects:{peace:10,hp:8},desc:{en:'Restores Peace and HP. Peace came with a fork.',ja:'平和とHPを回復。平和はフォークと一緒に来た。'}},
+  coconut_shrimp:{name:'Coconut Shrimp',ja:'ココナッツシュリンプ',category:'Snacks',effects:{hp:18,selfRespect:4},desc:{en:'Restores HP and Self-Respect. The plate understood the assignment.',ja:'HPと自己尊重を回復。皿が仕事を理解していた。'}},
+  solo_pasta:{name:'Solo Pasta',ja:'ひとりパスタ',category:'Snacks',effects:{hp:25,peace:5},desc:{en:'Strong HP recovery. Romanticizing your own dinner is a valid strategy.',ja:'HPを大きく回復。自分の夕食をロマンチックにするのは正しい戦略。'}},
+  fancy_salad:{name:'Fancy Salad',ja:'おしゃれサラダ',category:'Snacks',effects:{clarity:8,hp:10},desc:{en:'Clarity and HP. Ingredients with full names restore perspective.',ja:'明晰度とHPを回復。フルネームがありそうな食材が視点を戻す。'}},
+  steak_dinner:{name:'Steak Dinner',ja:'ステーキディナー',category:'Snacks',effects:{hp:35,selfRespect:8},desc:{en:'Big HP and Self-Respect recovery. Standards tasted correct.',ja:'HPと自己尊重を大きく回復。基準の高さが正しい味をした。'}},
+  seafood_plate:{name:'Seafood Plate',ja:'シーフードプレート',category:'Snacks',effects:{peace:10,hp:25},desc:{en:'Peace and HP. Ocean energy without emotional undertow.',ja:'平和とHPを回復。情緒の引き潮なしの海パワー。'}},
+  dessert_sampler:{name:'Dessert Sampler',ja:'デザート盛り合わせ',category:'Snacks',effects:{peace:15,selfRespect:5},desc:{en:'Big Peace boost. Joy arrived in multiple fonts.',ja:'平和を大きく回復。喜びが複数のフォントで届く。'}},
+  parmesan_fries:{name:'Parmesan Fries',ja:'パルメザンポテト',category:'Snacks',effects:{hp:15,peace:8},desc:{en:'Restores HP and Peace. More emotionally available than most matches.',ja:'HPと平和を回復。大半のマッチより情緒的に頼れる。'}},
+  mocktail:{name:'Mocktail',ja:'モクテル',category:'Drinks',effects:{peace:10},desc:{en:'Restores Peace. Cute glass, clear decisions.',ja:'平和を回復。かわいいグラス、クリアな判断。'}},
+  sparkling_water:{name:'Sparkling Water',ja:'炭酸水',category:'Drinks',effects:{clarity:5,hp:5},desc:{en:'Small Clarity and HP recovery. Hydration refused to be dramatic.',ja:'明晰度とHPを少し回復。水分補給はドラマを拒否した。'}},
+  pink_cocktail:{name:'Pink Cocktail',ja:'ピンクカクテル',category:'Drinks',effects:{peace:12,selfRespect:3},desc:{en:'Peace and Self-Respect. It matched the outfit and the boundary.',ja:'平和と自己尊重を回復。服にも境界線にも合う。'}},
+  late_night_sliders:{name:'Late-Night Sliders',ja:'深夜スライダー',category:'Snacks',effects:{hp:25,peace:3},desc:{en:'Big HP recovery. Tiny burgers, huge recovery.',ja:'HPを大きく回復。小さなバーガー、大きな回復。'}},
+  lipstick:{name:'Lipstick',ja:'リップスティック',category:'Beauty Items',effects:{selfRespect:12},desc:{en:'Boosts Self-Respect. Lip color says “I am not explaining myself today.”',ja:'自己尊重を上げる。リップの色が「今日は説明しません」と言っている。'}},
+  compact_mirror:{name:'Compact Mirror',ja:'コンパクトミラー',category:'Beauty Items',effects:{clarity:12,delusion:-8},desc:{en:'Restores Clarity and reduces Delusion. A tiny mirror for seeing the situation clearly.',ja:'明晰度を回復し、思い込みを下げる。状況を見るための小さな鏡。'}},
+  gemstone:{name:'Gemstone',ja:'天然石',category:'Special Items',effects:{peace:12,selfRespect:4,delusion:-5},desc:{en:'Boosts Peace and Self-Respect. Cute crystal energy, zero tolerance for nonsense.',ja:'平和と自己尊重を上げる。かわいい石の力、非常識への許容量ゼロ。'}},
+  pepper_spray:{name:'Pepper Spray',ja:'ペッパースプレー',category:'Safety Items',effects:{selfRespect:8,peace:5,enemyDamage:22,stun:true},desc:{en:'Battle item. Damages and stuns unsafe red flags. Not a joke item.',ja:'バトル用。危険な赤旗にダメージを与えてひるませる。ネタアイテムではない。'}},
+  mini_perfume:{name:'Mini Perfume',ja:'ミニ香水',category:'Beauty Items',effects:{selfRespect:7,peace:4,enemyDamage:8},desc:{en:'Boosts confidence. In battle, enemy confidence takes minor emotional damage.',ja:'自信を上げる。バトルでは敵の自信に小ダメージ。'}},
+  face_mist:{name:'Face Mist',ja:'フェイスミスト',category:'Beauty Items',effects:{peace:10,clarity:5},desc:{en:'Restores Peace and Clarity. Hydrated, calm, unavailable for foolishness.',ja:'平和と明晰度を回復。うるおって、落ち着いて、愚かさには対応不可。'}},
+  portable_charger:{name:'Portable Charger',ja:'モバイルバッテリー',category:'Safety Items',effects:{groupChat:15,clarity:5},desc:{en:'Recharges Group Chat energy and Clarity. The phone stays alive, unfortunately but usefully.',ja:'グルチャ力と明晰度を回復。スマホは生き残る。残念だけど役に立つ。'}},
+  spa_voucher:{name:'Spa Voucher',ja:'スパ券',category:'Special Items',effects:{hp:35,peace:25,stamina:25,selfRespect:8},desc:{en:'Big soft-life recovery. Expensive silence in item form.',ja:'ソフトライフ大回復。高級な静けさがアイテムになった。'}},
+  charm_bracelet:{name:'Charm Bracelet',ja:'チャームブレスレット',category:'Beauty Items',effects:{selfRespect:6,peace:6},desc:{en:'Small Peace and Self-Respect boost. Cute wrist armor.',ja:'平和と自己尊重を少し上げる。かわいい手首の防具。'}},
+  silk_scrunchie:{name:'Silk Scrunchie',ja:'シルクシュシュ',category:'Beauty Items',effects:{peace:6,clarity:4},desc:{en:'Small Peace and Clarity boost. Hair protected, aura intact.',ja:'平和と明晰度を少し上げる。髪を守って、オーラも守る。'}},
+  emergency_chocolate:{name:'Emergency Chocolate',ja:'緊急チョコ',category:'Snacks',effects:{hp:8,peace:12},desc:{en:'Emergency Peace recovery. Sometimes survival is chocolate.',ja:'緊急平和回復。生存がチョコの時もある。'}}
+};
+window.BAG_ITEMS_116=BAG_ITEMS_116;
+
+function slug116(name){return String(name||'item').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');}
+function itemId116(item){return item.id || slug116(item.name);}
+function getBagItem116(id){return BAG_ITEMS_116[id] || null;}
+function saveBag116(){try{localStorage.setItem(V116_BAG_KEY,JSON.stringify(state.inventory||{}));}catch(e){}}
+function bagCount116(){return Object.values(state.inventory||{}).reduce((a,b)=>a+(Number(b)||0),0);}
+function itemLabel116(id){const item=getBagItem116(id);return item?(state.lang==='ja'?(item.ja||item.name):item.name):id;}
+function desc116(obj){return obj?(state.lang==='ja'?(obj.ja||obj.en||''):(obj.en||obj.ja||'')):'';}
+function addToBag116(id,count=1){if(!state.inventory)state.inventory={};state.inventory[id]=(state.inventory[id]||0)+count;saveBag116();updateHud();}
+function removeFromBag116(id,count=1){if(!state.inventory)state.inventory={};state.inventory[id]=Math.max(0,(state.inventory[id]||0)-count);if(state.inventory[id]<=0)delete state.inventory[id];saveBag116();updateHud();}
+function effectText116(e={}){
+  const labels={hp:'HP',peace:state.lang==='ja'?'平和':'Peace',clarity:state.lang==='ja'?'明晰度':'Clarity',selfRespect:state.lang==='ja'?'自己尊重':'Self-Respect',stamina:state.lang==='ja'?'スタミナ':'Stamina',delusion:state.lang==='ja'?'思い込み':'Delusion',groupChat:state.lang==='ja'?'グルチャ':'Group Chat',enemyDamage:state.lang==='ja'?'敵ダメージ':'Enemy Damage'};
+  return Object.entries(e).filter(([k,v])=>typeof v==='number'&&v!==0).map(([k,v])=>`${labels[k]||k} ${v>=0?'+':''}${v}`).join(' / ');
+}
+function applyEffects116(effects={}){
+  if(typeof effects.hp==='number')state.hp=clamp(state.hp+effects.hp,state.maxHp);
+  if(typeof effects.peace==='number')state.peace=clamp(state.peace+effects.peace);
+  if(typeof effects.clarity==='number')state.clarity=clamp(state.clarity+effects.clarity);
+  if(typeof effects.selfRespect==='number')state.selfRespect=clamp(state.selfRespect+effects.selfRespect);
+  if(typeof effects.stamina==='number')state.stamina=clamp(state.stamina+effects.stamina);
+  if(typeof effects.delusion==='number')state.delusion=clamp(state.delusion+effects.delusion);
+  if(typeof effects.groupChat==='number')state.groupChat=clamp(state.groupChat+effects.groupChat);
+  const b=state.currentBattle;
+  if(b&&b.type==='villain'&&typeof effects.enemyDamage==='number'){
+    b.enemyHp=Math.max(0,b.enemyHp-effects.enemyDamage);
+    popEffect(`${effects.enemyDamage} ${state.lang==='ja'?'DAMAGE':'DAMAGE'}`);
+  }
+  if(b&&b.type==='villain'&&effects.stun){ b.skipEnemyTurn116=true; }
+  updateHud(); updateBattleBars();
+}
+
+function useBagItem116(id){
+  const item=getBagItem116(id); if(!item)return;
+  if(!state.inventory||!state.inventory[id]){say('Bag',state.lang==='ja'?'もう持っていない。':'Amy does not have that item anymore.');return openBag116();}
+  removeFromBag116(id,1);
+  applyEffects116(item.effects||{});
+  const bits=[];
+  bits.push(desc116(item.desc));
+  const eff=effectText116(item.effects||{}); if(eff)bits.push(`(${eff})`);
+  if(item.effects&&item.effects.stun)bits.push(state.lang==='ja'?'敵はひるんだ。':'The enemy was stunned.');
+  say(itemLabel116(id),bits.join(' '));
+  const b=state.currentBattle;
+  if(b&&b.type==='villain'){
+    if(b.enemyHp<=0)return winBattle();
+    if(b.skipEnemyTurn116){ b.skipEnemyTurn116=false; return setActions([{label:state.lang==='ja'?'敵はひるんだ。エイミーのターン':'Enemy stunned. Amy’s Turn',fn:setBattleActions,className:'green wide'}]); }
+    return setActions([{label:state.lang==='ja'?'続ける':'Continue',fn:enemyTurn,className:'primary'}]);
+  }
+  setActions([{label:'Bag',fn:openBag116,className:'green'},{label:'Back to Actions',fn:returnFromBag116,className:'wide'}]);
+}
+function returnFromBag116(){
+  const acts=state._bagReturnActions116||[];
+  if(acts.length)return setActions(acts);
+  if(state.currentBattle&&state.currentBattle.type==='villain')return setBattleActions();
+  if(state.location)return goLocation(state.location);
+  showScreen('mapScreen');
+}
+function openBag116(){
+  state._bagReturnActions116=(typeof v111LastActions!=='undefined'&&Array.isArray(v111LastActions))?v111LastActions.slice():[];
+  const ids=Object.keys(state.inventory||{}).filter(id=>state.inventory[id]>0);
+  if(!ids.length){
+    say('Bag',L111('No items yet. Buy snacks, drinks, and soft-life supplies first.'));
+    return setActions([{label:'Back to Actions',fn:returnFromBag116,className:'wide'}]);
+  }
+  const battle=!!(state.currentBattle&&state.currentBattle.type==='villain');
+  const intro=battle?L111('Using an item takes Amy’s turn.'):L111('Pick an item to use.');
+  const lines=ids.map(id=>`${itemLabel116(id)} x${state.inventory[id]} — ${desc116(getBagItem116(id).desc)}`).join('\n');
+  say('Inventory Bag',`${intro}\n${lines}`);
+  const actions=ids.map(id=>({label:`${L111('Use')} ${itemLabel116(id)} x${state.inventory[id]}`,fn:()=>useBagItem116(id),className:'green'}));
+  actions.push({label:'Back to Actions',fn:returnFromBag116,className:'wide'});
+  setActions(actions);
+}
+window.openBag116=openBag116;
+
+function injectBagButton116(){
+  const hud=document.querySelector('.hud');
+  if(!hud)return;
+  if(document.getElementById('bagToggleBtn')){document.getElementById('bagToggleBtn').textContent=`${L111('Bag')} (${bagCount116()})`;return;}
+  const btn=document.createElement('button');
+  btn.id='bagToggleBtn'; btn.className='small-btn'; btn.style.padding='7px 10px'; btn.style.borderRadius='999px';
+  btn.onclick=()=>openBag116(); hud.appendChild(btn);
+  btn.textContent=`${L111('Bag')} (${bagCount116()})`;
+}
+const v116UpdateHudBase=updateHud;
+updateHud=function(){v116UpdateHudBase(); if(typeof injectLanguageToggle111==='function')injectLanguageToggle111(); injectBagButton116();};
+window.addEventListener('load',()=>{injectBagButton116();updateHud();});
+
+// Convert location purchases into Bag inventory rather than instant-use boosts.
+const v116BuyItemBase=typeof buyItem114==='function'?buyItem114:null;
+buyItem114=function(title,item,returnFn){
+  if(state.funds<item.cost){say('System',L111('Not enough Soft Life Funds.'));setActions([{label:'Back',fn:returnFn}]);return;}
+  const id=itemId116(item);
+  if(!BAG_ITEMS_116[id]){
+    BAG_ITEMS_116[id]={name:item.name,ja:item.ja,category:'Special Items',effects:item.effects||{},desc:item.text||{en:`${item.name} can be used later from the Bag.`,ja:`${item.ja||item.name}は後でバッグから使える。`}};
+  }
+  state.funds-=item.cost;
+  addToBag116(id,1);
+  say(title,`${itemLabel116(id)} ${state.lang==='ja'?'をバッグに入れた。':'was added to Amy’s Bag.'} ${desc116(getBagItem116(id).desc)}`);
+  setActions([{label:'Buy Something Else',fn:returnFn,className:'green'},{label:'Bag',fn:openBag116,className:'green'},{label:'Back to Location',fn:()=>goLocation(state.location),className:'wide'}]);
+};
+
+// Mall shopping now stocks persistent Bag items.
+const MALL_ITEMS_116=[
+  {id:'lipstick',cost:140},{id:'compact_mirror',cost:160},{id:'gemstone',cost:220},{id:'pepper_spray',cost:250},
+  {id:'mini_perfume',cost:180},{id:'face_mist',cost:150},{id:'portable_charger',cost:200},{id:'spa_voucher',cost:650},
+  {id:'charm_bracelet',cost:180},{id:'silk_scrunchie',cost:90},{id:'emergency_chocolate',cost:60}
+];
+function buyMallItem116(id,cost){
+  if(state.funds<cost){say('Mall',L111('Not enough Soft Life Funds.'));return renderShop();}
+  state.funds-=cost; addToBag116(id,1);
+  const item=getBagItem116(id);
+  say('Mall',`${itemLabel116(id)} ${state.lang==='ja'?'をバッグに入れた。':'was added to Amy’s Bag.'} ${desc116(item.desc)}`);
+  setActions([{label:'Buy Something Else',fn:()=>showScreen('shopScreen'),className:'green'},{label:'Bag',fn:openBag116,className:'green'},{label:'Back to Mall',fn:()=>goLocation('mall'),className:'wide'}]);
+}
+renderShop=function(){
+  const grid=document.getElementById('shopGrid'); if(!grid)return;
+  grid.innerHTML='';
+  MALL_ITEMS_116.forEach(entry=>{
+    const item=getBagItem116(entry.id);
+    const card=document.createElement('div'); card.className='shop-card';
+    card.innerHTML=`<h3>${itemLabel116(entry.id)}</h3><div class="card-desc">${L111('Cost')}: ${entry.cost} Soft Life Funds<br>${desc116(item.desc)}<br><b>${effectText116(item.effects||{})}</b></div><button class="map-btn ${state.funds<entry.cost?'':'green'}" ${state.funds<entry.cost?'disabled':''}>${L111('Buy')}</button>`;
+    card.querySelector('button').onclick=()=>buyMallItem116(entry.id,entry.cost);
+    grid.appendChild(card);
+  });
+};
+
+// Battle menu gets Bag as an explicit command too, while HUD Bag remains always available.
+const v116SetBattleActionsBase=setBattleActions;
+setBattleActions=function(){
+  setAmyPose('idle');
+  if(state.currentBattle&&(state.currentBattle.id==='algorithm'||state.currentBattle.id==='pattern')){
+    const boss=villains[state.currentBattle.id];
+    setEnemyPose(state.currentBattle.id,'idle',boss.name,`${boss.name}<br><small>${boss.className}</small>`);
+  }
+  setActions([
+    {label:'Boundary Slash',fn:()=>amyAttack('Boundary Slash',20,state.lang==='ja'?'エイミーは「境界線スラッシュ」を使った。厚かましさに効果抜群。':'Amy used Boundary Slash. It was super effective against audacity.')},
+    {label:'Phone Punch',fn:()=>amyAttack('Phone Punch',13+Math.floor(state.clarity/12),state.lang==='ja'?'エイミーは「スマホパンチ」を決めた。物語にまっすぐツッコミを入れた。':'Amy hit him with a direct response and a clean right hook to the narrative.')},
+    {label:'Kick of Discernment',fn:()=>amyAttack('Kick of Discernment',18+Math.floor(state.selfRespect/12),state.lang==='ja'?'エイミーは「見極めキック」を使った。思い込みは低軌道へ飛ばされた。':'Amy used Kick of Discernment. Delusion was launched into low orbit.')},
+    {label:'Check Receipts',fn:()=>amyAttack('Check Receipts',16+state.redFlagData*4,state.lang==='ja'?'エイミーは証拠を確認した。レシートが不穏に光った。':'Amy checked the receipts. Evidence sparkled ominously.')},
+    {label:'Summon Friend',fn:summonFriendMenu},
+    {label:'Bag',fn:openBag116,className:'green'},
+    {label:'Girl, Stand Up!',fn:girlStandUp,className:'primary wide'},
+    {label:'Run / Block',fn:escapeBattle,className:'danger wide'}
+  ]);
+};
+
+// Make safety-item stun actually skip the next enemy action if called directly.
+const v116EnemyTurnBase=enemyTurn;
+enemyTurn=function(){
+  const b=state.currentBattle;
+  if(b&&b.skipEnemyTurn116){
+    b.skipEnemyTurn116=false;
+    say('System',state.lang==='ja'?'敵はひるんで動けなかった。エイミーのターン。':'The enemy was stunned and lost their turn. Amy’s turn.');
+    return setActions([{label:state.lang==='ja'?'エイミーのターン':'Amy’s Turn',fn:setBattleActions,className:'green'}]);
+  }
+  return v116EnemyTurnBase();
+};
+
+// Update shop screen text when language toggles or shop opens.
+const v116ShowScreenBase=showScreen;
+showScreen=function(id){
+  const r=v116ShowScreenBase(id);
+  if(id==='shopScreen')renderShop();
+  return r;
+};
+})();
+
+</script>
+</body>
+</html>
