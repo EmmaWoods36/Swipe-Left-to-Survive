@@ -2558,6 +2558,596 @@ showScreen=function(id){
 };
 })();
 
+
+
+/* =========================
+   v1.17 Story Mode cleanup + direct-map overlay patch
+   - Villain Codex is no longer exposed from Story Mode/title actions.
+   - Free red-flag fights remain Arcade/freeplay content only.
+   - City Map removes the white card/panel look: the map art is the screen, pins overlay directly.
+   ========================= */
+(function(){
+const style=document.createElement('style');
+style.textContent=`
+/* v1.17: direct-on-background city map, no white map card */
+#mapScreen{
+  padding:0 !important;
+  background:transparent !important;
+  backdrop-filter:none !important;
+  align-items:stretch !important;
+  justify-items:stretch !important;
+}
+#mapScreen .panel.light.map-panel{
+  position:relative !important;
+  width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  padding:0 !important;
+  margin:0 !important;
+  overflow:hidden !important;
+  border-radius:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:#fff !important;
+}
+#mapScreen .map-panel > h2,
+#mapScreen .map-panel > .subtitle{
+  position:absolute !important;
+  z-index:5 !important;
+  left:22px !important;
+  margin:0 !important;
+  max-width:min(520px,calc(100% - 44px)) !important;
+  color:#fff !important;
+  text-shadow:0 3px 12px rgba(0,0,0,.72) !important;
+}
+#mapScreen .map-panel > h2{
+  top:18px !important;
+  padding:8px 14px !important;
+  border-radius:16px !important;
+  background:rgba(122,16,96,.80) !important;
+  border:1px solid rgba(255,136,218,.78) !important;
+  backdrop-filter:blur(3px) !important;
+}
+#mapScreen .map-panel > .subtitle{
+  top:76px !important;
+  padding:7px 12px !important;
+  border-radius:14px !important;
+  background:rgba(18,8,27,.58) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  color:#ffe5f6 !important;
+}
+#mapScreen .map-shell{
+  position:absolute !important;
+  inset:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+#mapScreen .map-toolbar{
+  position:absolute !important;
+  z-index:5 !important;
+  top:122px !important;
+  left:22px !important;
+  display:flex !important;
+  gap:8px !important;
+  margin:0 !important;
+}
+#mapScreen .map-chip{
+  background:rgba(122,16,96,.82) !important;
+  border:1px solid rgba(255,136,218,.78) !important;
+  color:#fff7fc !important;
+  box-shadow:0 10px 22px rgba(0,0,0,.22) !important;
+}
+#mapScreen .city-map-ui{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  aspect-ratio:auto !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  background-size:cover !important;
+  background-position:center center !important;
+}
+#mapScreen .city-map-ui:before{
+  background:linear-gradient(180deg,rgba(14,4,16,.08),rgba(14,4,16,.26)) !important;
+}
+#mapScreen .map-legend{
+  right:18px !important;
+  bottom:18px !important;
+}
+#mapScreen .map-panel > h3,
+#mapScreen #locationGrid{
+  display:none !important;
+}
+#titleScreen button[onclick*="codexScreen"]{
+  display:none !important;
+}
+`;
+document.head.appendChild(style);
+
+function removeStoryCodexButtons117(){
+  document.querySelectorAll('#titleScreen button').forEach(btn=>{
+    const txt=(btn.textContent||'').trim().toLowerCase();
+    const onclick=String(btn.getAttribute('onclick')||'').toLowerCase();
+    if(txt.includes('villain codex') || txt.includes('ヴィラン図鑑') || onclick.includes('codexscreen')){
+      btn.remove();
+    }
+  });
+}
+function titleActions117(){
+  const actions=[
+    {label:state.lang==='ja'?'ゲーム開始':'Start Prototype',fn:startGame,className:'primary'},
+    {label:state.lang==='ja'?'マップを開く':'Open Map',fn:()=>showScreen('mapScreen')},
+    {label:state.lang==='ja'?'クローゼット':'Closet',fn:()=>showScreen('closetScreen')}
+  ];
+  if(typeof showEnterCheatScreen==='function')actions.push({label:state.lang==='ja'?'チートコード入力':'Enter Cheat Code',fn:showEnterCheatScreen,className:'wide'});
+  if(typeof showUnlockedCheatsScreen==='function')actions.push({label:state.lang==='ja'?'解放済みチート':'Unlocked Cheats',fn:showUnlockedCheatsScreen,className:'wide'});
+  setActions(actions);
+}
+
+const v117ShowScreenBase=showScreen;
+showScreen=function(id){
+  if(id==='codexScreen'){
+    // Free-selecting/fighting red flags belongs to Arcade Mode, not Story Mode.
+    if(typeof ensureV112Screens==='function')ensureV112Screens();
+    v117ShowScreenBase('arcadeScreen');
+    say(state.lang==='ja'?'システム':'System',state.lang==='ja'
+      ?'ヴィラン図鑑はストーリーモードから外しました。赤旗バトルのフリー選択はアーケードモードでどうぞ。'
+      :'Villain Codex is Arcade/freeplay content now. In Story Mode, red flags trigger through LoveLoop cutscenes and story events.');
+    return;
+  }
+  const r=v117ShowScreenBase(id);
+  if(id==='titleScreen'){
+    removeStoryCodexButtons117();
+    titleActions117();
+  }
+  if(id==='mapScreen'){
+    // Keep the map as the screen art itself, not a card-within-a-card.
+    const m=document.getElementById('cityMapUi');
+    if(m)m.setAttribute('aria-label',state.lang==='ja'?'海辺・バー・図書館などへ移動するマップ':'City map with direct clickable location pins');
+  }
+  return r;
+};
+
+window.addEventListener('load',()=>{
+  removeStoryCodexButtons117();
+  titleActions117();
+});
+})();
+
+
+
+/* =========================
+   v1.18 Friend randomization + Beachside Cafe access repair
+   - Meet/Hang With Friends now always launches a random coherent friend scene.
+   - No friend picker in Story Mode public-location friend hangouts.
+   - Syncs each location object to the latest patched action functions so Beach shows Visit Beachside Cafe.
+   - Keeps Beachside Cafe as a Beach sublocation, not a map pin.
+   ========================= */
+(function(){
+  function tr118(x){ return (typeof L111==='function') ? L111(x) : x; }
+  Object.assign(window.V111_JA || V111_JA || {}, {
+    'Back to Beach':'海辺へ戻る',
+    'Meet Friends':'友達に会う',
+    'Meet a Friend':'友達に会う',
+    'Hang With Friends':'友達と過ごす',
+    'Friend Hangout':'友達と過ごす',
+    'Random Friend Scene':'ランダム友達シーン',
+    'Amy ran into a friend.':'エイミーは友達にばったり会った。',
+    'Amy ran into friends.':'エイミーは友達にばったり会った。',
+    'No friend scene is available here.':'ここでは友達イベントは発生しない。',
+    'Visit Beachside Cafe':'海辺のカフェへ行く',
+    'Beachside Cafe':'海辺のカフェ',
+    'Sit by the Water':'水辺に座る',
+    'Watch the Water Alone':'一人で海を眺める',
+    'Sit Under the Moon Alone':'月明かりの下で一人過ごす',
+    'Check Phone':'スマホを見る'
+  });
+
+  function findLoc118(id){ return locations.find(l=>l.id===id); }
+  function setLocAction118(id, fn){ const l=findLoc118(id); if(l && typeof fn==='function') l.actions=fn; }
+  function ensureBeachsideCafeLoc118(){
+    let l=findLoc118('beachside_cafe');
+    if(!l){
+      locations.push(loc('beachside_cafe','Beachside Cafe','Cake, ocean air, and Christy behind the counter.',()=> 'beachside_cafe', beachsideCafeActions));
+      l=findLoc118('beachside_cafe');
+    }
+    if(l){
+      l.label='Beachside Cafe';
+      l.desc='A seaside cafe with cute drinks, cake, ocean air, and Christy behind the counter.';
+      l.bg=()=> 'beachside_cafe';
+      l.actions=beachsideCafeActions;
+    }
+  }
+
+  function locationAllowsFriendScene118(location){
+    const blocked=['apartment','bedroom','closet','office','villain_apartment','car','algorithm','pattern'];
+    if(blocked.includes(location))return false;
+    if(location==='bar')return true;
+    if(typeof friendSceneAvailable114==='function')return friendSceneAvailable114(location);
+    return ['library','park','restaurant','mall','spa','beach','beachside_cafe'].includes(location);
+  }
+
+  function startRandomFriendScene118(location=state.location){
+    if(!locationAllowsFriendScene118(location)){
+      const msg=state.lang==='ja'?'ここでは友達イベントは発生しない。グルチャに近況だけ送った。':'No friend scene is available here. Amy just sent a quick group-chat update.';
+      say(state.lang==='ja'?'友達':'Friends',msg);
+      if(typeof showCutsceneUi113==='function')showCutsceneUi113(state.lang==='ja'?'友達':'Friends',msg);
+      setActions([{label:'Back',fn:()=>goLocation(location||state.location)}]);
+      return;
+    }
+    if(typeof startFriendScene114==='function'){
+      return startFriendScene114(location);
+    }
+    say('Friends',state.lang==='ja'?'エイミーは友達にばったり会った。少し気持ちが軽くなった。':'Amy ran into a friend. The day felt lighter.');
+    state.peace=clamp(state.peace+6); state.groupChat=clamp(state.groupChat+6); updateHud();
+    setActions([{label:'Back to Location',fn:()=>goLocation(location)}]);
+  }
+
+  // Story Mode friend buttons should never open a manual friend picker.
+  window.startRandomFriendScene118=startRandomFriendScene118;
+  hangWithFriends=function(location=state.location){ return startRandomFriendScene118(location); };
+  groupChatScene=function(){ return startRandomFriendScene118(state.location); };
+
+  // Keep the detailed random scene engine but polish its finish buttons.
+  if(typeof continueFriendScene114==='function' && !window.__v118FriendSceneFinishPatched){
+    window.__v118FriendSceneFinishPatched=true;
+    const oldContinue=continueFriendScene114;
+    continueFriendScene114=function(){
+      const before=state.friendScene114;
+      const result=oldContinue();
+      // If the original engine just finished, ensure the repeat button still starts random scenes, not a picker.
+      if(before && !state.friendScene114){
+        const loc=before.location;
+        setActions([
+          {label:'Meet a Friend',fn:()=>startRandomFriendScene118(loc),className:'green'},
+          {label:'Back to Location',fn:()=>goLocation(loc)}
+        ]);
+      }
+      return result;
+    };
+    window.continueFriendScene114=continueFriendScene114;
+  }
+
+  // Beach must always show Beachside Cafe as a sublocation.
+  beachActions=function(){
+    const arr=[];
+    if(state.postPatternUnlocked){
+      arr.push({label:state.time==='Night'?'Sit Under the Moon Alone':'Watch the Water Alone',fn:beachEnding,className:'green wide'});
+    }else{
+      arr.push({label:'Sit by the Water',fn:()=>locationActivity('Beach',state.lang==='ja'?'波は穏やかだった。平和は勝ち取らなくてもいい。':'The waves are steady. Peace does not have to be earned.',{peace:25,clarity:10}),className:'green'});
+    }
+    arr.push({label:'Visit Beachside Cafe',fn:()=>goLocation('beachside_cafe'),className:'green wide'});
+    arr.push({label:'Meet a Friend',fn:()=>startRandomFriendScene118('beach'),className:'green'});
+    arr.push({label:'Check Phone',fn:openDatingApp,className:'danger'});
+    arr.push({label:'Back to Map',fn:()=>showScreen('mapScreen')});
+    return arr;
+  };
+
+  beachsideCafeActions=function(){
+    const arr=[
+      {label:'Order Drink/Snack',fn:()=>showItemMenu114('Beachside Cafe',[...ITEMS_114.cafe_drinks,...ITEMS_114.cafe_food],()=>goLocation('beachside_cafe')),className:'green'},
+      {label:'Open Laptop',fn:workOnLaptop114,className:'green'},
+      {label:'Relax by the Window',fn:()=>locationActivity('Beachside Cafe',state.lang==='ja'?'エイミーは窓辺で海を眺めた。返事を急がない時間。':'Amy sat by the window with ocean air and no obligation to answer her phone.',{peace:12,clarity:6}),className:'green'},
+      {label:'Chat With Christy',fn:()=>chatNpc114('christy'),className:'green'},
+      {label:'Meet a Friend',fn:()=>startRandomFriendScene118('beachside_cafe')},
+      {label:'Back to Beach',fn:()=>goLocation('beach')},
+      {label:'Back to Map',fn:()=>showScreen('mapScreen')}
+    ];
+    if(state.postPatternUnlocked&&!state.rejectedGreenFlags.has('christy'))arr.unshift({label:'Ask Christy Out / Green Flag Battle',fn:()=>startGreenFlagBattle('christy'),className:'green wide'});
+    if(typeof canUseGirlRoute==='function' && canUseGirlRoute()&&!state.rejectedGreenFlags.has('mia'))arr.unshift({label:'Meet Mia / Cheat Date Battle',fn:()=>startGreenFlagBattle('mia'),className:'green wide'});
+    return arr;
+  };
+
+  // Sync existing location objects to the newest action functions. This fixes older loc() references.
+  function syncLocationActions118(){
+    ensureBeachsideCafeLoc118();
+    setLocAction118('library',libraryActions);
+    setLocAction118('bar',barActions);
+    setLocAction118('park',parkActions);
+    setLocAction118('restaurant',restaurantActions);
+    setLocAction118('mall',mallActions);
+    setLocAction118('spa',spaActions);
+    setLocAction118('beach',beachActions);
+    setLocAction118('beachside_cafe',beachsideCafeActions);
+    setLocAction118('office',()=>[{label:'Do Office Things',fn:doOffice},{label:'Back to Map',fn:()=>showScreen('mapScreen')}]);
+    const v=findLoc118('villain_apartment');
+    if(v){ v.actions=()=>[{label:'Back to Map',fn:()=>showScreen('mapScreen')}]; }
+  }
+  syncLocationActions118();
+
+  // Keep Christy visit counter stable after New Game resets.
+  const startGameBase118=startGame;
+  startGame=function(){
+    const r=startGameBase118();
+    state.npcVisits=Object.assign({james:0,xavier:0,andrew:0,christy:0},state.npcVisits||{});
+    syncLocationActions118();
+    return r;
+  };
+
+  const showScreenBase118=showScreen;
+  showScreen=function(id){
+    syncLocationActions118();
+    return showScreenBase118(id);
+  };
+
+  const goLocationBase118=goLocation;
+  goLocation=function(id){
+    syncLocationActions118();
+    return goLocationBase118(id);
+  };
+
+  window.addEventListener('load',syncLocationActions118);
+})();
+
+
+/* =========================
+   v1.19 Visual Asset Pack: corrected character mapping + 16:9 backgrounds
+   - Adds current 16:9 city/apartment/park/library/bar/restaurant/mall/glitch/closet/spa art.
+   - Adds Christy assets.
+   - Adds friend/green-flag/red-flag headshot registry with the corrected canonical red-flag mapping.
+   - Keeps story red-flag battles event/cutscene driven; this only updates visuals/asset references.
+   ========================= */
+(function(){
+  const bg119 = {
+    "city_map_day": "assets/backgrounds/v19/bg_city_map_day.jpg",
+    "city_map_afternoon": "assets/backgrounds/v19/bg_city_map_afternoon.jpg",
+    "city_map_night": "assets/backgrounds/v19/bg_city_map_night.jpg",
+    "apartment_day": "assets/backgrounds/v19/bg_apartment_day.jpg",
+    "apartment_sunset": "assets/backgrounds/v19/bg_apartment_sunset.jpg",
+    "apartment_night": "assets/backgrounds/v19/bg_apartment_night.jpg",
+    "bedroom_day": "assets/backgrounds/v19/bg_bedroom_day.jpg",
+    "bedroom_sunset": "assets/backgrounds/v19/bg_bedroom_sunset.jpg",
+    "bedroom_night": "assets/backgrounds/v19/bg_bedroom_night.jpg",
+    "park_day": "assets/backgrounds/v19/bg_park_day.jpg",
+    "park_sunset": "assets/backgrounds/v19/bg_park_sunset.jpg",
+    "park_night": "assets/backgrounds/v19/bg_park_night.jpg",
+    "library_day": "assets/backgrounds/v19/bg_library_day.jpg",
+    "library_afternoon": "assets/backgrounds/v19/bg_library_afternoon.jpg",
+    "bar_day": "assets/backgrounds/v19/bg_bar_day.jpg",
+    "bar_night": "assets/backgrounds/v19/bg_bar_night.jpg",
+    "restaurant_day": "assets/backgrounds/v19/bg_restaurant_day.jpg",
+    "restaurant_night": "assets/backgrounds/v19/bg_restaurant_night.jpg",
+    "mall_day": "assets/backgrounds/v19/bg_mall_day.jpg",
+    "bedroom_glitch": "assets/backgrounds/v19/bg_bedroom_glitch.jpg",
+    "dream_world": "assets/backgrounds/v19/bg_dream_world.jpg",
+    "apartment_glitch": "assets/backgrounds/v19/bg_apartment_glitch.jpg",
+    "closet": "assets/backgrounds/v19/bg_closet.jpg",
+    "spa": "assets/backgrounds/v19/bg_spa.jpg"
+};
+  Object.assign(ASSETS.backgrounds, bg119, {
+    // Replace legacy keys so the existing code starts using the new 16:9 art immediately.
+    apartment_day: bg119.apartment_day,
+    apartment_sunset: bg119.apartment_sunset,
+    apartment_night: bg119.apartment_night,
+    bedroom_day: bg119.bedroom_day,
+    bedroom_sunset: bg119.bedroom_sunset,
+    bedroom_night: bg119.bedroom_night,
+    bedroom_glitch: bg119.bedroom_glitch,
+    closet: bg119.closet,
+    library: bg119.library_day,
+    bar: bg119.bar_day,
+    park: bg119.park_day,
+    restaurant: bg119.restaurant_day,
+    mall: bg119.mall_day,
+    spa: bg119.spa,
+    city_map_day: bg119.city_map_day,
+    city_map_afternoon: bg119.city_map_afternoon,
+    city_map_night: bg119.city_map_night,
+    dream_world: bg119.dream_world
+  });
+
+  const portrait119 = {
+    "amy_headshot": "assets/characters/main/amy_headshot.jpg",
+    "min_headshot": "assets/characters/friends/min_headshot.jpg",
+    "malik_headshot": "assets/characters/friends/malik_headshot.jpg",
+    "chloe_headshot": "assets/characters/friends/chloe_headshot.jpg",
+    "mia_headshot": "assets/characters/friends/mia_headshot.jpg",
+    "jade_headshot": "assets/characters/friends/jade_headshot.jpg",
+    "xavier_headshot": "assets/characters/green_flags/xavier_headshot.jpg",
+    "james_headshot": "assets/characters/green_flags/james_headshot.jpg",
+    "andrew_headshot": "assets/characters/green_flags/andrew_headshot.jpg",
+    "christy_headshot": "assets/characters/green_flags/christy_headshot.jpg",
+    "christy_fullbody": "assets/characters/green_flags/christy_fullbody.jpg",
+    "christy_fullbody_alt": "assets/characters/green_flags/christy_fullbody_alt.jpg",
+    "derrick_dark_humor_headshot": "assets/characters/villains/derrick_dark_humor_headshot.jpg",
+    "victor_old_young_girl_headshot": "assets/characters/villains/victor_old_young_girl_headshot.jpg",
+    "reggie_true_crime_headshot": "assets/characters/villains/reggie_true_crime_headshot.jpg",
+    "marquis_low_key_millionaire_headshot": "assets/characters/villains/marquis_low_key_millionaire_headshot.jpg",
+    "joey_broke_balladeer_headshot": "assets/characters/villains/joey_broke_balladeer_headshot.jpg",
+    "jay_2am_summoner_headshot": "assets/characters/villains/jay_2am_summoner_headshot.jpg",
+    "dante_demon_fighter_headshot": "assets/characters/villains/dante_demon_fighter_headshot.jpg",
+    "terrence_house_date_economist_headshot": "assets/characters/villains/terrence_house_date_economist_headshot.jpg",
+    "connor_preference_paladin_headshot": "assets/characters/villains/connor_preference_paladin_headshot.jpg",
+    "evan_guy_who_seems_normal_headshot": "assets/characters/villains/evan_guy_who_seems_normal_headshot.jpg",
+    "victor_old_young_girl_card": "assets/characters/villains/victor_old_young_girl_card.jpg",
+    "algorithm_headshot": "assets/characters/bosses/algorithm_headshot.jpg",
+    "pattern_headshot": "assets/characters/bosses/pattern_headshot.jpg"
+};
+  ASSETS.portraits = Object.assign(ASSETS.portraits || {}, portrait119);
+
+  const redFlagSprites119 = {
+    "derrick_dark_humor_walk": "assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_walk.jpg",
+    "derrick_dark_humor_point": "assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_point.jpg",
+    "derrick_dark_humor_stance": "assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_stance.jpg",
+    "derrick_dark_humor_taunt": "assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_taunt.jpg",
+    "derrick_dark_humor_hurt": "assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_hurt.jpg",
+    "derrick_dark_humor_special": "assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_special.jpg",
+    "derrick_dark_humor_fullbody_card": "assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_fullbody_card.jpg"
+};
+  ASSETS.sprites = ASSETS.sprites || {};
+  ASSETS.sprites.redFlags = Object.assign(ASSETS.sprites.redFlags || {}, {
+    dark_humor_guy: redFlagSprites119
+  });
+
+  // Corrected source-of-truth identity data from Amber's mapping.
+  const redFlagIdentity119 = {
+    dark_humor: {realName:'Derrick', archetype:'Dark Humor Guy', portrait:portrait119.derrick_dark_humor_headshot, art:redFlagSprites119.derrick_dark_humor_fullbody_card || portrait119.derrick_dark_humor_headshot},
+    old_young: {realName:'Victor', archetype:'Old Young-Girl Guy', portrait:portrait119.victor_old_young_girl_headshot, art:portrait119.victor_old_young_girl_card || portrait119.victor_old_young_girl_headshot},
+    body_bag: {realName:'Reggie', archetype:'True Crime Date', portrait:portrait119.reggie_true_crime_headshot, art:portrait119.reggie_true_crime_headshot},
+    millionaire: {realName:'Marquis', archetype:'Low-Key Millionaire', portrait:portrait119.marquis_low_key_millionaire_headshot, art:portrait119.marquis_low_key_millionaire_headshot},
+    broke_dreamer: {realName:'Joey', archetype:'Broke Balladeer', portrait:portrait119.joey_broke_balladeer_headshot, art:portrait119.joey_broke_balladeer_headshot},
+    two_am: {realName:'Jay', archetype:'2AM Summoner', portrait:portrait119.jay_2am_summoner_headshot, art:portrait119.jay_2am_summoner_headshot},
+    demon: {realName:'Dante', archetype:'Demon Fighter', portrait:portrait119.dante_demon_fighter_headshot, art:portrait119.dante_demon_fighter_headshot},
+    house_date: {realName:'Terrence', archetype:'House Date Economist', portrait:portrait119.terrence_house_date_economist_headshot, art:portrait119.terrence_house_date_economist_headshot},
+    preference: {realName:'Connor', archetype:'Preference Paladin', portrait:portrait119.connor_preference_paladin_headshot, art:portrait119.connor_preference_paladin_headshot},
+    normal_fake: {realName:'Evan', archetype:'Guy Who Seems Normal', portrait:portrait119.evan_guy_who_seems_normal_headshot, art:portrait119.evan_guy_who_seems_normal_headshot}
+  };
+  ASSETS.redFlags = Object.assign(ASSETS.redFlags || {}, redFlagIdentity119);
+
+  Object.keys(redFlagIdentity119).forEach(id=>{
+    const meta=redFlagIdentity119[id];
+    if(villains[id]){
+      villains[id].realName=meta.realName;
+      villains[id].archetypeName=meta.archetype;
+      if(id==='normal_fake'){ villains[id].name='Guy Who Seems Normal'; villains[id].jpName='普通そうな男'; }
+      if(id==='millionaire'){ villains[id].name='Low-Key Millionaire'; villains[id].jpName='自称こっそりミリオネア'; }
+      if(id==='broke_dreamer'){ villains[id].name='Broke Balladeer'; villains[id].jpName='金欠バラード男'; }
+      if(id==='two_am'){ villains[id].name='2AM Summoner'; villains[id].jpName='午前2時の召喚士'; }
+      if(id==='demon'){ villains[id].name='Demon Fighter'; villains[id].jpName='悪魔と戦う男'; }
+      if(id==='house_date'){ villains[id].name='House Date Economist'; villains[id].jpName='家デート経済学者'; }
+      if(id==='preference'){ villains[id].name='Preference Paladin'; villains[id].jpName='好みですパラディン'; }
+    }
+    ENEMY_ART.villains[id]=meta.art || meta.portrait;
+  });
+
+  // Good guys / friends / green flags portrait registry.
+  ASSETS.goodGuys = Object.assign(ASSETS.goodGuys || {}, {
+    amy: {name:'Amy', portrait:portrait119.amy_headshot},
+    min: {name:'Min', portrait:portrait119.min_headshot},
+    malik: {name:'Malik', portrait:portrait119.malik_headshot},
+    jade: {name:'Jade', portrait:portrait119.jade_headshot},
+    chloe: {name:'Chloe', portrait:portrait119.chloe_headshot},
+    mia: {name:'Mia', portrait:portrait119.mia_headshot},
+    xavier: {name:'Xavier', portrait:portrait119.xavier_headshot},
+    james: {name:'James', portrait:portrait119.james_headshot},
+    andrew: {name:'Andrew', portrait:portrait119.andrew_headshot},
+    christy: {name:'Christy', portrait:portrait119.christy_headshot, fullbody:portrait119.christy_fullbody, fullbodyAlt:portrait119.christy_fullbody_alt}
+  });
+  ENEMY_ART.greenFlags.xavier=portrait119.xavier_headshot;
+  ENEMY_ART.greenFlags.james=portrait119.james_headshot;
+  ENEMY_ART.greenFlags.andrew=portrait119.andrew_headshot;
+  ENEMY_ART.greenFlags.christy=portrait119.christy_fullbody || portrait119.christy_headshot;
+  if(greenFlags.christy){ greenFlags.christy.bg='spa'; }
+
+  // Time-aware background selection for the new 16:9 set.
+  function bgByTime119(base){
+    if(state.time==='Night' && ASSETS.backgrounds[base+'_night']) return base+'_night';
+    if(state.time==='Evening'){
+      if(ASSETS.backgrounds[base+'_sunset']) return base+'_sunset';
+      if(ASSETS.backgrounds[base+'_afternoon']) return base+'_afternoon';
+    }
+    if(ASSETS.backgrounds[base+'_day']) return base+'_day';
+    return base;
+  }
+  function syncBackgrounds119(){
+    const find=id=>locations.find(l=>l.id===id);
+    const set=(id,fn)=>{const l=find(id); if(l)l.bg=fn;};
+    set('apartment',()=>bgByTime119('apartment'));
+    set('bedroom',()=>bgByTime119('bedroom'));
+    set('park',()=>bgByTime119('park'));
+    set('library',()=>state.time==='Evening'?'library_afternoon':'library_day');
+    set('bar',()=>state.time==='Night'?'bar_night':'bar_day');
+    set('restaurant',()=>state.time==='Night'?'restaurant_night':'restaurant_day');
+    set('mall',()=> 'mall_day');
+    set('closet',()=> 'closet');
+    set('spa',()=> 'spa');
+  }
+  syncBackgrounds119();
+  const showScreenBase119=showScreen;
+  showScreen=function(id){ syncBackgrounds119(); return showScreenBase119(id); };
+  const goLocationBase119=goLocation;
+  goLocation=function(id){ syncBackgrounds119(); return goLocationBase119(id); };
+  const startGameBase119=startGame;
+  startGame=function(){ const r=startGameBase119(); syncBackgrounds119(); return r; };
+  window.addEventListener('load',syncBackgrounds119);
+})();
+
 </script>
 </body>
 </html>
+
+
+/* =========================
+   v1.20 Background Patch: car + beach + park + office + parking lot
+   - Adds final 16:9 car day/sunset/night art.
+   - Adds final 16:9 beach day/sunset/night art.
+   - Adds final 16:9 park day/sunset/night art.
+   - Adds final 16:9 office day art.
+   - Adds parking lot night art and assigns it to Reggie / True Crime Date.
+   ========================= */
+(function(){
+  const bg120 = {
+    car_day: 'assets/backgrounds/v20/bg_car_day.png',
+    car_sunset: 'assets/backgrounds/v20/bg_car_sunset.png',
+    car_night: 'assets/backgrounds/v20/bg_car_night.png',
+    parking_lot_night: 'assets/backgrounds/v20/bg_parking_lot_night.png',
+    beach_day: 'assets/backgrounds/v20/bg_beach_day.png',
+    beach: 'assets/backgrounds/v20/bg_beach_sunset.png',
+    beach_sunset: 'assets/backgrounds/v20/bg_beach_sunset.png',
+    beach_night: 'assets/backgrounds/v20/bg_beach_night.png',
+    park_day: 'assets/backgrounds/v20/bg_park_day.png',
+    park_sunset: 'assets/backgrounds/v20/bg_park_sunset.png',
+    park_night: 'assets/backgrounds/v20/bg_park_night.png',
+    office_day: 'assets/backgrounds/v20/bg_office_day.png',
+    office: 'assets/backgrounds/v20/bg_office_day.png'
+  };
+
+  Object.assign(ASSETS.backgrounds, bg120, {
+    beach: bg120.beach,
+    park: bg120.park_day,
+    office: bg120.office
+  });
+
+  if (typeof FALLBACK === 'object') {
+    Object.assign(FALLBACK, {
+      parking_lot_night: 'linear-gradient(135deg,#090d17 0%,#1a2844 46%,#31354f 100%)'
+    });
+  }
+
+  const beachLoc120 = locations.find(l => l.id === 'beach');
+  if (beachLoc120) {
+    beachLoc120.bg = () => state.time === 'Night' ? 'beach_night' : state.time === 'Evening' ? 'beach' : 'beach_day';
+  }
+
+  const parkLoc120 = locations.find(l => l.id === 'park');
+  if (parkLoc120) {
+    parkLoc120.bg = () => state.time === 'Night' ? 'park_night' : state.time === 'Evening' ? 'park_sunset' : 'park_day';
+  }
+
+  const officeLoc120 = locations.find(l => l.id === 'office');
+  if (officeLoc120) {
+    officeLoc120.bg = () => 'office';
+  }
+
+  const carLoc120 = locations.find(l => l.id === 'car');
+  if (carLoc120) {
+    carLoc120.bg = () => state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day';
+  }
+
+  const oldStartCar115 = typeof startCarScene115 === 'function' ? startCarScene115 : null;
+  if (oldStartCar115) {
+    startCarScene115 = function(resultKey){
+      hideAllScreens();
+      state.location='car';
+      setBackground(state.time==='Night' ? 'car_night' : state.time==='Evening' ? 'car_sunset' : 'car_day');
+      showAmy(true,'idle');
+      showEnemy(false);
+      document.getElementById('battleUi').classList.add('hidden');
+      document.getElementById('cutscenePanel').classList.remove('hidden');
+      document.getElementById('gameScreen').classList.remove('hidden');
+      const copy = (V18.carAftermath && V18.carAftermath[resultKey]) || (typeof resultKey==='string' ? resultKey : '');
+      say('Amy', typeof copy==='object' ? (state.lang==='ja' ? copy.ja : copy.en) : copy);
+      renderCarActions();
+      updateHud();
+    }
+  }
+
+  if (villains && villains.body_bag) villains.body_bag.bg = 'parking_lot_night';
+  if (typeof V18 === 'object' && V18.appNotifications && V18.appNotifications.body_bag) V18.appNotifications.body_bag.battleBg = 'parking_lot_night';
+})();
