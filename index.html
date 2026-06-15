@@ -3,37 +3,35 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Swipe Left to Survive - Amy Prototype</title>
+<title>Swipe Left to Survive</title>
 <style>
-:root{--pink:#ff7cc7;--hot:#ff2fa8;--purple:#8b5cf6;--cream:#fff4e9;--gold:#f7c76b;--green:#7ee083;--red:#ff4c66;--dark:#120b18;--border:rgba(255,195,229,.65);--shadow:0 18px 60px rgba(0,0,0,.45)}*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:"Trebuchet MS",system-ui,sans-serif;color:var(--cream);background:#150915;overflow:hidden}button{font:inherit}.hidden{display:none!important}.studio-splash{position:fixed;inset:0;z-index:9999;background:#f7efe5;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .9s ease}.studio-splash img{width:100%;height:100%;object-fit:cover}.studio-splash.fade-out{opacity:0;pointer-events:none}#game{width:100vw;height:100vh;display:grid;grid-template-rows:74px 1fr 190px;background:#140914}#topBar{display:grid;grid-template-columns:1fr auto;gap:16px;padding:12px 18px;align-items:center;background:linear-gradient(90deg,rgba(20,7,24,.94),rgba(62,18,61,.88));border-bottom:1px solid var(--border);box-shadow:0 6px 28px rgba(0,0,0,.35);z-index:10}.brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-mark{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#ffe2f3,#ff78c8 45%,#5b2070);color:#2c1033;font-size:24px;box-shadow:0 0 22px rgba(255,124,199,.4)}.brand h1{margin:0;font-size:clamp(20px,3vw,28px);letter-spacing:.04em;line-height:1}.brand small{display:block;margin-top:3px;color:#ffd8ec;opacity:.86;letter-spacing:.04em}.hud{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:8px}.stat{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);font-size:14px;white-space:nowrap}.stat b{color:#fff;margin-left:4px}#mainStage{position:relative;overflow:hidden;background-color:#1d1024}.bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(1.05);transform:scale(1.01);transition:background-image .35s ease,filter .35s ease}.bg:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 55%,rgba(255,117,195,.08),transparent 44%),linear-gradient(180deg,rgba(14,4,16,.12),rgba(14,4,16,.42));pointer-events:none}.scene-overlay{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:26px 48px 18px;pointer-events:none}.sprite-slot{min-height:420px;display:flex;align-items:flex-end;pointer-events:none}.sprite-card{width:min(34vw,360px);min-height:420px;border-radius:28px;padding:20px;display:grid;place-items:end center;background:linear-gradient(180deg,rgba(255,240,249,.1),rgba(255,75,167,.16));border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow);backdrop-filter:blur(4px);opacity:0;transform:translateY(20px);transition:opacity .35s ease,transform .35s ease}.sprite-card.visible{opacity:1;transform:translateY(0)}.sprite-card.enemy{justify-self:end;background:linear-gradient(180deg,rgba(255,70,100,.12),rgba(80,0,30,.36))}.sprite-placeholder{width:100%;height:340px;border-radius:24px;display:grid;place-items:center;text-align:center;font-size:20px;line-height:1.25;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.14),transparent 26%),linear-gradient(160deg,rgba(255,124,199,.28),rgba(137,92,246,.22));border:1px dashed rgba(255,255,255,.42);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.55)}.sprite-card .label{margin-top:10px;width:100%;text-align:center;font-weight:800;letter-spacing:.04em}#bottomPanel{position:relative;z-index:20;display:grid;grid-template-columns:minmax(260px,1fr) minmax(320px,1.2fr);gap:14px;padding:14px 18px;background:linear-gradient(180deg,rgba(18,6,22,.95),rgba(20,7,26,.98));border-top:1px solid var(--border);box-shadow:0 -10px 36px rgba(0,0,0,.45)}.dialogue-box,.action-box{min-height:162px;border-radius:22px;border:1px solid var(--border);background:rgba(255,244,233,.08);padding:15px 16px;overflow:auto}.speaker{color:var(--gold);font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;font-size:13px}#dialogueText{font-size:17px;line-height:1.35;color:#fffaf5}#actionGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.action-btn,.map-btn,.small-btn{border:1px solid rgba(255,216,236,.45);background:linear-gradient(180deg,rgba(255,124,199,.22),rgba(139,92,246,.18));color:#fff;border-radius:15px;padding:10px 12px;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,border .12s ease;box-shadow:0 10px 20px rgba(0,0,0,.22)}.action-btn:hover,.map-btn:hover,.small-btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.88);box-shadow:0 14px 26px rgba(0,0,0,.28),0 0 14px rgba(255,124,199,.25)}.action-btn:disabled,.map-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}.primary{background:linear-gradient(180deg,rgba(255,105,190,.9),rgba(132,48,173,.86))}.green{background:linear-gradient(180deg,rgba(91,220,122,.85),rgba(43,122,78,.88))}.danger{background:linear-gradient(180deg,rgba(255,80,104,.85),rgba(111,16,36,.88))}.wide{grid-column:1/-1}.screen{position:absolute;inset:0;padding:24px;display:grid;align-items:center;justify-items:center;z-index:8;background:rgba(10,4,13,.35);backdrop-filter:blur(1px)}.panel{width:min(1040px,calc(100vw - 36px));max-height:calc(100vh - 290px);overflow:auto;border-radius:28px;border:1px solid rgba(255,230,244,.38);background:rgba(18,8,27,.88);box-shadow:var(--shadow);padding:22px}.panel.light{background:rgba(255,244,233,.9);color:#2a172b}.panel h2{margin:0 0 10px;font-size:clamp(26px,5vw,46px);line-height:1}.panel p{line-height:1.45}.subtitle{color:#ffd4eb;margin-top:0}.light .subtitle{color:#714469}.menu-grid,.location-grid,.shop-grid,.closet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}.location-card,.shop-card,.closet-card{border-radius:18px;border:1px solid rgba(255,216,236,.42);background:rgba(255,255,255,.08);padding:14px;min-height:104px}.location-card h3,.shop-card h3,.closet-card h3{margin:0 0 8px;color:#fff}.light h3{color:#2a172b!important}.card-desc{font-size:14px;opacity:.88;margin-bottom:10px}.map-panel{background:rgba(255,244,233,.82)}.map-shell{margin-top:12px;border-radius:24px;padding:12px;border:1px solid rgba(113,68,105,.16);background:linear-gradient(180deg,rgba(255,255,255,.68),rgba(255,247,240,.56));box-shadow:0 12px 26px rgba(42,23,43,.12)}.map-toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}.map-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.82);border:1px solid rgba(113,68,105,.16);font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#714469}.city-map-ui{position:relative;width:100%;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#ffdcb3,#ff9db8 48%,#8ec3ff);background-size:cover;background-position:center center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 18px 36px rgba(42,23,43,.18)}.city-map-ui:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(24,10,34,.08))}.map-pin{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;padding:0;cursor:pointer;z-index:2}.map-pin:focus-visible{outline:none}.map-pin:hover .map-pin-icon,.map-pin:focus-visible .map-pin-icon{transform:translateY(-2px) scale(1.05);filter:drop-shadow(0 10px 20px rgba(255,45,168,.45))}.map-pin:hover .map-pin-label,.map-pin:focus-visible .map-pin-label{transform:translateY(-2px);box-shadow:0 14px 28px rgba(91,15,79,.3)}.map-pin-icon{position:relative;width:34px;height:34px;display:block;background:linear-gradient(180deg,#ff66c9,#c21887);border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #ffc1ea;box-shadow:0 10px 20px rgba(255,45,168,.32);transition:transform .12s ease,filter .12s ease}.map-pin-icon:before{content:"";position:absolute;inset:8px;background:#fff0fa;border-radius:50%}.map-pin-label{padding:7px 12px;border-radius:12px;background:rgba(122,16,96,.96);border:2px solid #ff88da;color:#fff7fc;font-size:12px;font-weight:900;letter-spacing:.03em;white-space:nowrap;box-shadow:0 10px 22px rgba(91,15,79,.22);transition:transform .12s ease,box-shadow .12s ease}.map-pin.current .map-pin-icon{background:linear-gradient(180deg,#ff8fd8,#ff2fa8)}.map-pin.current .map-pin-label{background:rgba(149,20,114,.98);border-color:#ffd0ef}.map-legend{position:absolute;right:14px;bottom:14px;z-index:2;padding:10px 12px;border-radius:14px;background:rgba(122,16,96,.9);border:1px solid #ff9de3;font-size:11px;color:#fff7fc;box-shadow:0 12px 24px rgba(42,23,43,.18)}@media (max-width:900px){.map-pin-label{padding:6px 10px;font-size:11px}.map-pin-icon{width:30px;height:30px}.map-toolbar{gap:8px}}@media (max-width:680px){.city-map-ui{aspect-ratio:4/5}.map-legend{right:10px;bottom:10px;padding:8px 10px;font-size:10px}}.battle-ui{position:absolute;inset:0;z-index:6;pointer-events:none}.health-bar{position:absolute;width:min(36vw,430px);padding:11px 13px;border-radius:18px;background:rgba(15,5,20,.72);border:1px solid rgba(255,255,255,.16);box-shadow:var(--shadow);pointer-events:none}.health-bar.left{left:20px;top:18px}.health-bar.right{right:20px;top:18px}.bar-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;color:#fff;font-weight:800;letter-spacing:.03em}.meter{height:14px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.16)}.meter-fill{height:100%;width:100%;border-radius:inherit;background:linear-gradient(90deg,#fb5fb4,#ffe08c);transition:width .3s ease}.meter-fill.enemy-fill{background:linear-gradient(90deg,#ff4c66,#9d174d)}.effect-pop{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:clamp(42px,8vw,102px);letter-spacing:.08em;text-align:center;color:#fff;text-shadow:0 0 18px rgba(255,68,166,.9),0 8px 26px rgba(0,0,0,.8);opacity:0;pointer-events:none}.effect-pop.show{animation:popFx .9s ease forwards}@keyframes popFx{0%{opacity:0;transform:scale(.8) rotate(-2deg)}25%{opacity:1;transform:scale(1.04) rotate(1deg)}100%{opacity:0;transform:scale(1.16)}}@media(max-width:860px){#game{grid-template-rows:98px 1fr 250px}#topBar{grid-template-columns:1fr;gap:8px}.hud{justify-content:flex-start}.scene-overlay{padding:18px 14px}.sprite-card{width:42vw;min-height:300px;padding:12px}.sprite-placeholder{height:230px;font-size:15px}#bottomPanel{grid-template-columns:1fr;padding:10px}#actionGrid{grid-template-columns:1fr}.panel{max-height:calc(100vh - 370px)}}
+:root{--pink:#ff7cc7;--hot:#ff2fa8;--purple:#8b5cf6;--cream:#fff4e9;--gold:#f7c76b;--green:#7ee083;--red:#ff4c66;--dark:#120b18;--border:rgba(255,195,229,.65);--shadow:0 18px 60px rgba(0,0,0,.45)}*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:"Trebuchet MS",system-ui,sans-serif;color:var(--cream);background:#150915;overflow:hidden}button{font:inherit}.hidden{display:none!important}.studio-splash{position:fixed;inset:0;z-index:9999;background:#f7efe5;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .9s ease}.studio-splash img{width:100%;height:100%;object-fit:cover}.studio-splash.fade-out{opacity:0;pointer-events:none}#game{width:100vw;height:100vh;display:grid;grid-template-rows:74px 1fr 190px;background:#140914}#topBar{display:grid;grid-template-columns:1fr auto;gap:16px;padding:12px 18px;align-items:center;background:linear-gradient(90deg,rgba(20,7,24,.94),rgba(62,18,61,.88));border-bottom:1px solid var(--border);box-shadow:0 6px 28px rgba(0,0,0,.35);z-index:10}.brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-mark{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#ffe2f3,#ff78c8 45%,#5b2070);color:#2c1033;font-size:24px;box-shadow:0 0 22px rgba(255,124,199,.4)}.brand h1{margin:0;font-size:clamp(20px,3vw,28px);letter-spacing:.04em;line-height:1}.brand small{display:block;margin-top:3px;color:#ffd8ec;opacity:.86;letter-spacing:.04em}.hud{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:8px}.stat{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);font-size:14px;white-space:nowrap}.stat b{color:#fff;margin-left:4px}#mainStage{position:relative;overflow:hidden;background-color:#1d1024}.bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(1.05);transform:scale(1.01);transition:background-image .35s ease,filter .35s ease}.bg:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 55%,rgba(255,117,195,.08),transparent 44%),linear-gradient(180deg,rgba(14,4,16,.12),rgba(14,4,16,.42));pointer-events:none}.scene-overlay{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:26px 48px 18px;pointer-events:none}.sprite-slot{min-height:420px;display:flex;align-items:flex-end;pointer-events:none}.sprite-card{width:min(34vw,360px);min-height:420px;border-radius:28px;padding:20px;display:grid;place-items:end center;background:linear-gradient(180deg,rgba(255,240,249,.1),rgba(255,75,167,.16));border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow);backdrop-filter:blur(4px);opacity:0;transform:translateY(20px);transition:opacity .35s ease,transform .35s ease}.sprite-card.visible{opacity:1;transform:translateY(0)}.sprite-card.enemy{justify-self:end;background:linear-gradient(180deg,rgba(255,70,100,.12),rgba(80,0,30,.36))}.sprite-placeholder{width:100%;height:340px;border-radius:24px;display:grid;place-items:center;text-align:center;font-size:20px;line-height:1.25;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.14),transparent 26%),linear-gradient(160deg,rgba(255,124,199,.28),rgba(137,92,246,.22));border:1px dashed rgba(255,255,255,.42);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.55)}.sprite-card .label{margin-top:10px;width:100%;text-align:center;font-weight:800;letter-spacing:.04em}.sprite-art{max-width:100%;max-height:340px;object-fit:contain;display:block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.4))}.sprite-art.enemy-art{max-height:320px}#bottomPanel{position:relative;z-index:20;display:grid;grid-template-columns:minmax(260px,1fr) minmax(320px,1.2fr);gap:14px;padding:14px 18px;background:linear-gradient(180deg,rgba(18,6,22,.95),rgba(20,7,26,.98));border-top:1px solid var(--border);box-shadow:0 -10px 36px rgba(0,0,0,.45)}.dialogue-box,.action-box{min-height:162px;border-radius:22px;border:1px solid var(--border);background:rgba(255,244,233,.08);padding:15px 16px;overflow:auto}.speaker{color:var(--gold);font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;font-size:13px}#dialogueText{font-size:17px;line-height:1.35;color:#fffaf5}#actionGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.action-btn,.map-btn,.small-btn{border:1px solid rgba(255,216,236,.45);background:linear-gradient(180deg,rgba(255,124,199,.22),rgba(139,92,246,.18));color:#fff;border-radius:15px;padding:10px 12px;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,border .12s ease;box-shadow:0 10px 20px rgba(0,0,0,.22)}.action-btn:hover,.map-btn:hover,.small-btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.88);box-shadow:0 14px 26px rgba(0,0,0,.28),0 0 14px rgba(255,124,199,.25)}.action-btn:disabled,.map-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}.primary{background:linear-gradient(180deg,rgba(255,105,190,.9),rgba(132,48,173,.86))}.green{background:linear-gradient(180deg,rgba(91,220,122,.85),rgba(43,122,78,.88))}.danger{background:linear-gradient(180deg,rgba(255,80,104,.85),rgba(111,16,36,.88))}.wide{grid-column:1/-1}.screen{position:absolute;inset:0;padding:24px;display:grid;align-items:center;justify-items:center;z-index:8;background:rgba(10,4,13,.35);backdrop-filter:blur(1px)}.panel{width:min(1040px,calc(100vw - 36px));max-height:calc(100vh - 290px);overflow:auto;border-radius:28px;border:1px solid rgba(255,230,244,.38);background:rgba(18,8,27,.88);box-shadow:var(--shadow);padding:22px}.panel.light{background:rgba(255,244,233,.9);color:#2a172b}.panel h2{margin:0 0 10px;font-size:clamp(26px,5vw,46px);line-height:1}.panel p{line-height:1.45}.subtitle{color:#ffd4eb;margin-top:0}.light .subtitle{color:#714469}.menu-grid,.location-grid,.shop-grid,.closet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}.location-card,.shop-card,.closet-card{border-radius:18px;border:1px solid rgba(255,216,236,.42);background:rgba(255,255,255,.08);padding:14px;min-height:104px}.location-card h3,.shop-card h3,.closet-card h3{margin:0 0 8px;color:#fff}.light h3{color:#2a172b!important}.card-desc{font-size:14px;opacity:.88;margin-bottom:10px}.map-panel{background:rgba(255,244,233,.82)}.map-shell{margin-top:12px;border-radius:24px;padding:12px;border:1px solid rgba(113,68,105,.16);background:linear-gradient(180deg,rgba(255,255,255,.68),rgba(255,247,240,.56));box-shadow:0 12px 26px rgba(42,23,43,.12)}.map-toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}.map-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.82);border:1px solid rgba(113,68,105,.16);font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#714469}.city-map-ui{position:relative;width:100%;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#ffdcb3,#ff9db8 48%,#8ec3ff);background-size:cover;background-position:center center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 18px 36px rgba(42,23,43,.18)}.city-map-ui:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(24,10,34,.08))}.map-pin{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;padding:0;cursor:pointer;z-index:2}.map-pin:focus-visible{outline:none}.map-pin:hover .map-pin-icon,.map-pin:focus-visible .map-pin-icon{transform:translateY(-2px) scale(1.05);filter:drop-shadow(0 10px 20px rgba(255,45,168,.45))}.map-pin:hover .map-pin-label,.map-pin:focus-visible .map-pin-label{transform:translateY(-2px);box-shadow:0 14px 28px rgba(91,15,79,.3)}.map-pin-icon{position:relative;width:34px;height:34px;display:block;background:linear-gradient(180deg,#ff66c9,#c21887);border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #ffc1ea;box-shadow:0 10px 20px rgba(255,45,168,.32);transition:transform .12s ease,filter .12s ease}.map-pin-icon:before{content:"";position:absolute;inset:8px;background:#fff0fa;border-radius:50%}.map-pin-label{padding:7px 12px;border-radius:12px;background:rgba(122,16,96,.96);border:2px solid #ff88da;color:#fff7fc;font-size:12px;font-weight:900;letter-spacing:.03em;white-space:nowrap;box-shadow:0 10px 22px rgba(91,15,79,.22);transition:transform .12s ease,box-shadow .12s ease}.map-pin.current .map-pin-icon{background:linear-gradient(180deg,#ff8fd8,#ff2fa8)}.map-pin.current .map-pin-label{background:rgba(149,20,114,.98);border-color:#ffd0ef}.map-legend{position:absolute;right:14px;bottom:14px;z-index:2;padding:10px 12px;border-radius:14px;background:rgba(122,16,96,.9);border:1px solid #ff9de3;font-size:11px;color:#fff7fc;box-shadow:0 12px 24px rgba(42,23,43,.18)}@media(max-width:900px){.map-pin-label{padding:6px 10px;font-size:11px}.map-pin-icon{width:30px;height:30px}.map-toolbar{gap:8px}}@media(max-width:680px){.city-map-ui{aspect-ratio:4/5}.map-legend{right:10px;bottom:10px;padding:8px 10px;font-size:10px}}.battle-ui{position:absolute;inset:0;z-index:6;pointer-events:none}.health-bar{position:absolute;width:min(36vw,430px);padding:11px 13px;border-radius:18px;background:rgba(15,5,20,.72);border:1px solid rgba(255,255,255,.16);box-shadow:var(--shadow);pointer-events:none}.health-bar.left{left:20px;top:18px}.health-bar.right{right:20px;top:18px}.bar-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;color:#fff;font-weight:800;letter-spacing:.03em}.meter{height:14px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.16)}.meter-fill{height:100%;width:100%;border-radius:inherit;background:linear-gradient(90deg,#fb5fb4,#ffe08c);transition:width .3s ease}.meter-fill.enemy-fill{background:linear-gradient(90deg,#ff4c66,#9d174d)}.effect-pop{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:clamp(42px,8vw,102px);letter-spacing:.08em;text-align:center;color:#fff;text-shadow:0 0 18px rgba(255,68,166,.9),0 8px 26px rgba(0,0,0,.8);opacity:0;pointer-events:none}.effect-pop.show{animation:popFx .9s ease forwards}@keyframes popFx{0%{opacity:0;transform:scale(.8) rotate(-2deg)}25%{opacity:1;transform:scale(1.04) rotate(1deg)}100%{opacity:0;transform:scale(1.16)}}@media(max-width:860px){#game{grid-template-rows:98px 1fr 250px}#topBar{grid-template-columns:1fr;gap:8px}.hud{justify-content:flex-start}.scene-overlay{padding:18px 14px}.sprite-card{width:42vw;min-height:300px;padding:12px}.sprite-placeholder{height:230px;font-size:15px}#bottomPanel{grid-template-columns:1fr;padding:10px}#actionGrid{grid-template-columns:1fr}.panel{max-height:calc(100vh - 370px)}}
 </style>
 </head>
 <body>
 <div id="studioSplash" class="studio-splash"><img src="assets/splash/emma_woods_studio_splash.jpeg" alt="Emma Woods Studio" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#fff4e9,#f2cbe3)';"></div>
-<div id="game"><header id="topBar"><div class="brand"><div class="brand-mark">♡</div><div><h1>Swipe Left to Survive</h1><small>A turn-based dating survival RPG prototype</small></div></div><div class="hud" id="hud"></div></header><main id="mainStage"><div class="bg" id="sceneBg"></div><div class="battle-ui hidden" id="battleUi"><div class="health-bar left"><div class="bar-label"><span>Amy</span><span id="amyHpLabel">100 / 100</span></div><div class="meter"><div class="meter-fill" id="amyHpFill"></div></div></div><div class="health-bar right"><div class="bar-label"><span id="enemyNameLabel">Enemy</span><span id="enemyHpLabel">100 / 100</span></div><div class="meter"><div class="meter-fill enemy-fill" id="enemyHpFill"></div></div></div><div class="effect-pop" id="effectPop">GIRL, STAND UP!</div></div><div class="scene-overlay"><div class="sprite-slot"><div class="sprite-card visible" id="amySprite"><div class="sprite-placeholder" id="amySpriteText">AMY<br><small>current outfit appears here</small></div><div class="label" id="amyLabel">Amy</div></div></div><div class="sprite-slot" style="justify-content:flex-end"><div class="sprite-card enemy" id="enemySprite"><div class="sprite-placeholder" id="enemySpriteText">ENEMY</div><div class="label" id="enemyLabel">Enemy</div></div></div></div><section class="screen" id="titleScreen"><div class="panel"><h2>Swipe Left to Survive</h2><p class="subtitle">Working title. Also considering: <b>Match Made in Hell</b>, <b>Amy vs. The Algorithm</b>, and <b>The Pattern</b>.</p><p>Amy thought dating would be normal. Unfortunately, the dating pool is full of bosses, debuffs, fake green flags, and men who need to be studied in a controlled environment.</p><div class="menu-grid"><button class="action-btn primary" onclick="startGame()">Start Prototype</button><button class="action-btn" onclick="showScreen('mapScreen')">Open City Map</button><button class="action-btn" onclick="showScreen('codexScreen')">Villain Codex</button><button class="action-btn" onclick="showScreen('closetScreen')">Open Closet</button></div></div></section><section class="screen hidden" id="mapScreen"><div class="panel light map-panel"><h2>City Map</h2><p class="subtitle">Clickable location pins now sit directly on the map. Mini descriptions help the player choose where to go next.</p><div class="map-shell"><div class="map-toolbar"><span class="map-chip" id="mapTimeChip">Golden Hour</span><span class="map-chip">Tap a pin to travel</span></div><div class="city-map-ui" id="cityMapUi"></div></div><h3 style="margin-top:18px">Quick Travel</h3><div class="location-grid" id="locationGrid"></div></div></section><section class="screen hidden" id="closetScreen"><div class="panel light"><h2>Amy’s Closet</h2><p class="subtitle">Selected outfit persists into battles and cutscenes.</p><div class="closet-grid" id="closetGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('mapScreen')">Back to Map</button></div></div></section><section class="screen hidden" id="shopScreen"><div class="panel light"><h2>Mall: Retail Therapy Rush</h2><p class="subtitle">Buy buffs, outfits, and self-care. MVP shopping mini-game placeholder.</p><div class="shop-grid" id="shopGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('mapScreen')">Back to Map</button></div></div></section><section class="screen hidden" id="codexScreen"><div class="panel"><h2>Villain Codex</h2><p class="subtitle">Clear red flags. The internet will still simp. The group chat is already tired.</p><div class="location-grid" id="codexGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('titleScreen')">Back</button></div></div></section></main><footer id="bottomPanel"><div class="dialogue-box"><div class="speaker" id="speaker">System</div><div id="dialogueText">Welcome to Amy’s dating survival RPG prototype.</div></div><div class="action-box"><div id="actionGrid"></div></div></footer></div>
+<div id="game"><header id="topBar"><div class="brand"><div class="brand-mark">♡</div><div><h1>Swipe Left to Survive</h1><small>A turn-based dating survival RPG prototype</small></div></div><div class="hud" id="hud"></div></header><main id="mainStage"><div class="bg" id="sceneBg"></div><div class="battle-ui hidden" id="battleUi"><div class="health-bar left"><div class="bar-label"><span>Amy</span><span id="amyHpLabel">100 / 100</span></div><div class="meter"><div class="meter-fill" id="amyHpFill"></div></div></div><div class="health-bar right"><div class="bar-label"><span id="enemyNameLabel">Enemy</span><span id="enemyHpLabel">100 / 100</span></div><div class="meter"><div class="meter-fill enemy-fill" id="enemyHpFill"></div></div></div><div class="effect-pop" id="effectPop">GIRL, STAND UP!</div></div><div class="scene-overlay"><div class="sprite-slot"><div class="sprite-card visible" id="amySprite"><div class="sprite-placeholder" id="amySpriteText">AMY<br><small>current outfit appears here</small></div><div class="label" id="amyLabel">Amy</div></div></div><div class="sprite-slot" style="justify-content:flex-end"><div class="sprite-card enemy" id="enemySprite"><div class="sprite-placeholder" id="enemySpriteText">ENEMY</div><div class="label" id="enemyLabel">Enemy</div></div></div></div><section class="screen" id="titleScreen"><div class="panel"><h2>Swipe Left to Survive</h2><p class="subtitle">Working title. Also considering: <b>Match Made in Hell</b>, <b>Amy vs. The Algorithm</b>, and <b>The Pattern</b>.</p><p>Amy thought dating would be normal. Unfortunately, the dating pool is full of bosses, debuffs, fake green flags, and men who need to be studied in a controlled environment.</p><div class="menu-grid"><button class="action-btn primary" onclick="startGame()">Start Prototype</button><button class="action-btn" onclick="showScreen('mapScreen')">Open City Map</button><button class="action-btn" onclick="showScreen('codexScreen')">Villain Codex</button><button class="action-btn" onclick="showScreen('closetScreen')">Open Closet</button></div></div></section><section class="screen hidden" id="mapScreen"><div class="panel light map-panel"><h2>City Map</h2><p class="subtitle">Tap a pink pin to travel.</p><div class="map-shell"><div class="map-toolbar"><span class="map-chip" id="mapTimeChip">Golden Hour</span><span class="map-chip">Location pins are clickable</span></div><div class="city-map-ui" id="cityMapUi"></div></div><h3 style="margin-top:18px">Quick Travel</h3><div class="location-grid" id="locationGrid"></div></div></section><section class="screen hidden" id="closetScreen"><div class="panel light"><h2>Amy’s Closet</h2><p class="subtitle">Selected outfit persists into battles and cutscenes.</p><div class="closet-grid" id="closetGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('mapScreen')">Back to Map</button></div></div></section><section class="screen hidden" id="shopScreen"><div class="panel light"><h2>Mall: Retail Therapy Rush</h2><p class="subtitle">Buy buffs, outfits, and self-care. MVP shopping mini-game placeholder.</p><div class="shop-grid" id="shopGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('mapScreen')">Back to Map</button></div></div></section><section class="screen hidden" id="codexScreen"><div class="panel"><h2>Villain Codex</h2><p class="subtitle">Clear red flags. The internet will still simp. The group chat is already tired.</p><div class="location-grid" id="codexGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('titleScreen')">Back</button></div></div></section></main><footer id="bottomPanel"><div class="dialogue-box"><div class="speaker" id="speaker">System</div><div id="dialogueText">Welcome to Amy’s dating survival RPG prototype.</div></div><div class="action-box"><div id="actionGrid"></div></div></footer></div>
 <script>
-const ASSETS={backgrounds:{apartment_day:"assets/backgrounds/apartment_day.png",apartment_sunset:"assets/backgrounds/apartment_sunset.png",apartment_night:"assets/backgrounds/apartment_night.png",bedroom_day:"assets/backgrounds/bedroom_day.png",bedroom_sunset:"assets/backgrounds/bedroom_sunset.png",bedroom_night:"assets/backgrounds/bedroom_night.png",bedroom_glitch:"assets/backgrounds/bedroom_glitch_algorithm.png",closet:"assets/backgrounds/closet.png",library:"assets/backgrounds/library.png",bar:"assets/backgrounds/bar.png",park:"assets/backgrounds/park.png",beach:"assets/backgrounds/beach_sunset.png",restaurant:"assets/backgrounds/restaurant.png",mall:"assets/backgrounds/mall.png",office:"assets/backgrounds/office.png",villain_apartment:"assets/backgrounds/villain_apartment.png",city_map_day:"assets/backgrounds/city_map_day.png",city_map_afternoon:"assets/backgrounds/city_map_afternoon.png",city_map_night:"assets/backgrounds/city_map_night.png",dream_world:"assets/backgrounds/dream_world_pattern.png"}};
+const ASSETS={backgrounds:{apartment_day:"assets/backgrounds/apartment_day.png",apartment_sunset:"assets/backgrounds/apartment_sunset.png",apartment_night:"assets/backgrounds/apartment_night.png",bedroom_day:"assets/backgrounds/bedroom_day.png",bedroom_sunset:"assets/backgrounds/bedroom_sunset.png",bedroom_night:"assets/backgrounds/bedroom_night.png",bedroom_glitch:"assets/backgrounds/bedroom_glitch_algorithm.png",closet:"assets/backgrounds/closet.png",library:"assets/backgrounds/library.png",bar:"assets/backgrounds/bar.png",park:"assets/backgrounds/park.png",beach:"assets/backgrounds/beach_sunset.png",restaurant:"assets/backgrounds/restaurant.png",mall:"assets/backgrounds/mall.png",office:"assets/backgrounds/office.png",villain_apartment:"assets/backgrounds/villain_apartment.png",city_map_day:"assets/backgrounds/city_map_day.png",city_map_afternoon:"assets/backgrounds/city_map_afternoon.png",city_map_night:"assets/backgrounds/city_map_night.png",dream_world:"assets/backgrounds/dream_world_pattern.png"},sprites:{amy:{idle:"assets/sprites/amy/amy_idle.png",punch:"assets/sprites/amy/amy_punch.png",kick:"assets/sprites/amy/amy_high_kick.png",energyBlast:"assets/sprites/amy/amy_energy_blast_alt.png",hurt:"assets/sprites/amy/amy_hurt.png",victory:"assets/sprites/amy/amy_victory.png",defeat:"assets/sprites/amy/amy_defeat.png",defend:"assets/sprites/amy/amy_defend.png",special:"assets/sprites/amy/amy_special_flag_beam.png",ultimate:"assets/sprites/amy/amy_ultimate_girl_stand_up.png",lowStance:"assets/sprites/amy/amy_low_stance.png",beamCannon:"assets/sprites/amy/amy_beam_cannon.png",kickSide:"assets/sprites/amy/amy_kick.png",energyBlastClassic:"assets/sprites/amy/amy_energy_blast.png",specialClassic:"assets/sprites/amy/amy_special_boundary_flag.png"},algorithm:{idle:"assets/sprites/enemies/bosses/the_algorithm/algorithm_idle.png",intro:"assets/sprites/enemies/bosses/the_algorithm/algorithm_intro.png",walk:"assets/sprites/enemies/bosses/the_algorithm/algorithm_walk.png",attack:"assets/sprites/enemies/bosses/the_algorithm/algorithm_attack.png",special:"assets/sprites/enemies/bosses/the_algorithm/algorithm_special.png",beam:"assets/sprites/enemies/bosses/the_algorithm/algorithm_beam.png",ultimate:"assets/sprites/enemies/bosses/the_algorithm/algorithm_ultimate.png"},pattern:{idle:"assets/sprites/enemies/bosses/the_pattern/pattern_idle.png",intro:"assets/sprites/enemies/bosses/the_pattern/pattern_ready.png",ready:"assets/sprites/enemies/bosses/the_pattern/pattern_ready.png",attack:"assets/sprites/enemies/bosses/the_pattern/pattern_attack_chain.png",chainBarrage:"assets/sprites/enemies/bosses/the_pattern/pattern_attack_chain_barrage.png",heartBlast:"assets/sprites/enemies/bosses/the_pattern/pattern_attack_heart_blast.png",special:"assets/sprites/enemies/bosses/the_pattern/pattern_special_memory_swarm.png",float:"assets/sprites/enemies/bosses/the_pattern/pattern_float.png",block:"assets/sprites/enemies/bosses/the_pattern/pattern_block.png"}}};
 const FALLBACK={apartment_day:"linear-gradient(135deg,#ffd8ec,#fff4e9 46%,#a7d8ff)",apartment_sunset:"linear-gradient(135deg,#3b1935,#e16a9b 45%,#ffb35d)",apartment_night:"linear-gradient(135deg,#10071b,#2f1742 55%,#0f274b)",bedroom_day:"linear-gradient(135deg,#fff0df,#ffd2e6 50%,#bde6ff)",bedroom_sunset:"linear-gradient(135deg,#33122b,#d85a85 48%,#f8a949)",bedroom_night:"linear-gradient(135deg,#0b0915,#251735 55%,#0a2440)",bedroom_glitch:"linear-gradient(135deg,#07030c,#250034 40%,#ff1493)",closet:"linear-gradient(135deg,#ffd8ec,#c88fed)",library:"linear-gradient(135deg,#5a2d3b,#a46a6f 50%,#f0c08a)",bar:"linear-gradient(135deg,#2a1024,#6a244e 55%,#d98256)",park:"linear-gradient(135deg,#345c30,#8fcf79 50%,#ffd38e)",beach:"linear-gradient(135deg,#ff9a76,#f7d07a 50%,#6ea8ff)",restaurant:"linear-gradient(135deg,#401b2b,#894658 55%,#e9a067)",mall:"linear-gradient(135deg,#ffd7ef,#fff0fa 45%,#e6c5ff)",office:"linear-gradient(135deg,#eef3ff,#c9d7ff 45%,#6c7898)",villain_apartment:"linear-gradient(135deg,#0c0b10,#3c2635 55%,#9b5a36)",city_map_day:"linear-gradient(135deg,#94d8ff,#fff5bd 50%,#79d18a)",city_map_afternoon:"linear-gradient(135deg,#2c214d,#d05d91 50%,#ffb86b)",city_map_night:"linear-gradient(135deg,#08142b,#172a57 55%,#66428b)",dream_world:"linear-gradient(135deg,#12051c,#4c123e 50%,#eb477c)"};
-const state={location:"apartment",time:"Day",day:1,funds:750,hp:100,maxHp:100,peace:70,stamina:80,clarity:55,selfRespect:55,delusion:20,groupChat:20,redFlagData:0,outfit:{top:"Pink Tank",bottom:"Jeans",shoes:"Pink Boots",jacket:"Purple Cardigan",accessory:"Gold Hoops"},defeated:new Set(),rejectedGreenFlags:new Set(),currentBattle:null,postPatternUnlocked:false};
+const state={location:"apartment",time:"Day",day:1,funds:750,hp:100,maxHp:100,peace:70,stamina:80,clarity:55,selfRespect:55,delusion:20,groupChat:20,redFlagData:0,outfit:{top:"Pink Tank",bottom:"Jeans",shoes:"Pink Boots",jacket:"Purple Cardigan",accessory:"Gold Hoops"},defeated:new Set(),rejectedGreenFlags:new Set(),currentBattle:null,postPatternUnlocked:false,currentAmyPose:"idle",currentEnemyPose:"idle"};
 const outfits={top:["Pink Tank","White Sweater","Power Blazer","Night Out Top","Cozy Hoodie","Beach Top"],bottom:["Jeans","Black Pants","Skirt","Comfy Joggers","Date Dress","Beach Shorts"],shoes:["Pink Boots","Sneakers","Heels","Combat Boots","Sandals"],jacket:["Purple Cardigan","Leather Jacket","Soft Cardigan","No Jacket","Power Blazer"],accessory:["Gold Hoops","Heart Purse","Pepper Spray Keychain","Lip Gloss of Discernment","Noise-Canceling Headphones"]};
 const villains={two_am:{name:"The 2AM Summoner",className:"Low-Effort Hookup Texter",bg:"bedroom_night",maxHp:75,quote:"wyd?",weakness:"Boundaries, ignoring him, sleep.",attacks:[a("wyd?",8,3,"The 2AM Summoner sent: “wyd?” Amy’s Peace was interrupted."),a("You up?",10,5,"He used “you up?” at a suspicious hour."),a("Let’s just see where this goes",12,8,"Situationship fog filled the battlefield.")]},preference:{name:"The Preference Paladin",className:"Fetishizer Knight",bg:"bar",maxHp:100,quote:"It’s not a fetish, it’s a preference.",weakness:"Direct questions and self-respect.",attacks:[a("You Look Like Beyoncé",12,4,"He used “You look just like Beyoncé.” Psychic damage taken."),a("I’m 1/32 Black",10,3,"He attempted to gain immunity to accountability. It failed."),a("My Parents Would Never Accept You",22,10,"Ultimate cowardice revealed.")]},body_bag:{name:"Body Bag Boy",className:"True Crime Date",bg:"villain_apartment",maxHp:115,quote:"I have a body bag and straitjacket in my trunk.",weakness:"Leaving immediately.",attacks:[a("Trunk Reveal",25,-4,"He mentioned the trunk. Safety alarms screamed."),a("It Was Just a Joke",16,8,"He tried to downplay the felony vibes."),a("Wanna See?",30,-10,"Absolutely not.")]},demon:{name:"The Demon Fighter",className:"Hot Disaster",bg:"restaurant",maxHp:125,quote:"I’m fighting my demons.",weakness:"Follow-up questions.",attacks:[a("Trauma Dump",18,10,"He used Trauma Dump. Amy is tempted to confuse intensity with intimacy."),a("I’ve Changed",16,12,"He said he changed, but the demons are still in party formation."),a("Hot Disaster Aura",24,18,"He is unfortunately attractive. Delusion surged.")]},millionaire:{name:"The Low-Key Millionaire",className:"Wallet Illusionist",bg:"restaurant",maxHp:105,quote:"I’m low-key a millionaire.",weakness:"Due diligence.",attacks:[a("Fake Luxury Flex",12,6,"Designer sunglasses flashed. Bank balance unknown."),a("I Need a Rich Woman",20,-3,"He wants a provider with no benefits package."),a("Do You Want My Kids?",24,-8,"Amy remembered they met last week.")]},house_date:{name:"The House Date Economist",className:"Bare Minimum Accountant",bg:"villain_apartment",maxHp:90,quote:"Do you wanna pay for the next one then?",weakness:"Standards.",attacks:[a("I Don’t Want To Be Used For Money",12,4,"He protected imaginary wealth."),a("House Date Loop",15,8,"The battlefield became a couch with no plans."),a("You Pay Then",18,-3,"Audacity detected.")]},coworker:{name:"The Experimental Coworker",className:"Office Happy Hour Creep",bg:"bar",maxHp:95,quote:"I’ve always wanted to try a Black girl.",weakness:"Documentation, HR, public shame.",attacks:[a("You’re Different",12,3,"He disguised objectification as a compliment."),a("Don’t Be So Sensitive",18,8,"Gaslight smoke spread across the bar."),a("It Was Just a Joke",16,6,"He tried to make Amy manage his embarrassment.")]},broke_dreamer:{name:"Joey Delivery",className:"The Broke Balladeer",bg:"restaurant",maxHp:85,quote:"I’m not broke, I’m pre-successful.",weakness:"Asking about employment.",attacks:[a("Song Dedication",9,10,"He sang a sweet song. Amy’s Standards wobbled."),a("Manifesting",12,8,"His five-year plan appears to be vibes."),a("Can You Spot Me?",17,-2,"Soft Life Funds threatened.")]},old_young:{name:"The Old Young-Girl Guy",className:"Nightlife Leech",bg:"bar",maxHp:100,quote:"You’re mature for your age.",weakness:"Visible disgust.",attacks:[a("Age Is Just a Number",16,4,"Creep level rose sharply."),a("Buy Me a Drink",12,-2,"He came with age and no wallet."),a("You Look So Young",24,-8,"Amy’s entire nervous system rejected this.")]},normal_fake:{name:"Guy Who Seems Normal",className:"Advanced Threat",bg:"restaurant",maxHp:140,quote:"You’re overthinking it.",weakness:"Consistency Check.",attacks:[a("Reasonable Explanation",18,12,"He sounded normal enough to be dangerous."),a("I Don’t Like Labels",22,14,"Clarity dropped. The red flags wore beige."),a("You’re Overthinking It",24,16,"Self-trust took damage.")]},algorithm:{name:"The Algorithm",className:"Dating App Overlord",bg:"bedroom_glitch",maxHp:170,quote:"Based on your activity, we think you’ll like...",weakness:"Delete app. Standards filter. Red Flag Data.",attacks:[a("99+ Likes",20,15,"The Algorithm flooded the room with matches."),a("He’s Your Type Though",24,18,"The app learned Amy’s weaknesses."),a("Lower Standards For More Matches",30,20,"The Algorithm tried to monetize loneliness.")]},pattern:{name:"The Pattern",className:"Inner Loop",bg:"dream_world",maxHp:200,quote:"It’s different this time.",weakness:"Self-trust, healing, Girl Stand Up.",attacks:[a("Maybe He’ll Change",25,20,"The Pattern whispered familiar chaos."),a("At Least He Wants Me",28,22,"Old fear tried to sound like logic."),a("One More Chance",34,26,"The loop tried to close again.")]}};
 function a(name,damage,delusion,text){return{name,damage,delusion,text}}
-const greenFlags={xavier:{name:"Xavier",role:"Quiet Librarian",bg:"library",ending:"Planetarium Date",quote:"No pressure. I just thought you might like the stars.",attack:"Respectful Invitation"},james:{name:"James",role:"Kind Bartender",bg:"bar",ending:"Movie Date",quote:"You good? And if you are, want to catch a movie sometime?",attack:"Safe Check-In"},andrew:{name:"Andrew",role:"Decent Guy at the Park",bg:"park",ending:"Dinner Date",quote:"I’d like to take you to dinner. No pressure either way.",attack:"Clear Intentions"}};
+const greenFlags={xavier:{name:"Xavier",role:"Quiet Librarian",bg:"library",ending:"Planetarium Date",quote:"No pressure. I just thought you might like the stars.",attack:"Respectful Invitation"},james:{name:"James",role:"Kind Bartender",bg:"bar",ending:"Movie Date",quote:"You good? And if you are, want to catch a movie sometime?",attack:"Safe Check-In"},andrew:{name:"Andrew",role:"Decent Guy at the Park",bg:"park",ending:"Dinner Date",quote:"I’d like to take you to dinner. No pressure either way.",attack:"Clear Intentions"}};const ENEMY_ART={villains:{two_am:"assets/characters/villains/2am_summoner_reference.png",preference:"assets/characters/villains/preference_paladin_reference.png",body_bag:"assets/characters/villains/body_bag_boy_reference.png",demon:"assets/characters/villains/demon_fighter_reference.png",coworker:"assets/characters/villains/experimental_coworker_reference.png",broke_dreamer:"assets/characters/villains/broke_dreamer_reference.png",old_young:"assets/characters/villains/old_young_girl_guy_reference.png",millionaire:"assets/characters/villains/low_key_millionaire_reference.png",house_date:"assets/characters/villains/house_date_economist_reference.png",normal_fake:"assets/characters/villains/demon_fighter_reference.png",algorithm:"assets/characters/bosses/algorithm_reference.png",pattern:"assets/characters/bosses/pattern_reference.png"},greenFlags:{xavier:"assets/characters/green_flags/xavier_reference.png",james:"assets/characters/green_flags/james_reference.png",andrew:"assets/characters/green_flags/andrew_reference.png"}};
 const friends={malik:{name:"Malik",line:"Amy... where the fuck are you finding these guys?!",action(){state.delusion=clamp(state.delusion-15);state.selfRespect=clamp(state.selfRespect+12);popEffect("BE SO FOR REAL");return"Malik used Common Sense Check."}},min:{name:"Min",line:"...",action(){state.clarity=clamp(state.clarity+18);state.delusion=clamp(state.delusion-20);popEffect("SIDE-EYE");return"Min side-eyed Amy. The silence did 999 psychic damage."}},jade:{name:"Jade",line:"Girl. Stand up.",action(){state.selfRespect=clamp(state.selfRespect+22);state.groupChat=clamp(state.groupChat+10);popEffect("GIRL, STAND UP!");return"Jade restored Self-Respect."}},chloe:{name:"Chloe",line:"I found receipts.",action(){state.redFlagData++;state.clarity=clamp(state.clarity+10);popEffect("RECEIPTS!");return"Chloe dropped evidence from the sky."}},mia:{name:"Mia",line:"No.",action(){state.hp=clamp(state.hp+15,state.maxHp);state.selfRespect=clamp(state.selfRespect+8);popEffect("NO.");return"Mia smiled politely. The enemy felt primal fear."}}};
 const locations=[loc("apartment","Amy’s Apartment","Home base. Rest, save, check phone, change clothes.",()=>state.time==="Night"?"apartment_night":state.time==="Evening"?"apartment_sunset":"apartment_day",apartmentActions),loc("bedroom","Bedroom","Rest, sleep, and eventually enter the dream-world Pattern battle.",()=>state.time==="Night"?"bedroom_night":state.time==="Evening"?"bedroom_sunset":"bedroom_day",bedroomActions),loc("closet","Closet","Change Amy’s outfit. Outfit persists into scenes.",()=>"closet",()=>[{label:"Open Closet",fn:()=>showScreen("closetScreen")},{label:"Back to Apartment",fn:()=>goLocation("apartment")}]),loc("office","Office","Do office things. Earn 500–1000 Soft Life Funds. Advances time.",()=>"office",()=>[{label:"Do Office Things",fn:doOffice},{label:"Back to Map",fn:()=>showScreen("mapScreen")}]),loc("library","Library","Restore Clarity. Xavier appears as background green-flag NPC.",()=>"library",libraryActions),loc("bar","Bar","Parmesan fries, drinks, friends, stamina recovery. James works here.",()=>"bar",barActions),loc("park","Park","Peaceful walks and calm energy. Andrew runs in the background.",()=>"park",parkActions),loc("mall","Mall","Shopping, outfit buying, and Retail Therapy Rush.",()=>"mall",()=>[{label:"Shop",fn:()=>showScreen("shopScreen")},{label:"Back to Map",fn:()=>showScreen("mapScreen")}]),loc("restaurant","Restaurant","Date spot. Normal meal in foreground, metaphorical battle in background.",()=>"restaurant",()=>[{label:"Trigger Random Date Battle",fn:startRandomVillainBattle},{label:"Back to Map",fn:()=>showScreen("mapScreen")}]),loc("villain_apartment","Villain Man Apartment","Higher-risk encounter zone. Why is there no furniture?",()=>"villain_apartment",()=>[{label:"Trigger Risky Battle",fn:()=>startBattle("house_date")},{label:"Back to Map",fn:()=>showScreen("mapScreen")}]),loc("beach","Beach","Peaceful sunset. Post-Pattern solo true-peace ending option.",()=>"beach",beachActions)];
-const mapPins=[{id:"apartment",icon:"🏠",tag:"Home Base",x:23,y:38,desc:"Rest, check the phone, access the bedroom, and open the closet."},{id:"office",icon:"💼",tag:"Funds",x:69,y:20,desc:"Do office things and earn 500–1000 Soft Life Funds."},{id:"library",icon:"📚",tag:"Clarity",x:48,y:41,desc:"Read in peace and restore Clarity. Xavier is usually nearby."},{id:"bar",icon:"🍟",tag:"HP + Stamina",x:56,y:70,desc:"Parmesan fries, a drink, and James quietly holding it down."},{id:"park",icon:"🌳",tag:"Peace",x:15,y:74,desc:"A calm place to reset. Andrew jogs through the background."},{id:"restaurant",icon:"🍽️",tag:"Date Zone",x:77,y:53,desc:"Foreground dinner. Background battle. Metaphorically, of course."},{id:"mall",icon:"🛍️",tag:"Shopping",x:76,y:82,desc:"Retail Therapy Rush, outfit shopping, and cute soft-life upgrades."},{id:"villain_apartment",icon:"🚩",tag:"High Risk",x:87,y:34,desc:"Higher-risk encounter zone. Suspicious vibes and minimal furniture."},{id:"beach",icon:"🌅",tag:"True Peace",x:8,y:88,desc:"The quiet ending. Waves, peace, and no more nonsense."}];
+const mapPins=[{id:"apartment",x:23,y:38},{id:"office",x:69,y:20},{id:"library",x:48,y:41},{id:"bar",x:56,y:70},{id:"park",x:15,y:74},{id:"restaurant",x:77,y:53},{id:"mall",x:76,y:82},{id:"villain_apartment",x:87,y:34},{id:"beach",x:8,y:88}];
 function loc(id,label,desc,bg,actions){return{id,label,desc,bg,actions}}
-function startGame(){hideAllScreens();setBackground("apartment_day");state.location="apartment";state.time="Day";updateHud();showAmy(true);showEnemy(false);say("Narrator","Amy downloaded a dating app. Amy thought she was looking for love. Amy was wrong.");setActions([{label:"Continue",fn:()=>{say("System","Tutorial: not every battle deserves a debate. Sometimes the winning move is Block.");setActions([{label:"Check Dating App",fn:()=>startBattle("two_am")},{label:"Open City Map",fn:()=>showScreen("mapScreen")},{label:"Open Closet",fn:()=>showScreen("closetScreen")}])}}])}
+function startGame(){hideAllScreens();setBackground("apartment_day");state.location="apartment";state.time="Day";updateHud();showAmy(true,"idle");showEnemy(false);say("Narrator","Amy downloaded a dating app. Amy thought she was looking for love. Amy was wrong.");setActions([{label:"Continue",fn:()=>{say("System","Tutorial: not every battle deserves a debate. Sometimes the winning move is Block.");setActions([{label:"Check Dating App",fn:()=>startBattle("two_am")},{label:"Open City Map",fn:()=>showScreen("mapScreen")},{label:"Open Closet",fn:()=>showScreen("closetScreen")}])}}])}
 function showScreen(id){hideAllScreens();document.getElementById(id).classList.remove("hidden");if(id==="mapScreen")renderLocations();if(id==="closetScreen"){setBackground("closet");renderCloset()}if(id==="shopScreen"){setBackground("mall");renderShop()}if(id==="codexScreen")renderCodex();updateHud()}
 function hideAllScreens(){document.querySelectorAll(".screen").forEach(s=>s.classList.add("hidden"))}
 function setBackground(bgKey){const el=document.getElementById("sceneBg"),url=ASSETS.backgrounds[bgKey];el.style.backgroundImage=FALLBACK[bgKey]||FALLBACK.apartment_day;const img=new Image();img.onload=()=>el.style.backgroundImage=`url('${url}')`;img.src=url}
 function updateHud(){document.getElementById("hud").innerHTML=`<div class="stat">Day <b>${state.day}</b></div><div class="stat">Time <b>${state.time}</b></div><div class="stat">HP <b>${state.hp}/${state.maxHp}</b></div><div class="stat">Peace <b>${state.peace}</b></div><div class="stat">Clarity <b>${state.clarity}</b></div><div class="stat">Self-Respect <b>${state.selfRespect}</b></div><div class="stat">Soft Life Funds <b>${state.funds}</b></div><div class="stat">Fit <b>${state.outfit.top}, ${state.outfit.bottom}</b></div>`;updateBattleBars()}
 function say(speaker,text){document.getElementById("speaker").textContent=speaker;document.getElementById("dialogueText").textContent=text}
 function setActions(actions){const grid=document.getElementById("actionGrid");grid.innerHTML="";actions.forEach(x=>{const b=document.createElement("button");b.className=`action-btn ${x.className||""}`;b.textContent=x.label;b.disabled=!!x.disabled;b.onclick=x.fn;grid.appendChild(b)})}
-function showAmy(show){document.getElementById("amySprite").classList.toggle("visible",show);if(show)updateAmySpriteLabel()}
-function showEnemy(show,name="Enemy",text="ENEMY"){document.getElementById("enemySprite").classList.toggle("visible",show);document.getElementById("enemyLabel").textContent=name;document.getElementById("enemySpriteText").innerHTML=text}
-function updateAmySpriteLabel(){document.getElementById("amySpriteText").innerHTML=`AMY<br><small>${state.outfit.top}<br>${state.outfit.bottom}<br>${state.outfit.shoes}</small>`}
-function getMapBgKey(){return state.time==="Night"?"city_map_night":state.time==="Evening"?"city_map_afternoon":"city_map_day"}function renderLocations(){setBackground(getMapBgKey());renderCityMap();const grid=document.getElementById("locationGrid");grid.innerHTML="";locations.forEach(l=>{const card=document.createElement("div");card.className="location-card";card.innerHTML=`<h3>${l.label}</h3><div class="card-desc">${l.desc}</div><button class="map-btn" onclick="goLocation('${l.id}')">Go</button>`;grid.appendChild(card)})}function renderCityMap(){const map=document.getElementById("cityMapUi"),chip=document.getElementById("mapTimeChip"),bgKey=getMapBgKey(),bgUrl=ASSETS.backgrounds[bgKey];chip.textContent=state.time==="Night"?"Night":state.time==="Evening"?"Golden Hour":"Daytime";map.style.backgroundImage=`linear-gradient(180deg,rgba(255,255,255,.03),rgba(24,10,34,.08)), url('${bgUrl}')`;map.innerHTML="";mapPins.forEach(p=>{const btn=document.createElement("button");btn.className=`map-pin ${state.location===p.id?"current":""}`;btn.style.left=`${p.x}%`;btn.style.top=`${p.y}%`;btn.setAttribute("aria-label",`Go to ${p.id}`);btn.innerHTML=`<span class="map-pin-icon"></span><span class="map-pin-label">${locations.find(l=>l.id===p.id)?.label||p.id}</span>`;btn.onclick=()=>goLocation(p.id);map.appendChild(btn)});const legend=document.createElement("div");legend.className="map-legend";legend.innerHTML=`<b>Tap a pin</b><br>Choose where Amy goes next.`;map.appendChild(legend)}
+function renderSprite(containerId,src,fallbackHtml="",enemyClass=false){const el=document.getElementById(containerId);if(!src){el.innerHTML=fallbackHtml;return}const img=new Image();img.className=`sprite-art${enemyClass?" enemy-art":""}`;img.alt="";img.onload=()=>{el.innerHTML="";el.appendChild(img)};img.onerror=()=>{el.innerHTML=fallbackHtml};img.src=src}function getEnemyArt(type,id){if(type==="greenFlag")return ENEMY_ART.greenFlags[id]||"";return ENEMY_ART.villains[id]||""}function getEnemySprite(id,pose="idle"){if((id==="algorithm"||id==="pattern")&&ASSETS.sprites&&ASSETS.sprites[id]){return ASSETS.sprites[id][pose]||ASSETS.sprites[id].idle||getEnemyArt("villain",id)}return getEnemyArt("villain",id)}function setAmyPose(pose="idle"){state.currentAmyPose=pose;const src=ASSETS.sprites.amy[pose]||ASSETS.sprites.amy.idle;const fallback=`AMY<br><small>${state.outfit.top}<br>${state.outfit.bottom}<br>${state.outfit.shoes}</small>`;renderSprite("amySpriteText",src,fallback,false)}function setEnemyPose(id,pose="idle",name="Enemy",text="ENEMY"){state.currentEnemyPose=pose;renderSprite("enemySpriteText",getEnemySprite(id,pose),text,true);document.getElementById("enemyLabel").textContent=name}function showAmy(show,pose="idle"){document.getElementById("amySprite").classList.toggle("visible",show);if(show)setAmyPose(pose)}function showEnemy(show,name="Enemy",text="ENEMY",image="",enemyId=""){document.getElementById("enemySprite").classList.toggle("visible",show);document.getElementById("enemyLabel").textContent=name;if(show){if(enemyId==="algorithm"||enemyId==="pattern")setEnemyPose(enemyId,"intro",name,text);else renderSprite("enemySpriteText",image,text,true)}else document.getElementById("enemySpriteText").innerHTML=""}function updateAmySpriteLabel(){if(document.getElementById("amySprite").classList.contains("visible"))setAmyPose(state.currentAmyPose||"idle")}
+function getMapBgKey(){return state.time==="Night"?"city_map_night":state.time==="Evening"?"city_map_afternoon":"city_map_day"}function renderLocations(){setBackground(getMapBgKey());renderCityMap();const grid=document.getElementById("locationGrid");grid.innerHTML="";locations.forEach(l=>{const card=document.createElement("div");card.className="location-card";card.innerHTML=`<h3>${l.label}</h3><div class="card-desc">${l.desc}</div><button class="map-btn" onclick="goLocation('${l.id}')">Go</button>`;grid.appendChild(card)})}function renderCityMap(){const map=document.getElementById("cityMapUi"),chip=document.getElementById("mapTimeChip"),bgKey=getMapBgKey(),bgUrl=ASSETS.backgrounds[bgKey];chip.textContent=state.time==="Night"?"Night":state.time==="Evening"?"Golden Hour":"Daytime";map.style.backgroundImage=`linear-gradient(180deg,rgba(255,255,255,.03),rgba(24,10,34,.08)), url('${bgUrl}')`;map.innerHTML="";mapPins.forEach(p=>{const loc=locations.find(l=>l.id===p.id);const btn=document.createElement("button");btn.className=`map-pin ${state.location===p.id?"current":""}`;btn.style.left=`${p.x}%`;btn.style.top=`${p.y}%`;btn.setAttribute("aria-label",`Go to ${loc?loc.label:p.id}`);btn.innerHTML=`<span class="map-pin-icon"></span><span class="map-pin-label">${loc?loc.label:p.id}</span>`;btn.onclick=()=>goLocation(p.id);map.appendChild(btn)});const legend=document.createElement("div");legend.className="map-legend";legend.innerHTML=`<b>Tap a pin</b><br>Choose where Amy goes next.`;map.appendChild(legend)}
 function goLocation(id){const l=locations.find(x=>x.id===id);if(!l)return;hideAllScreens();state.location=id;setBackground(l.bg());showAmy(true);showEnemy(false);document.getElementById("battleUi").classList.add("hidden");if(id==="library")say("System","The library is quiet. Xavier is in the background, reshelving books and minding his business.");else if(id==="bar")say("System","The bar is warm. James looks over like a concerned NPC and keeps polishing glasses.");else if(id==="park")say("System","The park feels peaceful. Andrew jogs by in the background like a green flag loading screen.");else if(id==="beach")say("System","The beach is quiet. No tests. No battles. Just waves.");else say("System",`Arrived at ${l.label}.`);setActions(l.actions());updateHud()}
 function apartmentActions(){return[{label:"Check Dating App",fn:startRandomVillainBattle,className:"danger"},{label:"Go to Bedroom",fn:()=>goLocation("bedroom")},{label:"Open Closet",fn:()=>showScreen("closetScreen")},{label:"Open City Map",fn:()=>showScreen("mapScreen")}]}
 function bedroomActions(){let arr=[{label:"Rest",fn:restAtHome,className:"green"},{label:"Sleep / Advance Day",fn:sleepAdvance},{label:"Back to Apartment",fn:()=>goLocation("apartment")},{label:"Open City Map",fn:()=>showScreen("mapScreen")}];if(state.defeated.has("algorithm")&&!state.defeated.has("pattern"))arr.unshift({label:"Sleep... Enter Dream World",fn:()=>startBattle("pattern"),className:"danger wide"});return arr}
@@ -51,18 +49,18 @@ function renderShop(){const grid=document.getElementById("shopGrid");grid.innerH
 function renderCodex(){const grid=document.getElementById("codexGrid");grid.innerHTML="";Object.entries(villains).forEach(([k,v])=>{const card=document.createElement("div");card.className="location-card";card.innerHTML=`<h3>${v.name}</h3><div class="card-desc"><b>${v.className}</b><br>“${v.quote}”<br>Weakness: ${v.weakness}</div><button class="map-btn ${state.defeated.has(k)?"green":"danger"}" onclick="startBattle('${k}')">${state.defeated.has(k)?"Rematch":"Fight"}</button>`;grid.appendChild(card)})}
 function spendFunds(cost,fn){if(state.funds<cost){say("System","Not enough Soft Life Funds.");return}state.funds-=cost;fn();updateHud();if(!document.getElementById("shopScreen").classList.contains("hidden"))renderShop()}
 function startRandomVillainBattle(){const order=["two_am","preference","coworker","broke_dreamer","house_date","millionaire","old_young","body_bag","demon","normal_fake"];startBattle(order.find(id=>!state.defeated.has(id))||"normal_fake")}
-function startBattle(id){hideAllScreens();const v=villains[id];if(!v)return;const hpScale=["normal_fake","algorithm","pattern"].includes(id)?1.15:1.08;state.currentBattle={id,type:"villain",enemyHp:Math.round(v.maxHp*hpScale),enemyMaxHp:Math.round(v.maxHp*hpScale)};setBackground(v.bg);showAmy(true);showEnemy(true,v.name,`${v.name}<br><small>${v.className}</small>`);document.getElementById("battleUi").classList.remove("hidden");say(v.name,`A wild ${v.name} appeared. “${v.quote}”`);setBattleActions();updateHud()}
-function setBattleActions(){setActions([{label:"Boundary Slash",fn:()=>amyAttack("Boundary Slash",20,"Amy used Boundary Slash. It was super effective against audacity.")},{label:"Ask Follow-Up Question",fn:()=>amyAttack("Follow-Up Question",14+Math.floor(state.clarity/10),"Amy asked one normal follow-up question. The enemy’s story began to wobble.")},{label:"Check Receipts",fn:()=>amyAttack("Check Receipts",16+state.redFlagData*4,"Amy checked the receipts. Evidence sparkled ominously.")},{label:"Summon Friend",fn:summonFriendMenu},{label:"Girl, Stand Up!",fn:girlStandUp,className:"primary wide"},{label:"Run / Block",fn:escapeBattle,className:"danger wide"}])}
-function amyAttack(move,dmg,text){const b=state.currentBattle;if(!b)return;b.enemyHp=Math.max(0,b.enemyHp-dmg);state.selfRespect=clamp(state.selfRespect+2);state.clarity=clamp(state.clarity+1);popEffect(move);say("Amy",text);updateBattleBars();if(b.enemyHp<=0)return winBattle();setActions([{label:"Continue",fn:enemyTurn}])}
-function enemyTurn(){const b=state.currentBattle,v=villains[b.id],atk=v.attacks[Math.floor(Math.random()*v.attacks.length)];let dmg=Math.max(8,Math.round(atk.damage*1.15)-Math.floor(state.selfRespect/28));if(["normal_fake","algorithm","pattern"].includes(b.id))dmg+=3;if(state.delusion>55)dmg+=8;state.hp=Math.max(0,state.hp-dmg);state.delusion=clamp(state.delusion+atk.delusion);state.peace=clamp(state.peace-Math.floor(dmg/2));popEffect(atk.name);say(v.name,atk.text);updateHud();if(state.hp<=0||state.delusion>=100)return gameOver(b.id);setActions([{label:"Amy’s Turn",fn:setBattleActions}])}
+function startBattle(id){hideAllScreens();const v=villains[id];if(!v)return;const hpScale=["normal_fake","algorithm","pattern"].includes(id)?1.15:1.08;state.currentBattle={id,type:"villain",enemyHp:Math.round(v.maxHp*hpScale),enemyMaxHp:Math.round(v.maxHp*hpScale)};setBackground(v.bg);showAmy(true,"idle");showEnemy(true,v.name,`${v.name}<br><small>${v.className}</small>`,getEnemyArt("villain",id),id);document.getElementById("battleUi").classList.remove("hidden");say(v.name,`A wild ${v.name} appeared. “${v.quote}”`);setBattleActions();updateHud()}
+function setBattleActions(){setAmyPose("idle");if(state.currentBattle&&(state.currentBattle.id==="algorithm"||state.currentBattle.id==="pattern")){const boss=villains[state.currentBattle.id];setEnemyPose(state.currentBattle.id,"idle",boss.name,`${boss.name}<br><small>${boss.className}</small>`) }setActions([{label:"Boundary Slash",fn:()=>amyAttack("Boundary Slash",20,"Amy used Boundary Slash. It was super effective against audacity.")},{label:"Phone Punch",fn:()=>amyAttack("Phone Punch",13+Math.floor(state.clarity/12),"Amy hit him with a direct response and a clean right hook to the narrative.")},{label:"Kick of Discernment",fn:()=>amyAttack("Kick of Discernment",18+Math.floor(state.selfRespect/12),"Amy used Kick of Discernment. Delusion was launched into low orbit.")},{label:"Check Receipts",fn:()=>amyAttack("Check Receipts",16+state.redFlagData*4,"Amy checked the receipts. Evidence sparkled ominously.")},{label:"Summon Friend",fn:summonFriendMenu},{label:"Girl, Stand Up!",fn:girlStandUp,className:"primary wide"},{label:"Run / Block",fn:escapeBattle,className:"danger wide"}])}
+function amyAttack(move,dmg,text){const b=state.currentBattle;if(!b)return;setAmyPose(move==="Boundary Slash"?"special":move==="Check Receipts"?"energyBlast":move==="Kick of Discernment"?"kick":"punch");b.enemyHp=Math.max(0,b.enemyHp-dmg);state.selfRespect=clamp(state.selfRespect+2);state.clarity=clamp(state.clarity+1);popEffect(move);say("Amy",text);updateBattleBars();if(b.enemyHp<=0)return winBattle();setActions([{label:"Continue",fn:enemyTurn}])}
+function enemyTurn(){const b=state.currentBattle,v=villains[b.id],atk=v.attacks[Math.floor(Math.random()*v.attacks.length)];setAmyPose("hurt");if(b.id==="algorithm"){let pose="attack";if(atk.name==="99+ Likes")pose="attack";else if(atk.name==="He’s Your Type Though")pose="beam";else if(atk.name==="Lower Standards For More Matches")pose="ultimate";setEnemyPose("algorithm",pose,v.name,`${v.name}<br><small>${v.className}</small>`)}if(b.id==="pattern"){let pose="attack";if(atk.name==="Maybe He’ll Change")pose="attack";else if(atk.name==="At Least He Wants Me")pose="heartBlast";else if(atk.name==="One More Chance")pose="chainBarrage";setEnemyPose("pattern",pose,v.name,`${v.name}<br><small>${v.className}</small>`)}let dmg=Math.max(8,Math.round(atk.damage*1.15)-Math.floor(state.selfRespect/28));if(["normal_fake","algorithm","pattern"].includes(b.id))dmg+=3;if(state.delusion>55)dmg+=8;state.hp=Math.max(0,state.hp-dmg);state.delusion=clamp(state.delusion+atk.delusion);state.peace=clamp(state.peace-Math.floor(dmg/2));popEffect(atk.name);say(v.name,atk.text);updateHud();if(state.hp<=0||state.delusion>=100)return gameOver(b.id);setActions([{label:"Amy’s Turn",fn:setBattleActions}])}
 function summonFriendMenu(){setActions(Object.entries(friends).map(([k,f])=>({label:`Call ${f.name}`,fn:()=>useFriend(k)})).concat([{label:"Back",fn:setBattleActions}]))}
 function useFriend(id){if(state.groupChat<10){say("Group Chat","Group Chat Meter too low.");return setActions([{label:"Back",fn:setBattleActions}])}state.groupChat=clamp(state.groupChat-10);const f=friends[id],result=f.action(),b=state.currentBattle;if(b&&b.type==="villain")b.enemyHp=Math.max(0,b.enemyHp-8);say(f.name,`${f.line} ${result}`);updateHud();if(b&&b.enemyHp<=0)winBattle();else setActions([{label:"Continue",fn:enemyTurn}])}
-function girlStandUp(){const b=state.currentBattle;if(!b)return;const dmg=30+Math.floor(state.selfRespect/5)+Math.floor(state.groupChat/8);state.groupChat=clamp(state.groupChat-15);state.selfRespect=clamp(state.selfRespect+10);state.delusion=clamp(state.delusion-18);b.enemyHp=Math.max(0,b.enemyHp-dmg);popEffect("GIRL, STAND UP!");say("Amy","Amy used her ultimate: Girl, Stand Up! The group chat appeared. Malik yelled. Min side-eyed. Jade pointed. Chloe dropped receipts. Mia smiled. Audacity trembled.");updateHud();if(b.enemyHp<=0)winBattle();else setActions([{label:"Continue",fn:enemyTurn}])}
-function escapeBattle(){const b=state.currentBattle,v=villains[b.id];state.selfRespect=clamp(state.selfRespect+6);state.peace=clamp(state.peace+4);say("Amy",`Amy blocked ${v.name} and left. No debate. No dissertation. Peace protected.`);state.defeated.add(b.id);state.currentBattle=null;document.getElementById("battleUi").classList.add("hidden");showEnemy(false);setActions([{label:"Back to Map",fn:()=>showScreen("mapScreen")}]);updateHud()}
-function winBattle(){const b=state.currentBattle,id=b.id,v=villains[id];state.defeated.add(id);state.currentBattle=null;state.redFlagData++;state.groupChat=clamp(state.groupChat+12);state.clarity=clamp(state.clarity+8);state.selfRespect=clamp(state.selfRespect+12);state.peace=clamp(state.peace+6);document.getElementById("battleUi").classList.add("hidden");showEnemy(false);say("Victory",`${v.name} was defeated. Amy gained XP, clarity, receipts, and self-respect. Soft Life Funds gained: 0, because Amy is not paid for emotional labor.`);let acts=[{label:"Back to Map",fn:()=>showScreen("mapScreen"),className:"primary"}];if(shouldOfferAlgorithm())acts.unshift({label:"Go Home and Face The Algorithm",fn:()=>startBattle("algorithm"),className:"danger wide"});if(id==="algorithm")acts.unshift({label:"Sleep",fn:()=>goLocation("bedroom"),className:"danger wide"});if(id==="pattern"){state.postPatternUnlocked=true;acts=[{label:"What do you want to do next?",fn:()=>showScreen("mapScreen"),className:"green wide"}];say("Victory","The Pattern has finally been defeated. The cycle is broken. Amy is no longer moving from fear, chaos, or old habits. What do you want to do next?")}setActions(acts);updateHud()}
+function girlStandUp(){const b=state.currentBattle;if(!b)return;setAmyPose("ultimate");const dmg=30+Math.floor(state.selfRespect/5)+Math.floor(state.groupChat/8);state.groupChat=clamp(state.groupChat-15);state.selfRespect=clamp(state.selfRespect+10);state.delusion=clamp(state.delusion-18);b.enemyHp=Math.max(0,b.enemyHp-dmg);popEffect("GIRL, STAND UP!");say("Amy","Amy used her ultimate: Girl, Stand Up! The group chat appeared. Malik yelled. Min side-eyed. Jade pointed. Chloe dropped receipts. Mia smiled. Audacity trembled.");updateHud();if(b.enemyHp<=0)winBattle();else setActions([{label:"Continue",fn:enemyTurn}])}
+function escapeBattle(){const b=state.currentBattle,v=villains[b.id];setAmyPose("defend");state.selfRespect=clamp(state.selfRespect+6);state.peace=clamp(state.peace+4);say("Amy",`Amy blocked ${v.name} and left. No debate. No dissertation. Peace protected.`);state.defeated.add(b.id);state.currentBattle=null;document.getElementById("battleUi").classList.add("hidden");showEnemy(false);setActions([{label:"Back to Map",fn:()=>showScreen("mapScreen")}]);updateHud()}
+function winBattle(){const b=state.currentBattle,id=b.id,v=villains[id];setAmyPose("victory");state.defeated.add(id);state.currentBattle=null;state.redFlagData++;state.groupChat=clamp(state.groupChat+12);state.clarity=clamp(state.clarity+8);state.selfRespect=clamp(state.selfRespect+12);state.peace=clamp(state.peace+6);document.getElementById("battleUi").classList.add("hidden");showEnemy(false);say("Victory",`${v.name} was defeated. Amy gained XP, clarity, receipts, and self-respect. Soft Life Funds gained: 0, because Amy is not paid for emotional labor.`);let acts=[{label:"Back to Map",fn:()=>showScreen("mapScreen"),className:"primary"}];if(shouldOfferAlgorithm())acts.unshift({label:"Go Home and Face The Algorithm",fn:()=>startBattle("algorithm"),className:"danger wide"});if(id==="algorithm")acts.unshift({label:"Sleep",fn:()=>goLocation("bedroom"),className:"danger wide"});if(id==="pattern"){state.postPatternUnlocked=true;acts=[{label:"What do you want to do next?",fn:()=>showScreen("mapScreen"),className:"green wide"}];say("Victory","The Pattern has finally been defeated. The cycle is broken. Amy is no longer moving from fear, chaos, or old habits. What do you want to do next?")}setActions(acts);updateHud()}
 function shouldOfferAlgorithm(){const ids=["two_am","preference","coworker","broke_dreamer","house_date","millionaire","old_young","body_bag","demon","normal_fake"];return ids.filter(id=>state.defeated.has(id)).length>=6&&!state.defeated.has("algorithm")}
-function gameOver(id){const v=villains[id];state.currentBattle=null;document.getElementById("battleUi").classList.add("hidden");showEnemy(false);let title="MATCH MADE IN HELL",text=`Amy settled for ${v.name}. The group chat has muted the conversation for their own mental health.`;if(id==="algorithm"){title="GAME OVER: LOST TO THE ALGORITHM";text="The Algorithm learned Amy’s weaknesses. New match found in 0.3 seconds."}if(id==="pattern"){title="GAME OVER: THE PATTERN REMAINS";text="Amy chose familiar chaos over unfamiliar peace."}say(title,text);setActions([{label:"Try Again",fn:()=>{state.hp=state.maxHp;state.delusion=20;state.peace=70;showScreen("mapScreen")},className:"primary"},{label:"Title Screen",fn:()=>showScreen("titleScreen")}]);updateHud()}
-function startGreenFlagBattle(id){const gf=greenFlags[id];hideAllScreens();setBackground(gf.bg);state.currentBattle={id,type:"greenFlag"};showAmy(true);showEnemy(true,gf.name,`${gf.name}<br><small>${gf.role}</small>`);document.getElementById("battleUi").classList.add("hidden");popEffect("GREEN FLAG?");say(gf.name,`A familiar green flag appeared. “${gf.quote}”`);setActions([{label:"Enter Fake Battle",fn:()=>greenFlagFakeFight(id),className:"green"},{label:"Politely Decline",fn:()=>rejectGreenFlag(id)},{label:"Back Away Slowly",fn:()=>showScreen("mapScreen")}])}
+function gameOver(id){const v=villains[id];setAmyPose("defeat");state.currentBattle=null;document.getElementById("battleUi").classList.add("hidden");showEnemy(false);let title="MATCH MADE IN HELL",text=`Amy settled for ${v.name}. The group chat has muted the conversation for their own mental health.`;if(id==="algorithm"){title="GAME OVER: LOST TO THE ALGORITHM";text="The Algorithm learned Amy’s weaknesses. New match found in 0.3 seconds."}if(id==="pattern"){title="GAME OVER: THE PATTERN REMAINS";text="Amy chose familiar chaos over unfamiliar peace."}say(title,text);setActions([{label:"Try Again",fn:()=>{state.hp=state.maxHp;state.delusion=20;state.peace=70;showScreen("mapScreen")},className:"primary"},{label:"Title Screen",fn:()=>showScreen("titleScreen")}]);updateHud()}
+function startGreenFlagBattle(id){const gf=greenFlags[id];hideAllScreens();setBackground(gf.bg);state.currentBattle={id,type:"greenFlag"};showAmy(true,"idle");showEnemy(true,gf.name,`${gf.name}<br><small>${gf.role}</small>`,getEnemyArt("greenFlag",id));document.getElementById("battleUi").classList.add("hidden");popEffect("GREEN FLAG?");say(gf.name,`A familiar green flag appeared. “${gf.quote}”`);setActions([{label:"Enter Fake Battle",fn:()=>greenFlagFakeFight(id),className:"green"},{label:"Politely Decline",fn:()=>rejectGreenFlag(id)},{label:"Back Away Slowly",fn:()=>showScreen("mapScreen")}])}
 function greenFlagFakeFight(id){const gf=greenFlags[id];state.peace=clamp(state.peace+12);state.selfRespect=clamp(state.selfRespect+8);popEffect("NO DAMAGE");say(gf.name,`${gf.name} used ${gf.attack}. Green hearts floated across the battlefield. Amy took no damage.`);setActions([{label:`Accept ${gf.ending}`,fn:()=>greenFlagEnding(id),className:"green wide"},{label:"Reject Date",fn:()=>rejectGreenFlag(id)}]);updateHud()}
 function greenFlagEnding(id){const gf=greenFlags[id];let t=id==="xavier"?"Xavier and Amy go to the planetarium. The stars are quiet, beautiful, and not asking her to explain her boundaries.":id==="james"?"James and Amy go to the movies. No weird pressure, no secret agenda, just popcorn and peace.":"Andrew and Amy go to dinner. The conversation is clear, kind, and refreshingly normal.";say(`${gf.ending} Ending`,t);setActions([{label:"Return to Title",fn:()=>showScreen("titleScreen"),className:"primary"},{label:"Back to Map",fn:()=>showScreen("mapScreen")}])}
 function rejectGreenFlag(id){const gf=greenFlags[id];state.rejectedGreenFlags.add(id);state.peace=clamp(state.peace+10);state.selfRespect=clamp(state.selfRespect+10);showEnemy(false);say(gf.name,`${gf.name} respected Amy’s answer. No guilt trip. No debate. Green flag confirmed. Amy can choose where to go next.`);setActions([{label:"Choose Another Location",fn:()=>showScreen("mapScreen"),className:"green"},{label:"Go to Beach",fn:()=>goLocation("beach")}]);updateHud()}
@@ -71,7 +69,949 @@ function groupChatScene(){state.groupChat=clamp(state.groupChat+20);state.peace=
 function updateBattleBars(){document.getElementById("amyHpLabel").textContent=`${state.hp} / ${state.maxHp}`;document.getElementById("amyHpFill").style.width=`${state.hp/state.maxHp*100}%`;const b=state.currentBattle,n=b&&b.type==="villain"?villains[b.id].name:"Enemy",hp=b&&b.type==="villain"?b.enemyHp:0,max=b&&b.type==="villain"?b.enemyMaxHp:1;document.getElementById("enemyNameLabel").textContent=n;document.getElementById("enemyHpLabel").textContent=b&&b.type==="villain"?`${hp} / ${max}`:"";document.getElementById("enemyHpFill").style.width=`${hp/max*100}%`}
 function popEffect(text){const el=document.getElementById("effectPop");el.textContent=text;el.classList.remove("show");void el.offsetWidth;el.classList.add("show")}
 function clamp(num,max=100){return Math.max(0,Math.min(max,num))}function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min}function titleCase(s){return s.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase())}
-window.addEventListener("load",()=>{updateHud();setBackground("apartment_sunset");showAmy(true);showEnemy(false);setActions([{label:"Start Prototype",fn:startGame,className:"primary"},{label:"Open Map",fn:()=>showScreen("mapScreen")},{label:"Villain Codex",fn:()=>showScreen("codexScreen")},{label:"Closet",fn:()=>showScreen("closetScreen")}]);setTimeout(()=>{const s=document.getElementById("studioSplash");s.classList.add("fade-out");setTimeout(()=>s.style.display="none",950)},3600)});
+
+
+/* =========================
+   v1.8 Story/Dialogue Patch
+   Adds phone-triggered date battles, individual friend lines, green-flag NPC progression,
+   Spa, car decompression scenes, office creeper trigger, and expanded boss/red-flag dialogue.
+   ========================= */
+
+Object.assign(FALLBACK, {
+  beach_day:"linear-gradient(135deg,#79d6ff 0%,#fff2a8 45%,#f5d38d 62%,#75b7e8 100%)",
+  beach_night:"linear-gradient(135deg,#07132f 0%,#142950 45%,#4d3b7d 67%,#0a1b34 100%)",
+  spa:"linear-gradient(135deg,#fff6ef 0%,#f7dfd6 42%,#d8b98f 68%,#624c46 100%)",
+  car_day:"linear-gradient(135deg,#dff2ff 0%,#ffe6f2 45%,#8ba5c4 100%)",
+  car_night:"linear-gradient(135deg,#050812 0%,#162340 48%,#703056 78%,#0e0b16 100%)",
+  car_rain:"linear-gradient(135deg,#0b1322 0%,#24364f 45%,#8b7896 100%)"
+});
+Object.assign(ASSETS.backgrounds, {
+  beach_day:"assets/backgrounds/beach_day.png",
+  beach_night:"assets/backgrounds/beach_night.png",
+  spa:"assets/backgrounds/spa.png",
+  car_day:"assets/backgrounds/car_day.png",
+  car_night:"assets/backgrounds/car_night.png",
+  car_rain:"assets/backgrounds/car_rain.png"
+});
+Object.assign(state, {
+  npcVisits:{james:0,xavier:0,andrew:0},
+  officeCreeperTriggered:false,
+  lastDateBattle:null,
+  currentCutscene:null,
+  appOpened:0
+});
+
+const V18 = {
+  villainOrder:["two_am","preference","house_date","demon","broke_dreamer","millionaire","body_bag","old_young","normal_fake"],
+  friendAvailability:{
+    bar:["malik","min","jade","chloe","mia"],
+    restaurant:["jade","chloe","malik","mia"],
+    library:["min","chloe","mia"],
+    park:["malik","min","jade","mia"],
+    beach:["jade","malik","chloe","min","mia"],
+    mall:["jade","chloe","mia"],
+    spa:["jade","mia"],
+    apartment:["malik","jade","chloe","mia","min"],
+    car:["malik","jade","chloe","mia","min"]
+  },
+  friendLines:{
+    malik:{
+      bar:["Bar rule: if the message starts with ‘don’t be mad,’ we stop reading.","Amy. I love you. But your dating app is starting to feel like a haunted house with profile pictures.","Do not let a man with no bed frame reduce your self-esteem.","If confusion was cologne, he would be drenched."],
+      restaurant:["Eat first. Spiral later. Men hate when pasta wins.","I support dinner. I do not support dinner becoming a job interview for a man with unresolved storage-unit energy.","If he says ‘I’m not hungry’ then eats your fries, I want legal permission to act."],
+      park:["I’m not saying the jogger is cute. I’m saying I noticed God was in a good mood that day.","This park has trees, sunlight, and zero men asking for gas money. Healing."],
+      beach:["The waves are healing. Your inbox is not.","This is peaceful. No men. No notifications. Just waves and consequences staying far away."],
+      car:["Are you alive or did Budget Boy talk you into splitting tap water?","Amy. Be so f@&$ing for real. Drive home, drink water, block him."],
+      default:["Amy, be so f@&$ing for real!","I am begging you to stop seeing potential and start seeing evidence.","That man is not mysterious. He is unemployed in cursive."]
+    },
+    min:{
+      bar:["The music is loud enough to drown out poor decisions. Use that.","You ordered fries. He ordered access.","I am judging supportively."],
+      library:["This place is nice. People are quiet on purpose.","Xavier recommended a book without making it about himself. Unusual. Promising."],
+      park:["That wave was normal. Suspiciously refreshing.","The park has low nonsense density today."],
+      beach:["The ocean is better at communication than most of your matches.","Good location. Low nonsense density."],
+      car:["I said nothing, and yet I was correct.","The room feels cleaner when your phone is silent."],
+      default:["No.","Amy.","You saw that, right?","I know you heard him.","That was the red flag."]
+    },
+    jade:{
+      bar:["Show me the profile. And don’t defend him before I finish reading.","Let me see the outfit. Good. Now let me see the standards.","He tried to humble you? With that haircut?"],
+      restaurant:["Eat first. Spiral later.","Cute is not a character reference.","No essays for men committed to misunderstanding the syllabus."],
+      mall:["Buy the dress because you like it, not because a man might finally act right in it.","We are not dressing for potential. We are dressing for proof of life."],
+      spa:["This is the only kind of pressure we accept. Steam room pressure. Not man pressure.","See? This is what standards look like with cucumber water."],
+      beach:["You need more days where nobody asks you to understand their childhood before appetizers.","Look at this sunset. It has never once asked you to lower your standards."],
+      car:["Come to the bar. Immediately.","Breathe. Lip gloss on. Standards higher."],
+      default:["Girl. Stand up.","Empathy is not a lease agreement. You do not have to move into his trauma."]
+    },
+    chloe:{
+      bar:["I got us fries. Also I did background research. One of those things is healthy.","James remembered your order. Not in a creepy way. In a ‘hospitality professional with emotional regulation’ way."],
+      restaurant:["This pasta is better than the last three men combined.","Okay, I’m not judging. I’m just opening a spreadsheet."],
+      library:["Xavier has excellent book recommendations. Also his shoes are clean. I notice things.","I highlighted three plot holes in his story and one in his bio."],
+      beach:["I brought snacks and emotional neutrality.","The ocean has never asked you for gas money."],
+      car:["I made a checklist for future ‘normal’ men.","I found a contradiction. Several, actually."],
+      default:["I found receipts.","Private is fine. Vague with dramatic lighting is different."]
+    },
+    mia:{
+      bar:["I’m drinking something pink and minding my business until someone gives me a reason not to.","If he ruins your appetite, I will take that personally."],
+      restaurant:["If he ruins your appetite, I will take that personally.","He said what? Oh. That’s interesting."],
+      park:["If peace had a texture, it would be this.","I’m deciding whether this is a red flag or a crime scene."],
+      spa:["You look relaxed. I love that. Keep ignoring him.","Not in this robe. That’s the rule."],
+      beach:["If peace had a texture, it would be this.","If a man texts you during this sunset, he is jealous of nature."],
+      car:["Do you need comfort or an alibi?","Okay. Comfort first. Alibi later if necessary."],
+      default:["No.","You don’t have to be polite to a man who entered the conversation barefoot."]
+    }
+  },
+  battleSupport:{
+    malik:["Amy. Be so f@&$ing for real.","Do not let this man PowerPoint you into lowering your standards.","This is not chemistry. This is a gas leak.","You are not his redemption arc. You are booked and moisturized.","Girl, his red flags have red flags. They are reproducing."],
+    min:["No.","Amy.","You saw that.","Be serious.","I know you heard him.","That was the red flag.","I am judging supportively.","Your phone is the villain.","Min says nothing. It is somehow worse."],
+    jade:["Chin up. Lip gloss on. Standards higher.","He is trying to confuse you because he cannot impress you.","No essays for men committed to misunderstanding the syllabus.","Girl. Stand up."],
+    chloe:["I highlighted the contradiction. Aim there.","You’re not confused because you’re wrong. You’re confused because he keeps changing the story.","Blocked, archived, and color-coded.","I found receipts."],
+    mia:["Hit him again. Respectfully.","You are not hard to love. He is hard to tolerate.","Good. I was about to become less cute.","I hope his phone falls into soup."]
+  },
+  victoryLines:{
+    min:["Good.","Finally.","Nature is healing.","The room feels cleaner.","I can unclench my jaw now.","Blocked. Beautiful.","That was overdue.","Peace has returned to the server.","A sensible outcome. Shocking.","I said nothing, and yet I was correct."],
+    malik:["Beautiful. Elegant. Blocked with intention.","Another man defeated by listening to the sentence he said out loud.","That was character development with a combo meter."],
+    jade:["And that is how we clear a room.","Standards restored. Lip gloss maintained.","Cute outfit, clean block, no notes."],
+    chloe:["Blocked, archived, and color-coded.","I saved the receipts for training purposes.","The timeline finally makes sense: he was lying."],
+    mia:["Good. I was about to become less cute.","Justice, but moisturized.","I love when nonsense leaves." ]
+  },
+  appNotifications:{
+    two_am:{app:"LoveLoop",msg:"Jay sent you a message: ‘u up?’",battleBg:"bedroom_night"},
+    preference:{app:"LoveLoop",msg:"Connor sent you a message: ‘You’re so beautiful. I’ve always loved your type.’",battleBg:"bar"},
+    house_date:{app:"LoveLoop",msg:"Terrence sent you a message: ‘I know a chill spot.’",battleBg:"villain_apartment"},
+    demon:{app:"LoveLoop",msg:"Dante sent you a message: ‘I’m not perfect, but I’ve changed.’",battleBg:"restaurant"},
+    broke_dreamer:{app:"LoveLoop",msg:"Joey sent you a voice note and said he wrote it after seeing your profile.",battleBg:"restaurant"},
+    millionaire:{app:"LoveLoop",msg:"Marquis sent you a message: ‘I’m low-key a millionaire. I just don’t move like these other dudes.’",battleBg:"restaurant"},
+    body_bag:{app:"LoveLoop",msg:"Reggie sent you a message: ‘You got dark humor?’",battleBg:"villain_apartment"},
+    old_young:{app:"LoveLoop",msg:"A man with sunglasses indoors liked your photo and called you mature.",battleBg:"bar"},
+    normal_fake:{app:"LoveLoop",msg:"Evan asked about your favorite bookstore. A normal question. Suspiciously normal.",battleBg:"restaurant"}
+  },
+  cutscenes:{
+    two_am:[
+      ["LoveLoop","Jay sent: “u up?”"],
+      ["Amy","Existing."],
+      ["Jay","Lol you funny. You free tonight?"],
+      ["Amy","It’s 2:14 a.m."],
+      ["Jay","That’s why I asked."],
+      ["Narrator","The bedroom lights flickered. A neon clock appeared, stuck at 2:14."]
+    ],
+    preference:[
+      ["Connor","You’re so beautiful. I’ve always loved your type."],
+      ["Amy","My type?"],
+      ["Connor","Like, your vibe. Beyoncé. SZA. Wakanda. You know."],
+      ["Amy","I do not know."],
+      ["Connor","It’s just a preference. That’s not a fetish."],
+      ["Narrator","His compliments turned into sticky pink chains labeled exotic, spicy, and queen."]
+    ],
+    house_date:[
+      ["Terrence","I was thinking you could come over and we could watch something."],
+      ["Amy","For a first date?"],
+      ["Terrence","Why women always gotta make dating expensive?"],
+      ["Amy","Coffee is expensive?"],
+      ["Terrence","Do you wanna pay for the next one then?"],
+      ["Amy","The first one hasn’t happened."],
+      ["Narrator","The living room stretched into a battlefield of folding chairs and imaginary wealth."]
+    ],
+    demon:[
+      ["Dante","I used to be wild. Got kicked out of school. Military school too. But I’m fighting my demons now."],
+      ["Amy","Are the demons in the room?"],
+      ["Dante","Sometimes."],
+      ["Amy","That was not reassuring."],
+      ["Dante","I need someone loyal. Someone who won’t give up when things get hard."],
+      ["Narrator","His shadow split into three versions of himself, each wearing a different red flag as armor."]
+    ],
+    broke_dreamer:[
+      ["Joey","Yo, I wrote this song after seeing your profile."],
+      ["Amy","I’m scared."],
+      ["Joey","I’m a delivery driver right now, but music is my real calling."],
+      ["Amy","That’s nice."],
+      ["Joey","I don’t really do fancy dates. I’m more about vibes."],
+      ["Narrator","A parking lot stage appeared under buzzing lights. His guitar glowed with unpaid studio time."]
+    ],
+    millionaire:[
+      ["Marquis","I’m low-key a millionaire. I just need a woman who believes in me."],
+      ["Amy","That sounds like a job posting."],
+      ["Marquis","I got kids too. You good with kids?"],
+      ["Amy","As a concept?"],
+      ["Marquis","They need a real woman in their life."],
+      ["Amy","Sir, we matched forty minutes ago."],
+      ["Narrator","Gold coins rained down, then bounced like plastic tokens."]
+    ],
+    body_bag:[
+      ["Reggie","I got a body bag and a straitjacket in my trunk. Which one you want me to get?"],
+      ["Amy","Neither."],
+      ["Reggie","Lol you scared?"],
+      ["Amy","Yes. Correctly."],
+      ["Reggie","I like women who can take a joke."],
+      ["Amy","I like men who don’t sound like local news."],
+      ["Narrator","The parking lot lights snapped off one by one."]
+    ],
+    old_young:[
+      ["Nightlife Leech","You’re mature for your age."],
+      ["Amy","That sentence needs to leave the room."],
+      ["Nightlife Leech","Age is just a number."],
+      ["Amy","So is 911."],
+      ["Nightlife Leech","Buy me a drink?"],
+      ["Narrator","The bar lights turned sticky, and every exit sign got brighter."]
+    ],
+    normal_fake:[
+      ["Evan","Hey Amy, I noticed you like bookstores. Any favorite genres?"],
+      ["Amy","Oh. A normal question."],
+      ["Evan","You seem different. My ex was crazy, but you seem reasonable."],
+      ["Amy","What happened?"],
+      ["Evan","She couldn’t handle how honest I am. I told her she was gaining weight because I cared."],
+      ["Amy","There it is."],
+      ["Narrator","The pleasant café cracked like porcelain. Behind it was a courtroom where Evan was both judge and victim."]
+    ],
+    coworker:[
+      ["Narrator","Amy stayed late to finish one more task. The office lights hummed."],
+      ["Coworker","Random question. Have you ever dated someone from work?"],
+      ["Amy","No."],
+      ["Coworker","I’ve always wanted to try something different."],
+      ["Amy","Different?"],
+      ["Coworker","You know. I’ve never been with a Black girl before."],
+      ["Amy","Please return to your department."],
+      ["Narrator","The cubicles rose like walls. HR posters peeled off the walls and whispered uselessly."]
+    ]
+  },
+  phoneIgnoreLines:[
+    ["Amy","Amy turned the phone face-down. Not today, Satan. Peace increased."],
+    ["Amy","Amy ignored the notification. Her nervous system sent a thank-you card."],
+    ["Amy","Amy chose silence. The app did not deserve eye contact."]
+  ],
+  phoneBlockLines:[
+    ["Amy","Amy blocked him before the second red flag could load."],
+    ["Amy","Blocked on principle. Peace protected."],
+    ["Amy","Amy returned the energy to sender. Address unknown."]
+  ],
+  carLines:{
+    house_date:"Amy sat in the car and stared at the dashboard. “I put on earrings for a man who thinks coffee is financial exploitation.”",
+    preference:"Amy closed the car door and inhaled slowly. “He said Wakanda with his whole chest.”",
+    demon:"Amy gripped the steering wheel. “I cannot be someone’s healing arc and emergency contact.”",
+    normal_fake:"Amy sat in silence. “The normal ones are getting better at costumes.”",
+    body_bag:"Amy locked the door, then locked it again. “Correctly scared is still correct.”",
+    broke_dreamer:"Amy stared at the steering wheel. “I am not paying for fries and a dream journal.”",
+    millionaire:"Amy looked at her phone. “Low-key millionaire, high-key looking for a sponsor.”",
+    two_am:"Amy turned her phone over and looked at the ceiling. “Sleep is a boundary.”",
+    old_young:"Amy sat in the car with the engine off. “That man needs a hobby and a birth certificate.”",
+    coworker:"Amy sat in her car outside the office. “Tomorrow, I am documenting everything.”"
+  },
+  algorithmLines:{
+    intro:["Welcome back, Amy.","Your engagement has decreased by 43%. Hope levels remain exploitable.","We noticed you were feeling peaceful. We have corrected the feed."],
+    taunts:["New match detected.","Boosting emotionally unavailable profiles.","Recycling familiar attachment patterns.","Showing you someone cute but dangerous.","Your standards are affecting conversion.","Loneliness spike detected. Deploying gym selfie.","Would you like to ignore your intuition?","Limited-time offer: false hope."]
+  },
+  patternLines:{
+    intro:["You thought the app was the problem?","I am the reason the wrong door feels familiar.","You have met me before. Different face. Same lesson.","I only need to convince you this time is different."],
+    taunts:["Maybe he’ll change.","At least he wants you.","You’re being too picky.","What if this is your last chance?","He had a hard life.","Don’t you miss being chosen?","Just one more message.","Closure is only one conversation away."]
+  }
+};
+
+Object.assign(villains.algorithm, {
+  quote:"We noticed you were feeling peaceful. We have corrected the feed.",
+  attacks:[
+    a("99+ Likes",20,15,"The Algorithm flooded the room with matches. Most of them were holding fish or unresolved attachment wounds."),
+    a("He’s Your Type Though",24,18,"The app learned Amy’s weaknesses and put them in good lighting."),
+    a("Lower Standards For More Matches",30,20,"The Algorithm tried to monetize loneliness."),
+    a("Limited-Time False Hope",22,16,"A cute profile appeared with three compliments and no consistency.")
+  ]
+});
+Object.assign(villains.pattern, {
+  quote:"It’s different this time.",
+  attacks:[
+    a("Maybe He’ll Change",25,20,"The Pattern whispered familiar chaos in a nicer outfit."),
+    a("At Least He Wants Me",28,22,"Old fear tried to sound like logic."),
+    a("One More Chance",34,26,"The loop tried to close again."),
+    a("Closure Is One Message Away",30,24,"The Pattern dressed reopening the wound as healing.")
+  ]
+});
+
+const mallLoc = locations.find(l=>l.id==="mall");
+if(mallLoc){mallLoc.desc="Shopping, food court snacks, and the Spa. Soft-life maintenance zone.";mallLoc.actions=mallActions;}
+const restaurantLoc = locations.find(l=>l.id==="restaurant");
+if(restaurantLoc){restaurantLoc.actions=restaurantActions;restaurantLoc.desc="Eat alone, meet friends, or check the phone. Date battles start from choices, not debug buttons.";}
+const beachLoc = locations.find(l=>l.id==="beach");
+if(beachLoc){beachLoc.desc="Morning, sunset, and night peace. Post-Pattern solo true-peace ending option.";beachLoc.bg=()=>state.time==="Night"?"beach_night":state.time==="Evening"?"beach":"beach_day";}
+if(!locations.find(l=>l.id==="spa"))locations.push(loc("spa","Spa","Quiet robes, cucumber water, steam, and no nonsense.",()=>"spa",spaActions));
+if(!locations.find(l=>l.id==="car"))locations.push(loc("car","Car","Post-date decompression space. Breathe, text friends, block somebody.",()=>state.time==="Day"?"car_day":"car_night",carActions));
+
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function nextVillainId(){return V18.villainOrder.find(id=>!state.defeated.has(id))||"normal_fake"}
+function locationName(id){const l=locations.find(x=>x.id===id);return l?l.label:titleCase(id)}
+function friendPool(location=state.location){return V18.friendAvailability[location]||V18.friendAvailability.bar}
+function friendLine(id,location=state.location){const f=V18.friendLines[id]||{};return pick(f[location]||f.default||[friends[id]?.line||"..."])}
+function makeFriendTalkAction(id,location=state.location){return {label:`Talk to ${friends[id].name}`,fn:()=>talkToFriend(id,location)}}
+
+startGame=function(){
+  hideAllScreens();
+  state.location="apartment";state.time="Day";state.day=1;state.appOpened=0;
+  setBackground("apartment_day");showAmy(true,"idle");showEnemy(false);updateHud();
+  say("Narrator","Amy had a cute apartment, a job that paid the bills, friends who loved her, and one dating app she kept pretending she was done with.");
+  setActions([{label:"Continue",fn:()=>{
+    say("Amy","I am simply opening myself up to possibility.");
+    setActions([{label:"Download the App",fn:()=>{
+      say("Narrator","The phone buzzed like it had been waiting for weakness.");
+      setActions([{label:"Check Phone",fn:openDatingApp,className:"danger"},{label:"Open City Map",fn:()=>showScreen("mapScreen")},{label:"Open Closet",fn:()=>showScreen("closetScreen")}]);
+    },className:"primary"},{label:"Maybe Later",fn:()=>showScreen("mapScreen")}]);
+  }}]);
+};
+
+function normalLocationArrival(id,l){
+  if(id==="library")return "The library is quiet. Xavier is in the background, reshelving books and minding his business.";
+  if(id==="bar")return "The bar is warm. James looks over like a concerned NPC and keeps polishing glasses.";
+  if(id==="park")return "The park feels peaceful. Andrew jogs by in the background like a green flag loading screen.";
+  if(id==="beach")return state.time==="Night"?"The beach is dark and quiet. No tests. No battles. Just waves and moonlight.":state.time==="Evening"?"The beach is soft with sunset. Amy can breathe here.":"The beach is bright and calm. Morning peace has entered the chat.";
+  if(id==="spa")return "The spa is quiet enough to make Amy's phone feel underdressed.";
+  if(id==="car")return "Amy sits in the car and lets the silence do some emotional triage.";
+  return `Arrived at ${l.label}.`;
+}
+
+goLocation=function(id){
+  const l=locations.find(x=>x.id===id);if(!l)return;
+  hideAllScreens();state.location=id;setBackground(l.bg());showAmy(true);showEnemy(false);document.getElementById("battleUi").classList.add("hidden");
+  if(id==="office" && state.day>=4 && !state.defeated.has("coworker") && !state.officeCreeperTriggered){
+    state.officeCreeperTriggered=true;
+    say("Office","Amy stayed late to finish one more task. Then her phone lit up with a message from someone she had not given her number to.");
+    setActions([{label:"Read Message",fn:()=>startDateCutscene("coworker"),className:"danger wide"},{label:"Document Everything",fn:()=>{state.clarity=clamp(state.clarity+10);state.selfRespect=clamp(state.selfRespect+10);startDateCutscene("coworker");},className:"primary wide"}]);
+    updateHud();return;
+  }
+  say("System",normalLocationArrival(id,l));
+  setActions(l.actions());updateHud();
+};
+
+function apartmentActions(){return [
+  {label:"Check Phone",fn:openDatingApp,className:"danger"},
+  {label:"Text the Group Chat",fn:()=>hangWithFriends("apartment")},
+  {label:"Go to Bedroom",fn:()=>goLocation("bedroom")},
+  {label:"Open Closet",fn:()=>showScreen("closetScreen")},
+  {label:"Open City Map",fn:()=>showScreen("mapScreen"),className:"wide"}
+]};
+
+function restaurantActions(){return [
+  {label:"Eat Alone",fn:()=>locationActivity("Restaurant","Amy ate in peace. The food minded its business, which was refreshing.",{peace:12,stamina:12}) ,className:"green"},
+  {label:"Meet Friends for Dinner",fn:()=>hangWithFriends("restaurant")},
+  {label:"Check Phone",fn:openDatingApp,className:"danger"},
+  {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+]};
+
+function libraryActions(){
+  const arr=[
+    {label:"Read in Peace",fn:()=>locationActivity("Library","Amy read in silence. Confusion faded. Clarity restored.",{clarity:25,delusion:-10,peace:10}),className:"green"},
+    {label:"Check Out a Book",fn:interactXavier,className:"green"},
+    {label:"Chat With Friends",fn:()=>hangWithFriends("library")},
+    {label:"Check Phone",fn:openDatingApp,className:"danger"},
+    {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+  ];
+  if(state.postPatternUnlocked&&!state.rejectedGreenFlags.has("xavier"))arr.unshift({label:"Ask Xavier Out / Green Flag Battle",fn:()=>startGreenFlagBattle("xavier"),className:"green wide"});
+  return arr;
+};
+
+function barActions(){
+  const arr=[
+    {label:"Order Food/Drink From James",fn:interactJames,className:"green"},
+    {label:"Hang With Friends",fn:()=>hangWithFriends("bar")},
+    {label:"Check Phone",fn:openDatingApp,className:"danger"},
+    {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+  ];
+  if(state.postPatternUnlocked&&!state.rejectedGreenFlags.has("james"))arr.unshift({label:"Ask James Out / Green Flag Battle",fn:()=>startGreenFlagBattle("james"),className:"green wide"});
+  return arr;
+};
+
+function parkActions(){
+  const arr=[
+    {label:"Sit on Bench",fn:()=>locationActivity("Park","Amy sat on a bench and let the day be normal for five whole minutes.",{peace:14,stamina:5,delusion:-4}),className:"green"},
+    {label:"Take a Walk",fn:()=>locationActivity("Park","Amy touched grass. The nervous system recalibrated.",{peace:18,stamina:8,delusion:-5}),className:"green"},
+    {label:"Notice / Talk to Cute Stranger",fn:interactAndrew,className:"green"},
+    {label:"Meet a Friend",fn:()=>hangWithFriends("park")},
+    {label:"Check Phone",fn:openDatingApp,className:"danger"},
+    {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+  ];
+  if(state.postPatternUnlocked&&!state.rejectedGreenFlags.has("andrew"))arr.unshift({label:"Ask Andrew Out / Green Flag Battle",fn:()=>startGreenFlagBattle("andrew"),className:"green wide"});
+  return arr;
+};
+
+function beachActions(){
+  if(state.postPatternUnlocked)return [
+    {label:state.time==="Night"?"Sit Under the Moon Alone":"Watch the Water Alone",fn:beachEnding,className:"green wide"},
+    {label:"Meet a Friend",fn:()=>hangWithFriends("beach")},
+    {label:"Not Yet. Go Somewhere Else.",fn:()=>showScreen("mapScreen")}
+  ];
+  return [
+    {label:"Sit by the Water",fn:()=>locationActivity("Beach","The waves are steady. Amy remembers peace does not have to be earned.",{peace:25,clarity:10}),className:"green"},
+    {label:"Meet a Friend",fn:()=>hangWithFriends("beach")},
+    {label:"Check Phone",fn:openDatingApp,className:"danger"},
+    {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+  ];
+};
+
+function mallActions(){return [
+  {label:"Go Shopping",fn:()=>showScreen("shopScreen")},
+  {label:"Visit Spa",fn:()=>goLocation("spa"),className:"green"},
+  {label:"Grab Food Court Snack",fn:()=>spendFunds(75,()=>locationActivity("Food Court","Amy got a snack and did not share it with anybody annoying.",{stamina:18,peace:5})),className:"green"},
+  {label:"Meet Friends",fn:()=>hangWithFriends("mall")},
+  {label:"Check Phone",fn:openDatingApp,className:"danger"},
+  {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+]};
+
+function spaActions(){return [
+  {label:"Steam Room",fn:()=>spendFunds(250,()=>locationActivity("Spa","Amy sat in the steam room. Her phone stayed face-down, as it should.",{peace:25,delusion:-10,selfRespect:5})),className:"green"},
+  {label:"Facial",fn:()=>spendFunds(300,()=>locationActivity("Spa","Cleanse the pores and the poor decisions.",{peace:20,clarity:12,selfRespect:6})),className:"green"},
+  {label:"Massage",fn:()=>spendFunds(500,()=>locationActivity("Spa","Amy left moisturized, relaxed, and briefly unreachable by nonsense.",{hp:40,stamina:35,peace:20})),className:"green"},
+  {label:"Meet a Friend",fn:()=>hangWithFriends("spa")},
+  {label:"Back to Mall",fn:()=>goLocation("mall")},
+  {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+]};
+
+function carActions(){return [
+  {label:"Breathe",fn:()=>locationActivity("Car","Amy took three slow breaths. The date was over. The lesson could stay outside.",{peace:15,clarity:8,delusion:-8}),className:"green"},
+  {label:"Text Group Chat",fn:()=>hangWithFriends("car")},
+  {label:"Block Him Again",fn:()=>locationActivity("Car","Amy checked the block list like a locked door. Still locked. Beautiful.",{selfRespect:10,peace:8}),className:"green"},
+  {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+]};
+
+function locationActivity(speaker,text,effects={}){
+  for(const [k,v] of Object.entries(effects)){
+    if(k==="hp")state.hp=clamp(state.hp+v,state.maxHp);
+    else if(k in state)state[k]=clamp(state[k]+v);
+  }
+  say(speaker,text);updateHud();
+}
+
+function hangWithFriends(location=state.location){
+  const pool=friendPool(location);
+  say("Friends",`${locationName(location)} hangout. Pick who Amy talks to; the whole group no longer dumps every reaction at once.`);
+  const actions=pool.map(id=>makeFriendTalkAction(id,location));
+  actions.push({label:"Send Dating App Screenshot",fn:sendScreenshotToGroup,className:"primary wide"});
+  actions.push({label:`Back to ${locationName(location)}`,fn:()=>goLocation(location)});
+  setActions(actions);
+}
+function talkToFriend(id,location=state.location){
+  const line=friendLine(id,location);
+  if(id==="malik")state.selfRespect=clamp(state.selfRespect+5);
+  if(id==="min")state.clarity=clamp(state.clarity+6);
+  if(id==="jade")state.selfRespect=clamp(state.selfRespect+7);
+  if(id==="chloe")state.redFlagData++;
+  if(id==="mia")state.peace=clamp(state.peace+5);
+  state.groupChat=clamp(state.groupChat+6);
+  say(friends[id].name,line);updateHud();
+  const actions=[...friendPool(location).map(fid=>makeFriendTalkAction(fid,location)),{label:`Back to ${locationName(location)}`,fn:()=>goLocation(location),className:"wide"}];
+  setActions(actions);
+}
+function sendScreenshotToGroup(){
+  state.groupChat=clamp(state.groupChat+15);state.clarity=clamp(state.clarity+8);state.delusion=clamp(state.delusion-8);
+  const responders=[pick(friendPool(state.location)),pick(friendPool(state.location))].filter((v,i,a)=>a.indexOf(v)===i);
+  const lines=responders.map(id=>`${friends[id].name}: ${friendLine(id,state.location)}`).join("  ");
+  say("Group Chat",lines||"The group chat is typing with frightening speed.");updateHud();
+  setActions([{label:"Check Phone Anyway",fn:openDatingApp,className:"danger"},{label:"Back",fn:()=>goLocation(state.location)}]);
+}
+
+groupChatScene=function(){hangWithFriends(state.location)};
+
+function interactJames(){
+  state.npcVisits.james++;
+  state.stamina=clamp(state.stamina+18);state.hp=clamp(state.hp+12,state.maxHp);state.peace=clamp(state.peace+8);
+  const lines=[
+    ["James","Hey. What can I get started for you?"],["Amy","Something with fries."],["James","Emotionally or literally?"],["Amy","Both."],["James","Parmesan fries it is."],
+    ["James","Usual?"],["Amy","You remember?"],["James","It’s my job. Also, you looked deeply betrayed by the menu last time until you found fries."],
+    ["James","Water first?"],["Amy","Do I look that bad?"],["James","You look like somebody said something stupid and expected you to be grateful."]
+  ];
+  const pair=lines[(state.npcVisits.james-1)%lines.length];
+  say(pair[0],pair[1]);updateHud();
+}
+function interactXavier(){
+  state.npcVisits.xavier++;
+  state.clarity=clamp(state.clarity+14);state.peace=clamp(state.peace+8);state.delusion=clamp(state.delusion-5);
+  const lines=[
+    ["Xavier","Looking for anything specific?"],["Amy","A book that will make me forget dating apps exist."],["Xavier","Fiction, nonfiction, or spiritual emergency?"],["Amy","Surprise me."],
+    ["Xavier","This one has romance, but nobody sends ‘wyd’ at midnight."],["Amy","So fantasy."],["Xavier","Technically literary fiction."],
+    ["Xavier","You come here when you need quiet."],["Amy","Is it obvious?"],["Xavier","Only because you relax before you sit down."]
+  ];
+  const pair=lines[(state.npcVisits.xavier-1)%lines.length];
+  say(pair[0],pair[1]);updateHud();
+}
+function interactAndrew(){
+  state.npcVisits.andrew++;
+  const n=state.npcVisits.andrew;
+  state.peace=clamp(state.peace+10);state.stamina=clamp(state.stamina+5);
+  let line;
+  if(n===1)line=["Narrator","Amy noticed a cute stranger jogging past the fountain. Okay, park."];
+  else if(n===2)line=["Narrator","The same jogger passed again. This time, he gave a small wave. Amy waved back before she could overthink it."];
+  else if(n===3)line=["Amy","Hi.  Jogger: Hey.  Amy: That counts as socializing."];
+  else if(n===4||n===5)line=["Amy","I’m not about to stop a man with a fitness goal. That feels rude."];
+  else if(n===6)line=["Andrew","You’re here a lot.  Amy: So are you.  Andrew: Fair. I’m Andrew.  Amy: Amy."];
+  else line=["Amy","So do you run for fun or are you being chased by your responsibilities?  Andrew: Both, depending on the week."];
+  say(line[0],line[1]);updateHud();
+}
+
+function openDatingApp(){
+  state.appOpened++;
+  const id=nextVillainId();
+  const note=V18.appNotifications[id]||{app:"LoveLoop",msg:"You have a new match."};
+  say(note.app,note.msg);
+  setActions([
+    {label:"Reply",fn:()=>startDateCutscene(id),className:"danger"},
+    {label:"Ignore",fn:ignoreNotification,className:"green"},
+    {label:"Send to Group Chat",fn:sendScreenshotToGroup},
+    {label:"Block",fn:()=>blockNotification(id),className:"primary"},
+    {label:"Back",fn:()=>goLocation(state.location),className:"wide"}
+  ]);
+}
+function ignoreNotification(){
+  state.peace=clamp(state.peace+10);state.selfRespect=clamp(state.selfRespect+5);state.delusion=clamp(state.delusion-5);
+  const l=pick(V18.phoneIgnoreLines);say(l[0],l[1]);updateHud();setActions([{label:"Back",fn:()=>goLocation(state.location),className:"green"},{label:"Check Another Notification",fn:openDatingApp,className:"danger"}]);
+}
+function blockNotification(id){
+  state.selfRespect=clamp(state.selfRespect+10);state.peace=clamp(state.peace+6);state.delusion=clamp(state.delusion-8);
+  const l=pick(V18.phoneBlockLines);say(l[0],l[1]);updateHud();setActions([{label:"Back",fn:()=>goLocation(state.location),className:"green"},{label:"Check Phone Again",fn:openDatingApp,className:"danger"}]);
+}
+function startDateCutscene(id){
+  state.currentCutscene={id,index:0,lines:V18.cutscenes[id]||[[villains[id]?.name||"Match","Something felt off."],["Narrator","The scene shifted into a date battle."]]};
+  hideAllScreens();
+  const bg=(V18.appNotifications[id]&&V18.appNotifications[id].battleBg)||villains[id].bg;
+  setBackground(bg);showAmy(true,"idle");showEnemy(false);document.getElementById("battleUi").classList.add("hidden");
+  continueCutscene();
+}
+function continueCutscene(){
+  const c=state.currentCutscene;if(!c)return;
+  if(c.index>=c.lines.length){const id=c.id;state.currentCutscene=null;startBattle(id);return;}
+  const [sp,txt]=c.lines[c.index++];say(sp,txt);
+  setActions([{label:c.index>=c.lines.length?"Date Battle!":"Continue",fn:continueCutscene,className:c.index>=c.lines.length?"danger wide":"primary wide"},{label:"Block and Leave",fn:()=>{const id=c.id;state.currentCutscene=null;state.defeated.add(id);goCarAfterDate(id);},className:"green wide"}]);
+}
+
+startRandomVillainBattle=function(){openDatingApp()};
+
+startBattle=function(id){
+  hideAllScreens();const v=villains[id];if(!v)return;
+  state.lastDateBattle=id;
+  const hpScale=["normal_fake","algorithm","pattern"].includes(id)?1.15:1.08;
+  state.currentBattle={id,type:"villain",enemyHp:Math.round(v.maxHp*hpScale),enemyMaxHp:Math.round(v.maxHp*hpScale)};
+  setBackground(v.bg);showAmy(true,"idle");showEnemy(true,v.name,`${v.name}<br><small>${v.className}</small>`,getEnemyArt("villain",id),id);
+  document.getElementById("battleUi").classList.remove("hidden");
+  let intro=`${v.name} entered the battlefield. “${v.quote}”`;
+  if(id==="algorithm")intro=`The phone screen went black. ${pick(V18.algorithmLines.intro)}`;
+  if(id==="pattern")intro=`After The Algorithm fell, the silence felt too clean. ${pick(V18.patternLines.intro)}`;
+  say(v.name,intro);setBattleActions();updateHud();
+};
+
+useFriend=function(id){
+  if(state.groupChat<10){say("Group Chat","Group Chat Meter too low.");return setActions([{label:"Back",fn:setBattleActions}])}
+  state.groupChat=clamp(state.groupChat-10);
+  const f=friends[id],b=state.currentBattle;
+  let damage=8,caption=pick(V18.battleSupport[id]||[f.line]);
+  if(id==="min"){damage=10;state.clarity=clamp(state.clarity+18);state.delusion=clamp(state.delusion-20);popEffect("SIDE-EYE");caption=`${caption} Min's side-eye did psychic damage.`;}
+  else if(id==="malik"){damage=12;state.delusion=clamp(state.delusion-15);state.selfRespect=clamp(state.selfRespect+12);popEffect("BE SO FOR REAL");}
+  else if(id==="jade"){damage=10;state.selfRespect=clamp(state.selfRespect+22);state.groupChat=clamp(state.groupChat+10);popEffect("GIRL, STAND UP!");}
+  else if(id==="chloe"){damage=14;state.redFlagData++;state.clarity=clamp(state.clarity+10);popEffect("RECEIPTS!");}
+  else if(id==="mia"){damage=10;state.peace=clamp(state.peace+15);popEffect("NO.");}
+  if(b&&b.type==="villain")b.enemyHp=Math.max(0,b.enemyHp-damage);
+  say(f.name,caption);updateHud();
+  if(b&&b.enemyHp<=0)winBattle();else setActions([{label:"Continue",fn:enemyTurn}]);
+};
+
+girlStandUp=function(){
+  const b=state.currentBattle;if(!b)return;setAmyPose("ultimate");
+  const dmg=30+Math.floor(state.selfRespect/5)+Math.floor(state.groupChat/8);state.groupChat=clamp(state.groupChat-15);state.selfRespect=clamp(state.selfRespect+10);state.delusion=clamp(state.delusion-18);b.enemyHp=Math.max(0,b.enemyHp-dmg);
+  popEffect("GIRL, STAND UP!");
+  say("Amy","Amy used her ultimate: Girl, Stand Up! Malik yelled, “Amy, be so f@&$ing for real!” Min side-eyed so hard the enemy lost confidence. Jade pointed. Chloe dropped receipts. Mia smiled. Audacity trembled.");
+  updateHud();if(b.enemyHp<=0)winBattle();else setActions([{label:"Continue",fn:enemyTurn}]);
+};
+
+winBattle=function(){
+  const b=state.currentBattle,id=b.id,v=villains[id];setAmyPose("victory");state.defeated.add(id);state.currentBattle=null;state.redFlagData++;state.groupChat=clamp(state.groupChat+12);state.clarity=clamp(state.clarity+8);state.selfRespect=clamp(state.selfRespect+12);state.peace=clamp(state.peace+6);document.getElementById("battleUi").classList.add("hidden");showEnemy(false);
+  const friendId=pick(Object.keys(V18.victoryLines));
+  say("Victory",`${v.name} was defeated. ${pick(V18.victoryLines[friendId])} Soft Life Funds gained: 0, because Amy is not paid for emotional labor.`);
+  let acts=[{label:"Decompress in Car",fn:()=>goCarAfterDate(id),className:"green"},{label:"Back to Map",fn:()=>showScreen("mapScreen"),className:"primary"}];
+  if(shouldOfferAlgorithm())acts.unshift({label:"Go Home and Face The Algorithm",fn:()=>startBattle("algorithm"),className:"danger wide"});
+  if(id==="algorithm")acts.unshift({label:"Sleep... Enter Dream World",fn:()=>goLocation("bedroom"),className:"danger wide"});
+  if(id==="pattern"){
+    state.postPatternUnlocked=true;
+    acts=[{label:"Choose What Amy Wants Next",fn:()=>showScreen("mapScreen"),className:"green wide"}];
+    say("Victory","The Pattern has finally been defeated. No match. No message. No maybe. Amy can choose what she wants next.");
+  }
+  setActions(acts);updateHud();
+};
+
+escapeBattle=function(){
+  const b=state.currentBattle,v=villains[b.id],id=b.id;setAmyPose("defend");state.selfRespect=clamp(state.selfRespect+6);state.peace=clamp(state.peace+4);state.defeated.add(id);state.currentBattle=null;document.getElementById("battleUi").classList.add("hidden");showEnemy(false);
+  say("Amy",`Amy blocked ${v.name} and left. No debate. No dissertation. Peace protected.`);
+  setActions([{label:"Decompress in Car",fn:()=>goCarAfterDate(id),className:"green"},{label:"Back to Map",fn:()=>showScreen("mapScreen"),className:"primary"}]);updateHud();
+};
+
+function goCarAfterDate(id){
+  hideAllScreens();state.location="car";setBackground(state.time==="Day"?"car_day":"car_night");showAmy(true,"idle");showEnemy(false);document.getElementById("battleUi").classList.add("hidden");
+  say("Car",V18.carLines[id]||"Amy sat in the car and let the date become a story instead of a wound.");
+  setActions(carActions());updateHud();
+}
+
+doOffice=function(){
+  if(state.day>=4 && !state.defeated.has("coworker") && !state.officeCreeperTriggered){state.officeCreeperTriggered=true;return startDateCutscene("coworker");}
+  const earned=rand(500,1000);state.funds+=earned;state.stamina=clamp(state.stamina-15);advanceTime();say("Office",`Amy did office things. +${earned} Soft Life Funds. Energy took minor corporate damage.`);updateHud();
+};
+
+startGreenFlagBattle=function(id){
+  const gf=greenFlags[id];hideAllScreens();setBackground(gf.bg);state.currentBattle={id,type:"greenFlag"};showAmy(true,"idle");showEnemy(true,gf.name,`${gf.name}<br><small>${gf.role}</small>`,getEnemyArt("greenFlag",id));document.getElementById("battleUi").classList.add("hidden");popEffect("GREEN FLAG?");
+  const intro={
+    james:"For the record, you don’t owe me a chance because I was nice to you. I just like talking to you. If you’re interested, I’d like to take you out. If not, I’ll still bring the fries.",
+    xavier:"I don’t want to interrupt your peace. I’d like to be invited into it, if you want. You can say no.",
+    andrew:"No pressure. Dinner, walk, or we keep waving at each other until retirement. You deserve options."
+  };
+  say(gf.name,intro[id]||`A familiar green flag appeared. “${gf.quote}”`);
+  setActions([{label:"Enter Fake Battle",fn:()=>greenFlagFakeFight(id),className:"green"},{label:"Politely Decline",fn:()=>rejectGreenFlag(id)},{label:"Back Away Slowly",fn:()=>showScreen("mapScreen")}]);
+};
+
+greenFlagFakeFight=function(id){
+  const gf=greenFlags[id];state.peace=clamp(state.peace+12);state.selfRespect=clamp(state.selfRespect+8);popEffect("NO DAMAGE");
+  const line=id==="james"?"James used Remembered Your Order. Green hearts floated across the battlefield. Amy took no damage.":id==="xavier"?"Xavier used Quiet Presence. It was super effective against panic and pressure.":"Andrew used Patient Wave. The battlefield did not know what to do with healthy pacing.";
+  say(gf.name,line);setActions([{label:`Accept ${gf.ending}`,fn:()=>greenFlagEnding(id),className:"green wide"},{label:"Reject Date",fn:()=>rejectGreenFlag(id)}]);updateHud();
+};
+
+beachEnding=function(){
+  setBackground(state.time==="Night"?"beach_night":state.time==="Evening"?"beach":"beach_day");showAmy(true);showEnemy(false);
+  say("Beach Ending","Amy put her phone on silent and watched the water. No match. No message. No maybe. Just her. “This is enough tonight.”");popEffect("999 PEACE");
+  setActions([{label:"Return to Title",fn:()=>showScreen("titleScreen"),className:"primary"},{label:"Keep Looking at the Water",fn:()=>say("Amy","For once, silence does not feel lonely.")}]);
+};
+
+
+renderLocations=function(){
+  setBackground(getMapBgKey());
+  renderCityMap();
+  const grid=document.getElementById("locationGrid");
+  grid.innerHTML="";
+  locations.filter(l=>!["spa","car"].includes(l.id)).forEach(l=>{
+    const card=document.createElement("div");
+    card.className="location-card";
+    card.innerHTML=`<h3>${l.label}</h3><div class="card-desc">${l.desc}</div><button class="map-btn" onclick="goLocation('${l.id}')">Go</button>`;
+    grid.appendChild(card);
+  });
+};
+
+// refresh any mutated panels if user opens map/shop after patch
+
+window.addEventListener("load",()=>{updateHud();setBackground("apartment_sunset");showAmy(true,"idle");showEnemy(false);setActions([{label:"Start Prototype",fn:startGame,className:"primary"},{label:"Open Map",fn:()=>showScreen("mapScreen")},{label:"Villain Codex",fn:()=>showScreen("codexScreen")},{label:"Closet",fn:()=>showScreen("closetScreen")}]);setTimeout(()=>{const s=document.getElementById("studioSplash");s.classList.add("fade-out");setTimeout(()=>s.style.display="none",950)},3600)});
+
+/* =========================
+   v1.9 Cheat Route Patch
+   Adds earned cheat progression, Enter Cheat Code / Unlocked Cheats menus,
+   postgame Malik + Min bestie date routes, and post-bestie Mia route.
+   ========================= */
+
+Object.assign(FALLBACK, {
+  aquarium:"linear-gradient(135deg,#06132f 0%,#104873 42%,#53b7d6 68%,#061428 100%)",
+  beachside_cafe:"linear-gradient(135deg,#ffe7d6 0%,#ff9fcf 42%,#69c6df 76%,#2b6f99 100%)"
+});
+Object.assign(ASSETS.backgrounds, {
+  aquarium:"assets/backgrounds/aquarium.png",
+  beachside_cafe:"assets/backgrounds/beachside_cafe.png"
+});
+Object.assign(ENEMY_ART.greenFlags, {
+  malik:"assets/characters/friends/malik_reference.png",
+  min:"assets/characters/friends/min_reference.png",
+  mia:"assets/characters/friends/mia_reference.png"
+});
+Object.assign(greenFlags, {
+  malik:{name:"Malik",role:"Bestie Route — Cheat Only",bg:"beach",ending:"Beach Bestie Date",quote:"I love being your friend. I’m not trying to gamble that like an idiot. But I’d be lying if I said I never thought you were beautiful.",attack:"Loud Honest Care"},
+  min:{name:"Min",role:"Bestie Route — Cheat Only",bg:"aquarium",ending:"Aquarium Bestie Date",quote:"I’m not asking because I’m lonely. I’m asking because I care about you.",attack:"Quiet Vulnerability"},
+  mia:{name:"Mia",role:"Girl Route — Ultra Cheat",bg:"beachside_cafe",ending:"Beachside Cafe Date",quote:"I like how soft you are even when you’re pretending not to be.",attack:"Cute But Dangerous Honesty"}
+});
+if(!locations.find(l=>l.id==="aquarium"))locations.push(loc("aquarium","Aquarium","Quiet blue light, fish who mind their business, and Min’s postgame cheat route.",()=>"aquarium",aquariumActions));
+if(!locations.find(l=>l.id==="beachside_cafe"))locations.push(loc("beachside_cafe","Beachside Cafe","Cute drinks, ocean breeze, dessert, and Mia’s ultra-postgame cheat route.",()=>"beachside_cafe",beachsideCafeActions));
+if(!mapPins.find(p=>p.id==="aquarium"))mapPins.push({id:"aquarium",x:36,y:84});
+if(!mapPins.find(p=>p.id==="beachside_cafe"))mapPins.push({id:"beachside_cafe",x:18,y:91});
+
+const V19_CHEAT_KEY="slts_v19_cheat_progress";
+const V19_DEFAULT_PROGRESS={
+  endings:{james:false,xavier:false,andrew:false,beach:false,malik:false,min:false,mia:false},
+  unlocked:{bestieRoutes:false,girlRoute:false},
+  active:{bestieRoutes:false,girlRoute:false}
+};
+function v19Clone(obj){return JSON.parse(JSON.stringify(obj));}
+function loadCheatProgress(){
+  try{
+    const raw=localStorage.getItem(V19_CHEAT_KEY);
+    if(!raw)return v19Clone(V19_DEFAULT_PROGRESS);
+    const parsed=JSON.parse(raw);
+    return {
+      endings:Object.assign({},V19_DEFAULT_PROGRESS.endings,parsed.endings||{}),
+      unlocked:Object.assign({},V19_DEFAULT_PROGRESS.unlocked,parsed.unlocked||{}),
+      active:Object.assign({},V19_DEFAULT_PROGRESS.active,parsed.active||{})
+    };
+  }catch(e){return v19Clone(V19_DEFAULT_PROGRESS);}
+}
+function saveCheatProgress(){try{localStorage.setItem(V19_CHEAT_KEY,JSON.stringify(state.cheatProgress));}catch(e){}}
+state.cheatProgress=loadCheatProgress();
+function originalEndingsComplete(){const e=state.cheatProgress.endings;return !!(e.james&&e.xavier&&e.andrew&&e.beach);}
+function bestieEndingsComplete(){const e=state.cheatProgress.endings;return !!(e.malik&&e.min);}
+function updateCheatUnlocks(){
+  const newly=[];
+  if(originalEndingsComplete()&&!state.cheatProgress.unlocked.bestieRoutes){
+    state.cheatProgress.unlocked.bestieRoutes=true;
+    newly.push("BESTIE ROUTES");
+  }
+  if(bestieEndingsComplete()&&!state.cheatProgress.unlocked.girlRoute){
+    state.cheatProgress.unlocked.girlRoute=true;
+    newly.push("GIRL ROUTE");
+  }
+  saveCheatProgress();
+  return newly;
+}
+function earnEnding(id){
+  if(state.cheatProgress.endings[id]!==undefined){state.cheatProgress.endings[id]=true;}
+  return updateCheatUnlocks();
+}
+function cheatActive(name){return !!(state.cheatProgress&&state.cheatProgress.active&&state.cheatProgress.active[name]);}
+function cheatUnlocked(name){return !!(state.cheatProgress&&state.cheatProgress.unlocked&&state.cheatProgress.unlocked[name]);}
+function canUseBestieRoutes(){return state.postPatternUnlocked&&cheatActive("bestieRoutes");}
+function canUseGirlRoute(){return state.postPatternUnlocked&&cheatActive("girlRoute");}
+
+function ensureCheatScreens(){
+  const main=document.getElementById("mainStage");
+  if(!document.getElementById("enterCheatScreen")){
+    const sec=document.createElement("section");
+    sec.className="screen hidden";sec.id="enterCheatScreen";
+    sec.innerHTML=`<div class="panel"><h2>Enter Cheat Code</h2><p class="subtitle">Cheats are locked on the first playthrough. Earn endings to reveal them.</p><div style="display:grid;gap:12px;max-width:620px"><input id="cheatInput" placeholder="TYPE CHEAT CODE" style="font:inherit;padding:13px 14px;border-radius:14px;border:1px solid rgba(255,216,236,.65);background:rgba(255,255,255,.1);color:#fff;text-transform:uppercase"><button class="action-btn primary" onclick="submitCheatCode()">Submit</button><button class="action-btn" onclick="showUnlockedCheatsScreen()">Unlocked Cheats</button><button class="action-btn" onclick="showScreen('titleScreen')">Back</button><p id="cheatMessage" style="min-height:44px;line-height:1.35"></p></div></div>`;
+    main.appendChild(sec);
+  }
+  if(!document.getElementById("unlockedCheatsScreen")){
+    const sec=document.createElement("section");
+    sec.className="screen hidden";sec.id="unlockedCheatsScreen";
+    sec.innerHTML=`<div class="panel"><h2>Unlocked Cheats</h2><p class="subtitle">Cheats appear here only after Amy earns them through endings.</p><div id="unlockedCheatsBody" class="location-grid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showEnterCheatScreen()">Enter Cheat Code</button> <button class="small-btn" onclick="showScreen('titleScreen')">Back</button></div></div>`;
+    main.appendChild(sec);
+  }
+}
+function injectCheatMenuButtons(){
+  ensureCheatScreens();
+  const grid=document.querySelector("#titleScreen .menu-grid");
+  if(grid&&!document.getElementById("v19EnterCheatBtn")){
+    const enter=document.createElement("button");enter.id="v19EnterCheatBtn";enter.className="action-btn";enter.textContent="Enter Cheat Code";enter.onclick=showEnterCheatScreen;grid.appendChild(enter);
+    const unlocked=document.createElement("button");unlocked.id="v19UnlockedCheatBtn";unlocked.className="action-btn";unlocked.textContent="Unlocked Cheats";unlocked.onclick=showUnlockedCheatsScreen;grid.appendChild(unlocked);
+  }
+}
+function showEnterCheatScreen(){ensureCheatScreens();showScreen("enterCheatScreen");const input=document.getElementById("cheatInput");if(input){input.value="";input.focus();}const msg=document.getElementById("cheatMessage");if(msg)msg.textContent="Enter an earned cheat. Hidden cheats will not activate early.";}
+function showUnlockedCheatsScreen(){ensureCheatScreens();renderUnlockedCheats();showScreen("unlockedCheatsScreen");}
+function cheatStatusCard(title,desc,stateText,buttonLabel,fnName,enabled=true){
+  return `<div class="location-card"><h3>${title}</h3><div class="card-desc">${desc}</div><p><b>${stateText}</b></p>${buttonLabel?`<button class="map-btn" ${enabled?`onclick="${fnName}"`:"disabled"}>${buttonLabel}</button>`:""}</div>`;
+}
+function renderUnlockedCheats(){
+  const body=document.getElementById("unlockedCheatsBody");if(!body)return;
+  const e=state.cheatProgress.endings,u=state.cheatProgress.unlocked,a=state.cheatProgress.active;
+  const originalCount=["james","xavier","andrew","beach"].filter(k=>e[k]).length;
+  const bestieCount=["malik","min"].filter(k=>e[k]).length;
+  let html="";
+  html+=cheatStatusCard("Original Endings",`Earn all four intended endings first: James, Xavier, Andrew, and Choose Yourself. Progress: ${originalCount}/4.`,originalCount===4?"Complete":"Locked progression",null);
+  html+=cheatStatusCard("BESTIE ROUTES","Unlocks Malik and Min as postgame cheat-only green flag date battles. Malik: Beach. Min: Aquarium.",u.bestieRoutes?(a.bestieRoutes?"Active":"Unlocked, not active"):"Hidden until all 4 original endings",u.bestieRoutes?(a.bestieRoutes?"Deactivate":"Activate"):"Locked","toggleCheat('bestieRoutes')",u.bestieRoutes);
+  html+=cheatStatusCard("Bestie Endings",`Complete Malik and Min after activating BESTIE ROUTES. Progress: ${bestieCount}/2.`,bestieCount===2?"Complete":"Locked / In Progress",null);
+  html+=cheatStatusCard("GIRL ROUTE","Unlocks Mia as the ultra-postgame cheat-only route at the Beachside Cafe.",u.girlRoute?(a.girlRoute?"Active":"Unlocked, not active"):"Hidden until Malik + Min are completed",u.girlRoute?(a.girlRoute?"Deactivate":"Activate"):"Locked","toggleCheat('girlRoute')",u.girlRoute);
+  body.innerHTML=html;
+}
+function toggleCheat(name){
+  if(!cheatUnlocked(name))return;
+  state.cheatProgress.active[name]=!state.cheatProgress.active[name];
+  saveCheatProgress();renderUnlockedCheats();
+  say("Cheat Menu",`${name==="bestieRoutes"?"BESTIE ROUTES":"GIRL ROUTE"} ${state.cheatProgress.active[name]?"activated":"deactivated"}.`);
+}
+function submitCheatCode(){
+  const input=document.getElementById("cheatInput"),msg=document.getElementById("cheatMessage");
+  const raw=(input&&input.value||"").trim().toUpperCase().replace(/[’']/g,"'");
+  const norm=raw.replace(/[^A-Z0-9]+/g," ").trim();
+  let response="";
+  if(["BESTIE ROUTES","FRIENDZONE BREAKER","DON T TELL THE GROUP CHAT","FORBIDDEN GROUP CHAT"].includes(norm)){
+    if(cheatUnlocked("bestieRoutes")){state.cheatProgress.active.bestieRoutes=true;saveCheatProgress();response="BESTIE ROUTES activated. Malik and Min can appear as final post-Pattern date options on the next run.";}
+    else response="That cheat is still hidden. Earn James, Xavier, Andrew, and Choose Yourself first.";
+  }else if(["GIRL ROUTE","GIRLS NIGHT BONUS","MIA ROUTE"].includes(norm)){
+    if(cheatUnlocked("girlRoute")){state.cheatProgress.active.girlRoute=true;saveCheatProgress();response="GIRL ROUTE activated. Mia can appear as the ultra-postgame Beachside Cafe date option.";}
+    else response="That cheat is still hidden. Complete the Malik and Min bestie routes first.";
+  }else if(norm){
+    response="Unknown cheat. The group chat is suspicious.";
+  }else response="Type a cheat code first.";
+  if(msg)msg.textContent=response;
+  say("Cheat Code",response);renderUnlockedCheats();
+}
+
+const v19StartGameBase=startGame;
+startGame=function(){
+  state.defeated=new Set();state.rejectedGreenFlags=new Set();state.currentBattle=null;state.postPatternUnlocked=false;
+  state.hp=state.maxHp;state.peace=70;state.stamina=80;state.clarity=55;state.selfRespect=55;state.delusion=20;state.groupChat=20;state.redFlagData=0;
+  state.npcVisits={james:0,xavier:0,andrew:0};state.officeCreeperTriggered=false;state.lastDateBattle=null;state.currentCutscene=null;state.appOpened=0;
+  return v19StartGameBase();
+};
+
+function lockedBonusLocation(id){
+  if(id==="aquarium")return !cheatActive("bestieRoutes");
+  if(id==="beachside_cafe")return !cheatActive("girlRoute");
+  return false;
+}
+const v19RenderCityMapBase=renderCityMap;
+renderCityMap=function(){
+  const map=document.getElementById("cityMapUi"),chip=document.getElementById("mapTimeChip"),bgKey=getMapBgKey(),bgUrl=ASSETS.backgrounds[bgKey];
+  chip.textContent=state.time==="Night"?"Night":state.time==="Evening"?"Golden Hour":"Daytime";
+  map.style.backgroundImage=`linear-gradient(180deg,rgba(255,255,255,.03),rgba(24,10,34,.08)), url('${bgUrl}')`;
+  map.innerHTML="";
+  mapPins.filter(p=>!lockedBonusLocation(p.id)).forEach(p=>{
+    const loc=locations.find(l=>l.id===p.id);const btn=document.createElement("button");
+    btn.className=`map-pin ${state.location===p.id?"current":""}`;btn.style.left=`${p.x}%`;btn.style.top=`${p.y}%`;
+    btn.setAttribute("aria-label",`Go to ${loc?loc.label:p.id}`);
+    btn.innerHTML=`<span class="map-pin-icon"></span><span class="map-pin-label">${loc?loc.label:p.id}</span>`;btn.onclick=()=>goLocation(p.id);map.appendChild(btn);
+  });
+  const legend=document.createElement("div");legend.className="map-legend";legend.innerHTML=`<b>Tap a pin</b><br>Choose where Amy goes next.`;map.appendChild(legend);
+};
+renderLocations=function(){
+  setBackground(getMapBgKey());renderCityMap();
+  const grid=document.getElementById("locationGrid");grid.innerHTML="";
+  locations.filter(l=>!["spa","car"].includes(l.id)&&!lockedBonusLocation(l.id)).forEach(l=>{
+    const card=document.createElement("div");card.className="location-card";
+    card.innerHTML=`<h3>${l.label}</h3><div class="card-desc">${l.desc}</div><button class="map-btn" onclick="goLocation('${l.id}')">Go</button>`;
+    grid.appendChild(card);
+  });
+};
+
+function aquariumActions(){
+  const arr=[
+    {label:"Look at the Jellyfish",fn:()=>locationActivity("Aquarium","The jellyfish drifted with no agenda. Min would approve.",{peace:14,clarity:8}),className:"green"},
+    {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+  ];
+  if(canUseBestieRoutes()&&!state.rejectedGreenFlags.has("min"))arr.unshift({label:"Ask Min Out / Green Flag Battle",fn:()=>startGreenFlagBattle("min"),className:"green wide"});
+  return arr;
+}
+function beachsideCafeActions(){
+  const arr=[
+    {label:"Order Cake",fn:()=>spendFunds(120,()=>locationActivity("Beachside Cafe","Amy ordered cake by the water. Regular joy is important.",{peace:16,stamina:12,selfRespect:4})),className:"green"},
+    {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+  ];
+  if(canUseGirlRoute()&&!state.rejectedGreenFlags.has("mia"))arr.unshift({label:"Ask Mia Out / Green Flag Battle",fn:()=>startGreenFlagBattle("mia"),className:"green wide"});
+  return arr;
+}
+const v19BeachActionsBase=beachActions;
+beachActions=function(){
+  const arr=v19BeachActionsBase();
+  if(canUseBestieRoutes()&&!state.rejectedGreenFlags.has("malik"))arr.unshift({label:"Ask Malik Out / Green Flag Battle",fn:()=>startGreenFlagBattle("malik"),className:"green wide"});
+  return arr;
+};
+const v19LibraryActionsBase=libraryActions;
+libraryActions=function(){return v19LibraryActionsBase();};
+const v19BarActionsBase=barActions;
+barActions=function(){return v19BarActionsBase();};
+
+const V19_GREEN_INTROS={
+  james:"For the record, you don’t owe me a chance because I was nice to you. I just like talking to you. If you’re interested, I’d like to take you out. If not, I’ll still bring the fries.",
+  xavier:"I don’t want to interrupt your peace. I’d like to be invited into it, if you want. You can say no.",
+  andrew:"No pressure. Dinner, walk, or we keep waving at each other until retirement. You deserve options.",
+  malik:"Okay. Before you say anything, I know this is weird. I love being your friend. I’m not trying to gamble that like an idiot. But I’d be lying if I said I never thought you were beautiful. One date. A real one. If you say no, nothing changes.",
+  min:"I picked the aquarium because it’s quiet, the lighting is good, and the fish don’t interrupt. I like being your friend. That’s the problem. I’d like to take you on a date. If not, I will pretend this conversation was about jellyfish.",
+  mia:"So. Bonus content. I picked this cafe because the cake is good and the ocean makes people honest. I like you. I’d like to take you out properly. With dessert. Maybe hand-holding if you behave."
+};
+startGreenFlagBattle=function(id){
+  const gf=greenFlags[id];hideAllScreens();setBackground(gf.bg);state.currentBattle={id,type:"greenFlag"};showAmy(true,"idle");
+  showEnemy(true,gf.name,`${gf.name}<br><small>${gf.role}</small>`,getEnemyArt("greenFlag",id));
+  document.getElementById("battleUi").classList.add("hidden");
+  popEffect(["malik","min","mia"].includes(id)?"CHEAT ROUTE":"GREEN FLAG?");
+  const supportNote=["malik","min","mia"].includes(id)?"\n\nSupport disabled: this is a private bonus-date battle.":"";
+  say(gf.name,(V19_GREEN_INTROS[id]||`A familiar green flag appeared. “${gf.quote}”`)+supportNote);
+  setActions([{label:"Enter Green Flag Date Battle",fn:()=>greenFlagFakeFight(id),className:"green"},{label:"Politely Decline",fn:()=>rejectGreenFlag(id)},{label:"Back Away Slowly",fn:()=>showScreen("mapScreen")}]);
+};
+greenFlagFakeFight=function(id){
+  const gf=greenFlags[id];state.peace=clamp(state.peace+12);state.selfRespect=clamp(state.selfRespect+8);popEffect("NO DAMAGE");
+  const line={
+    james:"James used Remembered Your Order. Green hearts floated across the battlefield. Amy took no damage.",
+    xavier:"Xavier used Quiet Presence. It was super effective against panic and pressure.",
+    andrew:"Andrew used Patient Wave. The battlefield did not know what to do with healthy pacing.",
+    malik:"Malik used Loud Honest Care. He was nervous, sincere, and still somehow roasting the entire cursed dating roster. Amy took no damage.",
+    min:"Min used Quiet Vulnerability. The aquarium lights turned blue. His face still had boundaries. Amy took no damage.",
+    mia:"Mia used Cute But Dangerous Honesty. The cake was good, the ocean was pretty, and Amy took no damage."
+  }[id]||`${gf.name} used ${gf.attack}. Green hearts floated across the battlefield. Amy took no damage.`;
+  say(gf.name,line);setActions([{label:`Accept ${gf.ending}`,fn:()=>greenFlagEnding(id),className:"green wide"},{label:"Reject Date",fn:()=>rejectGreenFlag(id)}]);updateHud();
+};
+greenFlagEnding=function(id){
+  const gf=greenFlags[id];
+  const endings={
+    xavier:"Xavier and Amy go to the planetarium. The stars are quiet, beautiful, and not asking her to explain her boundaries.",
+    james:"James and Amy go to the movies. No weird pressure, no secret agenda, just popcorn and peace.",
+    andrew:"Andrew and Amy go to dinner. The conversation is clear, kind, and refreshingly normal.",
+    malik:"Amy agrees to one real date with Malik at the beach. He immediately realizes she is going to weaponize ‘be so f@&$ing for real’ against him forever. Cute CG unlocked: Malik Beach Date.",
+    min:"Amy agrees to one real date with Min at the aquarium. He says he is experiencing several emotions; this is the public version. Cute CG unlocked: Min Aquarium Date.",
+    mia:"Amy agrees to Mia’s Beachside Cafe date. There is cake, ocean air, and a dangerous amount of cute. Cute CG unlocked: Mia Beachside Cafe Date."
+  };
+  const newly=earnEnding(id);
+  let text=endings[id]||`${gf.name} and Amy choose something calm, clear, and mutual.`;
+  if(newly.length)text+=`\n\nCHEAT UNLOCKED: ${newly.join(" + ")}. Check Unlocked Cheats from the title menu.`;
+  say(`${gf.ending} Ending`,text);
+  setActions([{label:"Return to Title",fn:()=>showScreen("titleScreen"),className:"primary"},{label:"Back to Map",fn:()=>showScreen("mapScreen")}]);
+};
+rejectGreenFlag=function(id){
+  const gf=greenFlags[id];state.rejectedGreenFlags.add(id);state.peace=clamp(state.peace+10);state.selfRespect=clamp(state.selfRespect+10);showEnemy(false);
+  const lines={
+    malik:"Girl, yes. We are still besties. You think I survived years of your screenshots to lose you over one honest conversation? I’ll catch you at the bar, and I am still judging your matches.",
+    min:"Okay. Still besties. Unfortunately, you are difficult to get rid of. I will now pretend this conversation was about jellyfish.",
+    mia:"No hard feelings. I still brought cake energy, and you are still cute. We move."
+  };
+  say(gf.name,lines[id]||`${gf.name} respected Amy’s answer. No guilt trip. No debate. Green flag confirmed. Amy can choose where to go next.`);
+  setActions([{label:"Choose Another Location",fn:()=>showScreen("mapScreen"),className:"green"},{label:"Go to Beach",fn:()=>goLocation("beach")}]);updateHud();
+};
+beachEnding=function(){
+  setBackground(state.time==="Night"?"beach_night":state.time==="Evening"?"beach":"beach_day");showAmy(true);showEnemy(false);
+  const newly=earnEnding("beach");
+  let text="Amy put her phone on silent and watched the water. No match. No message. No maybe. Just her. “This is enough tonight.”";
+  if(newly.length)text+=`\n\nCHEAT UNLOCKED: ${newly.join(" + ")}. Check Unlocked Cheats from the title menu.`;
+  say("Choose Yourself Ending",text);popEffect("999 PEACE");
+  setActions([{label:"Return to Title",fn:()=>showScreen("titleScreen"),className:"primary"},{label:"Keep Looking at the Water",fn:()=>say("Amy","For once, silence does not feel lonely.")}]);
+};
+
+const v19ShowScreenBase=showScreen;
+showScreen=function(id){ensureCheatScreens();v19ShowScreenBase(id);if(id==="unlockedCheatsScreen")renderUnlockedCheats();};
+
+window.addEventListener("load",()=>{
+  state.cheatProgress=loadCheatProgress();updateCheatUnlocks();injectCheatMenuButtons();
+  setActions([{label:"Start Prototype",fn:startGame,className:"primary"},{label:"Open Map",fn:()=>showScreen("mapScreen")},{label:"Villain Codex",fn:()=>showScreen("codexScreen")},{label:"Closet",fn:()=>showScreen("closetScreen")},{label:"Enter Cheat Code",fn:showEnterCheatScreen,className:"wide"},{label:"Unlocked Cheats",fn:showUnlockedCheatsScreen,className:"wide"}]);
+});
+
 </script>
 </body>
 </html>
+
+
+/* =========================
+   v1.10 Beachside Cafe Sublocation Patch
+   Keeps Beachside Cafe off the world map and makes it accessible from Beach.
+   ========================= */
+
+// Beachside Cafe is a Beach sublocation now, not a separate world-map pin.
+for(let i=mapPins.length-1;i>=0;i--){
+  if(mapPins[i].id==="beachside_cafe")mapPins.splice(i,1);
+}
+
+const v110RenderLocationsBase=renderLocations;
+renderLocations=function(){
+  setBackground(getMapBgKey());
+  renderCityMap();
+  const grid=document.getElementById("locationGrid");
+  grid.innerHTML="";
+  locations
+    .filter(l=>!["spa","car","beachside_cafe"].includes(l.id)&&!lockedBonusLocation(l.id))
+    .forEach(l=>{
+      const card=document.createElement("div");
+      card.className="location-card";
+      card.innerHTML=`<h3>${l.label}</h3><div class="card-desc">${l.desc}</div><button class="map-btn" onclick="goLocation('${l.id}')">Go</button>`;
+      grid.appendChild(card);
+    });
+};
+
+const v110BeachActionsBase=beachActions;
+beachActions=function(){
+  const arr=v110BeachActionsBase().filter(a=>a.label!=="Visit Beachside Cafe");
+  const cafeAction={
+    label:cheatActive("girlRoute")?"Visit Beachside Cafe":"Visit Beachside Cafe",
+    fn:()=>goLocation("beachside_cafe"),
+    className:"green"
+  };
+  const backIdx=arr.findIndex(a=>/Back to Map|Go Somewhere Else|Not Yet/i.test(a.label));
+  arr.splice(backIdx>=0?backIdx:arr.length,0,cafeAction);
+  return arr;
+};
+
+beachsideCafeActions=function(){
+  const arr=[
+    {label:"Order Cake",fn:()=>spendFunds(120,()=>locationActivity("Beachside Cafe","Amy ordered cake by the water. Regular joy is important.",{peace:16,stamina:12,selfRespect:4})),className:"green"},
+    {label:"Sit by the Window",fn:()=>locationActivity("Beachside Cafe","Amy sat by the window with ocean air, a cute drink, and absolutely no obligation to answer her phone.",{peace:12,clarity:6}),className:"green"},
+    {label:"Back to Beach",fn:()=>goLocation("beach")},
+    {label:"Back to Map",fn:()=>showScreen("mapScreen")}
+  ];
+  if(canUseGirlRoute()&&!state.rejectedGreenFlags.has("mia")){
+    arr.unshift({label:"Ask Mia Out / Green Flag Battle",fn:()=>startGreenFlagBattle("mia"),className:"green wide"});
+  }
+  return arr;
+};
