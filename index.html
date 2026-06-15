@@ -1463,7 +1463,123 @@ function renderDateFitGallery112(){
   body.innerHTML=state.dateFitGallery.map((s,i)=>`<div class="v112-card"><img class="gallery-img" src="${s.dataUrl}" alt="${getSnapshotCaption112(s)}"><h3>${getSnapshotCaption112(s)}</h3><div class="v112-row"><button class="small-btn" onclick="downloadDateFitSnapshot112(${i})">Download PNG</button><button class="small-btn" onclick="printDateFitSnapshot112(${i})">Print</button><button class="small-btn" onclick="shareDateFitSnapshot112(${i})">Share</button><button class="small-btn" onclick="emailDateFitSnapshot112(${i})">Email</button><button class="small-btn danger" onclick="deleteDateFitSnapshot112(${i})">Delete</button></div></div>`).join('');
 }
 window.downloadDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const a=document.createElement('a');a.href=s.dataUrl;a.download=`date-fit-${s.partnerLabel||s.partner}-${s.location||'scene'}.png`.replace(/\s+/g,'-').toLowerCase();a.click();};
-window.printDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const w=window.open('','_blank');if(!w){say('Dress-Up Gallery','Pop-up blocked. Use Download PNG instead.');return}w.document.write(`<title>${getSnapshotCaption112(s)}</title><body style="margin:0;display:grid;place-items:center;min-height:100vh;background:#fff"><img src="${s.dataUrl}" style="max-width:96vw;max-height:96vh"></body>`);w.document.close();w.focus();setTimeout(()=>w.print(),300);};
+window.printDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const w=window.open('','_blank');if(!w){say('Dress-Up Gallery','Pop-up blocked. Use Download PNG instead.');return}w.document.write(`<title>${getSnapshotCaption112(s)}</title><body style="margin:0;display:grid;place-items:center;min-height:100vh;background:#fff"><img src="${s.dataUrl}" style="max-width:96vw;max-height:96vh">
+
+/* =========================
+   v1.22 FINAL 16:9 CODED BACKGROUNDS
+   This patch uses the exact 16:9 image batch Amber sent after v1.19.
+   Assets live in: assets/backgrounds/final_16x9/
+   ========================= */
+(function(){
+  const bg122 = {
+    car_day: 'assets/backgrounds/final_16x9/bg_car_day.png',
+    car_sunset: 'assets/backgrounds/final_16x9/bg_car_sunset.png',
+    car_night: 'assets/backgrounds/final_16x9/bg_car_night.png',
+    parking_lot_night: 'assets/backgrounds/final_16x9/bg_parking_lot_night.png',
+    beach_day: 'assets/backgrounds/final_16x9/bg_beach_day.png',
+    beach_sunset: 'assets/backgrounds/final_16x9/bg_beach_sunset.png',
+    beach_night: 'assets/backgrounds/final_16x9/bg_beach_night.png',
+    park_day: 'assets/backgrounds/final_16x9/bg_park_day.png',
+    park_sunset: 'assets/backgrounds/final_16x9/bg_park_sunset.png',
+    park_night: 'assets/backgrounds/final_16x9/bg_park_night.png',
+    office_day: 'assets/backgrounds/final_16x9/bg_office_day.png'
+  };
+
+  Object.assign(ASSETS.backgrounds, bg122, {
+    car: bg122.car_day,
+    beach: bg122.beach_sunset,
+    park: bg122.park_day,
+    office: bg122.office_day
+  });
+
+  if (typeof FALLBACK === 'object') {
+    Object.assign(FALLBACK, {
+      parking_lot_night: 'linear-gradient(135deg,#050812,#17243c 45%,#3a3e58)'
+    });
+  }
+
+  const beachLoc122 = locations.find(l => l.id === 'beach');
+  if (beachLoc122) {
+    beachLoc122.bg = () => state.time === 'Night' ? 'beach_night' : state.time === 'Evening' ? 'beach_sunset' : 'beach_day';
+  }
+
+  const parkLoc122 = locations.find(l => l.id === 'park');
+  if (parkLoc122) {
+    parkLoc122.bg = () => state.time === 'Night' ? 'park_night' : state.time === 'Evening' ? 'park_sunset' : 'park_day';
+  }
+
+  const officeLoc122 = locations.find(l => l.id === 'office');
+  if (officeLoc122) {
+    officeLoc122.bg = () => 'office_day';
+  }
+
+  const carLoc122 = locations.find(l => l.id === 'car');
+  if (carLoc122) {
+    carLoc122.bg = () => state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day';
+  }
+
+  if (villains && villains.body_bag) {
+    villains.body_bag.bg = 'parking_lot_night';
+  }
+
+  if (typeof V18 === 'object' && V18.appNotifications && V18.appNotifications.body_bag) {
+    V18.appNotifications.body_bag.battleBg = 'parking_lot_night';
+  }
+
+  if (typeof startCarScene115 === 'function') {
+    startCarScene115 = function(resultKey){
+      hideAllScreens();
+      state.location='car';
+      setBackground(state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day');
+      showAmy(true,'idle');
+      showEnemy(false);
+      document.getElementById('battleUi').classList.add('hidden');
+      document.getElementById('cutscenePanel').classList.remove('hidden');
+      document.getElementById('gameScreen').classList.remove('hidden');
+      const copy = (V18.carAftermath && V18.carAftermath[resultKey]) || (typeof resultKey === 'string' ? resultKey : '');
+      say('Amy', typeof copy === 'object' ? (state.lang === 'ja' ? copy.ja : copy.en) : copy);
+      renderCarActions();
+      updateHud();
+    };
+  }
+})();
+
+
+
+/* =========================
+   v1.24 DIRECT assets/backgrounds routing
+   All coded 16:9 backgrounds now live directly in assets/backgrounds/.
+   ========================= */
+(function(){
+  const bg124 = {
+    city_map_day:'assets/backgrounds/bg_city_map_day.png', city_map_afternoon:'assets/backgrounds/bg_city_map_afternoon.png', city_map_night:'assets/backgrounds/bg_city_map_night.png',
+    apartment_day:'assets/backgrounds/bg_apartment_day.png', apartment_sunset:'assets/backgrounds/bg_apartment_sunset.png', apartment_night:'assets/backgrounds/bg_apartment_night.png',
+    bedroom_day:'assets/backgrounds/bg_bedroom_day.png', bedroom_sunset:'assets/backgrounds/bg_bedroom_sunset.png', bedroom_night:'assets/backgrounds/bg_bedroom_night.png',
+    library_day:'assets/backgrounds/bg_library_day.png', library_afternoon:'assets/backgrounds/bg_library_afternoon.png',
+    bar_day:'assets/backgrounds/bg_bar_day.png', bar_night:'assets/backgrounds/bg_bar_night.png',
+    restaurant_day:'assets/backgrounds/bg_restaurant_day.png', restaurant_night:'assets/backgrounds/bg_restaurant_night.png',
+    mall_day:'assets/backgrounds/bg_mall_day.png', bedroom_glitch:'assets/backgrounds/bg_bedroom_glitch.png', dream_world:'assets/backgrounds/bg_dream_world.png', apartment_glitch:'assets/backgrounds/bg_apartment_glitch.png', closet:'assets/backgrounds/bg_closet.png', spa:'assets/backgrounds/bg_spa.png',
+    car_day:'assets/backgrounds/bg_car_day.png', car_sunset:'assets/backgrounds/bg_car_sunset.png', car_night:'assets/backgrounds/bg_car_night.png', parking_lot_night:'assets/backgrounds/bg_parking_lot_night.png',
+    beach_day:'assets/backgrounds/bg_beach_day.png', beach_sunset:'assets/backgrounds/bg_beach_sunset.png', beach_night:'assets/backgrounds/bg_beach_night.png',
+    park_day:'assets/backgrounds/bg_park_day.png', park_sunset:'assets/backgrounds/bg_park_sunset.png', park_night:'assets/backgrounds/bg_park_night.png', office_day:'assets/backgrounds/bg_office_day.png'
+  };
+  Object.assign(ASSETS.backgrounds, bg124, {library:bg124.library_day, bar:bg124.bar_day, restaurant:bg124.restaurant_day, mall:bg124.mall_day, park:bg124.park_day, beach:bg124.beach_sunset, office:bg124.office_day, car:bg124.car_day, closet:bg124.closet, spa:bg124.spa});
+  const setLoc=(id,fn)=>{const l=locations.find(x=>x.id===id); if(l) l.bg=fn;};
+  setLoc('apartment',()=>state.time==='Night'?'apartment_night':state.time==='Evening'?'apartment_sunset':'apartment_day');
+  setLoc('bedroom',()=>state.time==='Night'?'bedroom_night':state.time==='Evening'?'bedroom_sunset':'bedroom_day');
+  setLoc('library',()=>state.time==='Evening'?'library_afternoon':'library_day');
+  setLoc('bar',()=>state.time==='Night'?'bar_night':'bar_day');
+  setLoc('restaurant',()=>state.time==='Night'?'restaurant_night':'restaurant_day');
+  setLoc('mall',()=> 'mall_day'); setLoc('closet',()=> 'closet'); setLoc('spa',()=> 'spa');
+  setLoc('park',()=>state.time==='Night'?'park_night':state.time==='Evening'?'park_sunset':'park_day');
+  setLoc('beach',()=>state.time==='Night'?'beach_night':state.time==='Evening'?'beach_sunset':'beach_day');
+  setLoc('office',()=> 'office_day');
+  setLoc('car',()=>state.time==='Night'?'car_night':state.time==='Evening'?'car_sunset':'car_day');
+  if(villains && villains.body_bag) villains.body_bag.bg='parking_lot_night';
+  if(typeof V18==='object' && V18.appNotifications && V18.appNotifications.body_bag) V18.appNotifications.body_bag.battleBg='parking_lot_night';
+})();
+
+</body>`);w.document.close();w.focus();setTimeout(()=>w.print(),300);};
 async function dataURLToFile112(dataUrl,name){const res=await fetch(dataUrl);const blob=await res.blob();return new File([blob],name,{type:'image/png'});}
 window.shareDateFitSnapshot112=async function(i){const s=state.dateFitGallery[i];if(!s)return;try{const file=await dataURLToFile112(s.dataUrl,'date-fit.png');if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:getSnapshotCaption112(s),text:'My Swipe Left to Survive Date Fit Studio Polaroid',files:[file]});}else if(navigator.share){await navigator.share({title:getSnapshotCaption112(s),text:'My Swipe Left to Survive Date Fit Studio Polaroid'});}else{downloadDateFitSnapshot112(i);say('Dress-Up Gallery','Sharing is not supported here, so I downloaded the PNG instead.');}}catch(e){say('Dress-Up Gallery','Share was cancelled or not supported. Download PNG still works.');}};
 window.emailDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const subject=encodeURIComponent(`Date Fit Studio: ${getSnapshotCaption112(s)}`);const body=encodeURIComponent('I made a Swipe Left to Survive Date Fit Studio Polaroid. Download the PNG from the gallery and attach it to this email.');window.location.href=`mailto:?subject=${subject}&body=${body}`;};
@@ -3069,85 +3185,121 @@ window.addEventListener('load',()=>{
 })();
 
 </script>
-</body>
-</html>
 
 
 /* =========================
-   v1.20 Background Patch: car + beach + park + office + parking lot
-   - Adds final 16:9 car day/sunset/night art.
-   - Adds final 16:9 beach day/sunset/night art.
-   - Adds final 16:9 park day/sunset/night art.
-   - Adds final 16:9 office day art.
-   - Adds parking lot night art and assigns it to Reggie / True Crime Date.
+   v1.22 FINAL 16:9 CODED BACKGROUNDS
+   This patch uses the exact 16:9 image batch Amber sent after v1.19.
+   Assets live in: assets/backgrounds/final_16x9/
    ========================= */
 (function(){
-  const bg120 = {
-    car_day: 'assets/backgrounds/v20/bg_car_day.png',
-    car_sunset: 'assets/backgrounds/v20/bg_car_sunset.png',
-    car_night: 'assets/backgrounds/v20/bg_car_night.png',
-    parking_lot_night: 'assets/backgrounds/v20/bg_parking_lot_night.png',
-    beach_day: 'assets/backgrounds/v20/bg_beach_day.png',
-    beach: 'assets/backgrounds/v20/bg_beach_sunset.png',
-    beach_sunset: 'assets/backgrounds/v20/bg_beach_sunset.png',
-    beach_night: 'assets/backgrounds/v20/bg_beach_night.png',
-    park_day: 'assets/backgrounds/v20/bg_park_day.png',
-    park_sunset: 'assets/backgrounds/v20/bg_park_sunset.png',
-    park_night: 'assets/backgrounds/v20/bg_park_night.png',
-    office_day: 'assets/backgrounds/v20/bg_office_day.png',
-    office: 'assets/backgrounds/v20/bg_office_day.png'
+  const bg122 = {
+    car_day: 'assets/backgrounds/final_16x9/bg_car_day.png',
+    car_sunset: 'assets/backgrounds/final_16x9/bg_car_sunset.png',
+    car_night: 'assets/backgrounds/final_16x9/bg_car_night.png',
+    parking_lot_night: 'assets/backgrounds/final_16x9/bg_parking_lot_night.png',
+    beach_day: 'assets/backgrounds/final_16x9/bg_beach_day.png',
+    beach_sunset: 'assets/backgrounds/final_16x9/bg_beach_sunset.png',
+    beach_night: 'assets/backgrounds/final_16x9/bg_beach_night.png',
+    park_day: 'assets/backgrounds/final_16x9/bg_park_day.png',
+    park_sunset: 'assets/backgrounds/final_16x9/bg_park_sunset.png',
+    park_night: 'assets/backgrounds/final_16x9/bg_park_night.png',
+    office_day: 'assets/backgrounds/final_16x9/bg_office_day.png'
   };
 
-  Object.assign(ASSETS.backgrounds, bg120, {
-    beach: bg120.beach,
-    park: bg120.park_day,
-    office: bg120.office
+  Object.assign(ASSETS.backgrounds, bg122, {
+    car: bg122.car_day,
+    beach: bg122.beach_sunset,
+    park: bg122.park_day,
+    office: bg122.office_day
   });
 
   if (typeof FALLBACK === 'object') {
     Object.assign(FALLBACK, {
-      parking_lot_night: 'linear-gradient(135deg,#090d17 0%,#1a2844 46%,#31354f 100%)'
+      parking_lot_night: 'linear-gradient(135deg,#050812,#17243c 45%,#3a3e58)'
     });
   }
 
-  const beachLoc120 = locations.find(l => l.id === 'beach');
-  if (beachLoc120) {
-    beachLoc120.bg = () => state.time === 'Night' ? 'beach_night' : state.time === 'Evening' ? 'beach' : 'beach_day';
+  const beachLoc122 = locations.find(l => l.id === 'beach');
+  if (beachLoc122) {
+    beachLoc122.bg = () => state.time === 'Night' ? 'beach_night' : state.time === 'Evening' ? 'beach_sunset' : 'beach_day';
   }
 
-  const parkLoc120 = locations.find(l => l.id === 'park');
-  if (parkLoc120) {
-    parkLoc120.bg = () => state.time === 'Night' ? 'park_night' : state.time === 'Evening' ? 'park_sunset' : 'park_day';
+  const parkLoc122 = locations.find(l => l.id === 'park');
+  if (parkLoc122) {
+    parkLoc122.bg = () => state.time === 'Night' ? 'park_night' : state.time === 'Evening' ? 'park_sunset' : 'park_day';
   }
 
-  const officeLoc120 = locations.find(l => l.id === 'office');
-  if (officeLoc120) {
-    officeLoc120.bg = () => 'office';
+  const officeLoc122 = locations.find(l => l.id === 'office');
+  if (officeLoc122) {
+    officeLoc122.bg = () => 'office_day';
   }
 
-  const carLoc120 = locations.find(l => l.id === 'car');
-  if (carLoc120) {
-    carLoc120.bg = () => state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day';
+  const carLoc122 = locations.find(l => l.id === 'car');
+  if (carLoc122) {
+    carLoc122.bg = () => state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day';
   }
 
-  const oldStartCar115 = typeof startCarScene115 === 'function' ? startCarScene115 : null;
-  if (oldStartCar115) {
+  if (villains && villains.body_bag) {
+    villains.body_bag.bg = 'parking_lot_night';
+  }
+
+  if (typeof V18 === 'object' && V18.appNotifications && V18.appNotifications.body_bag) {
+    V18.appNotifications.body_bag.battleBg = 'parking_lot_night';
+  }
+
+  if (typeof startCarScene115 === 'function') {
     startCarScene115 = function(resultKey){
       hideAllScreens();
       state.location='car';
-      setBackground(state.time==='Night' ? 'car_night' : state.time==='Evening' ? 'car_sunset' : 'car_day');
+      setBackground(state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day');
       showAmy(true,'idle');
       showEnemy(false);
       document.getElementById('battleUi').classList.add('hidden');
       document.getElementById('cutscenePanel').classList.remove('hidden');
       document.getElementById('gameScreen').classList.remove('hidden');
-      const copy = (V18.carAftermath && V18.carAftermath[resultKey]) || (typeof resultKey==='string' ? resultKey : '');
-      say('Amy', typeof copy==='object' ? (state.lang==='ja' ? copy.ja : copy.en) : copy);
+      const copy = (V18.carAftermath && V18.carAftermath[resultKey]) || (typeof resultKey === 'string' ? resultKey : '');
+      say('Amy', typeof copy === 'object' ? (state.lang === 'ja' ? copy.ja : copy.en) : copy);
       renderCarActions();
       updateHud();
-    }
+    };
   }
-
-  if (villains && villains.body_bag) villains.body_bag.bg = 'parking_lot_night';
-  if (typeof V18 === 'object' && V18.appNotifications && V18.appNotifications.body_bag) V18.appNotifications.body_bag.battleBg = 'parking_lot_night';
 })();
+
+
+
+/* =========================
+   v1.24 DIRECT assets/backgrounds routing
+   All coded 16:9 backgrounds now live directly in assets/backgrounds/.
+   ========================= */
+(function(){
+  const bg124 = {
+    city_map_day:'assets/backgrounds/bg_city_map_day.png', city_map_afternoon:'assets/backgrounds/bg_city_map_afternoon.png', city_map_night:'assets/backgrounds/bg_city_map_night.png',
+    apartment_day:'assets/backgrounds/bg_apartment_day.png', apartment_sunset:'assets/backgrounds/bg_apartment_sunset.png', apartment_night:'assets/backgrounds/bg_apartment_night.png',
+    bedroom_day:'assets/backgrounds/bg_bedroom_day.png', bedroom_sunset:'assets/backgrounds/bg_bedroom_sunset.png', bedroom_night:'assets/backgrounds/bg_bedroom_night.png',
+    library_day:'assets/backgrounds/bg_library_day.png', library_afternoon:'assets/backgrounds/bg_library_afternoon.png',
+    bar_day:'assets/backgrounds/bg_bar_day.png', bar_night:'assets/backgrounds/bg_bar_night.png',
+    restaurant_day:'assets/backgrounds/bg_restaurant_day.png', restaurant_night:'assets/backgrounds/bg_restaurant_night.png',
+    mall_day:'assets/backgrounds/bg_mall_day.png', bedroom_glitch:'assets/backgrounds/bg_bedroom_glitch.png', dream_world:'assets/backgrounds/bg_dream_world.png', apartment_glitch:'assets/backgrounds/bg_apartment_glitch.png', closet:'assets/backgrounds/bg_closet.png', spa:'assets/backgrounds/bg_spa.png',
+    car_day:'assets/backgrounds/bg_car_day.png', car_sunset:'assets/backgrounds/bg_car_sunset.png', car_night:'assets/backgrounds/bg_car_night.png', parking_lot_night:'assets/backgrounds/bg_parking_lot_night.png',
+    beach_day:'assets/backgrounds/bg_beach_day.png', beach_sunset:'assets/backgrounds/bg_beach_sunset.png', beach_night:'assets/backgrounds/bg_beach_night.png',
+    park_day:'assets/backgrounds/bg_park_day.png', park_sunset:'assets/backgrounds/bg_park_sunset.png', park_night:'assets/backgrounds/bg_park_night.png', office_day:'assets/backgrounds/bg_office_day.png'
+  };
+  Object.assign(ASSETS.backgrounds, bg124, {library:bg124.library_day, bar:bg124.bar_day, restaurant:bg124.restaurant_day, mall:bg124.mall_day, park:bg124.park_day, beach:bg124.beach_sunset, office:bg124.office_day, car:bg124.car_day, closet:bg124.closet, spa:bg124.spa});
+  const setLoc=(id,fn)=>{const l=locations.find(x=>x.id===id); if(l) l.bg=fn;};
+  setLoc('apartment',()=>state.time==='Night'?'apartment_night':state.time==='Evening'?'apartment_sunset':'apartment_day');
+  setLoc('bedroom',()=>state.time==='Night'?'bedroom_night':state.time==='Evening'?'bedroom_sunset':'bedroom_day');
+  setLoc('library',()=>state.time==='Evening'?'library_afternoon':'library_day');
+  setLoc('bar',()=>state.time==='Night'?'bar_night':'bar_day');
+  setLoc('restaurant',()=>state.time==='Night'?'restaurant_night':'restaurant_day');
+  setLoc('mall',()=> 'mall_day'); setLoc('closet',()=> 'closet'); setLoc('spa',()=> 'spa');
+  setLoc('park',()=>state.time==='Night'?'park_night':state.time==='Evening'?'park_sunset':'park_day');
+  setLoc('beach',()=>state.time==='Night'?'beach_night':state.time==='Evening'?'beach_sunset':'beach_day');
+  setLoc('office',()=> 'office_day');
+  setLoc('car',()=>state.time==='Night'?'car_night':state.time==='Evening'?'car_sunset':'car_day');
+  if(villains && villains.body_bag) villains.body_bag.bg='parking_lot_night';
+  if(typeof V18==='object' && V18.appNotifications && V18.appNotifications.body_bag) V18.appNotifications.body_bag.battleBg='parking_lot_night';
+})();
+
+</body>
+</html>
