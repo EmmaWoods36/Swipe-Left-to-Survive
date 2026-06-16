@@ -3689,6 +3689,353 @@ window.addEventListener('load',()=>{
   window.AMY_BG_KEYS_V132 = Object.assign(window.AMY_BG_KEYS_V132 || {}, bg132);
 })();
 
+
+
+/* =========================
+   v1.33 Japanese Localization Expansion
+   - Adds Japanese translations for static UI, HUD, locations, LoveLoop prompts,
+     villain names/classes/quotes/weaknesses, attacks, battle UI, friends, shop/codex,
+     and the new random midgame villains.
+   ========================= */
+(function(){
+  const JA133 = {"static": {"Swipe Left to Survive": "Swipe Left to Survive", "A turn-based dating survival RPG prototype": "ターン制デートサバイバルRPGプロトタイプ", "Working title. Also considering: Match Made in Hell, Amy vs. The Algorithm, and The Pattern.": "仮タイトル。候補：Match Made in Hell、Amy vs. The Algorithm、The Pattern。", "Amy thought dating would be normal. Unfortunately, the dating pool is full of bosses, debuffs, fake green flags, and men who need to be studied in a controlled environment.": "エイミーは、デートくらい普通にできると思っていた。残念ながら、恋愛市場にはボス、デバフ、偽グリーンフラッグ、そして研究対象にしたほうがいい男たちが溢れている。", "Start Prototype": "プロトタイプ開始", "Open City Map": "シティマップを開く", "Villain Codex": "ヴィラン図鑑", "Open Closet": "クローゼットを開く", "City Map": "シティマップ", "Tap a pink pin to travel.": "ピンクのピンをタップして移動。", "Location pins are clickable": "ロケーションピンはクリック可能", "Quick Travel": "クイック移動", "Amy’s Closet": "エイミーのクローゼット", "Selected outfit persists into battles and cutscenes.": "選んだ服装はバトルやカットシーンにも反映されます。", "Mall: Retail Therapy Rush": "モール：リテールセラピー・ラッシュ", "Buy buffs, outfits, and self-care. MVP shopping mini-game placeholder.": "バフ、服、自分ケア用品を購入。MVP版のショッピング・ミニゲーム仮置き。", "Clear red flags. The internet will still simp. The group chat is already tired.": "赤旗を見抜け。ネット民はまだ沸く。グルチャはもう疲れている。", "System": "システム", "Narrator": "ナレーション", "Enemy": "敵", "Amy": "エイミー", "Welcome to Amy’s dating survival RPG prototype.": "エイミーのデートサバイバルRPGプロトタイプへようこそ。", "Day": "日目", "Time": "時間", "HP": "HP", "Peace": "平穏", "Clarity": "明晰さ", "Self-Respect": "自尊心", "Soft Life Funds": "ソフトライフ資金", "Fit": "コーデ", "Daytime": "昼", "Golden Hour": "夕方", "Evening": "夕方", "Night": "夜", "Go": "行く", "Back": "戻る", "Back to Map": "マップへ戻る", "Return to Title": "タイトルへ戻る", "Continue": "続ける", "Date Battle!": "デートバトル！", "Block and Leave": "ブロックして帰る", "Reply": "返信する", "Ignore": "無視する", "Block": "ブロック", "Ask Follow-Up Question": "追加質問する", "Summon Friend Advice": "友達に相談", "Send to Group Chat": "グルチャに送る", "Check Phone": "スマホを見る", "Open LoveLoop": "LoveLoopを開く", "Check Dating App": "デートアプリを見る", "Trigger Random Date Battle": "ランダムデートバトル発生", "Trigger Risky Battle": "危険なバトル発生", "Do Office Things": "仕事をする", "Shop": "買い物する", "Open Bag": "バッグを開く", "Bag": "バッグ", "Sleep...": "眠る…", "Dream World": "夢の世界", "Pattern Battle": "パターン戦", "Watch the Sunset Alone": "ひとりで夕日を見る", "Visit Beachside Cafe": "海辺のカフェへ行く", "Back to Beach": "海辺へ戻る", "Order Cake": "ケーキを注文する", "Sit by the Window": "窓辺に座る", "Breathe by the Water": "水辺でひと息つく", "Not Yet. Go Somewhere Else.": "まだ。別の場所へ行く", "Choose Another Location": "別の場所を選ぶ", "Amy’s Turn": "エイミーのターン", "Fight": "戦う", "Rematch": "再戦", "Weakness": "弱点", "Current": "現在", "Cost": "価格", "Buy": "購入", "Not enough Soft Life Funds.": "ソフトライフ資金が足りません。", "Call Malik": "マリクを呼ぶ", "Call Min": "ミンを呼ぶ", "Call Jade": "ジェイドを呼ぶ", "Call Chloe": "クロエを呼ぶ", "Call Mia": "ミアを呼ぶ", "Group Chat": "グルチャ", "Group Chat Meter too low.": "グルチャメーターが足りない。", "Victory": "勝利", "Game Over": "ゲームオーバー", "Boundary Slash": "境界線スラッシュ", "Phone Punch": "スマホパンチ", "Kick of Discernment": "見極めキック", "Check Receipts": "証拠チェック", "Summon Friend": "友達を召喚", "Girl, Stand Up!": "Girl, Stand Up!", "Run / Block": "逃げる／ブロック", "GIRL, STAND UP!": "GIRL, STAND UP!", "BE SO FOR REAL": "マジで現実見て", "SIDE-EYE": "無言の圧", "RECEIPTS!": "証拠！", "NO.": "無理。", "NO DAMAGE": "ノーダメージ", "LESSON LEARNED": "教訓習得", "Profile": "プロフィール", "View Profile": "プロフィールを見る", "Choose a Match": "マッチを選ぶ"}, "locations": {"apartment": {"label": "エイミーのアパート", "desc": "拠点。休む、セーブする、スマホを見る、服を変える。"}, "bedroom": {"label": "寝室", "desc": "休む、眠る、そしていつか夢の世界でパターンと対峙する。"}, "closet": {"label": "クローゼット", "desc": "エイミーの服を変更。コーデはシーンにもバトルにも残る。"}, "office": {"label": "オフィス", "desc": "仕事をする。500〜1000ソフトライフ資金を稼ぎ、時間が進む。"}, "library": {"label": "図書館", "desc": "明晰さを回復。背景グリーンフラッグNPCとしてザビエルがいる。"}, "bar": {"label": "バー", "desc": "パルメザンフライ、ドリンク、友達、スタミナ回復。ジェームズの職場。"}, "park": {"label": "公園", "desc": "穏やかな散歩と落ち着いた空気。アンドリューが背景で走っている。"}, "mall": {"label": "モール", "desc": "買い物、服、リテールセラピー・ラッシュ。"}, "restaurant": {"label": "レストラン", "desc": "デートスポット。表では普通の食事、裏では比喩的なバトル。"}, "villain_apartment": {"label": "ヤバい男の部屋", "desc": "高リスク遭遇ゾーン。なぜ家具がないのか。"}, "beach": {"label": "海辺", "desc": "穏やかな夕日。パターン後のソロ真平和エンド候補。"}, "beachside_cafe": {"label": "海辺のカフェ", "desc": "ケーキ、海風、クリスティ、かわいい平和ルートの気配。"}, "spa": {"label": "スパ", "desc": "回復、自分ケア、男の圧ではない圧。"}, "car": {"label": "車", "desc": "デート後の避難、深呼吸、帰宅判断。"}}, "villains": {"two_am": {"name": "2AM召喚男", "className": "低努力ワンチャン男", "quote": "起きてる？", "weakness": "境界線、無視、睡眠。", "lesson": "睡眠は標準装備"}, "preference": {"name": "好みの聖騎士", "className": "フェチ化ナイト", "quote": "フェチじゃなくて好みだよ。", "weakness": "直接質問と自尊心。"}, "body_bag": {"name": "レジー／トゥルークライム男", "className": "事件予感デート", "quote": "トランクにボディバッグと拘束衣あるけど、どっち見る？", "weakness": "すぐ帰ること。"}, "demon": {"name": "デーモンファイター", "className": "危険なイケメン", "quote": "俺は自分の悪魔と戦ってる。", "weakness": "追加質問。"}, "millionaire": {"name": "低キー百万長者", "className": "財布の幻術師", "quote": "俺、こっそり百万長者なんだ。", "weakness": "デューデリジェンス。"}, "house_date": {"name": "家デート経済学者", "className": "最低限会計士", "quote": "じゃあ次は君が払う？", "weakness": "基準。"}, "coworker": {"name": "実験したがる同僚", "className": "オフィス飲み会クリープ", "quote": "ずっと黒人の子を試してみたかったんだ。", "weakness": "記録、HR、公衆の恥。"}, "broke_dreamer": {"name": "ジョーイ・デリバリー", "className": "金欠バラード男", "quote": "俺は金欠じゃない。成功前なだけ。", "weakness": "仕事について聞くこと。"}, "old_young": {"name": "若い子狙いおじさん", "className": "夜遊び寄生男", "quote": "君、年のわりに大人だね。", "weakness": "露骨な嫌悪感。"}, "normal_fake": {"name": "普通そうな男", "className": "上級脅威", "quote": "考えすぎだよ。", "weakness": "一貫性チェック。"}, "algorithm": {"name": "アルゴリズム", "className": "デートアプリ支配者", "quote": "あなたの行動履歴から、おすすめはこちら…", "weakness": "アプリ削除。基準フィルター。赤旗データ。"}, "pattern": {"name": "パターン", "className": "内なるループ", "quote": "でも、今度こそ違うかもしれない。", "weakness": "自己認識、休息、愛を得るために苦しまないこと。"}, "dark_humor": {"name": "ダークユーモア男", "className": "境界線テスター", "quote": "冗談が通じる子が好きなんだ。", "weakness": "笑わないこと。"}, "true_crime": {"name": "トゥルークライムデート", "className": "駐車場の危険人物", "quote": "冗談だよ。怖がりすぎ。", "weakness": "安全第一。"}, "lucien_reservation_mirage": {"name": "ルシアン・モロー", "villainName": "予約の蜃気楼", "className": "偽高級／約束商人", "quote": "君にはちゃんとした夜がふさわしい。任せて。", "weakness": "カレンダーの証拠、確定した予定、未来形の努力を拒むこと。", "lesson": "約束は予定ではない"}, "roman_industry_mystery": {"name": "ロマン・ベガ", "villainName": "業界ミステリー", "className": "曖昧なエンタメ系マネーフレックス男", "quote": "エンタメ業界だよ。引退しようと思えば早期引退できる。", "weakness": "追加質問と違和感を信じること。", "lesson": "追加質問をしよう"}, "nico_boundary_pusher": {"name": "ニコ・ハート", "villainName": "境界線プッシャー", "className": "押しつけプレイフル男", "quote": "リラックスして。冗談だって。", "weakness": "はっきりした境界線。不快感を議論しないこと。", "lesson": "境界線に討論は不要"}, "blake_disruptor": {"name": "ブレイク・スターリング", "villainName": "ディスラプター", "className": "暗号資産／テック兄貴ウェビナーデート", "quote": "今、でかいものを作ってるんだ。", "weakness": "その言葉の意味を説明させること。", "lesson": "自信は実力ではない"}, "julian_softboi_savior": {"name": "ジュリアン・クロス", "villainName": "ソフトボーイ救世主", "className": "フェイク感情進化系ソフトボーイ", "quote": "安全なつながりの空間を作りたいんだ。", "weakness": "意図より影響。彼のセラピストにならないこと。", "lesson": "言葉は人格ではない"}}, "attacks": {"wyd?": ["今なにしてる？", "2AM召喚男が『起きてる？』を送信。エイミーの平穏が妨害された。"], "You up?": ["起きてる？", "怪しい時間に『起きてる？』を使った。"], "Let’s just see where this goes": ["流れに任せようよ", "曖昧な関係の霧が戦場を満たした。"], "You Look Like Beyoncé": ["ビヨンセに似てるね", "『ビヨンセに似てる』で精神ダメージ。"], "I’m 1/32 Black": ["俺、32分の1黒人だし", "責任回避の免罪符を出そうとした。失敗。"], "My Parents Would Never Accept You": ["親は君を受け入れないと思う", "究極の臆病さが露呈した。"], "Trunk Reveal": ["トランク暴露", "トランクの話が出た。安全アラームが鳴り響く。"], "It Was Just a Joke": ["冗談だよ", "犯罪ニュース感を軽くしようとした。"], "Wanna See?": ["見たい？", "絶対に無理。"], "Trauma Dump": ["トラウマ投下", "トラウマ投下。エイミーは強烈さを親密さと勘違いしそうになる。"], "I’ve Changed": ["俺は変わった", "変わったと言うが、悪魔たちはまだ編成済み。"], "Hot Disaster Aura": ["危険なイケメンオーラ", "残念ながら顔がいい。妄想が急上昇。"], "Fake Luxury Flex": ["偽ラグジュアリーフレックス", "高級サングラスが光る。残高は不明。"], "I Need a Rich Woman": ["金持ちの女が必要なんだ", "福利厚生なしの提供者を求めている。"], "Do You Want My Kids?": ["子ども欲しい？", "エイミーは出会って一週間も経ってないことを思い出した。"], "I Don’t Want To Be Used For Money": ["金目当てにされたくない", "存在しない富を守った。"], "House Date Loop": ["家デートループ", "戦場が計画性ゼロのソファになった。"], "You Pay Then": ["じゃあ君が払って", "図々しさを検知。"], "You’re Different": ["君は特別", "褒め言葉のふりをした対象化。"], "Don’t Be So Sensitive": ["そんな敏感にならないで", "ガスライティングの煙が広がった。"], "Song Dedication": ["捧げ歌", "甘い歌を歌った。エイミーの基準が揺らぐ。"], "Manifesting": ["引き寄せ中", "5年計画の実体はどうやらバイブス。"], "Can You Spot Me?": ["ちょっと立て替えて", "ソフトライフ資金が狙われた。"], "Age Is Just a Number": ["年齢はただの数字", "クリープ値が急上昇。"], "Buy Me a Drink": ["一杯おごって", "年齢は重ねたが財布は置いてきた。"], "You Look So Young": ["若く見えるね", "エイミーの神経系が全力拒否。"], "Reasonable Explanation": ["もっともらしい説明", "危険なくらい普通に聞こえた。"], "I Don’t Like Labels": ["ラベルは苦手", "明晰さが低下。赤旗がベージュを着た。"], "You’re Overthinking It": ["考えすぎだよ", "自己信頼にダメージ。"], "99+ Likes": ["99+いいね", "アルゴリズムが部屋をマッチで氾濫させた。"], "He’s Your Type Though": ["でもタイプでしょ？", "アプリはエイミーの弱点を学習していた。"], "Lower Standards For More Matches": ["基準を下げるとマッチ増加", "アルゴリズムが孤独を収益化しようとした。"], "Table for Never": ["永遠に予約なし", "予約はきらめき、そして消えた。そもそも存在していなかった。"], "Promise Loop": ["約束ループ", "『次こそ本物のデート』という未来形の霧が立ち込めた。"], "Plan Swap": ["予定すり替え", "美しい夜は『その辺歩こう』に変換された。"], "Charm Fog": ["魅力の霧", "褒め言葉が空っぽの予定表を覆った。"], "Next Time, I Swear": ["次こそ本当に", "SPECIAL：想像上の未来の努力で今夜を支払おうとした。"], "Ambiguous Income": ["曖昧収入", "空欄をエイミーに埋めさせ、その空欄をエイミーのせいにした。"], "Retirement Flex": ["早期引退フレックス", "文脈なしで早期引退マネーを見せつけた。"], "Shock Reveal": ["衝撃の開示", "誠実さというより落とし穴のような職業 reveal。"], "Open-Mindedness Check": ["オープンマインド検査", "相性の問題を道徳テストにすり替えた。"], "I Broke Her": ["俺、壊しちゃった？", "SPECIAL：ロマンは不快感を畏敬と勘違いした。エイミーの忍耐にひび。"], "Boundary Creep": ["境界線クリープ", "冗談が一歩近づき、さらにもう一歩近づいた。"], "Just Kidding Touch": ["冗談タッチ", "顔に答えが出ているのに『冗談』に隠れた。"], "Why So Serious?": ["なんでそんな真面目？", "不快感を人格の欠点にしようとした。"], "Read-the-Room Failure": ["空気読めない失敗", "部屋は合図を出した。彼は無視した。"], "Pushy Playfulness": ["押しつけ遊び心", "SPECIAL：ニコは『ノー』をガチャガチャできる鍵穴だと思った。エイミーは鍵を変えた。"], "Blockchain Monologue": ["ブロックチェーン独演会", "前菜が来た。そして頼んでいない12分の説明も来た。"], "Passive Income Flex": ["不労所得フレックス", "『不労所得』を能動的な不安とともに言った。"], "Founder Aura": ["創業者オーラ", "スタートアップ肩書きがレンタルの後光みたいに浮いた。"], "Actually, Let Me Explain": ["いや、説明させて", "聞かれていないことを説明するためにエイミーを遮った。"], "The Pitch Deck": ["ピッチデッキ", "ULTIMATE：スライド、グラフ、バズワード、そしてエイミーへの質問ゼロ。"], "Therapy-Speak Trap": ["セラピー語トラップ", "癒し系の単語を三つ使い、責任はゼロ。"], "Hold Space Shield": ["ホールドスペース・シールド", "空間を保つと言いながら、全部占領した。"], "Not Like Other Men": ["他の男とは違う", "最低限のまともさに拍手を要求した。"], "Weaponized Vulnerability": ["武器化された弱さ", "彼の感情が本題を隠す煙幕になった。"], "The Healing Era Monologue": ["ヒーリング期モノローグ", "ULTIMATE：靴を履いたポッドキャストが、エイミーをリトリート進行役にしようとした。"]}, "dialogue": {"Amy downloaded a dating app. Amy thought she was looking for love. Amy was wrong.": "エイミーはデートアプリを入れた。恋を探しているつもりだった。間違っていた。", "Tutorial: not every battle deserves a debate. Sometimes the winning move is Block.": "チュートリアル：すべての戦いに議論は不要。勝ち筋が『ブロック』の時もある。", "The library is quiet. Xavier is in the background, reshelving books and minding his business.": "図書館は静かだ。ザビエルが奥で本を戻している。", "The bar is warm. James looks over like a concerned NPC and keeps polishing glasses.": "バーはあたたかい。ジェームズが心配そうなNPCみたいにこちらを見て、グラスを磨いている。", "The park feels peaceful. Andrew jogs by in the background like a green flag loading screen.": "公園は穏やかだ。アンドリューがグリーンフラッグのロード画面みたいに背景を走っていく。", "The beach is quiet. No tests. No battles. Just waves.": "海辺は静かだ。テストもバトルもない。ただ波だけ。", "Arrived at the Beachside Cafe. Cake, ocean air, and cute bonus-route energy.": "海辺のカフェに着いた。ケーキ、海風、かわいいボーナスルートの気配。", "Something felt off.": "何かがおかしい。", "The scene shifted into a date battle.": "シーンはデートバトルへ移った。", "Amy used Boundary Slash. It was super effective against audacity.": "エイミーは境界線スラッシュを使った。図々しさに抜群の効果。", "Amy hit him with a direct response and a clean right hook to the narrative.": "エイミーはまっすぐな返答と、物語へのきれいな右フックを叩き込んだ。", "Amy used Kick of Discernment. Delusion was launched into low orbit.": "エイミーは見極めキックを使った。妄想が低軌道へ吹き飛ばされた。", "Amy checked the receipts. Evidence sparkled ominously.": "エイミーは証拠を確認した。証拠が不穏に光った。", "Amy used her ultimate: Girl, Stand Up! Malik yelled, “Amy, be so f@&$ing for real!” Min side-eyed so hard the enemy lost confidence. Jade pointed. Chloe dropped receipts. Mia smiled. Audacity trembled.": "エイミーはアルティメット『Girl, Stand Up!』を使った。マリクが叫び、ミンが強烈に横目で見て、ジェイドが指差し、クロエが証拠を落とし、ミアが微笑んだ。図々しさが震えた。", "The phone screen went black.": "スマホ画面が真っ黒になった。", "After The Algorithm fell, the silence felt too clean.": "アルゴリズムが倒れたあと、静けさは妙にきれいすぎた。", "I LEARNED MY LESSON activated. Red flag and boss fights are disabled.": "I LEARNED MY LESSON が有効になりました。赤旗戦とボス戦は無効です。", "That cheat is still hidden. Complete Mia’s route first.": "そのチートはまだ隠されています。先にミアのルートを完了してください。"}, "notifications": {"two_am": "ジェイからメッセージ：『起きてる？』", "preference": "コナーからメッセージ：『君、すごく綺麗。ずっと君みたいなタイプが好きだった。』", "house_date": "テレンスからメッセージ：『チルできる場所知ってるよ。』", "demon": "ダンテからメッセージ：『完璧じゃないけど、俺は変わった。』", "broke_dreamer": "ジョーイからボイスメモ。プロフィールを見て曲を書いたらしい。", "millionaire": "マーキスからメッセージ：『俺、こっそり百万長者なんだ。他の男とは違う動き方してる。』", "body_bag": "レジーからメッセージ：『ダークユーモアいける？』", "old_young": "室内サングラスの男があなたの写真にいいねして、『大人っぽいね』と言った。", "normal_fake": "エヴァンが好きな本屋を聞いてきた。普通の質問。怪しいほど普通。", "lucien_reservation_mirage": "ルシアン：『綺麗な場所を知ってる。任せて。』", "roman_industry_mystery": "ロマン：『エンタメ業界だよ。たまに顔バレする。』", "nico_boundary_pusher": "ニコ：『真面目になるとかわいいね。』", "blake_disruptor": "ブレイク：『俺が作ってるものは、ほとんどの人には理解できない。』", "julian_softboi_savior": "ジュリアン：『安全なつながりの空間を作りたい。』"}, "friends": {"malik": {"line": "エイミー……どこでこんな男たち見つけてるの？！", "result": "マリクは常識チェックを使った。"}, "min": {"line": "……", "result": "ミンは無言で横目を向けた。その沈黙が999の精神ダメージ。"}, "jade": {"line": "ちょっと、立ちな。", "result": "ジェイドは自尊心を回復した。"}, "chloe": {"line": "証拠見つけた。", "result": "クロエが空から証拠を落とした。"}, "mia": {"line": "無理。", "result": "ミアは丁寧に微笑んだ。敵は原始的な恐怖を感じた。"}}, "green": {"xavier": {"role": "静かな司書", "ending": "プラネタリウムデート", "quote": "プレッシャーはないよ。ただ、星が好きかと思って。", "attack": "敬意ある誘い"}, "james": {"role": "優しいバーテンダー", "ending": "映画デート", "quote": "大丈夫？ もし大丈夫なら、今度映画でもどう？", "attack": "安全確認"}, "andrew": {"role": "公園のまともな人", "ending": "ディナーデート", "quote": "夕食に誘いたい。どちらでもプレッシャーはないよ。", "attack": "明確な意図"}, "christy": {"role": "海辺のカフェ店主", "ending": "スパデート", "quote": "今日は誰かの謎を解く日じゃなくて、休む日でもいいんだよ。", "attack": "あたたかい確認"}}};
+  window.SLTS_JA_V133 = JA133;
+
+  function jaMode133(){ return state && state.lang === 'ja'; }
+  function tr133(s){
+    if(s && typeof s === 'object') return jaMode133() ? (s.ja || s.en || '') : (s.en || s.ja || '');
+    const key = String(s ?? '');
+    if(!jaMode133()) return key;
+    return (JA133.static && JA133.static[key]) || (JA133.dialogue && JA133.dialogue[key]) || key;
+  }
+  function speaker133(s){
+    const key=String(s ?? '');
+    if(!jaMode133()) return key;
+    return (JA133.static && JA133.static[key]) || key;
+  }
+  function villainDisplay133(id){
+    const v = villains[id] || {};
+    const j = JA133.villains[id] || {};
+    return jaMode133() ? (j.name || v.jpName || v.realName || v.name || id) : (v.realName || v.name || id);
+  }
+  function villainBattleName133(id){
+    const v = villains[id] || {};
+    const j = JA133.villains[id] || {};
+    if(jaMode133()) return j.villainName || j.name || v.jpName || v.name || id;
+    return v.villainName || v.name || id;
+  }
+  function villainClass133(id){
+    const v = villains[id] || {};
+    const j = JA133.villains[id] || {};
+    return jaMode133() ? (j.className || v.jpClassName || v.className || '') : (v.className || '');
+  }
+  function villainQuote133(id){
+    const v = villains[id] || {};
+    const j = JA133.villains[id] || {};
+    return jaMode133() ? (j.quote || v.jpQuote || v.quote || '') : (v.quote || '');
+  }
+  function villainWeakness133(id){
+    const v = villains[id] || {};
+    const j = JA133.villains[id] || {};
+    return jaMode133() ? (j.weakness || v.jpWeakness || v.weakness || '') : (v.weakness || '');
+  }
+  function attackName133(atk){
+    if(!atk) return '';
+    if(jaMode133()) return atk.jaName || ((JA133.attacks[atk.name]||[])[0]) || atk.name;
+    return atk.name;
+  }
+  function attackText133(atk){
+    if(!atk) return '';
+    if(atk.text && typeof atk.text === 'object') return tr133(atk.text);
+    if(jaMode133()) return atk.jaText || ((JA133.attacks[atk.name]||[])[1]) || atk.text || '';
+    return atk.text || '';
+  }
+
+  if(typeof V111_JA === 'object') Object.assign(V111_JA, JA133.static || {});
+  Object.entries(JA133.locations || {}).forEach(([id,j])=>{
+    const l=locations.find(x=>x.id===id);
+    if(l){ l.labelJa=j.label; l.descJa=j.desc; if(!l.labelEn)l.labelEn=l.label; if(!l.descEn)l.descEn=l.desc; }
+  });
+  Object.entries(JA133.villains || {}).forEach(([id,j])=>{
+    const v=villains[id]; if(!v) return;
+    v.jpName=j.name; v.jpVillainName=j.villainName; v.jpClassName=j.className; v.jpQuote=j.quote; v.jpWeakness=j.weakness; v.jpLessonLearned=j.lesson;
+  });
+  Object.values(villains).forEach(v=>{
+    (v.attacks||[]).forEach(atk=>{
+      const j = JA133.attacks[atk.name];
+      if(j){ atk.jaName=j[0]; atk.jaText=j[1]; }
+    });
+  });
+  Object.entries(JA133.green || {}).forEach(([id,j])=>{
+    const g=greenFlags[id]; if(!g) return;
+    g.jpRole=j.role; g.jpEnding=j.ending; g.jpQuote=j.quote; g.jpAttack=j.attack;
+  });
+  Object.entries(JA133.friends || {}).forEach(([id,j])=>{
+    const f=friends[id]; if(!f) return;
+    f.jpLine=j.line; f.jpResult=j.result;
+  });
+  Object.entries(JA133.notifications || {}).forEach(([id,ja])=>{
+    if(V18 && V18.appNotifications && V18.appNotifications[id]){
+      const cur=V18.appNotifications[id].msg;
+      V18.appNotifications[id].msg = (cur && typeof cur==='object') ? Object.assign(cur, {ja}) : {en:String(cur || ''), ja};
+    }
+  });
+
+  const baseSay133 = say;
+  say = function(speaker,text){
+    return baseSay133(speaker133(speaker), tr133(text));
+  };
+
+  function locLabel133(l){ return jaMode133() ? (l.labelJa || L111(l.labelEn || l.label)) : (l.labelEn || l.label); }
+  function locDesc133(l){ return jaMode133() ? (l.descJa || l.descEn || l.desc) : (l.descEn || l.desc); }
+
+  function applyStaticLocalization133(){
+    const pairs=[
+      ['.brand small','A turn-based dating survival RPG prototype'],
+      ['#titleScreen h2','Swipe Left to Survive'],
+      ['#mapScreen h2','City Map'],
+      ['#mapScreen .subtitle','Tap a pink pin to travel.'],
+      ['#closetScreen h2','Amy’s Closet'],
+      ['#closetScreen .subtitle','Selected outfit persists into battles and cutscenes.'],
+      ['#shopScreen h2','Mall: Retail Therapy Rush'],
+      ['#shopScreen .subtitle','Buy buffs, outfits, and self-care. MVP shopping mini-game placeholder.'],
+      ['#codexScreen h2','Villain Codex'],
+      ['#codexScreen .subtitle','Clear red flags. The internet will still simp. The group chat is already tired.']
+    ];
+    pairs.forEach(([sel,en])=>{ const el=document.querySelector(sel); if(el) el.textContent=tr133(en); });
+    const titleP=document.querySelector('#titleScreen .panel p:not(.subtitle)');
+    if(titleP) titleP.textContent=tr133('Amy thought dating would be normal. Unfortunately, the dating pool is full of bosses, debuffs, fake green flags, and men who need to be studied in a controlled environment.');
+    document.querySelectorAll('button').forEach(btn=>{
+      const en=btn.dataset.enText133 || btn.textContent.trim();
+      if(!btn.dataset.enText133) btn.dataset.enText133=en;
+      btn.textContent=tr133(en);
+    });
+  }
+
+  updateHud=function(){
+    const hud=document.getElementById('hud');
+    if(hud){
+      const timeLabel = state.time==='Night'?'Night':state.time==='Evening'?'Golden Hour':'Daytime';
+      hud.innerHTML=`<div class="stat">${tr133('Day')} <b>${state.day}</b></div><div class="stat">${tr133('Time')} <b>${tr133(timeLabel)}</b></div><div class="stat">${tr133('HP')} <b>${state.hp}/${state.maxHp}</b></div><div class="stat">${tr133('Peace')} <b>${state.peace}</b></div><div class="stat">${tr133('Clarity')} <b>${state.clarity}</b></div><div class="stat">${tr133('Self-Respect')} <b>${state.selfRespect}</b></div><div class="stat">${tr133('Soft Life Funds')} <b>${state.funds}</b></div><div class="stat">${tr133('Fit')} <b>${state.outfit.top}, ${state.outfit.bottom}</b></div>`;
+      updateBattleBars();
+      if(typeof injectLanguageToggle111==='function') injectLanguageToggle111();
+      if(typeof injectBagButton116==='function') injectBagButton116();
+      if(typeof updateLanguageToggle111==='function') updateLanguageToggle111();
+    }
+  };
+
+  updateBattleBars=function(){
+    document.getElementById("amyHpLabel").textContent=`${state.hp} / ${state.maxHp}`;
+    document.getElementById("amyHpFill").style.width=`${state.hp/state.maxHp*100}%`;
+    const b=state.currentBattle;
+    const id=b&&b.type==="villain"?b.id:null;
+    const n=id?villainBattleName133(id):tr133("Enemy");
+    const hp=b&&b.type==="villain"?b.enemyHp:0,max=b&&b.type==="villain"?b.enemyMaxHp:1;
+    document.getElementById("enemyNameLabel").textContent=n;
+    document.getElementById("enemyHpLabel").textContent=b&&b.type==="villain"?`${hp} / ${max}`:"";
+    document.getElementById("enemyHpFill").style.width=`${hp/max*100}%`;
+  };
+
+  renderLocations=function(){
+    setBackground(getMapBgKey());
+    renderCityMap();
+    const grid=document.getElementById("locationGrid"); grid.innerHTML="";
+    locations
+      .filter(l=>!["spa","car","beachside_cafe"].includes(l.id)&&!(typeof lockedBonusLocation==='function'&&lockedBonusLocation(l.id)))
+      .forEach(l=>{
+        const card=document.createElement("div"); card.className="location-card";
+        card.innerHTML=`<h3>${locLabel133(l)}</h3><div class="card-desc">${locDesc133(l)}</div><button class="map-btn" onclick="goLocation('${l.id}')">${tr133("Go")}</button>`;
+        grid.appendChild(card);
+      });
+    applyStaticLocalization133();
+  };
+
+  renderCityMap=function(){
+    const map=document.getElementById("cityMapUi"), chip=document.getElementById("mapTimeChip"), bgKey=getMapBgKey(), bgUrl=ASSETS.backgrounds[bgKey];
+    if(chip) chip.textContent=tr133(state.time==="Night"?"Night":state.time==="Evening"?"Golden Hour":"Daytime");
+    map.style.backgroundImage=`linear-gradient(180deg,rgba(255,255,255,.03),rgba(24,10,34,.08)), url('${bgUrl}')`;
+    map.innerHTML="";
+    mapPins.filter(p=>!(typeof lockedBonusLocation==='function'&&lockedBonusLocation(p.id))).forEach(p=>{
+      const loc=locations.find(l=>l.id===p.id), btn=document.createElement("button");
+      btn.className=`map-pin ${state.location===p.id?"current":""}`; btn.style.left=`${p.x}%`; btn.style.top=`${p.y}%`;
+      const label=loc?locLabel133(loc):p.id;
+      btn.setAttribute("aria-label",`${tr133("Go")} ${label}`);
+      btn.innerHTML=`<span class="map-pin-icon"></span><span class="map-pin-label">${label}</span>`;
+      btn.onclick=()=>goLocation(p.id); map.appendChild(btn);
+    });
+    const legend=document.createElement("div"); legend.className="map-legend"; legend.innerHTML=`<b>${tr133("Tap a pin")}</b><br>${tr133("Choose where Amy goes next.")}`; map.appendChild(legend);
+  };
+
+  renderCloset=function(){
+    const grid=document.getElementById("closetGrid"); grid.innerHTML="";
+    Object.entries(outfits).forEach(([slot,ops])=>{
+      const card=document.createElement("div"); card.className="closet-card";
+      const slotJa = jaMode133()?({top:'トップス',bottom:'ボトムス',shoes:'靴'}[slot]||titleCase(slot)):titleCase(slot);
+      card.innerHTML=`<h3>${slotJa}</h3><div class="card-desc">${tr133("Current")}: <b>${state.outfit[slot]}</b></div>`;
+      ops.forEach(o=>{ const b=document.createElement("button"); b.className="small-btn"; b.style.margin="3px"; b.textContent=o; b.onclick=()=>{state.outfit[slot]=o; updateAmySpriteLabel(); renderCloset(); say("Closet",jaMode133()?`エイミーは ${o} を装備した。`:`Amy equipped ${o}.`); updateHud();}; card.appendChild(b); });
+      grid.appendChild(card);
+    });
+  };
+
+  renderShop=function(){
+    const grid=document.getElementById("shopGrid"); grid.innerHTML="";
+    shopItems.forEach(i=>{
+      const shopNames={"Parmesan Fries":"パルメザンフライ","Lip Gloss of Discernment":"見極めリップグロス","Pepper Spray Keychain":"ペッパースプレーキーチェーン","Cute Outfit Piece":"かわいい服パーツ","Noise-Canceling Headphones":"ノイズキャンセリングヘッドホン"};
+      const name = jaMode133() ? (shopNames[i.name]||i.ja||i.name) : i.name;
+      const card=document.createElement("div"); card.className="shop-card";
+      card.innerHTML=`<h3>${name}</h3><div class="card-desc">${tr133("Cost")}: ${i.cost} ${tr133("Soft Life Funds")}</div><button class="map-btn ${state.funds<i.cost?"":"green"}" ${state.funds<i.cost?"disabled":""}>${tr133("Buy")}</button>`;
+      card.querySelector("button").onclick=()=>spendFunds(i.cost,i.fn);
+      grid.appendChild(card);
+    });
+  };
+
+  renderCodex=function(){
+    const grid=document.getElementById("codexGrid"); grid.innerHTML="";
+    Object.entries(villains).forEach(([k,v])=>{
+      const card=document.createElement("div"); card.className="location-card";
+      card.innerHTML=`<h3>${villainBattleName133(k)}</h3><div class="card-desc"><b>${villainClass133(k)}</b><br>“${villainQuote133(k)}”<br>${tr133("Weakness")}: ${villainWeakness133(k)}</div><button class="map-btn ${state.defeated.has(k)?"green":"danger"}" onclick="startBattle('${k}')">${state.defeated.has(k)?tr133("Rematch"):tr133("Fight")}</button>`;
+      grid.appendChild(card);
+    });
+  };
+
+  const baseSetActions133=setActions;
+  setActions=function(actions){
+    return baseSetActions133((actions||[]).map(a=>Object.assign({},a,{label:tr133(a.label)})));
+  };
+
+  function amyMoves133(id){
+    const map={
+      lucien_reservation_mirage:[
+        ['Intentions Are Not Reservations','意図は予約ではない','Amy demanded an actual time, place, and confirmation.','エイミーは実際の時間、場所、確認を求めた。',24],
+        ['Calendar or Cap','カレンダーか嘘か','Amy opened the calendar. The fantasy started sweating.','エイミーがカレンダーを開いた。幻想が汗をかき始めた。',22],
+        ['Future Tense Counter','未来形カウンター','Amy refused to date effort that only exists later.','エイミーは未来にしか存在しない努力を拒んだ。',20]
+      ],
+      roman_industry_mystery:[
+        ['Ask Follow-Up Question','追加質問する','Amy asked one clear question. The fog lost its lighting.','エイミーははっきり一つ質問した。霧は照明を失った。',22],
+        ['Compatibility Is Not Judgment','相性の話であって裁判じゃない','Amy named the mismatch without taking the bait.','エイミーは誘導に乗らず、相性の不一致を言語化した。',21],
+        ['You Didn’t Break Me','壊れてない、引いてるだけ','Amy clarified the difference between awe and discomfort.','エイミーは畏敬と不快感の違いをはっきりさせた。',24]
+      ],
+      nico_boundary_pusher:[
+        ['No Is Not a Puzzle','ノーはパズルじゃない','Amy stopped negotiating a complete sentence.','エイミーは完結した一文を交渉するのをやめた。',24],
+        ['Playful Is Mutual','遊びはお互い様','Amy reminded him that jokes require consent too.','エイミーは冗談にも同意がいると思い出させた。',22],
+        ['Stop Negotiating My Boundary','境界線を交渉するな','Amy drew the line in hot pink.','エイミーはホットピンクの線を引いた。',23]
+      ],
+      blake_disruptor:[
+        ['Define Your Terms','用語を定義して','Amy asked him to define every buzzword. The empire shook.','エイミーはすべてのバズワードの定義を求めた。帝国が揺れた。',24],
+        ['This Is Not a TED Talk','これはTEDトークじゃない','Amy interrupted the webinar date.','エイミーはウェビナーデートを遮った。',22],
+        ['Decentralize Yourself Away From Me','私から分散して','Amy requested immediate decentralization in the opposite direction.','エイミーは逆方向への即時分散を求めた。',25]
+      ],
+      julian_softboi_savior:[
+        ['Intentions Don’t Erase Impact','意図は影響を消さない','Amy refused the safe-space smoke screen.','エイミーは安全空間の煙幕を拒んだ。',24],
+        ['You Are Taking Up Space','空間を奪ってる','Amy pointed out that holding space is not hoarding it.','エイミーは、空間を保つことと独占することは違うと指摘した。',22],
+        ['Podcast Episode With Shoes','靴を履いたポッドキャスト','Amy identified the man, the myth, and the microphone.','エイミーは男と神話とマイクを見抜いた。',25]
+      ]
+    };
+    return map[id] || [
+      ['Boundary Slash','境界線スラッシュ','Amy used Boundary Slash. It was super effective against audacity.','エイミーは境界線スラッシュを使った。図々しさに抜群の効果。',20],
+      ['Phone Punch','スマホパンチ','Amy hit him with a direct response and a clean right hook to the narrative.','エイミーはまっすぐな返答と物語への右フックを叩き込んだ。',13+Math.floor(state.clarity/12)],
+      ['Kick of Discernment','見極めキック','Amy used Kick of Discernment. Delusion was launched into low orbit.','エイミーは見極めキックを使った。妄想が低軌道へ吹き飛ばされた。',18+Math.floor(state.selfRespect/12)],
+      ['Check Receipts','証拠チェック','Amy checked the receipts. Evidence sparkled ominously.','エイミーは証拠を確認した。証拠が不穏に光った。',16+state.redFlagData*4]
+    ];
+  }
+
+  startBattle=function(id){
+    hideAllScreens(); const v=villains[id]; if(!v) return;
+    state.lastDateBattle=id;
+    const hpScale=["normal_fake","algorithm","pattern"].includes(id)?1.15:1.08;
+    state.currentBattle={id,type:"villain",enemyHp:Math.round(v.maxHp*hpScale),enemyMaxHp:Math.round(v.maxHp*hpScale)};
+    setBackground(v.bg); showAmy(true,"idle");
+    showEnemy(true, villainBattleName133(id), `${villainBattleName133(id)}<br><small>${villainClass133(id)}</small>`, getEnemyArt("villain",id), id);
+    document.getElementById("battleUi").classList.remove("hidden");
+    let intro = jaMode133()? `${villainBattleName133(id)}が戦場に現れた。「${villainQuote133(id)}」` : `${villainBattleName133(id)} entered the battlefield. “${villainQuote133(id)}”`;
+    if(id==="algorithm") intro = jaMode133()?`スマホ画面が真っ黒になった。${pick(V18.algorithmLines.intro)}`:`The phone screen went black. ${pick(V18.algorithmLines.intro)}`;
+    if(id==="pattern") intro = jaMode133()?`アルゴリズムが倒れたあと、静けさは妙にきれいすぎた。${pick(V18.patternLines.intro)}`:`After The Algorithm fell, the silence felt too clean. ${pick(V18.patternLines.intro)}`;
+    say(villainBattleName133(id), intro); setBattleActions(); updateHud();
+  };
+
+  setBattleActions=function(){
+    setAmyPose("idle");
+    const id=state.currentBattle&&state.currentBattle.id;
+    if(id){ const name=villainBattleName133(id); setEnemyPose(id,"idle",name,`${name}<br><small>${villainClass133(id)}</small>`); }
+    const moves=amyMoves133(id);
+    const actions=moves.map(m=>({label:jaMode133()?m[1]:m[0], fn:()=>amyAttack({en:m[0],ja:m[1],textEn:m[2],textJa:m[3]},m[4],jaMode133()?m[3]:m[2])}));
+    actions.push({label:"Summon Friend",fn:summonFriendMenu});
+    actions.push({label:"Girl, Stand Up!",fn:girlStandUp,className:"primary wide"});
+    actions.push({label:"Run / Block",fn:escapeBattle,className:"danger wide"});
+    setActions(actions);
+  };
+
+  amyAttack=function(move,dmg,text){
+    const b=state.currentBattle;if(!b)return;
+    const moveEn = typeof move==='object' ? move.en : move;
+    const moveLabel = typeof move==='object' ? (jaMode133()?move.ja:move.en) : tr133(move);
+    setAmyPose(moveEn==="Boundary Slash"?"special":moveEn==="Check Receipts"?"energyBlast":moveEn==="Kick of Discernment"?"kick":"punch");
+    b.enemyHp=Math.max(0,b.enemyHp-dmg); state.selfRespect=clamp(state.selfRespect+2); state.clarity=clamp(state.clarity+1);
+    popEffect(moveLabel); say("Amy",text); updateBattleBars();
+    if(b.enemyHp<=0)return winBattle(); setActions([{label:"Continue",fn:enemyTurn}]);
+  };
+
+  enemyTurn=function(){
+    const b=state.currentBattle;if(!b)return;
+    const v=villains[b.id], atk=v.attacks[Math.floor(Math.random()*v.attacks.length)];
+    setAmyPose("hurt");
+    if(v.spriteArt) setEnemyPose(b.id,"attack",villainBattleName133(b.id),`${villainBattleName133(b.id)}<br><small>${villainClass133(b.id)}</small>`);
+    else if(b.id==="algorithm"){let pose=atk.name==="He’s Your Type Though"?"beam":atk.name==="Lower Standards For More Matches"?"ultimate":"attack";setEnemyPose("algorithm",pose,villainBattleName133(b.id),`${villainBattleName133(b.id)}<br><small>${villainClass133(b.id)}</small>`);}
+    else if(b.id==="pattern"){let pose=atk.name==="At Least He Wants Me"?"heartBlast":atk.name==="One More Chance"?"chainBarrage":"attack";setEnemyPose("pattern",pose,villainBattleName133(b.id),`${villainBattleName133(b.id)}<br><small>${villainClass133(b.id)}</small>`);}
+    let dmg=Math.max(8,Math.round(atk.damage*1.15)-Math.floor(state.selfRespect/28)); if(["normal_fake","algorithm","pattern"].includes(b.id))dmg+=3; if(state.delusion>55)dmg+=8;
+    state.hp=Math.max(0,state.hp-dmg); state.delusion=clamp(state.delusion+atk.delusion); state.peace=clamp(state.peace-Math.floor(dmg/2));
+    popEffect(attackName133(atk)); say(villainBattleName133(b.id),attackText133(atk)); updateHud();
+    if(state.hp<=0||state.delusion>=100)return gameOver(b.id); setActions([{label:"Amy’s Turn",fn:setBattleActions}]);
+  };
+
+  summonFriendMenu=function(){
+    setActions(Object.entries(friends).map(([k,f])=>({label:`Call ${f.name}`,fn:()=>useFriend(k)})).concat([{label:"Back",fn:setBattleActions}]));
+  };
+
+  const baseUseFriend133=useFriend;
+  useFriend=function(id){
+    const f=friends[id], j=JA133.friends[id];
+    if(!jaMode133()) return baseUseFriend133(id);
+    if(state.groupChat<10){say("Group Chat","Group Chat Meter too low.");return setActions([{label:"Back",fn:setBattleActions}]);}
+    state.groupChat=clamp(state.groupChat-10);
+    const b=state.currentBattle; let damage=10;
+    if(id==="min"){damage=10;state.clarity=clamp(state.clarity+18);state.delusion=clamp(state.delusion-20);popEffect("無言の圧");}
+    else if(id==="malik"){damage=12;state.delusion=clamp(state.delusion-15);state.selfRespect=clamp(state.selfRespect+12);popEffect("マジで現実見て");}
+    else if(id==="jade"){damage=10;state.selfRespect=clamp(state.selfRespect+22);state.groupChat=clamp(state.groupChat+10);popEffect("立ちな");}
+    else if(id==="chloe"){damage=14;state.redFlagData++;state.clarity=clamp(state.clarity+10);popEffect("証拠！");}
+    else if(id==="mia"){damage=10;state.peace=clamp(state.peace+15);popEffect("無理。");}
+    if(b&&b.type==="villain")b.enemyHp=Math.max(0,b.enemyHp-damage);
+    say(f.name,`${j?j.line:f.line} ${j?j.result:''}`); updateHud();
+    if(b&&b.enemyHp<=0)winBattle();else setActions([{label:"Continue",fn:enemyTurn}]);
+  };
+
+  girlStandUp=function(){
+    const b=state.currentBattle;if(!b)return;setAmyPose("ultimate");
+    const dmg=30+Math.floor(state.selfRespect/5)+Math.floor(state.groupChat/8);
+    state.groupChat=clamp(state.groupChat-15); state.selfRespect=clamp(state.selfRespect+10); state.delusion=clamp(state.delusion-18); b.enemyHp=Math.max(0,b.enemyHp-dmg);
+    popEffect("GIRL, STAND UP!");
+    say("Amy", jaMode133()?"エイミーはアルティメット『Girl, Stand Up!』を使った。グルチャが出現。マリクが叫び、ミンが横目で刺し、ジェイドが指差し、クロエが証拠を落とし、ミアが微笑んだ。図々しさが震えた。":"Amy used her ultimate: Girl, Stand Up! Malik yelled, “Amy, be so f@&$ing for real!” Min side-eyed so hard the enemy lost confidence. Jade pointed. Chloe dropped receipts. Mia smiled. Audacity trembled.");
+    updateHud(); if(b.enemyHp<=0)winBattle();else setActions([{label:"Continue",fn:enemyTurn}]);
+  };
+
+  const baseToggleLanguage133 = typeof toggleLanguage111==='function' ? toggleLanguage111 : null;
+  if(baseToggleLanguage133){
+    toggleLanguage111=function(){
+      baseToggleLanguage133();
+      applyStaticLocalization133();
+      if(!document.getElementById("mapScreen").classList.contains("hidden")) renderLocations();
+      if(!document.getElementById("closetScreen").classList.contains("hidden")) renderCloset();
+      if(!document.getElementById("shopScreen").classList.contains("hidden")) renderShop();
+      if(!document.getElementById("codexScreen").classList.contains("hidden")) renderCodex();
+      updateHud();
+    };
+  }
+
+  window.applyJapaneseLocalization133=applyStaticLocalization133;
+  window.addEventListener('load',()=>{ applyStaticLocalization133(); updateHud(); });
+  setTimeout(()=>{ applyStaticLocalization133(); updateHud(); },0);
+})();
+
 </script>
 </body>
 </html>

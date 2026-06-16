@@ -1,0 +1,4 @@
+file,description
+assets/localization/ja_v1_33.json,"Japanese localization registry for UI, locations, villains, attacks, dialogue, friends, green flags"
+index.html,Code patched with v1.33 Japanese localization layer
+README_v1_33_JAPANESE_LOCALIZATION.txt,Human-readable summary
