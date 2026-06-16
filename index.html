@@ -1463,123 +1463,7 @@ function renderDateFitGallery112(){
   body.innerHTML=state.dateFitGallery.map((s,i)=>`<div class="v112-card"><img class="gallery-img" src="${s.dataUrl}" alt="${getSnapshotCaption112(s)}"><h3>${getSnapshotCaption112(s)}</h3><div class="v112-row"><button class="small-btn" onclick="downloadDateFitSnapshot112(${i})">Download PNG</button><button class="small-btn" onclick="printDateFitSnapshot112(${i})">Print</button><button class="small-btn" onclick="shareDateFitSnapshot112(${i})">Share</button><button class="small-btn" onclick="emailDateFitSnapshot112(${i})">Email</button><button class="small-btn danger" onclick="deleteDateFitSnapshot112(${i})">Delete</button></div></div>`).join('');
 }
 window.downloadDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const a=document.createElement('a');a.href=s.dataUrl;a.download=`date-fit-${s.partnerLabel||s.partner}-${s.location||'scene'}.png`.replace(/\s+/g,'-').toLowerCase();a.click();};
-window.printDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const w=window.open('','_blank');if(!w){say('Dress-Up Gallery','Pop-up blocked. Use Download PNG instead.');return}w.document.write(`<title>${getSnapshotCaption112(s)}</title><body style="margin:0;display:grid;place-items:center;min-height:100vh;background:#fff"><img src="${s.dataUrl}" style="max-width:96vw;max-height:96vh">
-
-/* =========================
-   v1.22 FINAL 16:9 CODED BACKGROUNDS
-   This patch uses the exact 16:9 image batch Amber sent after v1.19.
-   Assets live in: assets/backgrounds/final_16x9/
-   ========================= */
-(function(){
-  const bg122 = {
-    car_day: 'assets/backgrounds/final_16x9/bg_car_day.png',
-    car_sunset: 'assets/backgrounds/final_16x9/bg_car_sunset.png',
-    car_night: 'assets/backgrounds/final_16x9/bg_car_night.png',
-    parking_lot_night: 'assets/backgrounds/final_16x9/bg_parking_lot_night.png',
-    beach_day: 'assets/backgrounds/final_16x9/bg_beach_day.png',
-    beach_sunset: 'assets/backgrounds/final_16x9/bg_beach_sunset.png',
-    beach_night: 'assets/backgrounds/final_16x9/bg_beach_night.png',
-    park_day: 'assets/backgrounds/final_16x9/bg_park_day.png',
-    park_sunset: 'assets/backgrounds/final_16x9/bg_park_sunset.png',
-    park_night: 'assets/backgrounds/final_16x9/bg_park_night.png',
-    office_day: 'assets/backgrounds/final_16x9/bg_office_day.png'
-  };
-
-  Object.assign(ASSETS.backgrounds, bg122, {
-    car: bg122.car_day,
-    beach: bg122.beach_sunset,
-    park: bg122.park_day,
-    office: bg122.office_day
-  });
-
-  if (typeof FALLBACK === 'object') {
-    Object.assign(FALLBACK, {
-      parking_lot_night: 'linear-gradient(135deg,#050812,#17243c 45%,#3a3e58)'
-    });
-  }
-
-  const beachLoc122 = locations.find(l => l.id === 'beach');
-  if (beachLoc122) {
-    beachLoc122.bg = () => state.time === 'Night' ? 'beach_night' : state.time === 'Evening' ? 'beach_sunset' : 'beach_day';
-  }
-
-  const parkLoc122 = locations.find(l => l.id === 'park');
-  if (parkLoc122) {
-    parkLoc122.bg = () => state.time === 'Night' ? 'park_night' : state.time === 'Evening' ? 'park_sunset' : 'park_day';
-  }
-
-  const officeLoc122 = locations.find(l => l.id === 'office');
-  if (officeLoc122) {
-    officeLoc122.bg = () => 'office_day';
-  }
-
-  const carLoc122 = locations.find(l => l.id === 'car');
-  if (carLoc122) {
-    carLoc122.bg = () => state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day';
-  }
-
-  if (villains && villains.body_bag) {
-    villains.body_bag.bg = 'parking_lot_night';
-  }
-
-  if (typeof V18 === 'object' && V18.appNotifications && V18.appNotifications.body_bag) {
-    V18.appNotifications.body_bag.battleBg = 'parking_lot_night';
-  }
-
-  if (typeof startCarScene115 === 'function') {
-    startCarScene115 = function(resultKey){
-      hideAllScreens();
-      state.location='car';
-      setBackground(state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day');
-      showAmy(true,'idle');
-      showEnemy(false);
-      document.getElementById('battleUi').classList.add('hidden');
-      document.getElementById('cutscenePanel').classList.remove('hidden');
-      document.getElementById('gameScreen').classList.remove('hidden');
-      const copy = (V18.carAftermath && V18.carAftermath[resultKey]) || (typeof resultKey === 'string' ? resultKey : '');
-      say('Amy', typeof copy === 'object' ? (state.lang === 'ja' ? copy.ja : copy.en) : copy);
-      renderCarActions();
-      updateHud();
-    };
-  }
-})();
-
-
-
-/* =========================
-   v1.24 DIRECT assets/backgrounds routing
-   All coded 16:9 backgrounds now live directly in assets/backgrounds/.
-   ========================= */
-(function(){
-  const bg124 = {
-    city_map_day:'assets/backgrounds/bg_city_map_day.png', city_map_afternoon:'assets/backgrounds/bg_city_map_afternoon.png', city_map_night:'assets/backgrounds/bg_city_map_night.png',
-    apartment_day:'assets/backgrounds/bg_apartment_day.png', apartment_sunset:'assets/backgrounds/bg_apartment_sunset.png', apartment_night:'assets/backgrounds/bg_apartment_night.png',
-    bedroom_day:'assets/backgrounds/bg_bedroom_day.png', bedroom_sunset:'assets/backgrounds/bg_bedroom_sunset.png', bedroom_night:'assets/backgrounds/bg_bedroom_night.png',
-    library_day:'assets/backgrounds/bg_library_day.png', library_afternoon:'assets/backgrounds/bg_library_afternoon.png',
-    bar_day:'assets/backgrounds/bg_bar_day.png', bar_night:'assets/backgrounds/bg_bar_night.png',
-    restaurant_day:'assets/backgrounds/bg_restaurant_day.png', restaurant_night:'assets/backgrounds/bg_restaurant_night.png',
-    mall_day:'assets/backgrounds/bg_mall_day.png', bedroom_glitch:'assets/backgrounds/bg_bedroom_glitch.png', dream_world:'assets/backgrounds/bg_dream_world.png', apartment_glitch:'assets/backgrounds/bg_apartment_glitch.png', closet:'assets/backgrounds/bg_closet.png', spa:'assets/backgrounds/bg_spa.png',
-    car_day:'assets/backgrounds/bg_car_day.png', car_sunset:'assets/backgrounds/bg_car_sunset.png', car_night:'assets/backgrounds/bg_car_night.png', parking_lot_night:'assets/backgrounds/bg_parking_lot_night.png',
-    beach_day:'assets/backgrounds/bg_beach_day.png', beach_sunset:'assets/backgrounds/bg_beach_sunset.png', beach_night:'assets/backgrounds/bg_beach_night.png',
-    park_day:'assets/backgrounds/bg_park_day.png', park_sunset:'assets/backgrounds/bg_park_sunset.png', park_night:'assets/backgrounds/bg_park_night.png', office_day:'assets/backgrounds/bg_office_day.png'
-  };
-  Object.assign(ASSETS.backgrounds, bg124, {library:bg124.library_day, bar:bg124.bar_day, restaurant:bg124.restaurant_day, mall:bg124.mall_day, park:bg124.park_day, beach:bg124.beach_sunset, office:bg124.office_day, car:bg124.car_day, closet:bg124.closet, spa:bg124.spa});
-  const setLoc=(id,fn)=>{const l=locations.find(x=>x.id===id); if(l) l.bg=fn;};
-  setLoc('apartment',()=>state.time==='Night'?'apartment_night':state.time==='Evening'?'apartment_sunset':'apartment_day');
-  setLoc('bedroom',()=>state.time==='Night'?'bedroom_night':state.time==='Evening'?'bedroom_sunset':'bedroom_day');
-  setLoc('library',()=>state.time==='Evening'?'library_afternoon':'library_day');
-  setLoc('bar',()=>state.time==='Night'?'bar_night':'bar_day');
-  setLoc('restaurant',()=>state.time==='Night'?'restaurant_night':'restaurant_day');
-  setLoc('mall',()=> 'mall_day'); setLoc('closet',()=> 'closet'); setLoc('spa',()=> 'spa');
-  setLoc('park',()=>state.time==='Night'?'park_night':state.time==='Evening'?'park_sunset':'park_day');
-  setLoc('beach',()=>state.time==='Night'?'beach_night':state.time==='Evening'?'beach_sunset':'beach_day');
-  setLoc('office',()=> 'office_day');
-  setLoc('car',()=>state.time==='Night'?'car_night':state.time==='Evening'?'car_sunset':'car_day');
-  if(villains && villains.body_bag) villains.body_bag.bg='parking_lot_night';
-  if(typeof V18==='object' && V18.appNotifications && V18.appNotifications.body_bag) V18.appNotifications.body_bag.battleBg='parking_lot_night';
-})();
-
-</body>`);w.document.close();w.focus();setTimeout(()=>w.print(),300);};
+window.printDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const w=window.open('','_blank');if(!w){say('Dress-Up Gallery','Pop-up blocked. Use Download PNG instead.');return}w.document.write(`<title>${getSnapshotCaption112(s)}</title><body style="margin:0;display:grid;place-items:center;min-height:100vh;background:#fff"><img src="${s.dataUrl}" style="max-width:96vw;max-height:96vh"></body>`);w.document.close();w.focus();setTimeout(()=>w.print(),300);};
 async function dataURLToFile112(dataUrl,name){const res=await fetch(dataUrl);const blob=await res.blob();return new File([blob],name,{type:'image/png'});}
 window.shareDateFitSnapshot112=async function(i){const s=state.dateFitGallery[i];if(!s)return;try{const file=await dataURLToFile112(s.dataUrl,'date-fit.png');if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:getSnapshotCaption112(s),text:'My Swipe Left to Survive Date Fit Studio Polaroid',files:[file]});}else if(navigator.share){await navigator.share({title:getSnapshotCaption112(s),text:'My Swipe Left to Survive Date Fit Studio Polaroid'});}else{downloadDateFitSnapshot112(i);say('Dress-Up Gallery','Sharing is not supported here, so I downloaded the PNG instead.');}}catch(e){say('Dress-Up Gallery','Share was cancelled or not supported. Download PNG still works.');}};
 window.emailDateFitSnapshot112=function(i){const s=state.dateFitGallery[i];if(!s)return;const subject=encodeURIComponent(`Date Fit Studio: ${getSnapshotCaption112(s)}`);const body=encodeURIComponent('I made a Swipe Left to Survive Date Fit Studio Polaroid. Download the PNG from the gallery and attach it to this email.');window.location.href=`mailto:?subject=${subject}&body=${body}`;};
@@ -3184,122 +3068,581 @@ window.addEventListener('load',()=>{
   window.addEventListener('load',syncBackgrounds119);
 })();
 
-</script>
 
 
 /* =========================
-   v1.22 FINAL 16:9 CODED BACKGROUNDS
-   This patch uses the exact 16:9 image batch Amber sent after v1.19.
-   Assets live in: assets/backgrounds/final_16x9/
+   v1.25 CLEAN BACKGROUND ROUTING + RANDOM MIDGAME VILLAINS
+   - Direct assets/backgrounds/bg_*.png paths only.
+   - Adds randomized midgame villain pool.
+   - Adds Lucien, Roman, Nico, Blake, Julian.
+   - Come Over King intentionally excluded.
    ========================= */
 (function(){
-  const bg122 = {
-    car_day: 'assets/backgrounds/final_16x9/bg_car_day.png',
-    car_sunset: 'assets/backgrounds/final_16x9/bg_car_sunset.png',
-    car_night: 'assets/backgrounds/final_16x9/bg_car_night.png',
-    parking_lot_night: 'assets/backgrounds/final_16x9/bg_parking_lot_night.png',
-    beach_day: 'assets/backgrounds/final_16x9/bg_beach_day.png',
-    beach_sunset: 'assets/backgrounds/final_16x9/bg_beach_sunset.png',
-    beach_night: 'assets/backgrounds/final_16x9/bg_beach_night.png',
-    park_day: 'assets/backgrounds/final_16x9/bg_park_day.png',
-    park_sunset: 'assets/backgrounds/final_16x9/bg_park_sunset.png',
-    park_night: 'assets/backgrounds/final_16x9/bg_park_night.png',
-    office_day: 'assets/backgrounds/final_16x9/bg_office_day.png'
+  const bg125 = {
+    city_map_day:'assets/backgrounds/bg_city_map_day.png',
+    city_map_afternoon:'assets/backgrounds/bg_city_map_afternoon.png',
+    city_map_night:'assets/backgrounds/bg_city_map_night.png',
+    apartment_day:'assets/backgrounds/bg_apartment_day.png',
+    apartment_sunset:'assets/backgrounds/bg_apartment_sunset.png',
+    apartment_night:'assets/backgrounds/bg_apartment_night.png',
+    bedroom_day:'assets/backgrounds/bg_bedroom_day.png',
+    bedroom_sunset:'assets/backgrounds/bg_bedroom_sunset.png',
+    bedroom_night:'assets/backgrounds/bg_bedroom_night.png',
+    bedroom_glitch:'assets/backgrounds/bg_bedroom_glitch.png',
+    apartment_glitch:'assets/backgrounds/bg_apartment_glitch.png',
+    dream_world:'assets/backgrounds/bg_dream_world.png',
+    closet:'assets/backgrounds/bg_closet.png',
+    office:'assets/backgrounds/bg_office_day.png',
+    office_day:'assets/backgrounds/bg_office_day.png',
+    library:'assets/backgrounds/bg_library_day.png',
+    library_day:'assets/backgrounds/bg_library_day.png',
+    library_afternoon:'assets/backgrounds/bg_library_afternoon.png',
+    bar:'assets/backgrounds/bg_bar_day.png',
+    bar_day:'assets/backgrounds/bg_bar_day.png',
+    bar_night:'assets/backgrounds/bg_bar_night.png',
+    park:'assets/backgrounds/bg_park_day.png',
+    park_day:'assets/backgrounds/bg_park_day.png',
+    park_sunset:'assets/backgrounds/bg_park_sunset.png',
+    park_night:'assets/backgrounds/bg_park_night.png',
+    restaurant:'assets/backgrounds/bg_restaurant_day.png',
+    restaurant_day:'assets/backgrounds/bg_restaurant_day.png',
+    restaurant_night:'assets/backgrounds/bg_restaurant_night.png',
+    mall:'assets/backgrounds/bg_mall_day.png',
+    mall_day:'assets/backgrounds/bg_mall_day.png',
+    spa:'assets/backgrounds/bg_spa.png',
+    beach:'assets/backgrounds/bg_beach_sunset.png',
+    beach_day:'assets/backgrounds/bg_beach_day.png',
+    beach_sunset:'assets/backgrounds/bg_beach_sunset.png',
+    beach_night:'assets/backgrounds/bg_beach_night.png',
+    beachside_cafe:'assets/backgrounds/bg_beachside_cafe_day.png',
+    beachside_cafe_day:'assets/backgrounds/bg_beachside_cafe_day.png',
+    beachside_cafe_sunset:'assets/backgrounds/bg_beachside_cafe_sunset.png',
+    beachside_cafe_night:'assets/backgrounds/bg_beachside_cafe_night.png',
+    car_day:'assets/backgrounds/bg_car_day.png',
+    car_sunset:'assets/backgrounds/bg_car_sunset.png',
+    car_night:'assets/backgrounds/bg_car_night.png',
+    parking_lot_night:'assets/backgrounds/bg_parking_lot_night.png'
+  };
+  Object.assign(ASSETS.backgrounds, bg125);
+
+  function bgByTime125(base){
+    if(state.time==='Night' && ASSETS.backgrounds[base+'_night']) return base+'_night';
+    if(state.time==='Evening' && ASSETS.backgrounds[base+'_sunset']) return base+'_sunset';
+    if(state.time==='Evening' && ASSETS.backgrounds[base+'_afternoon']) return base+'_afternoon';
+    if(ASSETS.backgrounds[base+'_day']) return base+'_day';
+    return base;
+  }
+  function setLocBg125(id, fn){
+    const l=locations.find(x=>x.id===id);
+    if(l) l.bg=fn;
+  }
+  setLocBg125('apartment',()=>bgByTime125('apartment'));
+  setLocBg125('bedroom',()=>bgByTime125('bedroom'));
+  setLocBg125('office',()=> 'office_day');
+  setLocBg125('library',()=>state.time==='Evening'?'library_afternoon':'library_day');
+  setLocBg125('bar',()=>state.time==='Night'?'bar_night':'bar_day');
+  setLocBg125('park',()=>bgByTime125('park'));
+  setLocBg125('restaurant',()=>state.time==='Night'?'restaurant_night':'restaurant_day');
+  setLocBg125('mall',()=> 'mall_day');
+  setLocBg125('spa',()=> 'spa');
+  setLocBg125('closet',()=> 'closet');
+  setLocBg125('beach',()=>bgByTime125('beach'));
+  setLocBg125('beachside_cafe',()=>bgByTime125('beachside_cafe'));
+  setLocBg125('car',()=>bgByTime125('car'));
+
+  const atk125=(name,damage,delusion,text,type='normal')=>({name,damage,delusion,text,moveType:type});
+
+  const NEW_RANDOM_VILLAINS_125 = {
+    lucien_reservation_mirage:{
+      realName:'Lucien Moreau', name:'Reservation Mirage', villainName:'Reservation Mirage',
+      className:'Fake Fancy / Promise Merchant',
+      archetype:'Fake fancy promise merchant who sells the fantasy of effort instead of actual effort.',
+      encounterType:'random_midgame', locationTags:['restaurant','lounge','downtown','dating_app'],
+      bg:'restaurant_day', maxHp:112, quote:'You deserve a proper evening. Leave it to me.',
+      weakness:'Calendar proof, confirmed plans, and refusing future-tense effort.',
+      lessonLearned:'Promises Are Not Plans', rewardBuff:'Discernment buff. Unlock concept: Calendar or Cap.',
+      attacks:[
+        atk125('Table for Never',15,8,'The reservation shimmered, then vanished. It had never existed.'),
+        atk125('Promise Loop',16,10,'He promised the real date would happen next time. Future tense fog rolled in.'),
+        atk125('Plan Swap',14,7,'The beautiful evening became a vague “we can just walk around.”'),
+        atk125('Charm Fog',17,11,'Compliments tried to cover the empty itinerary.'),
+        atk125('Next Time, I Swear',30,16,'SPECIAL: He tried to pay for tonight with imaginary future effort.','special')
+      ]
+    },
+    roman_industry_mystery:{
+      realName:'Roman Vega', name:'Industry Mystery', villainName:'Industry Mystery',
+      className:'Vague Entertainment Flexer',
+      archetype:'Adult-entertainment guy who is vague, flashy, and creepy about Amy’s reaction.',
+      encounterType:'random_midgame', locationTags:['bar','lounge','nightlife','dating_app'],
+      bg:'bar_night', maxHp:118, quote:'I’m in entertainment. I could retire early if I wanted to.',
+      weakness:'Follow-up questions and trusting discomfort.',
+      lessonLearned:'Ask Follow-Up Questions', rewardBuff:'Unlock Amy move: Ask Follow-Up Question.',
+      attacks:[
+        atk125('Ambiguous Income',14,8,'He let Amy fill in the blanks, then acted like the blanks were her fault.'),
+        atk125('Retirement Flex',18,12,'He flexed early retirement money like context was optional.'),
+        atk125('Shock Reveal',20,14,'The career reveal landed less like honesty and more like a trapdoor.'),
+        atk125('Open-Mindedness Check',17,12,'He tried to turn compatibility into a morality quiz.'),
+        atk125('I Broke Her',32,18,'SPECIAL: Roman mistook discomfort for awe. Amy’s patience meter cracked.','special')
+      ]
+    },
+    nico_boundary_pusher:{
+      realName:'Nico Hart', name:'Boundary Pusher', villainName:'Boundary Pusher',
+      className:'Pushy Playfulness Specialist',
+      archetype:'Flirty guy who treats no as the beginning of a negotiation.',
+      encounterType:'random_midgame', locationTags:['cafe','bar','casual_date','hangout'],
+      bg:'beachside_cafe_day', maxHp:106, quote:'Relax, I’m just playful.',
+      weakness:'Clear boundaries and not debating discomfort.',
+      lessonLearned:'Boundaries Don’t Need a Debate', rewardBuff:'Boundary Strength buff. Unlock: No Is a Complete Sentence.',
+      attacks:[
+        atk125('Boundary Creep',14,8,'The joke stepped one inch too close, then another.'),
+        atk125('Just Kidding Touch',15,9,'He hid behind “just kidding” after Amy’s face already answered.'),
+        atk125('Why So Serious?',16,10,'He tried to make discomfort sound like a personality flaw.'),
+        atk125('Read-the-Room Failure',13,7,'The room sent a memo. He ignored it.'),
+        atk125('Pushy Playfulness',28,15,'SPECIAL: Nico treated no like a locked door he could jiggle. Amy changed the locks.','special')
+      ]
+    },
+    blake_disruptor:{
+      realName:'Blake Sterling', name:'The Disruptor', villainName:'The Disruptor',
+      className:'Crypto / Tech Bro Webinar Date',
+      archetype:'Self-absorbed crypto tech bro who turns every date into a pitch meeting.',
+      encounterType:'random_midgame', locationTags:['bar','coffee_shop','coworking','startup_mixer','dating_app'],
+      bg:'bar_day', maxHp:120, quote:'I’m building something huge right now.',
+      weakness:'Asking what any of those words mean.',
+      lessonLearned:'Confidence Is Not Competence', rewardBuff:'Unlock Amy move: Define Your Terms.',
+      attacks:[
+        atk125('Blockchain Monologue',15,10,'The appetizers arrived. So did a twelve-minute explanation nobody requested.'),
+        atk125('Passive Income Flex',16,11,'He said “passive income” with active insecurity.'),
+        atk125('Founder Aura',18,12,'A startup title hovered over him like a rented halo.'),
+        atk125('Actually, Let Me Explain',17,12,'He interrupted Amy to explain something she did not ask about.'),
+        atk125('The Pitch Deck',34,20,'ULTIMATE: Slides, charts, buzzwords, and zero questions about Amy.','ultimate')
+      ]
+    },
+    julian_softboi_savior:{
+      realName:'Julian Cross', name:'The Softboi Savior', villainName:'The Softboi Savior',
+      className:'Performative Feminist Softboi',
+      archetype:'Fake emotionally evolved softboi who weaponizes therapy language.',
+      encounterType:'random_midgame', locationTags:['cafe','bookstore','open_mic','wine_bar','park','dating_app'],
+      bg:'library_day', maxHp:124, quote:'I just want to create a safe space for connection.',
+      weakness:'Impact over intentions, and refusing to become his therapist.',
+      lessonLearned:'Language Is Not Character', rewardBuff:'Unlock Amy move: Define Accountability.',
+      attacks:[
+        atk125('Therapy-Speak Trap',16,10,'Julian used three healing words and zero accountability.'),
+        atk125('Hold Space Shield',15,9,'He held space by occupying all of it.'),
+        atk125('Not Like Other Men',17,12,'He requested applause for being baseline decent in public.'),
+        atk125('Weaponized Vulnerability',19,13,'His feelings became a smoke bomb around the actual issue.'),
+        atk125('The Healing Era Monologue',35,21,'ULTIMATE: A podcast episode with shoes tried to turn Amy into a retreat facilitator.','ultimate')
+      ]
+    }
   };
 
-  Object.assign(ASSETS.backgrounds, bg122, {
-    car: bg122.car_day,
-    beach: bg122.beach_sunset,
-    park: bg122.park_day,
-    office: bg122.office_day
+  Object.assign(villains, NEW_RANDOM_VILLAINS_125);
+  Object.keys(NEW_RANDOM_VILLAINS_125).forEach(id=>{ if(ENEMY_ART && ENEMY_ART.villains) ENEMY_ART.villains[id]=''; });
+
+  Object.assign(V18.appNotifications,{
+    lucien_reservation_mirage:{app:'LoveLoop',msg:'Lucien sent: “I know a beautiful place. Leave it to me.”',battleBg:'restaurant_day'},
+    roman_industry_mystery:{app:'LoveLoop',msg:'Roman sent: “I’m in entertainment. People recognize me sometimes.”',battleBg:'bar_night'},
+    nico_boundary_pusher:{app:'LoveLoop',msg:'Nico sent: “You’re cute when you get all serious.”',battleBg:'beachside_cafe_day'},
+    blake_disruptor:{app:'LoveLoop',msg:'Blake sent: “Most people don’t understand what I’m building.”',battleBg:'bar_day'},
+    julian_softboi_savior:{app:'LoveLoop',msg:'Julian sent: “I want to create a safe space for connection.”',battleBg:'library_day'}
   });
 
-  if (typeof FALLBACK === 'object') {
-    Object.assign(FALLBACK, {
-      parking_lot_night: 'linear-gradient(135deg,#050812,#17243c 45%,#3a3e58)'
-    });
-  }
+  Object.assign(V18.cutscenes,{
+    lucien_reservation_mirage:[
+      ['Lucien','You deserve a proper evening. I know a really nice place.'],['Amy','Okay, intentional. I like that.'],
+      ['Lucien','They were booked, but I have another idea.'],['Amy','Did you actually make the reservation?'],
+      ['Lucien','I was literally going to take you. Why are you focusing on the wrong thing?'],['Amy','Intentions are not reservations.'],
+      ['Narrator','The white tablecloth folded itself into a receipt marked: PROMISES ARE NOT PLANS.']
+    ],
+    roman_industry_mystery:[
+      ['Roman','I do pretty well for myself. I’m in entertainment.'],['Amy','Entertainment like music? TV?'],
+      ['Roman','Adult entertainment. I could retire early if I wanted to.'],['Amy','Oh. I’m processing that.'],
+      ['Roman','Wait… I broke her.'],['Amy','You didn’t break me. You creeped me out.'],
+      ['Narrator','The lounge lights dimmed. Every vague answer became a spotlight.']
+    ],
+    nico_boundary_pusher:[
+      ['Nico','Relax, I’m just playful.'],['Amy','I’m telling you I don’t like that.'],
+      ['Nico','You’re overthinking it. I’m joking.'],['Amy','I already said no.'],
+      ['Nico','I didn’t know it was that deep.'],['Amy','No is not a puzzle.'],
+      ['Narrator','The room went quiet. The boundary line glowed bright pink.']
+    ],
+    blake_disruptor:[
+      ['Blake','I’m building something huge right now. Most people don’t understand it.'],['Amy','What do you actually do?'],
+      ['Blake','It’s a decentralized lifestyle ecosystem with passive upside.'],['Amy','That answered nothing.'],
+      ['Blake','You’re thinking too small. I’m giving you free game.'],['Amy','This is a date, not a TED Talk.'],
+      ['Narrator','A pitch deck opened by itself. Floating buzzwords spawned around the table.']
+    ],
+    julian_softboi_savior:[
+      ['Julian','I just want to create a safe space for connection. I’ve done a lot of inner work.'],['Amy','That sounds nice.'],
+      ['Julian','I’m sensing defensiveness.'],['Amy','I asked one clarifying question.'],
+      ['Julian','That’s not really fair to my intentions.'],['Amy','Intentions don’t erase impact.'],
+      ['Narrator','Therapy words swirled into a soft beige fog. The fog wanted applause.']
+    ]
+  });
 
-  const beachLoc122 = locations.find(l => l.id === 'beach');
-  if (beachLoc122) {
-    beachLoc122.bg = () => state.time === 'Night' ? 'beach_night' : state.time === 'Evening' ? 'beach_sunset' : 'beach_day';
-  }
+  const randomPool125=['preference','house_date','demon','broke_dreamer','millionaire','body_bag','dark_humor','old_young',
+    'lucien_reservation_mirage','roman_industry_mystery','nico_boundary_pusher','blake_disruptor','julian_softboi_savior'].filter(id=>villains[id]);
+  const fixedAnchors125=['two_am','coworker','normal_fake','algorithm','pattern'];
 
-  const parkLoc122 = locations.find(l => l.id === 'park');
-  if (parkLoc122) {
-    parkLoc122.bg = () => state.time === 'Night' ? 'park_night' : state.time === 'Evening' ? 'park_sunset' : 'park_day';
-  }
+  function shuffle125(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+  function ensureRun125(){if(!state.randomVillainRun125 || !Array.isArray(state.randomVillainRun125)){state.randomVillainRun125=shuffle125(randomPool125).slice(0,state.randomBossCount125||4);}return state.randomVillainRun125;}
+  window.buildAmyStoryRun125=function(randomCount=4){state.randomBossCount125=Math.max(3,Math.min(6,randomCount));state.randomVillainRun125=shuffle125(randomPool125).slice(0,state.randomBossCount125);return ['two_am',...state.randomVillainRun125.slice(0,2),'coworker',...state.randomVillainRun125.slice(2),'normal_fake','algorithm','pattern'];};
+  window.resetAmyRandomRun125=function(){state.randomVillainRun125=null;return buildAmyStoryRun125(state.randomBossCount125||4);};
 
-  const officeLoc122 = locations.find(l => l.id === 'office');
-  if (officeLoc122) {
-    officeLoc122.bg = () => 'office_day';
-  }
+  V18.villainOrder=['two_am',...randomPool125,'normal_fake'];
 
-  const carLoc122 = locations.find(l => l.id === 'car');
-  if (carLoc122) {
-    carLoc122.bg = () => state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day';
-  }
+  nextVillainId=function(){
+    if(!state.defeated.has('two_am')) return 'two_am';
+    const run=ensureRun125();
+    const next=run.find(id=>!state.defeated.has(id));
+    if(next) return next;
+    if(!state.defeated.has('normal_fake')) return 'normal_fake';
+    if(!state.defeated.has('algorithm')) return 'algorithm';
+    if(!state.defeated.has('pattern')) return 'pattern';
+    return shuffle125(randomPool125)[0] || 'normal_fake';
+  };
 
-  if (villains && villains.body_bag) {
-    villains.body_bag.bg = 'parking_lot_night';
-  }
-
-  if (typeof V18 === 'object' && V18.appNotifications && V18.appNotifications.body_bag) {
-    V18.appNotifications.body_bag.battleBg = 'parking_lot_night';
-  }
-
-  if (typeof startCarScene115 === 'function') {
-    startCarScene115 = function(resultKey){
-      hideAllScreens();
-      state.location='car';
-      setBackground(state.time === 'Night' ? 'car_night' : state.time === 'Evening' ? 'car_sunset' : 'car_day');
-      showAmy(true,'idle');
-      showEnemy(false);
-      document.getElementById('battleUi').classList.add('hidden');
-      document.getElementById('cutscenePanel').classList.remove('hidden');
-      document.getElementById('gameScreen').classList.remove('hidden');
-      const copy = (V18.carAftermath && V18.carAftermath[resultKey]) || (typeof resultKey === 'string' ? resultKey : '');
-      say('Amy', typeof copy === 'object' ? (state.lang === 'ja' ? copy.ja : copy.en) : copy);
-      renderCarActions();
-      updateHud();
+  function askFollowUp125(id){
+    const lines={
+      lucien_reservation_mirage:'Amy asked for the reservation time. Lucien’s confidence flickered.',
+      roman_industry_mystery:'Amy asked one direct career question. The mystery lost its lighting.',
+      nico_boundary_pusher:'Amy repeated the boundary once. The joke stopped being cute.',
+      blake_disruptor:'Amy asked him to define three terms. The pitch deck began sweating.',
+      julian_softboi_savior:'Amy asked what accountability meant in practice. The safe space got quiet.'
     };
+    state.clarity=clamp(state.clarity+10);state.redFlagData++;
+    say('Amy',lines[id]||'Amy asked one follow-up question. The vibes became evidence.');updateHud();
+    setActions([{label:'Go on Date',fn:()=>startDateCutscene(id),className:'danger'},{label:'Block',fn:()=>blockNotification(id),className:'primary'},{label:'Back',fn:()=>goLocation(state.location),className:'wide'}]);
   }
+
+  openDatingApp=function(){
+    state.appOpened++;
+    const id=nextVillainId();
+    const note=V18.appNotifications[id]||{app:'LoveLoop',msg:'You have a new match.'};
+    const msg = note.msg && typeof note.msg==='object' ? (state.lang==='ja'?(note.msg.ja||note.msg.en):(note.msg.en||note.msg.ja)) : note.msg;
+    say(note.app||'LoveLoop',msg);
+    setActions([
+      {label:'Reply',fn:()=>startDateCutscene(id),className:'danger'},
+      {label:'Ask Follow-Up Question',fn:()=>askFollowUp125(id),className:'primary'},
+      {label:'Summon Friend Advice',fn:sendScreenshotToGroup},
+      {label:'Ignore',fn:ignoreNotification,className:'green'},
+      {label:'Block',fn:()=>blockNotification(id),className:'primary'},
+      {label:'Back',fn:()=>goLocation(state.location),className:'wide'}
+    ]);
+  };
+  startRandomVillainBattle=function(){openDatingApp();};
+
+  const baseUseFriend125=useFriend;
+  useFriend=function(id){
+    const b=state.currentBattle, vid=b&&b.id;
+    const special={
+      lucien_reservation_mirage:{malik:'Malik: “Be so for real. A reservation is not a personality.”',jade:'Jade: “Absolutely not. Calendar invite or goodbye.”',chloe:'Chloe: “Ask him one follow-up question: what time is the reservation?”',mia:'Mia: “You don’t have to confuse potential with proof.”'},
+      roman_industry_mystery:{min:'Min says nothing. The silence files a complaint.',chloe:'Chloe: “Ask him one follow-up question. Directly.”',malik:'Malik: “He did not break you. He made it weird.”'},
+      nico_boundary_pusher:{min:'Min gives one silent side-eye. Nico loses confidence.',jade:'Jade: “Absolutely not. No is not a debate topic.”',mia:'Mia: “If it stopped feeling playful, it stopped being playful.”'},
+      blake_disruptor:{malik:'Malik: “Be so for real. This is a date, not Shark Tank.”',min:'Min silently refuses to subscribe to the podcast.',chloe:'Chloe: “Ask him to define every buzzword.”'},
+      julian_softboi_savior:{malik:'Malik: “Be so for real. He is a podcast episode with shoes.”',jade:'Jade: “Absolutely not. Intentions do not erase impact.”',mia:'Mia: “Language is not character.”'}
+    };
+    if(vid && special[vid] && special[vid][id]){
+      if(state.groupChat<10){say('Group Chat','Group Chat Meter too low.');return setActions([{label:'Back',fn:setBattleActions}]);}
+      state.groupChat=clamp(state.groupChat-10);b.enemyHp=Math.max(0,b.enemyHp-14);
+      state.clarity=clamp(state.clarity+8);state.selfRespect=clamp(state.selfRespect+8);state.delusion=clamp(state.delusion-10);
+      popEffect(id==='min'?'SIDE-EYE':id==='chloe'?'FOLLOW-UP':id==='malik'?'BE SO FOR REAL':'SUPPORT');
+      say(friends[id]?.name||'Friend',special[vid][id]);updateHud();
+      if(b.enemyHp<=0)return winBattle();
+      return setActions([{label:'Continue',fn:enemyTurn}]);
+    }
+    return baseUseFriend125(id);
+  };
+
+  const baseWinBattle125=winBattle;
+  winBattle=function(){
+    const id=state.currentBattle && state.currentBattle.id;
+    const lesson=villains[id] && villains[id].lessonLearned;
+    const result=baseWinBattle125();
+    if(lesson && state.currentBattle===null){
+      say('Lesson Learned',lesson);
+      setActions([{label:'Back to Map',fn:()=>showScreen('mapScreen'),className:'primary'},{label:'Check Phone',fn:openDatingApp,className:'danger'}]);
+    }
+    return result;
+  };
+
+  window.NEW_RANDOM_VILLAINS_125=NEW_RANDOM_VILLAINS_125;
+  window.AMY_RANDOM_VILLAIN_POOL_125=randomPool125;
+  window.AMY_FIXED_ANCHORS_125=fixedAnchors125;
 })();
 
 
 
 /* =========================
-   v1.24 DIRECT assets/backgrounds routing
-   All coded 16:9 backgrounds now live directly in assets/backgrounds/.
+   v1.26 New Random Villain Art Registry
+   Maps image-generation handoff assets to the new random midgame villains.
    ========================= */
 (function(){
-  const bg124 = {
-    city_map_day:'assets/backgrounds/bg_city_map_day.png', city_map_afternoon:'assets/backgrounds/bg_city_map_afternoon.png', city_map_night:'assets/backgrounds/bg_city_map_night.png',
-    apartment_day:'assets/backgrounds/bg_apartment_day.png', apartment_sunset:'assets/backgrounds/bg_apartment_sunset.png', apartment_night:'assets/backgrounds/bg_apartment_night.png',
-    bedroom_day:'assets/backgrounds/bg_bedroom_day.png', bedroom_sunset:'assets/backgrounds/bg_bedroom_sunset.png', bedroom_night:'assets/backgrounds/bg_bedroom_night.png',
-    library_day:'assets/backgrounds/bg_library_day.png', library_afternoon:'assets/backgrounds/bg_library_afternoon.png',
-    bar_day:'assets/backgrounds/bg_bar_day.png', bar_night:'assets/backgrounds/bg_bar_night.png',
-    restaurant_day:'assets/backgrounds/bg_restaurant_day.png', restaurant_night:'assets/backgrounds/bg_restaurant_night.png',
-    mall_day:'assets/backgrounds/bg_mall_day.png', bedroom_glitch:'assets/backgrounds/bg_bedroom_glitch.png', dream_world:'assets/backgrounds/bg_dream_world.png', apartment_glitch:'assets/backgrounds/bg_apartment_glitch.png', closet:'assets/backgrounds/bg_closet.png', spa:'assets/backgrounds/bg_spa.png',
-    car_day:'assets/backgrounds/bg_car_day.png', car_sunset:'assets/backgrounds/bg_car_sunset.png', car_night:'assets/backgrounds/bg_car_night.png', parking_lot_night:'assets/backgrounds/bg_parking_lot_night.png',
-    beach_day:'assets/backgrounds/bg_beach_day.png', beach_sunset:'assets/backgrounds/bg_beach_sunset.png', beach_night:'assets/backgrounds/bg_beach_night.png',
-    park_day:'assets/backgrounds/bg_park_day.png', park_sunset:'assets/backgrounds/bg_park_sunset.png', park_night:'assets/backgrounds/bg_park_night.png', office_day:'assets/backgrounds/bg_office_day.png'
+  const art126 = {
+    lucien_reservation_mirage: {
+      profileArt: 'assets/characters/villains/lucien_moreau_profile.png',
+      cardArt: 'assets/characters/villains/lucien_reservation_mirage_card.png',
+      battleArt: 'assets/characters/villains/lucien_reservation_mirage_card.png'
+    },
+    roman_industry_mystery: {
+      profileArt: 'assets/characters/villains/roman_vega_profile.png',
+      cardArt: 'assets/characters/villains/roman_vega_industry_mystery_card.png',
+      fullbodyArt: 'assets/characters/villains/roman_vega_fullbody.png',
+      battleArt: 'assets/characters/villains/roman_vega_industry_mystery_card.png'
+    },
+    nico_boundary_pusher: {
+      profileArt: 'assets/characters/villains/nico_hart_profile.png',
+      cardArt: 'assets/characters/villains/nico_hart_boundary_pusher_card.png',
+      fullbodyArt: 'assets/characters/villains/nico_hart_fullbody.png',
+      battleArt: 'assets/characters/villains/nico_hart_boundary_pusher_card.png'
+    },
+    blake_disruptor: {
+      profileArt: 'assets/characters/villains/blake_sterling_disruptor_fullbody.png',
+      fullbodyArt: 'assets/characters/villains/blake_sterling_disruptor_fullbody.png',
+      battleArt: 'assets/characters/villains/blake_sterling_disruptor_fullbody.png'
+    },
+    julian_softboi_savior: {
+      profileArt: 'assets/characters/villains/julian_cross_softboi_fullbody.png',
+      fullbodyArt: 'assets/characters/villains/julian_cross_softboi_fullbody.png',
+      battleArt: 'assets/characters/villains/julian_cross_softboi_fullbody.png'
+    }
   };
-  Object.assign(ASSETS.backgrounds, bg124, {library:bg124.library_day, bar:bg124.bar_day, restaurant:bg124.restaurant_day, mall:bg124.mall_day, park:bg124.park_day, beach:bg124.beach_sunset, office:bg124.office_day, car:bg124.car_day, closet:bg124.closet, spa:bg124.spa});
-  const setLoc=(id,fn)=>{const l=locations.find(x=>x.id===id); if(l) l.bg=fn;};
-  setLoc('apartment',()=>state.time==='Night'?'apartment_night':state.time==='Evening'?'apartment_sunset':'apartment_day');
-  setLoc('bedroom',()=>state.time==='Night'?'bedroom_night':state.time==='Evening'?'bedroom_sunset':'bedroom_day');
-  setLoc('library',()=>state.time==='Evening'?'library_afternoon':'library_day');
-  setLoc('bar',()=>state.time==='Night'?'bar_night':'bar_day');
-  setLoc('restaurant',()=>state.time==='Night'?'restaurant_night':'restaurant_day');
-  setLoc('mall',()=> 'mall_day'); setLoc('closet',()=> 'closet'); setLoc('spa',()=> 'spa');
-  setLoc('park',()=>state.time==='Night'?'park_night':state.time==='Evening'?'park_sunset':'park_day');
-  setLoc('beach',()=>state.time==='Night'?'beach_night':state.time==='Evening'?'beach_sunset':'beach_day');
-  setLoc('office',()=> 'office_day');
-  setLoc('car',()=>state.time==='Night'?'car_night':state.time==='Evening'?'car_sunset':'car_day');
-  if(villains && villains.body_bag) villains.body_bag.bg='parking_lot_night';
-  if(typeof V18==='object' && V18.appNotifications && V18.appNotifications.body_bag) V18.appNotifications.body_bag.battleBg='parking_lot_night';
+
+  ASSETS.villainProfileArt = Object.assign(ASSETS.villainProfileArt || {}, art126);
+  Object.keys(art126).forEach(id=>{
+    if(villains[id]) Object.assign(villains[id], art126[id]);
+    if(ENEMY_ART && ENEMY_ART.villains) ENEMY_ART.villains[id] = art126[id].battleArt || art126[id].cardArt || art126[id].profileArt || '';
+  });
 })();
 
+
+
+/* =========================
+   v1.27 More Random Villain Art
+   Adds the second image-gen batch for Lucien, Blake, and Julian.
+   ========================= */
+(function(){
+  const art127 = {
+    lucien_reservation_mirage: {
+      fullbodyArt: 'assets/characters/villains/lucien_moreau_fullbody.png',
+      battleArt: 'assets/characters/villains/lucien_moreau_fullbody.png'
+    },
+    blake_disruptor: {
+      profileArt: 'assets/characters/villains/blake_sterling_profile.png',
+      cardArt: 'assets/characters/villains/blake_sterling_disruptor_card.png',
+      battleArt: 'assets/characters/villains/blake_sterling_disruptor_fullbody.png'
+    },
+    julian_softboi_savior: {
+      profileArt: 'assets/characters/villains/julian_cross_profile.png',
+      cardArt: 'assets/characters/villains/julian_cross_softboi_savior_card.png',
+      battleArt: 'assets/characters/villains/julian_cross_softboi_fullbody.png'
+    }
+  };
+
+  ASSETS.villainProfileArt = Object.assign(ASSETS.villainProfileArt || {}, art127);
+  Object.keys(art127).forEach(id=>{
+    if(villains[id]) Object.assign(villains[id], art127[id]);
+    if(ENEMY_ART && ENEMY_ART.villains) {
+      ENEMY_ART.villains[id] = art127[id].battleArt || art127[id].cardArt || art127[id].profileArt || ENEMY_ART.villains[id] || '';
+    }
+  });
+})();
+
+
+
+/* =========================
+   v1.28 Transparent Random Villain PNG Art
+   Uses PNG cutouts/cards from assets/characters/villains/.
+   ========================= */
+(function(){
+  const art128 = {
+    lucien_reservation_mirage: {
+      profileArt:'assets/characters/villains/lucien_moreau_profile.png',
+      cardArt:'assets/characters/villains/lucien_reservation_mirage_card.png',
+      fullbodyArt:'assets/characters/villains/lucien_moreau_fullbody.png',
+      battleArt:'assets/characters/villains/lucien_moreau_fullbody.png'
+    },
+    roman_industry_mystery: {
+      profileArt:'assets/characters/villains/roman_vega_profile.png',
+      cardArt:'assets/characters/villains/roman_vega_industry_mystery_card.png',
+      fullbodyArt:'assets/characters/villains/roman_vega_fullbody.png',
+      battleArt:'assets/characters/villains/roman_vega_fullbody.png'
+    },
+    nico_boundary_pusher: {
+      profileArt:'assets/characters/villains/nico_hart_profile.png',
+      cardArt:'assets/characters/villains/nico_hart_boundary_pusher_card.png',
+      fullbodyArt:'assets/characters/villains/nico_hart_fullbody.png',
+      battleArt:'assets/characters/villains/nico_hart_fullbody.png'
+    },
+    blake_disruptor: {
+      profileArt:'assets/characters/villains/blake_sterling_profile.png',
+      cardArt:'assets/characters/villains/blake_sterling_disruptor_card.png',
+      fullbodyArt:'assets/characters/villains/blake_sterling_disruptor_fullbody.png',
+      battleArt:'assets/characters/villains/blake_sterling_disruptor_fullbody.png'
+    },
+    julian_softboi_savior: {
+      profileArt:'assets/characters/villains/julian_cross_profile.png',
+      cardArt:'assets/characters/villains/julian_cross_softboi_savior_card.png',
+      fullbodyArt:'assets/characters/villains/julian_cross_softboi_fullbody.png',
+      battleArt:'assets/characters/villains/julian_cross_softboi_fullbody.png'
+    }
+  };
+  ASSETS.villainProfileArt = Object.assign(ASSETS.villainProfileArt || {}, art128);
+  Object.keys(art128).forEach(id=>{
+    if(villains[id]) Object.assign(villains[id], art128[id]);
+    if(ENEMY_ART && ENEMY_ART.villains) ENEMY_ART.villains[id]=art128[id].battleArt || art128[id].cardArt || art128[id].profileArt;
+  });
+})();
+
+
+
+/* =========================
+   v1.30 Flat Villain Asset Folder + Updated Boundary Guy
+   - Random midgame villain art now uses assets/characters/villains/.
+   - Nico Hart / Boundary Pusher gets updated idle + attack sprites.
+   ========================= */
+(function(){
+  const art130 = {
+    lucien_reservation_mirage: {
+      profileArt:'assets/characters/villains/lucien_moreau_profile.png',
+      cardArt:'assets/characters/villains/lucien_reservation_mirage_card.png',
+      fullbodyArt:'assets/characters/villains/lucien_moreau_fullbody.png',
+      battleArt:'assets/characters/villains/lucien_moreau_fullbody.png',
+      spriteArt:{
+        idle:'assets/characters/villains/lucien_moreau_standing_phone.png',
+        attack:'assets/characters/villains/lucien_moreau_attack_reserved.png'
+      }
+    },
+    roman_industry_mystery: {
+      profileArt:'assets/characters/villains/roman_vega_profile.png',
+      cardArt:'assets/characters/villains/roman_vega_industry_mystery_card.png',
+      fullbodyArt:'assets/characters/villains/roman_vega_fullbody.png',
+      battleArt:'assets/characters/villains/roman_vega_fullbody.png',
+      spriteArt:{
+        idle:'assets/characters/villains/roman_vega_standing_drink.png',
+        attack:'assets/characters/villains/roman_vega_attack_money.png'
+      }
+    },
+    nico_boundary_pusher: {
+      profileArt:'assets/characters/villains/nico_hart_profile.png',
+      cardArt:'assets/characters/villains/nico_hart_boundary_pusher_card.png',
+      fullbodyArt:'assets/characters/villains/nico_hart_standing_point.png',
+      battleArt:'assets/characters/villains/nico_hart_standing_point.png',
+      spriteArt:{
+        idle:'assets/characters/villains/nico_hart_standing_point.png',
+        attack:'assets/characters/villains/nico_hart_attack_boundary.png'
+      }
+    },
+    blake_disruptor: {
+      profileArt:'assets/characters/villains/blake_sterling_profile.png',
+      cardArt:'assets/characters/villains/blake_sterling_disruptor_card.png',
+      fullbodyArt:'assets/characters/villains/blake_sterling_disruptor_fullbody.png',
+      battleArt:'assets/characters/villains/blake_sterling_disruptor_fullbody.png',
+      spriteArt:{
+        idle:'assets/characters/villains/blake_sterling_standing_tablet.png',
+        attack:'assets/characters/villains/blake_sterling_attack_hologram.png'
+      }
+    },
+    julian_softboi_savior: {
+      profileArt:'assets/characters/villains/julian_cross_profile.png',
+      cardArt:'assets/characters/villains/julian_cross_softboi_savior_card.png',
+      fullbodyArt:'assets/characters/villains/julian_cross_softboi_fullbody.png',
+      battleArt:'assets/characters/villains/julian_cross_softboi_fullbody.png',
+      spriteArt:{
+        idle:'assets/characters/villains/julian_cross_standing_book.png',
+        attack:'assets/characters/villains/julian_cross_attack_aura.png'
+      }
+    }
+  };
+
+  ASSETS.villainProfileArt = Object.assign(ASSETS.villainProfileArt || {}, art130);
+  Object.keys(art130).forEach(id=>{
+    if(villains[id]) Object.assign(villains[id], art130[id]);
+    if(ENEMY_ART && ENEMY_ART.villains) ENEMY_ART.villains[id] = art130[id].battleArt || art130[id].fullbodyArt || art130[id].cardArt || art130[id].profileArt || '';
+  });
+
+  getEnemySprite = function(id,pose='idle'){
+    const v = villains[id];
+    if(v && v.spriteArt) return v.spriteArt[pose] || v.spriteArt.idle || v.battleArt || v.fullbodyArt || v.cardArt || v.profileArt || '';
+    if((id==='algorithm'||id==='pattern') && ASSETS.sprites && ASSETS.sprites[id]) return ASSETS.sprites[id][pose] || ASSETS.sprites[id].idle || getEnemyArt('villain',id);
+    return getEnemyArt('villain',id);
+  };
+
+  const baseSetBattleActions130 = setBattleActions;
+  setBattleActions = function(){
+    baseSetBattleActions130();
+    const b = state.currentBattle;
+    if(b && villains[b.id] && villains[b.id].spriteArt){
+      const v = villains[b.id];
+      setEnemyPose(b.id,'idle',v.name,`${v.name}<br><small>${v.className}</small>`);
+    }
+  };
+
+  const baseEnemyTurn130 = enemyTurn;
+  enemyTurn = function(){
+    const b = state.currentBattle;
+    if(b && villains[b.id] && villains[b.id].spriteArt){
+      const v = villains[b.id];
+      setEnemyPose(b.id,'attack',v.name,`${v.name}<br><small>${v.className}</small>`);
+    }
+    return baseEnemyTurn130();
+  };
+})();
+
+
+
+/* =========================
+   v1.31 16:9 Background Refresh Pack
+   - Adds refreshed 16:9 background art for dream world, glitch rooms, closet, beachside cafe, beach sunset, and spa.
+   - Confirms direct routing to assets/backgrounds/bg_*.png files.
+   ========================= */
+(function(){
+  const bg131 = {
+    dream_world:'assets/backgrounds/bg_dream_world.png',
+    bedroom_glitch:'assets/backgrounds/bg_bedroom_glitch.png',
+    apartment_glitch:'assets/backgrounds/bg_apartment_glitch.png',
+    closet:'assets/backgrounds/bg_closet.png',
+    beach:'assets/backgrounds/bg_beach_sunset.png',
+    beach_sunset:'assets/backgrounds/bg_beach_sunset.png',
+    beachside_cafe:'assets/backgrounds/bg_beachside_cafe_day.png',
+    beachside_cafe_day:'assets/backgrounds/bg_beachside_cafe_day.png',
+    beachside_cafe_sunset:'assets/backgrounds/bg_beachside_cafe_sunset.png',
+    beachside_cafe_night:'assets/backgrounds/bg_beachside_cafe_night.png',
+    spa:'assets/backgrounds/bg_spa.png'
+  };
+  Object.assign(ASSETS.backgrounds, bg131);
+
+  const FALLBACK131 = {
+    dream_world:'linear-gradient(135deg,#12051c,#4c123e 50%,#eb477c)',
+    bedroom_glitch:'linear-gradient(135deg,#07030c,#250034 40%,#ff1493)',
+    apartment_glitch:'linear-gradient(135deg,#140712,#4c1230 45%,#ff4da6)',
+    closet:'linear-gradient(135deg,#ffd8ec,#c88fed)',
+    beach:'linear-gradient(135deg,#ff9a76,#f7d07a 50%,#6ea8ff)',
+    beach_sunset:'linear-gradient(135deg,#ff9a76,#f7d07a 50%,#6ea8ff)',
+    beachside_cafe:'linear-gradient(135deg,#ffe7d6 0%,#ff9fcf 42%,#69c6df 76%,#2b6f99 100%)',
+    beachside_cafe_day:'linear-gradient(135deg,#fff5ef 0%,#ffd8e7 40%,#bce8ff 85%)',
+    beachside_cafe_sunset:'linear-gradient(135deg,#ffd9c7 0%,#ff98c8 40%,#8cc7ff 85%)',
+    beachside_cafe_night:'linear-gradient(135deg,#1b1533 0%,#5a234f 45%,#1b496f 100%)',
+    spa:'linear-gradient(135deg,#fff7fb 0%,#f8dff0 45%,#f5f0ff 100%)'
+  };
+  Object.assign(FALLBACK, FALLBACK131);
+
+  function bgByTime131(base){
+    if(state.time==='Night' && ASSETS.backgrounds[base+'_night']) return base+'_night';
+    if(state.time==='Evening' && ASSETS.backgrounds[base+'_sunset']) return base+'_sunset';
+    if(state.time==='Evening' && ASSETS.backgrounds[base+'_afternoon']) return base+'_afternoon';
+    if(ASSETS.backgrounds[base+'_day']) return base+'_day';
+    return base;
+  }
+  function setLocBg131(id, fn){
+    const l=locations.find(x=>x.id===id);
+    if(l) l.bg=fn;
+  }
+  setLocBg131('closet',()=> 'closet');
+  setLocBg131('spa',()=> 'spa');
+  setLocBg131('beach',()=> bgByTime131('beach'));
+  setLocBg131('beachside_cafe',()=> bgByTime131('beachside_cafe'));
+})();
+
+</script>
 </body>
 </html>
