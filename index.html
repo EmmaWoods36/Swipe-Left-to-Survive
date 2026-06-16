@@ -3643,6 +3643,52 @@ window.addEventListener('load',()=>{
   setLocBg131('beachside_cafe',()=> bgByTime131('beachside_cafe'));
 })();
 
+
+
+/* =========================
+   v1.32 More 16:9 Backgrounds
+   - Adds office day, closet night, LoveLoop apartment glitch, spa night, and updated restaurant night.
+   ========================= */
+(function(){
+  const bg132 = {
+    office:'assets/backgrounds/bg_office_day.png',
+    office_day:'assets/backgrounds/bg_office_day.png',
+    closet_night:'assets/backgrounds/bg_closet_night.png',
+    apartment_glitch_loveloop:'assets/backgrounds/bg_apartment_glitch_loveloop.png',
+    spa_night:'assets/backgrounds/bg_spa_night.png',
+    restaurant_night:'assets/backgrounds/bg_restaurant_night.png'
+  };
+  Object.assign(ASSETS.backgrounds, bg132);
+
+  Object.assign(FALLBACK, {
+    office:'linear-gradient(135deg,#edf5ff,#d8d0c8)',
+    office_day:'linear-gradient(135deg,#edf5ff,#d8d0c8)',
+    closet_night:'linear-gradient(135deg,#1e0f16,#5c2e3f,#d08a70)',
+    apartment_glitch_loveloop:'linear-gradient(135deg,#110018,#55134c,#ff1493)',
+    spa_night:'linear-gradient(135deg,#2b1222,#8c5361,#f7b4b4)',
+    restaurant_night:'linear-gradient(135deg,#170911,#3c1427,#a65a4f)'
+  });
+
+  function bgByTime132(base){
+    if(state.time==='Night' && ASSETS.backgrounds[base+'_night']) return base+'_night';
+    if(state.time==='Evening' && ASSETS.backgrounds[base+'_sunset']) return base+'_sunset';
+    if(state.time==='Evening' && ASSETS.backgrounds[base+'_afternoon']) return base+'_afternoon';
+    if(ASSETS.backgrounds[base+'_day']) return base+'_day';
+    return base;
+  }
+  function setLocBg132(id, fn){
+    const l=locations.find(x=>x.id===id);
+    if(l) l.bg=fn;
+  }
+
+  setLocBg132('office',()=> 'office_day');
+  setLocBg132('closet',()=> bgByTime132('closet'));
+  setLocBg132('spa',()=> bgByTime132('spa'));
+  setLocBg132('restaurant',()=> state.time==='Night' ? 'restaurant_night' : 'restaurant_day');
+
+  window.AMY_BG_KEYS_V132 = Object.assign(window.AMY_BG_KEYS_V132 || {}, bg132);
+})();
+
 </script>
 </body>
 </html>

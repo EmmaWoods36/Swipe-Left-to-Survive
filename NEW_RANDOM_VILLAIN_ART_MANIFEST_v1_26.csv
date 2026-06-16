@@ -1,0 +1,11 @@
+villain_id,usage,path,source,width,height,notes
+lucien_reservation_mirage,profileArt,assets/characters/villains/random_midgame/lucien_moreau_profile.jpg,83917AE8-9B14-4D93-B974-CF68FAC467E6.jpeg,1254,1254,Lucien Moreau profile portrait
+lucien_reservation_mirage,cardArt,assets/characters/villains/random_midgame/lucien_reservation_mirage_card.jpg,2060281A-7B7F-45D2-B4BD-B7EB0C71F7FE.jpeg,1122,1402,Reservation Mirage villain card
+roman_industry_mystery,profileArt,assets/characters/villains/random_midgame/roman_vega_profile.jpg,7507CEE8-6DFD-48A0-8F97-66321AC573F9.jpeg,1254,1254,Roman Vega profile portrait
+roman_industry_mystery,cardArt,assets/characters/villains/random_midgame/roman_vega_industry_mystery_card.jpg,6437A85D-114F-469C-B15F-B67AC08443AD.jpeg,1122,1402,Industry Mystery villain card
+nico_boundary_pusher,profileArt,assets/characters/villains/random_midgame/nico_hart_profile.jpg,99647A65-143E-4B84-BCC5-86BB60964A1B.jpeg,1254,1254,Nico Hart profile portrait
+nico_boundary_pusher,cardArt,assets/characters/villains/random_midgame/nico_hart_boundary_pusher_card.jpg,D6E5ACBB-D9A7-4938-BA3B-CF9AD9C6E51C.jpeg,1122,1402,Boundary Pusher villain card
+julian_softboi_savior,profileArt,assets/characters/villains/random_midgame/julian_cross_softboi_fullbody.jpg,0E52DA18-4E87-421E-B96A-2A34A0F93067.jpeg,1086,1448,Julian Cross fullbody/profile art
+roman_industry_mystery,fullbodyArt,assets/characters/villains/random_midgame/roman_vega_fullbody.jpg,78ED9D06-DD42-4ED5-9D39-0EF6745A7B68.jpeg,1086,1448,Roman Vega fullbody battle art
+nico_boundary_pusher,fullbodyArt,assets/characters/villains/random_midgame/nico_hart_fullbody.jpg,507C788F-E29C-4E59-8263-825F174C5414.jpeg,1086,1448,Nico Hart fullbody battle art
+blake_disruptor,profileArt,assets/characters/villains/random_midgame/blake_sterling_disruptor_fullbody.jpg,D9091E6D-1B67-41CB-89D9-4D8D1CDD36FE.jpeg,1086,1448,Blake Sterling fullbody/profile art

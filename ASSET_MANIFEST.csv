@@ -1,6 +1,7 @@
 path,size_bytes
 BACKGROUND_MANIFEST_v1_25.csv,5176
 BACKGROUND_MANIFEST_v1_31.csv,1444
+BACKGROUND_MANIFEST_v1_32.csv,854
 BOUNDARY_GUY_UPDATE_MANIFEST_v1_30.csv,425
 NEW_RANDOM_VILLAIN_ART_MANIFEST_v1_26.csv,1929
 NEW_RANDOM_VILLAIN_ART_MANIFEST_v1_27.csv,847
@@ -11,11 +12,13 @@ README_v1_28_TRANSPARENT_RANDOM_VILLAIN_PNGS.txt,672
 README_v1_29_MORE_TRANSPARENT_RANDOM_VILLAIN_SPRITES.txt,356
 README_v1_30_FLAT_VILLAINS_BOUNDARY_UPDATE.txt,1068
 README_v1_31_16x9_BACKGROUNDS.txt,727
+README_v1_32_MORE_16x9_BACKGROUNDS.txt,622
 TRANSPARENT_RANDOM_VILLAIN_NEW_SPRITES_MANIFEST_v1_29.csv,2204
 TRANSPARENT_RANDOM_VILLAIN_PNG_CONTACT_SHEET_v1_28.png,754440
 TRANSPARENT_RANDOM_VILLAIN_PNG_MANIFEST_v1_28.csv,2542
 assets/backgrounds/bg_apartment_day.png,1852912
 assets/backgrounds/bg_apartment_glitch.png,584987
+assets/backgrounds/bg_apartment_glitch_loveloop.png,2130213
 assets/backgrounds/bg_apartment_night.png,1567223
 assets/backgrounds/bg_apartment_sunset.png,1670506
 assets/backgrounds/bg_bar_day.png,1953540
@@ -37,6 +40,7 @@ assets/backgrounds/bg_city_map_afternoon.png,2549809
 assets/backgrounds/bg_city_map_day.png,2563371
 assets/backgrounds/bg_city_map_night.png,2241829
 assets/backgrounds/bg_closet.png,413434
+assets/backgrounds/bg_closet_night.png,1598372
 assets/backgrounds/bg_dream_world.png,468019
 assets/backgrounds/bg_library_afternoon.png,1913126
 assets/backgrounds/bg_library_day.png,1873781
@@ -49,6 +53,7 @@ assets/backgrounds/bg_parking_lot_night.png,1072035
 assets/backgrounds/bg_restaurant_day.png,1824674
 assets/backgrounds/bg_restaurant_night.png,1395982
 assets/backgrounds/bg_spa.png,456799
+assets/backgrounds/bg_spa_night.png,1631610
 assets/characters/villains/blake_sterling_attack_hologram.png,1640902
 assets/characters/villains/blake_sterling_disruptor_card.jpg,445341
 assets/characters/villains/blake_sterling_disruptor_card.png,2456719
@@ -89,4 +94,4 @@ assets/characters/villains/roman_vega_industry_mystery_card.png,2535055
 assets/characters/villains/roman_vega_profile.jpg,336066
 assets/characters/villains/roman_vega_profile.png,1997504
 assets/characters/villains/roman_vega_standing_drink.png,1110897
-index.html,358646
+index.html,360538
