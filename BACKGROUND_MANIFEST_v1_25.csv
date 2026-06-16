@@ -1,0 +1,36 @@
+file,path,width,height,source,notes
+bg_city_map_day.png,assets/backgrounds/bg_city_map_day.png,1536,864,70BAE347-BA07-41EF-AF2F-F677489AED61.jpeg,direct bg_ gameplay background
+bg_city_map_afternoon.png,assets/backgrounds/bg_city_map_afternoon.png,1536,864,38A0704F-7B12-49FC-AF83-87EA85A3EC93.jpeg,direct bg_ gameplay background
+bg_city_map_night.png,assets/backgrounds/bg_city_map_night.png,1536,864,10246523-ED13-4094-88FE-F65C0DEBE9BA.jpeg,direct bg_ gameplay background
+bg_apartment_day.png,assets/backgrounds/bg_apartment_day.png,1536,864,537CC824-48EF-4012-9B1E-F290557E3511.jpeg,direct bg_ gameplay background
+bg_apartment_sunset.png,assets/backgrounds/bg_apartment_sunset.png,1536,864,E117B3EE-DA14-4CD7-BFCC-2A364EF82E41.jpeg,direct bg_ gameplay background
+bg_apartment_night.png,assets/backgrounds/bg_apartment_night.png,1536,864,239F69E1-4EFE-4CA0-9508-CB1C2847A548.jpeg,direct bg_ gameplay background
+bg_bedroom_day.png,assets/backgrounds/bg_bedroom_day.png,1536,864,A795D7E7-BD05-4915-8A24-451838AA32B8.jpeg,direct bg_ gameplay background
+bg_bedroom_sunset.png,assets/backgrounds/bg_bedroom_sunset.png,1536,864,3FE12A54-3C65-4E52-80EB-805A781EB675.jpeg,direct bg_ gameplay background
+bg_bedroom_night.png,assets/backgrounds/bg_bedroom_night.png,1536,864,502F73EF-B886-41BE-BA7A-C995C668E945.jpeg,direct bg_ gameplay background
+bg_park_day.png,assets/backgrounds/bg_park_day.png,1536,864,FC0BF550-088A-48BF-96E2-0D0187EA6671.jpeg,direct bg_ gameplay background
+bg_park_sunset.png,assets/backgrounds/bg_park_sunset.png,1536,864,73F3AB1E-2B21-438B-8189-808ECB755D7C.jpeg,direct bg_ gameplay background
+bg_park_night.png,assets/backgrounds/bg_park_night.png,1536,864,AFC43A8A-61B6-402D-BA3B-FA4146F41FEA.jpeg,direct bg_ gameplay background
+bg_library_day.png,assets/backgrounds/bg_library_day.png,1536,864,917930DA-3019-4989-8BFC-9ED3388374CD.jpeg,direct bg_ gameplay background
+bg_library_afternoon.png,assets/backgrounds/bg_library_afternoon.png,1536,864,CBBE8831-530E-43BF-9AD5-2CE44EF52604.jpeg,direct bg_ gameplay background
+bg_bar_day.png,assets/backgrounds/bg_bar_day.png,1536,864,94999700-5EC0-4E72-B440-0B6ADD9ADB76.jpeg,direct bg_ gameplay background
+bg_bar_night.png,assets/backgrounds/bg_bar_night.png,1536,864,D0EDEAC4-FDF5-470B-97E3-046D8B914982.jpeg,direct bg_ gameplay background
+bg_restaurant_day.png,assets/backgrounds/bg_restaurant_day.png,1536,864,9B94281B-6AAF-45BB-9379-9C0ABE89F6AD.jpeg,direct bg_ gameplay background
+bg_restaurant_night.png,assets/backgrounds/bg_restaurant_night.png,1536,864,DBFC981F-B21D-48BD-9C77-97EAC1560847.jpeg,direct bg_ gameplay background
+bg_mall_day.png,assets/backgrounds/bg_mall_day.png,1536,864,A6FCBBBE-1125-4A05-824C-BB98AFC13DBC.jpeg,direct bg_ gameplay background
+bg_bedroom_glitch.png,assets/backgrounds/bg_bedroom_glitch.png,1536,864,1912AEFA-CB14-4EAF-8D58-7BF6B9535F69.jpeg,direct bg_ gameplay background
+bg_dream_world.png,assets/backgrounds/bg_dream_world.png,1536,864,C85EDAA3-312A-44C0-9314-85280ED1B2C2.jpeg,direct bg_ gameplay background
+bg_apartment_glitch.png,assets/backgrounds/bg_apartment_glitch.png,1536,864,A074D082-9656-437B-B217-EF85D93B88BC.jpeg,direct bg_ gameplay background
+bg_closet.png,assets/backgrounds/bg_closet.png,1536,864,3DEF2966-C20D-418D-AABA-4AA63E6A7D1B.jpeg,direct bg_ gameplay background
+bg_spa.png,assets/backgrounds/bg_spa.png,1536,864,14B74C88-0B5B-4397-852F-D9498523832D.jpeg,direct bg_ gameplay background
+bg_car_day.png,assets/backgrounds/bg_car_day.png,1536,864,4F32C723-AF17-49B0-9162-F7B6227F7A50.jpeg,direct bg_ gameplay background
+bg_car_sunset.png,assets/backgrounds/bg_car_sunset.png,1536,864,06CCB2A1-7E50-4BD3-BEBD-2625475414A0.jpeg,direct bg_ gameplay background
+bg_car_night.png,assets/backgrounds/bg_car_night.png,1536,864,5FF4BD61-D68C-4C8F-B386-DCBC13506F7E.jpeg,direct bg_ gameplay background
+bg_parking_lot_night.png,assets/backgrounds/bg_parking_lot_night.png,1536,864,C6119F91-D414-4721-80F7-4893F93AE709.jpeg,direct bg_ gameplay background
+bg_beach_day.png,assets/backgrounds/bg_beach_day.png,1536,864,C39233B7-7390-420D-95A7-45E5AC11C25F.jpeg,direct bg_ gameplay background
+bg_beach_sunset.png,assets/backgrounds/bg_beach_sunset.png,1536,864,31421997-A50B-45EB-9C9D-60A7109B9CF2.jpeg,direct bg_ gameplay background
+bg_beach_night.png,assets/backgrounds/bg_beach_night.png,1536,864,BF316CDA-FE92-405C-B45E-238C75B4BCCD.jpeg,direct bg_ gameplay background
+bg_office_day.png,assets/backgrounds/bg_office_day.png,1536,864,733809C0-F364-4A56-9B5A-392507B7B489.jpeg,direct bg_ gameplay background
+bg_beachside_cafe_day.png,assets/backgrounds/bg_beachside_cafe_day.png,1536,864,cozy_café_at_sunset_with_warm_ambiance.png,derived 16:9 cafe variant from the only accessible cafe image in this runtime
+bg_beachside_cafe_sunset.png,assets/backgrounds/bg_beachside_cafe_sunset.png,1536,864,cozy_café_at_sunset_with_warm_ambiance.png,derived 16:9 cafe variant from the only accessible cafe image in this runtime
+bg_beachside_cafe_night.png,assets/backgrounds/bg_beachside_cafe_night.png,1536,864,cozy_café_at_sunset_with_warm_ambiance.png,derived 16:9 cafe variant from the only accessible cafe image in this runtime
