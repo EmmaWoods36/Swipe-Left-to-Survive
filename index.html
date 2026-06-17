@@ -30,21 +30,10 @@
 @media(max-width:680px){.closed-location-actions{grid-template-columns:1fr}.location-hours-chip{font-size:11px;padding:4px 7px}}
 </style>
 
-
-<style id="v142-safe-toggle-splash-amy-css">
-/* v1.42 Safe Language Toggle + Splash Fail-Safe + Amy Card Fix */
-#languageToggleBtn.lang-toggle-switch{touch-action:manipulation}
-#amySprite.amy-card-mode{width:min(28vw,300px);min-height:340px;padding:12px;place-items:center;background:linear-gradient(180deg,rgba(255,240,249,.18),rgba(143,69,201,.22));border:1px solid rgba(255,195,229,.5)}
-#amySprite.amy-card-mode .sprite-placeholder{height:260px;border-style:solid;overflow:hidden;padding:0}
-#amySprite.amy-card-mode .sprite-art{width:100%;height:260px;max-height:260px;object-fit:cover;object-position:center 22%;border-radius:22px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.32))}
-#amySprite.amy-card-mode .label{font-size:13px;color:#fff4e9}
-@media(max-width:860px){#amySprite.amy-card-mode{width:42vw;min-height:280px}#amySprite.amy-card-mode .sprite-art,#amySprite.amy-card-mode .sprite-placeholder{height:220px}}
-</style>
-
 </head>
 <body>
 <div id="studioSplash" class="studio-splash"><img src="assets/splash/emma_woods_studio_splash.jpeg" alt="Emma Woods Studio" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#fff4e9,#f2cbe3)';"></div>
-<div id="game"><header id="topBar"><div class="brand"><div class="brand-mark">♡</div><div><h1>Swipe Left to Survive</h1><small>A turn-based dating survival RPG prototype</small></div></div><div class="hud" id="hud"></div></header><main id="mainStage"><div class="bg" id="sceneBg"></div><div class="battle-ui hidden" id="battleUi"><div class="health-bar left"><div class="bar-label"><span>Amy</span><span id="amyHpLabel">100 / 100</span></div><div class="meter"><div class="meter-fill" id="amyHpFill"></div></div></div><div class="health-bar right"><div class="bar-label"><span id="enemyNameLabel">Enemy</span><span id="enemyHpLabel">100 / 100</span></div><div class="meter"><div class="meter-fill enemy-fill" id="enemyHpFill"></div></div></div><div class="effect-pop" id="effectPop">GIRL, STAND UP!</div></div><div class="scene-overlay"><div class="sprite-slot"><div class="sprite-card visible" id="amySprite"><div class="sprite-placeholder" id="amySpriteText">AMY<br><small>current outfit appears here</small></div><div class="label" id="amyLabel">Amy</div></div></div><div class="sprite-slot" style="justify-content:flex-end"><div class="sprite-card enemy" id="enemySprite"><div class="sprite-placeholder" id="enemySpriteText">ENEMY</div><div class="label" id="enemyLabel">Enemy</div></div></div></div><section class="screen" id="titleScreen"><div class="panel"><h2>Swipe Left to Survive</h2><p class="subtitle">Working title. Also considering: <b>Match Made in Hell</b>, <b>Amy vs. The Algorithm</b>, and <b>The Pattern</b>.</p><p>Amy thought dating would be normal. Unfortunately, the dating pool is full of bosses, debuffs, fake green flags, and men who need to be studied in a controlled environment.</p><div class="menu-grid"><button class="action-btn primary" onclick="startGame()">Start Prototype</button><button class="action-btn" onclick="showScreen('mapScreen')">Open City Map</button><button class="action-btn" onclick="showScreen('codexScreen')">Villain Codex</button><button class="action-btn" onclick="showScreen('closetScreen')">Open Closet</button></div></div></section><section class="screen hidden" id="mapScreen"><div class="panel light map-panel"><h2>City Map</h2><p class="subtitle">Tap a pink pin to travel.</p><div class="map-shell"><div class="map-toolbar"><span class="map-chip" id="mapTimeChip">Golden Hour</span><span class="map-chip">Location pins are clickable</span></div><div class="city-map-ui" id="cityMapUi"></div></div><h3 style="margin-top:18px">Quick Travel</h3><div class="location-grid" id="locationGrid"></div></div></section><section class="screen hidden" id="closetScreen"><div class="panel light"><h2>Amy’s Closet</h2><p class="subtitle">Selected outfit persists into battles and cutscenes.</p><div class="closet-grid" id="closetGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('mapScreen')">Back to Map</button></div></div></section><section class="screen hidden" id="shopScreen"><div class="panel light"><h2>Mall: Retail Therapy Rush</h2><p class="subtitle">Buy buffs, outfits, and self-care. MVP shopping mini-game placeholder.</p><div class="shop-grid" id="shopGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('mapScreen')">Back to Map</button></div></div></section><section class="screen hidden" id="codexScreen"><div class="panel"><h2>Villain Codex</h2><p class="subtitle">Clear red flags. The internet will still simp. The group chat is already tired.</p><div class="location-grid" id="codexGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('titleScreen')">Back</button></div></div></section></main><footer id="bottomPanel"><div class="dialogue-box"><div class="speaker" id="speaker">System</div><div id="dialogueText">Welcome to Amy’s dating survival RPG prototype.</div></div><div class="action-box"><div id="actionGrid"></div></div></footer></div>
+<div id="game"><header id="topBar"><div class="brand"><div class="brand-mark">♡</div><div><h1>Swipe Left to Survive</h1><small>A turn-based dating survival RPG prototype</small></div></div><div class="hud" id="hud"></div></header><main id="mainStage"><div class="bg" id="sceneBg"></div><div class="battle-ui hidden" id="battleUi"><div class="health-bar left"><div class="bar-label"><span>Amy</span><span id="amyHpLabel">100 / 100</span></div><div class="meter"><div class="meter-fill" id="amyHpFill"></div></div></div><div class="health-bar right"><div class="bar-label"><span id="enemyNameLabel">Enemy</span><span id="enemyHpLabel">100 / 100</span></div><div class="meter"><div class="meter-fill enemy-fill" id="enemyHpFill"></div></div></div><div class="effect-pop" id="effectPop">GIRL, STAND UP!</div></div><div class="scene-overlay"><div class="sprite-slot"><div class="sprite-card visible" id="amySprite"><div class="sprite-placeholder" id="amySpriteText">Amy<br><small>Current Fit</small></div><div class="label" id="amyLabel">Amy</div></div></div><div class="sprite-slot" style="justify-content:flex-end"><div class="sprite-card enemy" id="enemySprite"><div class="sprite-placeholder" id="enemySpriteText">Enemy</div><div class="label" id="enemyLabel">Enemy</div></div></div></div><section class="screen" id="titleScreen"><div class="panel"><h2>Swipe Left to Survive</h2><p class="subtitle">A turn-based dating survival RPG prototype.</p><p>Amy thought she was looking for love. LoveLoop thought she was looking for a boss rush.</p><div class="menu-grid"><button class="action-btn primary" onclick="startGame()">Start Prototype</button><button class="action-btn" onclick="showScreen('mapScreen')">Open City Map</button><button class="action-btn" onclick="showScreen('codexScreen')">Villain Codex</button><button class="action-btn" onclick="showScreen('closetScreen')">Open Closet</button></div></div></section><section class="screen hidden" id="mapScreen"><div class="panel light map-panel"><h2>City Map</h2><p class="subtitle">Tap a pink pin to travel.</p><div class="map-shell"><div class="map-toolbar"><span class="map-chip" id="mapTimeChip">夕方</span><span class="map-chip">Location pins are clickable</span></div><div class="city-map-ui" id="cityMapUi"></div></div><h3 style="margin-top:18px">Quick Travel</h3><div class="location-grid" id="locationGrid"></div></div></section><section class="screen hidden" id="closetScreen"><div class="panel light"><h2>Amy’s Closet</h2><p class="subtitle">Selected outfit carries into scenes and battles.</p><div class="closet-grid" id="closetGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('mapScreen')">Back to Map</button></div></div></section><section class="screen hidden" id="shopScreen"><div class="panel light"><h2>Mall: Retail Therapy Rush</h2><p class="subtitle">Buy buffs, outfits, and self-care items. MVP shopping placeholder.</p><div class="shop-grid" id="shopGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('mapScreen')">Back to Map</button></div></div></section><section class="screen hidden" id="codexScreen"><div class="panel"><h2>Villain Codex</h2><p class="subtitle">Learn the red flags. The internet may still defend them. The group chat is tired.</p><div class="location-grid" id="codexGrid"></div><div style="margin-top:14px"><button class="small-btn" onclick="showScreen('titleScreen')">Back</button></div></div></section></main><footer id="bottomPanel"><div class="dialogue-box"><div class="speaker" id="speaker">System</div><div id="dialogueText">Welcome to Amy’s dating survival RPG prototype.</div></div><div class="action-box"><div id="actionGrid"></div></div></footer></div>
 <script>
 const ASSETS={backgrounds:{apartment_day:"assets/backgrounds/apartment_day.png",apartment_sunset:"assets/backgrounds/apartment_sunset.png",apartment_night:"assets/backgrounds/apartment_night.png",bedroom_day:"assets/backgrounds/bedroom_day.png",bedroom_sunset:"assets/backgrounds/bedroom_sunset.png",bedroom_night:"assets/backgrounds/bedroom_night.png",bedroom_glitch:"assets/backgrounds/bedroom_glitch_algorithm.png",closet:"assets/backgrounds/closet.png",library:"assets/backgrounds/library.png",bar:"assets/backgrounds/bar.png",park:"assets/backgrounds/park.png",beach:"assets/backgrounds/beach_sunset.png",restaurant:"assets/backgrounds/restaurant.png",mall:"assets/backgrounds/mall.png",office:"assets/backgrounds/office.png",villain_apartment:"assets/backgrounds/villain_apartment.png",city_map_day:"assets/backgrounds/city_map_day.png",city_map_afternoon:"assets/backgrounds/city_map_afternoon.png",city_map_night:"assets/backgrounds/city_map_night.png",dream_world:"assets/backgrounds/dream_world_pattern.png"},sprites:{amy:{idle:"assets/sprites/amy/amy_idle.png",punch:"assets/sprites/amy/amy_punch.png",kick:"assets/sprites/amy/amy_high_kick.png",energyBlast:"assets/sprites/amy/amy_energy_blast_alt.png",hurt:"assets/sprites/amy/amy_hurt.png",victory:"assets/sprites/amy/amy_victory.png",defeat:"assets/sprites/amy/amy_defeat.png",defend:"assets/sprites/amy/amy_defend.png",special:"assets/sprites/amy/amy_special_flag_beam.png",ultimate:"assets/sprites/amy/amy_ultimate_girl_stand_up.png",lowStance:"assets/sprites/amy/amy_low_stance.png",beamCannon:"assets/sprites/amy/amy_beam_cannon.png",kickSide:"assets/sprites/amy/amy_kick.png",energyBlastClassic:"assets/sprites/amy/amy_energy_blast.png",specialClassic:"assets/sprites/amy/amy_special_boundary_flag.png"},algorithm:{idle:"assets/sprites/enemies/bosses/the_algorithm/algorithm_idle.png",intro:"assets/sprites/enemies/bosses/the_algorithm/algorithm_intro.png",walk:"assets/sprites/enemies/bosses/the_algorithm/algorithm_walk.png",attack:"assets/sprites/enemies/bosses/the_algorithm/algorithm_attack.png",special:"assets/sprites/enemies/bosses/the_algorithm/algorithm_special.png",beam:"assets/sprites/enemies/bosses/the_algorithm/algorithm_beam.png",ultimate:"assets/sprites/enemies/bosses/the_algorithm/algorithm_ultimate.png"},pattern:{idle:"assets/sprites/enemies/bosses/the_pattern/pattern_idle.png",intro:"assets/sprites/enemies/bosses/the_pattern/pattern_ready.png",ready:"assets/sprites/enemies/bosses/the_pattern/pattern_ready.png",attack:"assets/sprites/enemies/bosses/the_pattern/pattern_attack_chain.png",chainBarrage:"assets/sprites/enemies/bosses/the_pattern/pattern_attack_chain_barrage.png",heartBlast:"assets/sprites/enemies/bosses/the_pattern/pattern_attack_heart_blast.png",special:"assets/sprites/enemies/bosses/the_pattern/pattern_special_memory_swarm.png",float:"assets/sprites/enemies/bosses/the_pattern/pattern_float.png",block:"assets/sprites/enemies/bosses/the_pattern/pattern_block.png"}}};
 const FALLBACK={apartment_day:"linear-gradient(135deg,#ffd8ec,#fff4e9 46%,#a7d8ff)",apartment_sunset:"linear-gradient(135deg,#3b1935,#e16a9b 45%,#ffb35d)",apartment_night:"linear-gradient(135deg,#10071b,#2f1742 55%,#0f274b)",bedroom_day:"linear-gradient(135deg,#fff0df,#ffd2e6 50%,#bde6ff)",bedroom_sunset:"linear-gradient(135deg,#33122b,#d85a85 48%,#f8a949)",bedroom_night:"linear-gradient(135deg,#0b0915,#251735 55%,#0a2440)",bedroom_glitch:"linear-gradient(135deg,#07030c,#250034 40%,#ff1493)",closet:"linear-gradient(135deg,#ffd8ec,#c88fed)",library:"linear-gradient(135deg,#5a2d3b,#a46a6f 50%,#f0c08a)",bar:"linear-gradient(135deg,#2a1024,#6a244e 55%,#d98256)",park:"linear-gradient(135deg,#345c30,#8fcf79 50%,#ffd38e)",beach:"linear-gradient(135deg,#ff9a76,#f7d07a 50%,#6ea8ff)",restaurant:"linear-gradient(135deg,#401b2b,#894658 55%,#e9a067)",mall:"linear-gradient(135deg,#ffd7ef,#fff0fa 45%,#e6c5ff)",office:"linear-gradient(135deg,#eef3ff,#c9d7ff 45%,#6c7898)",villain_apartment:"linear-gradient(135deg,#0c0b10,#3c2635 55%,#9b5a36)",city_map_day:"linear-gradient(135deg,#94d8ff,#fff5bd 50%,#79d18a)",city_map_afternoon:"linear-gradient(135deg,#2c214d,#d05d91 50%,#ffb86b)",city_map_night:"linear-gradient(135deg,#08142b,#172a57 55%,#66428b)",dream_world:"linear-gradient(135deg,#12051c,#4c123e 50%,#eb477c)"};
@@ -1054,7 +1043,7 @@ beachsideCafeActions=function(){
 
 // ---- Language toggle scaffold ----
 const V111_LANG_KEY="slts_language";
-state.lang = "en"; try{localStorage.setItem(V111_LANG_KEY,"en");}catch(e){};
+state.lang = localStorage.getItem(V111_LANG_KEY) || "en";
 const V111_JA = {
   "Swipe Left to Survive":"Swipe Left to Survive",
   "Daytime":"昼",
@@ -4960,77 +4949,1538 @@ window.addEventListener('load',()=>{
   window.addEventListener('load',()=>{state.allHoursOpen24h=loadAllHours139();applyAllHours139();try{renderLocations();}catch(e){}});
 })();
 
-</script>
-
-<script id="v142-safe-toggle-splash-amy-fix">
+window.SLTS_FORCE_JA_DEFAULT = true;
+/* =========================
+   v1.40 Integrated Japanese Localization Core
+   Title: マッチング地獄サバイバル
+   Description: 恋の地雷サバイバルRPG
+   Drop this after the existing v1.39 patch, before the closing script tag.
+   ========================= */
 (function(){
-  const PAGE_LANG_142 = 'en';
-  const TARGET_142 = 'index_ja.html';
-  const AMY_CARD_142 = 'assets/characters/amy/amy_card_neutral.png';
-  function hideSplash142(){
-    const s=document.getElementById('studioSplash');
-    if(!s)return;
-    s.classList.add('fade-out');
-    setTimeout(()=>{try{s.style.display='none';}catch(e){}},650);
-  }
-  window.hideSplash142=hideSplash142;
-  document.addEventListener('DOMContentLoaded',()=>setTimeout(hideSplash142,4200));
-  window.addEventListener('load',()=>{setTimeout(hideSplash142,2600);setTimeout(hideSplash142,5200);});
-  setTimeout(hideSplash142,6500);
-
-  function navToggle142(){
-    try{localStorage.setItem('slts_language', PAGE_LANG_142==='ja'?'en':'ja');}catch(e){}
-    window.location.href = TARGET_142;
-  }
-  function installToggle142(){
-    if(window.state)state.lang=PAGE_LANG_142;
-    try{localStorage.setItem('slts_language', PAGE_LANG_142);}catch(e){}
-    let btn=document.getElementById('languageToggleBtn');
-    const hud=document.querySelector('.hud');
-    if(!btn && hud){btn=document.createElement('button');btn.id='languageToggleBtn';btn.type='button';hud.appendChild(btn);}
-    if(btn){
-      btn.className='lang-toggle-switch '+PAGE_LANG_142;
-      btn.setAttribute('aria-label','日本語へ');
-      btn.innerHTML='<span class="lang-knob"></span><span class="lang-track"><span class="lang-option en">EN</span><span class="lang-option ja">和</span></span>';
-      btn.onclick=function(ev){if(ev){ev.preventDefault();ev.stopPropagation();}navToggle142();return false;};
+  const L136 = {
+  "title": "マッチング地獄サバイバル",
+  "description": "恋の地雷サバイバルRPG",
+  "static": {
+    "Swipe Left to Survive": "マッチング地獄サバイバル",
+    "A turn-based dating survival RPG prototype": "恋の地雷サバイバルRPG",
+    "Working title. Also considering: Match Made in Hell, Amy vs. The Algorithm, and The Pattern.": "恋の地雷を踏み抜け。笑って、見抜いて、生き残れ。",
+    "Amy thought dating would be normal. Unfortunately, the dating pool is full of bosses, debuffs, fake green flags, and men who need to be studied in a controlled environment.": "エイミーは、恋愛くらい普通にできると思っていた。だが恋のプールは、ボス、デバフ、偽グリーンフラッグ、そして研究室で観察したほうがいい男たちでいっぱいだった。",
+    "Start Prototype": "はじめる",
+    "Start Game": "ゲーム開始",
+    "Open City Map": "シティマップを開く",
+    "Villain Codex": "地雷男図鑑",
+    "Open Closet": "クローゼットを開く",
+    "City Map": "シティマップ",
+    "Tap a pink pin to travel.": "ピンクのピンをタップして移動。",
+    "Quick Travel": "クイック移動",
+    "Amy’s Closet": "エイミーのクローゼット",
+    "Selected outfit persists into battles and cutscenes.": "選んだコーデはバトルやカットシーンにも反映されます。",
+    "Mall: Retail Therapy Rush": "モール：リテールセラピー・ラッシュ",
+    "Buy buffs, outfits, and self-care. MVP shopping mini-game placeholder.": "バフ、服、自分ケア用品を購入。今はMVP版ショッピング仮置き。",
+    "Clear red flags. The internet will still simp. The group chat is already tired.": "赤旗を見抜け。ネット民はそれでも推す。グルチャはもう疲れている。",
+    "Date Fit Studio": "デートコーデスタジオ",
+    "Dress-Up Gallery": "コーデギャラリー",
+    "Arcade Mode": "アーケードモード",
+    "Quick Date Battle": "クイックデートバトル",
+    "Red Flag Gauntlet": "地雷男ガントレット",
+    "Boss Rush": "ボスラッシュ",
+    "Green Flag Dates": "グリーンフラッグデート",
+    "Concept Chaos": "概念カオス",
+    "Random Match": "ランダムマッチ",
+    "Choose Opponent": "相手を選ぶ",
+    "Start Gauntlet": "ガントレット開始",
+    "Start Boss Rush": "ボスラッシュ開始",
+    "Choose Green Flag": "グリーンフラッグを選ぶ",
+    "Open Concepts": "概念を開く",
+    "Randomize": "ランダム",
+    "Enter Cheat Code": "チートコード入力",
+    "Unlocked Cheats": "解放済みチート",
+    "Submit": "送信",
+    "Original Endings": "通常エンド",
+    "Bestie Endings": "親友ルートエンド",
+    "Peaceful Replay": "平和リプレイ",
+    "Return to Title": "タイトルへ戻る",
+    "Back to Map": "マップへ戻る",
+    "Back to Beach": "海辺へ戻る",
+    "Visit Beachside Cafe": "海辺のカフェへ行く",
+    "Order Cake": "ケーキを注文する",
+    "Sit by the Window": "窓辺に座る",
+    "Watch the Sunset Alone": "ひとりで夕日を見る",
+    "Keep Looking at the Water": "水面を眺め続ける",
+    "Keep Looking at the Sunset": "夕日を眺め続ける",
+    "Not Yet. Go Somewhere Else.": "まだ。別の場所へ行く",
+    "Choose Another Location": "別の場所を選ぶ",
+    "Check Phone": "スマホを見る",
+    "Open LoveLoop": "LoveLoopを開く",
+    "Check Dating App": "デートアプリを見る",
+    "Reply": "返信する",
+    "Ignore": "無視する",
+    "Block": "ブロック",
+    "Block and Leave": "ブロックして帰る",
+    "Ask Follow-Up Question": "追加質問する",
+    "Summon Friend Advice": "友達に相談",
+    "Send to Group Chat": "グルチャに送る",
+    "Give Up on LoveLoop": "LoveLoopを諦める",
+    "Go Home and Give Up": "家に帰って諦める",
+    "Red flags handled": "地雷対応済み",
+    "Date Battle!": "デートバトル！",
+    "Fight": "戦う",
+    "Rematch": "再戦",
+    "Weakness": "弱点",
+    "Boundary Slash": "境界線スラッシュ",
+    "Phone Punch": "スマホパンチ",
+    "Kick of Discernment": "見極めキック",
+    "Check Receipts": "証拠チェック",
+    "Summon Friend": "友達を召喚",
+    "Girl, Stand Up!": "立ちな！",
+    "Run / Block": "逃げる／ブロック",
+    "Amy’s Turn": "エイミーのターン",
+    "Call Malik": "マリクを呼ぶ",
+    "Call Min": "ミンを呼ぶ",
+    "Call Jade": "ジェイドを呼ぶ",
+    "Call Chloe": "クロエを呼ぶ",
+    "Call Mia": "ミアを呼ぶ",
+    "BE SO FOR REAL": "マジで現実見て",
+    "SIDE-EYE": "無言の圧",
+    "RECEIPTS!": "証拠！",
+    "NO.": "無理。",
+    "NO DAMAGE": "ノーダメージ",
+    "LESSON LEARNED": "教訓習得",
+    "GIRL, STAND UP!": "立ちな！",
+    "System": "システム",
+    "Narrator": "ナレーション",
+    "Victory": "勝利",
+    "Game Over": "ゲームオーバー",
+    "Enemy": "敵",
+    "Amy": "エイミー",
+    "Malik": "マリク",
+    "Min": "ミン",
+    "Jade": "ジェイド",
+    "Chloe": "クロエ",
+    "Mia": "ミア",
+    "James": "ジェームズ",
+    "Xavier": "ゼイヴィア",
+    "Andrew": "アンドリュー",
+    "Christy": "クリスティ",
+    "Eli": "イーライ",
+    "Val": "ヴァル",
+    "Sabrina": "サブリナ",
+    "Soft Life Funds": "ソフトライフ資金",
+    "Peace": "平穏",
+    "Clarity": "明晰さ",
+    "Self-Respect": "自尊心",
+    "Stamina": "スタミナ",
+    "Delusion": "妄想",
+    "Group Chat": "グルチャ",
+    "Day": "日目",
+    "Time": "時間",
+    "Clock": "時計",
+    "Sunrise": "朝焼け",
+    "Sunset": "夕暮れ",
+    "Evening": "夕方",
+    "Night": "夜",
+    "Daytime": "昼",
+    "Location pins are clickable": "ロケーションピンはクリック可能",
+    "Tap a pin": "ピンをタップ",
+    "Choose where Amy goes next.": "エイミーの行き先を選んでください。",
+    "Go": "行く",
+    "Back": "戻る",
+    "Buy": "購入",
+    "Cost": "価格",
+    "Current": "現在",
+    "Bag": "バッグ",
+    "Open Bag": "バッグを開く",
+    "Use": "使う",
+    "Profile": "プロフィール",
+    "View Profile": "プロフィールを見る",
+    "Choose a Match": "マッチを選ぶ",
+    "Date Battle": "デートバトル",
+    "Green Flag?": "グリーンフラッグ？"
+  },
+  "locations": {
+    "apartment": {
+      "label": "エイミーのアパート",
+      "desc": "拠点。休む、スマホを見る、服を変える。"
+    },
+    "bedroom": {
+      "label": "寝室",
+      "desc": "休む、眠る、そして夢の世界でパターンと向き合う場所。"
+    },
+    "closet": {
+      "label": "クローゼット",
+      "desc": "エイミーのコーデ変更。見た目も気分も大事。"
+    },
+    "office": {
+      "label": "オフィス",
+      "desc": "仕事をしてソフトライフ資金を稼ぐ。社畜デバフ注意。"
+    },
+    "library": {
+      "label": "図書館",
+      "desc": "明晰さ回復スポット。ゼイヴィアが静かに本を戻している。"
+    },
+    "bar": {
+      "label": "バー",
+      "desc": "パルメザンフライ、友達、ジェームズ。平和な雑音。"
+    },
+    "park": {
+      "label": "公園",
+      "desc": "散歩、ベンチ、アンドリューの背景ジョグ。"
+    },
+    "mall": {
+      "label": "モール",
+      "desc": "買い物、フードコート、スパ。ソフトライフ整備区画。"
+    },
+    "restaurant": {
+      "label": "レストラン",
+      "desc": "食事、友達、そして時々デートバトル。"
+    },
+    "villain_apartment": {
+      "label": "ヤバい男の部屋",
+      "desc": "高リスク遭遇ゾーン。家具がない時点で察して。"
+    },
+    "beach": {
+      "label": "海辺",
+      "desc": "波、夕日、ひとりで十分だと思える場所。"
+    },
+    "beachside_cafe": {
+      "label": "海辺のカフェ",
+      "desc": "ケーキ、海風、クリスティ、かわいい余白。"
+    },
+    "spa": {
+      "label": "スパ",
+      "desc": "蒸気、ローブ、キュウリ水。男の圧ではない圧。"
+    },
+    "car": {
+      "label": "車",
+      "desc": "デート後の避難所。深呼吸、グルチャ、ブロック確認。"
+    },
+    "aquarium": {
+      "label": "水族館",
+      "desc": "静かな青い光。ミンのボーナスルート向き。"
     }
-    window.toggleLanguage111=navToggle142;
-    window.switchLanguage141=navToggle142;
+  },
+  "characters": {
+    "amy": "エイミー",
+    "malik": "マリク",
+    "min": "ミン",
+    "jade": "ジェイド",
+    "chloe": "クロエ",
+    "mia": "ミア",
+    "james": "ジェームズ",
+    "xavier": "ゼイヴィア",
+    "andrew": "アンドリュー",
+    "christy": "クリスティ",
+    "eli": "イーライ",
+    "val": "ヴァル",
+    "sabrina": "サブリナ"
+  },
+  "npcRoles": {
+    "eli": {
+      "hidden": "スパの男性スタッフ",
+      "revealed": "イーライ"
+    },
+    "val": {
+      "hidden": "レストランのウェイトレス",
+      "revealed": "ヴァル"
+    },
+    "sabrina": {
+      "hidden": "ブティックの店員",
+      "revealed": "サブリナ"
+    },
+    "christy": {
+      "hidden": "海辺のカフェ店主",
+      "revealed": "クリスティ"
+    },
+    "james": {
+      "hidden": "優しいバーテンダー",
+      "revealed": "ジェームズ"
+    },
+    "xavier": {
+      "hidden": "静かな司書",
+      "revealed": "ゼイヴィア"
+    },
+    "andrew": {
+      "hidden": "公園のジョガー",
+      "revealed": "アンドリュー"
+    }
+  },
+  "greenFlags": {
+    "xavier": {
+      "name": "ゼイヴィア",
+      "role": "静かな司書",
+      "ending": "プラネタリウムデート",
+      "quote": "プレッシャーはないよ。ただ、星が好きかと思って。",
+      "attack": "敬意ある誘い"
+    },
+    "james": {
+      "name": "ジェームズ",
+      "role": "優しいバーテンダー",
+      "ending": "映画デート",
+      "quote": "大丈夫？ もし大丈夫なら、今度映画でもどう？",
+      "attack": "安全確認"
+    },
+    "andrew": {
+      "name": "アンドリュー",
+      "role": "公園のまともな人",
+      "ending": "ディナーデート",
+      "quote": "夕食に誘いたい。どちらでもプレッシャーはないよ。",
+      "attack": "明確な誘い"
+    },
+    "christy": {
+      "name": "クリスティ",
+      "role": "海辺のカフェ店主",
+      "ending": "スパデート",
+      "quote": "今日は誰かの謎を解く日じゃなくて、休む日でもいいんだよ。",
+      "attack": "あたたかい確認"
+    },
+    "malik": {
+      "name": "マリク",
+      "role": "親友ルート — チート限定",
+      "ending": "海辺の親友デート",
+      "quote": "友達として大事に思ってる。でも、綺麗だと思ったことがないって言ったら嘘になる。",
+      "attack": "うるさいほど正直な優しさ"
+    },
+    "min": {
+      "name": "ミン",
+      "role": "親友ルート — チート限定",
+      "ending": "水族館の親友デート",
+      "quote": "寂しいから聞いてるんじゃない。大事に思ってるから聞いてる。",
+      "attack": "静かな弱さ"
+    },
+    "mia": {
+      "name": "ミア",
+      "role": "ガールルート — ウルトラチート",
+      "ending": "海辺のカフェデート",
+      "quote": "強がってても、ちゃんと柔らかいところが好き。",
+      "attack": "かわいいけど危険な本音"
+    }
+  },
+  "villains": {
+    "two_am": {
+      "profileName": "ジェイ",
+      "name": "2AM召喚男",
+      "className": "低努力ワンチャン男",
+      "quote": "起きてる？",
+      "weakness": "境界線、無視、睡眠。",
+      "lesson": "睡眠は境界線"
+    },
+    "preference": {
+      "profileName": "コナー",
+      "name": "好みの聖騎士",
+      "className": "人種フェチ免罪符ナイト",
+      "quote": "フェチじゃなくて好みだよ。",
+      "weakness": "直接質問と自尊心。",
+      "lesson": "『好み』は免罪符ではない"
+    },
+    "house_date": {
+      "profileName": "テレンス",
+      "name": "家デート経済学者",
+      "className": "最低限会計士",
+      "quote": "じゃあ次は君が払う？",
+      "weakness": "基準。",
+      "lesson": "安上がりと親密さは別物"
+    },
+    "demon": {
+      "profileName": "ダンテ",
+      "name": "デーモンファイター",
+      "className": "危険なイケメン",
+      "quote": "俺は自分の悪魔と戦ってる。",
+      "weakness": "追加質問。",
+      "lesson": "悪魔退治は本人の仕事"
+    },
+    "broke_dreamer": {
+      "profileName": "ジョーイ",
+      "name": "ジョーイ・デリバリー",
+      "className": "金欠バラード男",
+      "quote": "金欠じゃない。成功前なだけ。",
+      "weakness": "仕事について聞くこと。",
+      "lesson": "夢は家賃を払わない"
+    },
+    "millionaire": {
+      "profileName": "マーキス",
+      "name": "低キー百万長者",
+      "className": "財布の幻術師",
+      "quote": "俺、こっそり百万長者なんだ。",
+      "weakness": "デューデリジェンス。",
+      "lesson": "低キーすぎる金持ちは大抵キーがない"
+    },
+    "body_bag": {
+      "profileName": "レジー",
+      "name": "トゥルークライム男",
+      "className": "事件予感デート",
+      "quote": "トランクにボディバッグと拘束衣あるけど、どっち見る？",
+      "weakness": "すぐ帰ること。",
+      "lesson": "怖がるべき時は怖がっていい"
+    },
+    "old_young": {
+      "profileName": "ヴィクター",
+      "name": "若い子狙いおじさん",
+      "className": "夜遊び寄生男",
+      "quote": "君、年のわりに大人だね。",
+      "weakness": "露骨な嫌悪感。",
+      "lesson": "年齢は数字、通報番号も数字"
+    },
+    "normal_fake": {
+      "profileName": "エヴァン",
+      "name": "普通そうな男",
+      "className": "上級脅威",
+      "quote": "考えすぎだよ。",
+      "weakness": "一貫性チェック。",
+      "lesson": "普通そう、は証拠ではない"
+    },
+    "coworker": {
+      "profileName": "同僚",
+      "name": "実験したがる同僚",
+      "className": "オフィス飲み会クリープ",
+      "quote": "黒人の子って試してみたかったんだ。",
+      "weakness": "記録、HR、公衆の恥。",
+      "lesson": "職場の距離感バグは記録する"
+    },
+    "algorithm": {
+      "profileName": "LoveLoop",
+      "name": "アルゴリズム",
+      "className": "デートアプリ支配者",
+      "quote": "あなたの行動履歴から、おすすめはこちら…",
+      "weakness": "アプリ削除。基準フィルター。赤旗データ。",
+      "lesson": "孤独を収益化させない"
+    },
+    "pattern": {
+      "profileName": "？？？",
+      "name": "パターン",
+      "className": "内なるループ",
+      "quote": "今度こそ違うかもしれない。",
+      "weakness": "自己信頼、休息、Girl Stand Up。",
+      "lesson": "違う顔でも同じ教訓なら同じループ"
+    },
+    "lucien_reservation_mirage": {
+      "profileName": "ルシアン・モロー",
+      "name": "予約の蜃気楼",
+      "className": "偽高級／約束商人",
+      "quote": "君にはちゃんとした夜がふさわしい。任せて。",
+      "weakness": "確定した予定、カレンダー、未来形の努力を拒むこと。",
+      "lesson": "約束は予約ではない"
+    },
+    "roman_industry_mystery": {
+      "profileName": "ロマン・ベガ",
+      "name": "業界ミステリー",
+      "className": "曖昧エンタメ系マネーフレックス男",
+      "quote": "エンタメ業界だよ。早期引退もできると思う。",
+      "weakness": "追加質問と違和感を信じること。",
+      "lesson": "追加質問をしよう"
+    },
+    "nico_boundary_pusher": {
+      "profileName": "ニコ・ハート",
+      "name": "境界線プッシャー",
+      "className": "押しつけプレイフル男",
+      "quote": "リラックスして。冗談だって。",
+      "weakness": "はっきりした境界線。不快感を議論しないこと。",
+      "lesson": "ノーに討論はいらない"
+    },
+    "blake_disruptor": {
+      "profileName": "ブレイク・スターリング",
+      "name": "ディスラプター",
+      "className": "暗号資産／テック兄貴ウェビナーデート",
+      "quote": "今、でかいものを作ってるんだ。",
+      "weakness": "その言葉の意味を説明させること。",
+      "lesson": "自信は実力ではない"
+    },
+    "julian_softboi_savior": {
+      "profileName": "ジュリアン・クロス",
+      "name": "ソフトボーイ救世主",
+      "className": "フェイク感情進化系ソフトボーイ",
+      "quote": "安全なつながりの空間を作りたいんだ。",
+      "weakness": "意図より影響。彼のセラピストにならないこと。",
+      "lesson": "言葉は人格ではない"
+    }
+  },
+  "outfits": {
+    "Pink Tank": "ピンクタンク",
+    "White Sweater": "白ニット",
+    "Power Blazer": "強めブレザー",
+    "Night Out Top": "夜遊びトップス",
+    "Cozy Hoodie": "ゆるパーカー",
+    "Beach Top": "ビーチトップス",
+    "Jeans": "ジーンズ",
+    "Black Pants": "黒パンツ",
+    "Skirt": "スカート",
+    "Comfy Joggers": "楽ちんジョガー",
+    "Date Dress": "デートワンピ",
+    "Beach Shorts": "ビーチショーツ",
+    "Pink Boots": "ピンクブーツ",
+    "Sneakers": "スニーカー",
+    "Heels": "ヒール",
+    "Combat Boots": "コンバットブーツ",
+    "Sandals": "サンダル",
+    "Purple Cardigan": "紫カーディガン",
+    "Leather Jacket": "レザージャケット",
+    "Soft Cardigan": "ふわカーディガン",
+    "No Jacket": "上着なし",
+    "Gold Hoops": "ゴールドフープ",
+    "Heart Purse": "ハートバッグ",
+    "Pepper Spray Keychain": "ペッパースプレーキーホルダー",
+    "Lip Gloss of Discernment": "見極めリップグロス",
+    "Noise-Canceling Headphones": "ノイズキャンセリングヘッドホン"
+  },
+  "shopItems": {
+    "Parmesan Fries": "パルメザンフライ",
+    "Lip Gloss of Discernment": "見極めリップグロス",
+    "Pepper Spray Keychain": "ペッパースプレーキーホルダー",
+    "Cute Outfit Piece": "かわいい服パーツ",
+    "Noise-Canceling Headphones": "ノイズキャンセリングヘッドホン"
+  },
+  "dialogue": {
+    "Amy had a cute apartment, a job that paid the bills, friends who loved her, and one dating app she kept pretending she was done with.": "エイミーには、かわいいアパート、生活費を払える仕事、愛してくれる友達、そして『もうやめた』と言いながら消していないデートアプリがあった。",
+    "I am simply opening myself up to possibility.": "可能性に心を開いてるだけだから。",
+    "The phone buzzed like it had been waiting for weakness.": "スマホが震えた。弱った瞬間を待っていたみたいに。",
+    "The library is quiet. Xavier is in the background, reshelving books and minding his business.": "図書館は静かだ。ゼイヴィアが奥で本を戻している。ちゃんと自分の仕事だけしている。",
+    "The bar is warm. James looks over like a concerned NPC and keeps polishing glasses.": "バーはあたたかい。ジェームズが心配そうなNPCみたいにこちらを見て、グラスを磨いている。",
+    "The park feels peaceful. Andrew jogs by in the background like a green flag loading screen.": "公園は穏やかだ。アンドリューがグリーンフラッグのロード画面みたいに背景を走っていく。",
+    "The beach is quiet. No tests. No battles. Just waves.": "海辺は静かだ。テストもバトルもない。ただ波だけ。",
+    "Amy touched grass. The nervous system recalibrated.": "エイミーは外の空気を吸った。神経系が再調整された。",
+    "Amy read in silence. Confusion faded. Clarity restored.": "エイミーは静かに読んだ。混乱が薄れ、明晰さが戻った。",
+    "Amy did office things.": "エイミーは仕事をした。",
+    "Energy took minor corporate damage.": "エネルギーに軽い会社員ダメージ。",
+    "Amy rested, ignored nonsense, and restored Peace.": "エイミーは休み、くだらない通知を無視し、平穏を回復した。",
+    "Amy slept. New day. Same audacity somewhere out there.": "エイミーは眠った。新しい朝。同じ図々しさがどこかにいる。",
+    "Sleep is a boundary.": "睡眠は境界線。",
+    "For once, silence does not feel lonely.": "初めて、沈黙が孤独に感じなかった。",
+    "Amy put her phone on silent and watched the water. No match. No message. No maybe. Just her. “This is enough tonight.”": "エイミーはスマホをサイレントにして、水面を見つめた。マッチも、メッセージも、『もしかして』もない。ただ自分だけ。『今夜はこれで十分。』",
+    "No match. No message. No maybe. Amy can choose what she wants next.": "マッチも、メッセージも、『もしかして』もない。次に何を選ぶかはエイミーが決める。"
+  },
+  "friendLines": {
+    "malik": {
+      "default": [
+        "エイミー、マジで現実見て！",
+        "お願いだから可能性じゃなく証拠を見て。",
+        "その男、ミステリアスじゃない。筆記体で無職なだけ。"
+      ],
+      "bar": [
+        "メッセージが『怒らないで』から始まったら、そこで読むのやめよ。",
+        "エイミー。愛してる。でもそのアプリ、プロフィール写真つきのお化け屋敷になってる。",
+        "ベッドフレームもない男に自己肯定感を下げさせないで。",
+        "混乱が香水なら、あいつ全身びしょびしょ。"
+      ],
+      "restaurant": [
+        "先に食べて。悩むのは後。男はパスタが勝つと嫌がるから。",
+        "ディナーは支持する。未解決の倉庫みたいな男の面接になるディナーは支持しない。",
+        "『お腹すいてない』って言って君のポテト食べたら、法的許可がほしい。"
+      ],
+      "park": [
+        "あのジョガーが可愛いとは言ってない。神様が調子いい日だったとは思う。",
+        "この公園には木と日差しと、ガソリン代を頼む男ゼロ。癒し。"
+      ],
+      "beach": [
+        "波は癒し。受信箱は違う。",
+        "平和だね。男なし、通知なし、ただ波と遠くにいてくれる結果。"
+      ],
+      "car": [
+        "生きてる？ それとも節約男に水道水割り勘させられた？",
+        "エイミー。マジで現実見て。帰って、水飲んで、ブロック。"
+      ]
+    },
+    "min": {
+      "default": [
+        "無理。",
+        "エイミー。",
+        "今の見たよね？",
+        "聞いたよね？",
+        "それが赤旗。"
+      ],
+      "bar": [
+        "音楽が大きい。悪い判断をかき消すには使える。",
+        "君はポテトを注文した。彼はアクセス権を注文した。",
+        "支援的に裁いている。"
+      ],
+      "library": [
+        "ここはいい。人が意図的に静か。",
+        "ゼイヴィアは自分語りせずに本をすすめた。珍しい。期待できる。"
+      ],
+      "park": [
+        "今の手振り、普通だった。異常なほど新鮮。",
+        "今日はくだらなさ濃度が低い。"
+      ],
+      "beach": [
+        "海のほうが大半のマッチよりコミュ力ある。",
+        "いい場所。くだらなさ濃度が低い。"
+      ],
+      "car": [
+        "私は何も言ってない。でも正しかった。",
+        "スマホが静かなだけで空気がきれい。"
+      ]
+    },
+    "jade": {
+      "default": [
+        "ちょっと、立ちな。",
+        "共感は賃貸契約じゃない。彼のトラウマに住まなくていい。"
+      ],
+      "bar": [
+        "プロフィール見せて。読み終わる前に擁護しないで。",
+        "コーデ見せて。よし。次は基準見せて。",
+        "あの髪型で君をへこませようとしたの？"
+      ],
+      "restaurant": [
+        "先に食べて。悩むのは後。",
+        "顔がいい、は身元保証じゃない。",
+        "誤解する気満々の男に作文は不要。"
+      ],
+      "mall": [
+        "その服は自分が好きだから買うの。男がやっとまともになるかも、で買わない。",
+        "可能性のために着飾らない。生存確認のために着飾る。"
+      ],
+      "spa": [
+        "受け入れる圧はこれだけ。スチームルームの圧。男の圧じゃない。",
+        "ほら。基準ってキュウリ水つきだとこう見える。"
+      ],
+      "beach": [
+        "前菜の前に相手の幼少期を理解しなくていい日を増やして。",
+        "この夕日を見て。基準下げろなんて一度も言ってこない。"
+      ],
+      "car": [
+        "バーに来て。今すぐ。",
+        "深呼吸。リップ塗って。基準上げて。"
+      ]
+    },
+    "chloe": {
+      "default": [
+        "証拠見つけた。",
+        "非公開はいい。曖昧で照明だけドラマチックなのは別。"
+      ],
+      "bar": [
+        "ポテト買ってきた。あと軽く調べた。健康的なのは片方だけ。",
+        "ジェームズ、注文覚えてたね。怖い感じじゃなく、感情調整のできる接客業の人って感じ。"
+      ],
+      "restaurant": [
+        "このパスタ、直近三人の男より優秀。",
+        "判断してないよ。ただスプレッドシート開いてるだけ。"
+      ],
+      "library": [
+        "ゼイヴィアのおすすめ本、かなり良い。靴もきれい。私は見てる。",
+        "彼の話に矛盾三つ、プロフィールに一つ見つけた。"
+      ],
+      "beach": [
+        "お菓子と感情的中立を持ってきた。",
+        "海はガソリン代を頼んでこない。"
+      ],
+      "car": [
+        "次の『普通そうな男』用チェックリスト作った。",
+        "矛盾見つけた。複数。"
+      ]
+    },
+    "mia": {
+      "default": [
+        "無理。",
+        "裸足で会話に入ってきた男に礼儀正しくしなくていい。"
+      ],
+      "bar": [
+        "ピンクの飲み物を飲んで、理由ができるまで大人しくしてる。",
+        "食欲を台無しにされたら、個人的に受け取る。"
+      ],
+      "restaurant": [
+        "食欲を台無しにされたら、個人的に受け取る。",
+        "彼、なんて？ ああ。興味深いね。"
+      ],
+      "park": [
+        "平和に質感があるなら、これ。",
+        "赤旗なのか事件現場なのか判断中。"
+      ],
+      "spa": [
+        "リラックスしてるね。好き。そのまま無視して。",
+        "そのローブ姿で相手しちゃダメ。それがルール。"
+      ],
+      "beach": [
+        "平和に質感があるなら、これ。",
+        "この夕日に男がLINEしてきたら、自然に嫉妬してる。"
+      ],
+      "car": [
+        "慰めが必要？ それともアリバイ？",
+        "よし。先に慰め。必要なら後でアリバイ。"
+      ]
+    }
+  },
+  "battleSupport": {
+    "malik": [
+      "エイミー。マジで現実見て。",
+      "この男にパワポされて基準を下げないで。",
+      "これは化学反応じゃない。ガス漏れ。",
+      "君は彼の再生ストーリーじゃない。予定もあるし肌も保湿済み。",
+      "彼の赤旗、赤旗を連れてる。繁殖してる。"
+    ],
+    "min": [
+      "無理。",
+      "エイミー。",
+      "今の見た。",
+      "真面目に。",
+      "聞いたよね。",
+      "それが赤旗。",
+      "支援的に裁いている。",
+      "スマホが悪役。",
+      "ミンは何も言わない。それが一番きつい。"
+    ],
+    "jade": [
+      "顎上げて。リップ塗って。基準上げて。",
+      "感心させられないから混乱させようとしてる。",
+      "誤解する気満々の男に作文は不要。",
+      "ちょっと、立ちな。"
+    ],
+    "chloe": [
+      "矛盾にハイライト入れた。そこ狙って。",
+      "あなたが間違ってるから混乱してるんじゃない。彼が話を変え続けるから。",
+      "ブロック、アーカイブ、色分け完了。",
+      "証拠見つけた。"
+    ],
+    "mia": [
+      "もう一回殴って。丁寧に。",
+      "あなたは愛しにくいんじゃない。彼が耐えにくいだけ。",
+      "よかった。そろそろ可愛さを失うところだった。",
+      "彼のスマホ、スープに落ちればいいのに。"
+    ]
+  },
+  "victoryLines": {
+    "min": [
+      "よし。",
+      "やっと。",
+      "自然が回復している。",
+      "空気がきれい。",
+      "顎の力を抜ける。",
+      "ブロック。美しい。",
+      "遅すぎたけど良い。",
+      "平和がサーバーに戻った。",
+      "常識的な結果。驚き。",
+      "私は何も言ってない。でも正しかった。"
+    ],
+    "malik": [
+      "美しい。優雅。意図を持ってブロック。",
+      "自分の発言を音読しただけで男がまた倒された。",
+      "コンボメーターつきの成長だった。"
+    ],
+    "jade": [
+      "こうやって部屋を片づけるの。",
+      "基準回復。リップ維持。指摘なし。",
+      "かわいいコーデ、きれいなブロック、文句なし。"
+    ],
+    "chloe": [
+      "ブロック、アーカイブ、色分け完了。",
+      "研修用に証拠保存した。",
+      "時系列がやっと意味を持った。彼は嘘ついてた。"
+    ],
+    "mia": [
+      "よかった。そろそろ可愛さを失うところだった。",
+      "正義、でも保湿済み。",
+      "くだらないものが去るの、大好き。"
+    ]
+  },
+  "phoneIgnoreLines": [
+    [
+      "Amy",
+      "エイミーはスマホを伏せた。今日は無理。平穏が上がった。"
+    ],
+    [
+      "Amy",
+      "エイミーは通知を無視した。神経系から感謝状が届いた。"
+    ],
+    [
+      "Amy",
+      "エイミーは沈黙を選んだ。アプリに目を合わせる価値はなかった。"
+    ]
+  ],
+  "phoneBlockLines": [
+    [
+      "Amy",
+      "エイミーは二本目の赤旗が読み込まれる前にブロックした。"
+    ],
+    [
+      "Amy",
+      "原則ブロック。平和を守った。"
+    ],
+    [
+      "Amy",
+      "エイミーはそのエネルギーを差出人不明で返送した。"
+    ]
+  ],
+  "carLines": {
+    "house_date": "エイミーは車でダッシュボードを見つめた。『コーヒーを金融搾取だと思う男のためにイヤリングつけたんだ、私。』",
+    "preference": "エイミーは車のドアを閉め、ゆっくり息を吸った。『ワカンダって、胸張って言ったな。』",
+    "demon": "エイミーはハンドルを握った。『人の癒し編と緊急連絡先を兼任するのは無理。』",
+    "normal_fake": "エイミーは黙って座った。『普通そうな男、衣装が上手くなってる。』",
+    "body_bag": "エイミーはドアをロックし、もう一度ロックした。『正しく怖がるのは、正しい。』",
+    "broke_dreamer": "エイミーはハンドルを見つめた。『ポテトと夢ノートのために払う気はない。』",
+    "millionaire": "エイミーはスマホを見た。『低キー百万長者、高キーでスポンサー探し。』",
+    "two_am": "エイミーはスマホを伏せ、天井を見た。『睡眠は境界線。』",
+    "old_young": "エイミーはエンジンを切った車内に座った。『あの人には趣味と出生証明書が必要。』",
+    "coworker": "エイミーは職場の外の車で座った。『明日、全部記録する。』"
+  },
+  "algorithmLines": {
+    "intro": [
+      "おかえり、エイミー。",
+      "エンゲージメントが43％低下。希望値はまだ収益化可能です。",
+      "平和を感じていたようなので、フィードを修正しました。"
+    ],
+    "taunts": [
+      "新しいマッチを検出。",
+      "感情的に利用できないプロフィールを強化中。",
+      "おなじみの愛着パターンを再配信中。",
+      "可愛いけど危険な相手を表示中。",
+      "あなたの基準がコンバージョンを妨げています。",
+      "孤独スパイクを検出。ジム自撮りを投入。",
+      "直感を無視しますか？",
+      "期間限定オファー：偽りの希望。"
+    ]
+  },
+  "patternLines": {
+    "intro": [
+      "アプリが問題だと思った？",
+      "間違った扉が懐かしく感じる理由が、私。",
+      "前にも会ってる。顔は違う。教訓は同じ。",
+      "『今度こそ違う』と思わせれば、それでいい。"
+    ],
+    "taunts": [
+      "彼は変わるかも。",
+      "少なくとも求めてくれてる。",
+      "高望みしすぎ。",
+      "これが最後のチャンスだったら？",
+      "彼も大変だったんだよ。",
+      "選ばれる感じ、恋しくない？",
+      "あと一通だけ。",
+      "終わらせるには、もう一回話せばいい。"
+    ]
+  },
+  "cutscenes": {
+    "two_am": [
+      [
+        "LoveLoop",
+        "ジェイ：『起きてる？』"
+      ],
+      [
+        "Amy",
+        "存在はしてる。"
+      ],
+      [
+        "Jay",
+        "笑。面白いね。今夜空いてる？"
+      ],
+      [
+        "Amy",
+        "午前2時14分だけど。"
+      ],
+      [
+        "Jay",
+        "だから聞いたんだよ。"
+      ],
+      [
+        "Narrator",
+        "寝室の明かりがちらついた。ネオンの時計が現れ、2:14で止まった。"
+      ]
+    ],
+    "preference": [
+      [
+        "Connor",
+        "君、すごく綺麗。ずっと君みたいなタイプが好きだった。"
+      ],
+      [
+        "Amy",
+        "私みたいなタイプ？"
+      ],
+      [
+        "Connor",
+        "雰囲気っていうか。ビヨンセ、SZA、ワカンダ。わかるでしょ。"
+      ],
+      [
+        "Amy",
+        "わからない。"
+      ],
+      [
+        "Connor",
+        "ただの好みだよ。フェチじゃない。"
+      ],
+      [
+        "Narrator",
+        "彼の褒め言葉は、『エキゾチック』『スパイシー』『クイーン』と書かれたベタベタのピンクの鎖になった。"
+      ]
+    ],
+    "house_date": [
+      [
+        "Terrence",
+        "うち来て何か観る感じでどう？"
+      ],
+      [
+        "Amy",
+        "初デートで？"
+      ],
+      [
+        "Terrence",
+        "なんで女ってデートを高くしたがるの？"
+      ],
+      [
+        "Amy",
+        "コーヒーが高い？"
+      ],
+      [
+        "Terrence",
+        "じゃあ次は君が払う？"
+      ],
+      [
+        "Amy",
+        "一回目もまだ起きてないけど。"
+      ],
+      [
+        "Narrator",
+        "リビングは折りたたみ椅子と想像上の富でできた戦場へ伸びていった。"
+      ]
+    ],
+    "demon": [
+      [
+        "Dante",
+        "昔は荒れてた。学校も追い出された。軍学校も。でも今は自分の悪魔と戦ってる。"
+      ],
+      [
+        "Amy",
+        "その悪魔、今この部屋にいる？"
+      ],
+      [
+        "Dante",
+        "時々。"
+      ],
+      [
+        "Amy",
+        "安心材料じゃないね。"
+      ],
+      [
+        "Dante",
+        "俺には忠実な人が必要なんだ。きつい時に見捨てない人。"
+      ],
+      [
+        "Narrator",
+        "彼の影が三つに分かれ、それぞれ別の赤旗を鎧のようにまとった。"
+      ]
+    ],
+    "broke_dreamer": [
+      [
+        "Joey",
+        "君のプロフィール見て曲を書いた。"
+      ],
+      [
+        "Amy",
+        "怖い。"
+      ],
+      [
+        "Joey",
+        "今は配達してるけど、音楽が本当の使命なんだ。"
+      ],
+      [
+        "Amy",
+        "それはいいね。"
+      ],
+      [
+        "Joey",
+        "派手なデートはあんまりしない。俺はバイブス重視。"
+      ],
+      [
+        "Narrator",
+        "ブンブン鳴る照明の下、駐車場ステージが現れた。彼のギターは未払いのスタジオ代で光っていた。"
+      ]
+    ],
+    "millionaire": [
+      [
+        "Marquis",
+        "俺、こっそり百万長者なんだ。俺を信じる女が必要。"
+      ],
+      [
+        "Amy",
+        "それ、求人票みたい。"
+      ],
+      [
+        "Marquis",
+        "子どももいる。子ども大丈夫？"
+      ],
+      [
+        "Amy",
+        "概念として？"
+      ],
+      [
+        "Marquis",
+        "あいつらの人生には本物の女が必要なんだ。"
+      ],
+      [
+        "Amy",
+        "マッチして40分だけど。"
+      ],
+      [
+        "Narrator",
+        "金貨が降ってきたが、プラスチックのゲーム用トークンみたいに跳ねた。"
+      ]
+    ],
+    "body_bag": [
+      [
+        "Reggie",
+        "トランクにボディバッグと拘束衣あるけど、どっち持ってこようか？"
+      ],
+      [
+        "Amy",
+        "どっちも無理。"
+      ],
+      [
+        "Reggie",
+        "笑。怖いの？"
+      ],
+      [
+        "Amy",
+        "はい。正しく。"
+      ],
+      [
+        "Reggie",
+        "冗談が通じる女が好きなんだよね。"
+      ],
+      [
+        "Amy",
+        "私はローカルニュースみたいに聞こえない男が好き。"
+      ],
+      [
+        "Narrator",
+        "駐車場の明かりが一つずつ消えた。"
+      ]
+    ],
+    "old_young": [
+      [
+        "Nightlife Leech",
+        "君、年のわりに大人だね。"
+      ],
+      [
+        "Amy",
+        "その文、部屋から出て行って。"
+      ],
+      [
+        "Nightlife Leech",
+        "年齢はただの数字。"
+      ],
+      [
+        "Amy",
+        "911も数字。"
+      ],
+      [
+        "Nightlife Leech",
+        "一杯おごって？"
+      ],
+      [
+        "Narrator",
+        "バーの照明がべたつき、非常口の表示だけが妙に明るくなった。"
+      ]
+    ],
+    "normal_fake": [
+      [
+        "Evan",
+        "エイミー、本屋好きなんだね。好きなジャンルある？"
+      ],
+      [
+        "Amy",
+        "あ、普通の質問。"
+      ],
+      [
+        "Evan",
+        "君は違う感じがする。元カノはヤバかったけど、君は理性的そう。"
+      ],
+      [
+        "Amy",
+        "何があったの？"
+      ],
+      [
+        "Evan",
+        "正直すぎる俺に耐えられなかった。太ってきたって言ったのも、気にかけてたから。"
+      ],
+      [
+        "Amy",
+        "出た。"
+      ],
+      [
+        "Narrator",
+        "心地よいカフェが陶器のようにひび割れた。中には、エヴァンが裁判官であり被害者でもある法廷があった。"
+      ]
+    ],
+    "coworker": [
+      [
+        "Narrator",
+        "エイミーはもう一つだけ仕事を終わらせようと残業した。オフィスの照明が低く鳴っている。"
+      ],
+      [
+        "Coworker",
+        "急な質問。職場の人と付き合ったことある？"
+      ],
+      [
+        "Amy",
+        "ない。"
+      ],
+      [
+        "Coworker",
+        "俺、ずっと違うタイプを試してみたかったんだ。"
+      ],
+      [
+        "Amy",
+        "違うタイプ？"
+      ],
+      [
+        "Coworker",
+        "ほら。黒人の子とは付き合ったことなくて。"
+      ],
+      [
+        "Amy",
+        "自分の部署に戻ってください。"
+      ],
+      [
+        "Narrator",
+        "キュービクルが壁のように高くなった。HRポスターが壁から剥がれ、役に立たない囁きをした。"
+      ]
+    ]
   }
-
-  function renderAmyCard142(){
-    if(window.state && state.currentBattle)return;
-    const card=document.getElementById('amySprite');
-    if(!card)return;
-    card.classList.add('amy-card-mode','visible');
-    const slot=document.getElementById('amySpriteText');
-    const label=document.getElementById('amyLabel');
-    if(label)label.textContent=PAGE_LANG_142==='ja'?'エイミー':'Amy';
-    if(!slot)return;
-    const img=new Image();
-    img.className='sprite-art';
-    img.alt=PAGE_LANG_142==='ja'?'エイミー':'Amy';
-    img.onload=function(){slot.innerHTML='';slot.appendChild(img);};
-    img.onerror=function(){
-      const fallback=(window.ASSETS&&ASSETS.sprites&&ASSETS.sprites.amy&&ASSETS.sprites.amy.idle)||'';
-      if(fallback){const f=new Image();f.className='sprite-art';f.onload=function(){slot.innerHTML='';slot.appendChild(f);};f.onerror=function(){slot.innerHTML=PAGE_LANG_142==='ja'?'エイミー':'AMY';};f.src=fallback;}
-      else slot.innerHTML=PAGE_LANG_142==='ja'?'エイミー':'AMY';
-    };
-    img.src=AMY_CARD_142;
+};
+  window.SLTS_JA_LOCALIZATION_V136 = L136;
+  const KEY = (typeof V111_LANG_KEY !== 'undefined') ? V111_LANG_KEY : 'slts_language';
+  if(window.SLTS_FORCE_JA_DEFAULT === true){
+    try{ localStorage.setItem(KEY,'ja'); }catch(e){}
+    if(typeof state === 'object') state.lang='ja';
   }
-  const baseShowAmy142=typeof showAmy==='function'?showAmy:null;
-  if(baseShowAmy142){
-    showAmy=function(show,pose='idle'){
-      const r=baseShowAmy142(show,pose);
-      if(show && !(window.state&&state.currentBattle))setTimeout(renderAmyCard142,0);
-      return r;
-    };
+  function ja(){ return typeof state === 'object' && state.lang === 'ja'; }
+  function tr(s){
+    if(s && typeof s === 'object') return ja() ? (s.ja || s.en || '') : (s.en || s.ja || '');
+    const key = String(s ?? '');
+    if(!ja()) return key;
+    return (L136.static && L136.static[key]) || (typeof V111_JA === 'object' && V111_JA[key]) || (window.SLTS_JA_V133 && window.SLTS_JA_V133.dialogue && window.SLTS_JA_V133.dialogue[key]) || key;
   }
-
-  window.addEventListener('load',()=>{installToggle142();setTimeout(installToggle142,250);setTimeout(renderAmyCard142,120);setTimeout(renderAmyCard142,900);});
-  setTimeout(()=>{installToggle142();renderAmyCard142();},0);
+  function remember(obj, fields){
+    if(!obj) return;
+    fields.forEach(f=>{ if(obj[f] !== undefined && obj['_en_'+f] === undefined) obj['_en_'+f] = obj[f]; });
+  }
+  function val(obj, f){ return ja() ? (obj && (obj['ja_'+f] || obj['jp'+f.charAt(0).toUpperCase()+f.slice(1)] || obj[f])) : (obj && (obj['_en_'+f] !== undefined ? obj['_en_'+f] : obj[f])); }
+  function applyDictionary136(){
+    if(typeof V111_JA === 'object') Object.assign(V111_JA, L136.static, L136.dialogue);
+    if(window.SLTS_JA_V133 && window.SLTS_JA_V133.static) Object.assign(window.SLTS_JA_V133.static, L136.static);
+    if(window.SLTS_JA_V133 && window.SLTS_JA_V133.dialogue) Object.assign(window.SLTS_JA_V133.dialogue, L136.dialogue);
+  }
+  function applyData136(){
+    if(typeof locations !== 'undefined') Object.entries(L136.locations).forEach(([id,j])=>{
+      const l=locations.find(x=>x.id===id); if(!l) return; remember(l,['label','desc']); l.labelJa=j.label; l.descJa=j.desc;
+    });
+    if(typeof villains !== 'undefined') Object.entries(L136.villains).forEach(([id,j])=>{
+      const v=villains[id]; if(!v) return; remember(v,['name','className','quote','weakness']);
+      v.jpName=j.name; v.jpVillainName=j.name; v.jpClassName=j.className; v.jpQuote=j.quote; v.jpWeakness=j.weakness; v.jpLessonLearned=j.lesson; v.profileNameJa=j.profileName;
+      if(ja()){ v.name=j.name; v.className=j.className; v.quote=j.quote; v.weakness=j.weakness; }
+      else { v.name=v._en_name ?? v.name; v.className=v._en_className ?? v.className; v.quote=v._en_quote ?? v.quote; v.weakness=v._en_weakness ?? v.weakness; }
+    });
+    if(typeof greenFlags !== 'undefined') Object.entries(L136.greenFlags).forEach(([id,j])=>{
+      const g=greenFlags[id]; if(!g) return; remember(g,['name','role','ending','quote','attack']);
+      g.jpName=j.name; g.jpRole=j.role; g.jpEnding=j.ending; g.jpQuote=j.quote; g.jpAttack=j.attack;
+      if(ja()){ g.name=j.name; g.role=j.role; g.ending=j.ending; g.quote=j.quote; g.attack=j.attack; }
+      else { g.name=g._en_name ?? g.name; g.role=g._en_role ?? g.role; g.ending=g._en_ending ?? g.ending; g.quote=g._en_quote ?? g.quote; g.attack=g._en_attack ?? g.attack; }
+    });
+    if(typeof friends !== 'undefined') Object.entries(L136.characters).forEach(([id,j])=>{
+      if(friends[id]){ remember(friends[id],['name','line']); friends[id].jpName=j; if(ja()) friends[id].name=j; else friends[id].name=friends[id]._en_name ?? friends[id].name; }
+    });
+    if(typeof V18 !== 'undefined'){
+      ['friendLines','battleSupport','victoryLines'].forEach(k=>{ if(L136[k]) V18[k]=ja()?JSON.parse(JSON.stringify(L136[k])):(V18['_en_'+k]||V18[k]); });
+      if(!V18._en_friendLines && V18.friendLines) V18._en_friendLines=JSON.parse(JSON.stringify(V18.friendLines));
+      if(!V18._en_battleSupport && V18.battleSupport) V18._en_battleSupport=JSON.parse(JSON.stringify(V18.battleSupport));
+      if(!V18._en_victoryLines && V18.victoryLines) V18._en_victoryLines=JSON.parse(JSON.stringify(V18.victoryLines));
+      if(!V18._en_phoneIgnoreLines && V18.phoneIgnoreLines) V18._en_phoneIgnoreLines=JSON.parse(JSON.stringify(V18.phoneIgnoreLines));
+      if(!V18._en_phoneBlockLines && V18.phoneBlockLines) V18._en_phoneBlockLines=JSON.parse(JSON.stringify(V18.phoneBlockLines));
+      if(!V18._en_carLines && V18.carLines) V18._en_carLines=JSON.parse(JSON.stringify(V18.carLines));
+      if(!V18._en_algorithmLines && V18.algorithmLines) V18._en_algorithmLines=JSON.parse(JSON.stringify(V18.algorithmLines));
+      if(!V18._en_patternLines && V18.patternLines) V18._en_patternLines=JSON.parse(JSON.stringify(V18.patternLines));
+      if(!V18._en_cutscenes && V18.cutscenes) V18._en_cutscenes=JSON.parse(JSON.stringify(V18.cutscenes));
+      V18.phoneIgnoreLines = ja()?JSON.parse(JSON.stringify(L136.phoneIgnoreLines)):(V18._en_phoneIgnoreLines||V18.phoneIgnoreLines);
+      V18.phoneBlockLines = ja()?JSON.parse(JSON.stringify(L136.phoneBlockLines)):(V18._en_phoneBlockLines||V18.phoneBlockLines);
+      V18.carLines = ja()?Object.assign({}, L136.carLines):(V18._en_carLines||V18.carLines);
+      V18.algorithmLines = ja()?JSON.parse(JSON.stringify(L136.algorithmLines)):(V18._en_algorithmLines||V18.algorithmLines);
+      V18.patternLines = ja()?JSON.parse(JSON.stringify(L136.patternLines)):(V18._en_patternLines||V18.patternLines);
+      if(V18.cutscenes){ Object.entries(L136.cutscenes).forEach(([id,lines])=>{ V18.cutscenes[id] = ja()?JSON.parse(JSON.stringify(lines)):((V18._en_cutscenes&&V18._en_cutscenes[id])||V18.cutscenes[id]); }); }
+    }
+  }
+  function outfitName136(s){ return ja()?((L136.outfits && L136.outfits[s]) || (L136.shopItems && L136.shopItems[s]) || s):s; }
+  window.SLTS_JA_ITEM_NAME_V136 = outfitName136;
+  function applyStatic136(){
+    document.documentElement.lang = ja()?'ja':'en';
+    document.title = ja()?L136.title:'Swipe Left to Survive';
+    const brand=document.querySelector('.brand h1'); if(brand) brand.textContent=ja()?L136.title:'Swipe Left to Survive';
+    const small=document.querySelector('.brand small'); if(small) small.textContent=ja()?L136.description:'A turn-based dating survival RPG prototype';
+    const h2=document.querySelector('#titleScreen h2'); if(h2) h2.textContent=ja()?L136.title:'Swipe Left to Survive';
+    const sub=document.querySelector('#titleScreen .subtitle'); if(sub) sub.textContent=ja()?'恋の地雷を踏み抜け。笑って、見抜いて、生き残れ。':'Working title. Also considering: Match Made in Hell, Amy vs. The Algorithm, and The Pattern.';
+    const p=document.querySelector('#titleScreen .panel p:not(.subtitle)'); if(p) p.textContent=tr('Amy thought dating would be normal. Unfortunately, the dating pool is full of bosses, debuffs, fake green flags, and men who need to be studied in a controlled environment.');
+    const mapTitle=document.querySelector('#mapScreen h2'); if(mapTitle) mapTitle.textContent=tr('City Map');
+    const codexTitle=document.querySelector('#codexScreen h2'); if(codexTitle) codexTitle.textContent=tr('Villain Codex');
+    document.querySelectorAll('button').forEach(btn=>{
+      if(btn.id==='languageToggleBtn'||btn.classList.contains('map-pin')||btn.querySelector('.lang-knob')||btn.querySelector('.map-pin-icon')) return;
+      if(btn.children.length>0) return;
+      const en=btn.dataset.enText136 || btn.dataset.enText134 || btn.dataset.enText133 || btn.textContent.trim();
+      if(!btn.dataset.enText136) btn.dataset.enText136=en;
+      btn.textContent=tr(en);
+    });
+  }
+  const baseRenderCloset136 = typeof renderCloset==='function' ? renderCloset : null;
+  if(baseRenderCloset136) renderCloset=function(){
+    const grid=document.getElementById('closetGrid'); if(!grid) return baseRenderCloset136();
+    grid.innerHTML='';
+    Object.entries(outfits).forEach(([slot,ops])=>{
+      const slotJa = ja()?({top:'トップス',bottom:'ボトムス',shoes:'靴',jacket:'上着',accessory:'アクセサリー'}[slot]||slot):titleCase(slot);
+      const card=document.createElement('div'); card.className='closet-card';
+      card.innerHTML=`<h3>${slotJa}</h3><div class="card-desc">${tr('Current')}: <b>${outfitName136(state.outfit[slot])}</b></div>`;
+      ops.forEach(o=>{ const b=document.createElement('button'); b.className='small-btn'; b.style.margin='3px'; b.textContent=outfitName136(o); b.onclick=()=>{state.outfit[slot]=o; updateAmySpriteLabel(); renderCloset(); say('Closet',ja()?`エイミーは「${outfitName136(o)}」を装備した。`:`Amy equipped ${o}.`); updateHud();}; card.appendChild(b); });
+      grid.appendChild(card);
+    });
+  };
+  const baseRenderShop136 = typeof renderShop==='function' ? renderShop : null;
+  if(baseRenderShop136) renderShop=function(){
+    const grid=document.getElementById('shopGrid'); if(!grid) return baseRenderShop136();
+    grid.innerHTML='';
+    shopItems.forEach(i=>{ const card=document.createElement('div'); card.className='shop-card'; const name=outfitName136(i.name); card.innerHTML=`<h3>${name}</h3><div class="card-desc">${tr('Cost')}: ${i.cost} ${tr('Soft Life Funds')}</div><button class="map-btn ${state.funds<i.cost?'':'green'}" ${state.funds<i.cost?'disabled':''}>${tr('Buy')}</button>`; card.querySelector('button').onclick=()=>spendFunds(i.cost,i.fn); grid.appendChild(card); });
+  };
+  const baseUpdateHud136 = typeof updateHud==='function' ? updateHud : null;
+  if(baseUpdateHud136) updateHud=function(){
+    const r=baseUpdateHud136();
+    if(ja()){ document.querySelectorAll('#hud .stat').forEach(el=>{ el.innerHTML=el.innerHTML.replace(/Soft Life Funds/g,'ソフトライフ資金').replace(/Peace/g,'平穏').replace(/Clarity/g,'明晰さ').replace(/Self-Respect/g,'自尊心'); }); }
+    return r;
+  };
+  const baseToggle136 = typeof toggleLanguage111==='function' ? toggleLanguage111 : null;
+  if(baseToggle136) toggleLanguage111=function(){
+    const r=baseToggle136();
+    applyDictionary136(); applyData136(); applyStatic136();
+    if(typeof renderLocations==='function' && document.getElementById('mapScreen') && !document.getElementById('mapScreen').classList.contains('hidden')) renderLocations();
+    if(typeof renderCloset==='function' && document.getElementById('closetScreen') && !document.getElementById('closetScreen').classList.contains('hidden')) renderCloset();
+    if(typeof renderShop==='function' && document.getElementById('shopScreen') && !document.getElementById('shopScreen').classList.contains('hidden')) renderShop();
+    if(typeof renderCodex==='function' && document.getElementById('codexScreen') && !document.getElementById('codexScreen').classList.contains('hidden')) renderCodex();
+    if(typeof updateHud==='function') updateHud();
+    return r;
+  };
+  window.applyJapaneseLocalization136=function(){ applyDictionary136(); applyData136(); applyStatic136(); if(typeof updateHud==='function') updateHud(); };
+  applyDictionary136(); applyData136();
+  window.addEventListener('load',()=>{ applyDictionary136(); applyData136(); applyStatic136(); if(typeof updateHud==='function') updateHud(); });
+  setTimeout(()=>{ applyDictionary136(); applyData136(); applyStatic136(); if(typeof updateHud==='function') updateHud(); },0);
 })();
-</script>
 
+
+
+
+/* =========================
+   v1.40 Japanese Localization Completion
+   Covers v1.36–v1.39 additions: location hours, office closed copy,
+   24 HOUR BADDIE utility cheat, arcade/date-fit dynamic screens,
+   and late-rendered gallery / cheat cards.
+   ========================= */
+(function(){
+  const J140={
+    '24 HOUR BADDIE':'24 HOUR BADDIE',
+    '24H BADDIE':'24H BADDIE',
+    'ALWAYS OPEN':'ALWAYS OPEN',
+    'OPEN 24 HOURS':'OPEN 24 HOURS',
+    'EVERYTHING IS OPEN':'EVERYTHING IS OPEN',
+    'NO CLOSED DOORS':'NO CLOSED DOORS',
+    'Utility cheat. Opens every location 24/7, including office, library, mall, spa, restaurant, and cafe.':'便利チート。オフィス、図書館、モール、スパ、レストラン、カフェを含む全ロケーションを24時間営業にします。',
+    'Inactive':'無効',
+    'Active':'有効',
+    'Activate':'有効にする',
+    'Deactivate':'無効にする',
+    'Go Home':'帰宅する',
+    'Hours':'営業時間',
+    'Open':'営業中',
+    'Closed':'閉店中',
+    'Open 24/7':'24時間営業',
+    'Closed •':'閉店中 •',
+    'Date Fit Studio':'デートコーデスタジオ',
+    'Dress-Up Gallery':'コーデギャラリー',
+    'Dress Amy, choose the date/location, snap a Polaroid, and save it to the Dress-Up Gallery.':'エイミーの服を選び、デート相手と場所を決めて、ポラロイド風に保存できます。',
+    'Saved Date Fit Studio snapshots. Browser share/email support depends on the device.':'保存済みのデートコーデ写真。共有やメール機能は端末・ブラウザにより異なります。',
+    'Snap Polaroid':'ポラロイドを撮る',
+    'Back to Date Fit Studio':'デートコーデスタジオへ戻る',
+    'Title':'タイトル',
+    'No Polaroids Yet':'まだポラロイドはありません',
+    'Make one in Date Fit Studio first.':'先にデートコーデスタジオで作成してください。',
+    'Open Date Fit Studio':'デートコーデスタジオを開く',
+    'Download PNG':'PNGを保存',
+    'Print':'印刷',
+    'Share':'共有',
+    'Email':'メール',
+    'Delete':'削除',
+    'Fit:':'コーデ：',
+    'Extras:':'小物：',
+    'Hairstyle':'ヘアスタイル',
+    'Accessory':'アクセサリー',
+    'Top':'トップス',
+    'Bottom':'ボトムス',
+    'Dress':'ワンピース',
+    'Shoes':'靴',
+    'Bag':'バッグ',
+    'Hat':'帽子',
+    'Jewelry':'ジュエリー',
+    'Location':'場所',
+    'Date / Photo Partner':'デート／写真の相手',
+    'Freeplay toy-box mode: Jade, Chloe, besties, red flags, bosses, and concepts are all allowed here.':'自由撮影モード。ジェイド、クロエ、親友、地雷男、ボス、概念存在までここでは全員OKです。',
+    'Arcade Mode':'アーケードモード',
+    'Fast command-battle freeplay. Story stays turn-based; Arcade is for rematches, gauntlets, boss rushes, and chaos.':'テンポ重視のコマンドバトル自由プレイ。本編はターン制のまま、再戦・連戦・ボスラッシュ・カオス用です。',
+    'Quick Date Battle':'クイックデートバトル',
+    'Pick one red flag, boss, or green flag and jump straight into a command battle.':'地雷男、ボス、グリーンフラッグを選んで、すぐコマンドバトルへ。',
+    'Red Flag Gauntlet':'地雷男ガントレット',
+    'Fight a chain of red flags with quick Arcade pacing. Great for testing balance.':'地雷男を連戦で倒す高速アーケードモード。バランス確認にも便利。',
+    'Boss Rush':'ボスラッシュ',
+    'Algorithm → Pattern. Concepts only. Feelings not included in the warranty.':'アルゴリズム → パターン。概念だけ。感情は保証対象外。',
+    'Green Flag Dates':'グリーンフラッグデート',
+    'Replay green flag fake battles without story restrictions.':'ストーリー制限なしでグリーンフラッグの疑似バトルを再プレイ。',
+    'Concept Chaos':'概念カオス',
+    'Battle or photo-date the Algorithm and The Pattern because freeplay has no shame.':'自由プレイに遠慮はないので、アルゴリズムやパターンともバトル／写真デート可能。',
+    'Random Match':'ランダムマッチ',
+    'Let chaos choose the opponent.':'カオスに相手を選ばせる。',
+    'Choose Opponent':'相手を選ぶ',
+    'Start Gauntlet':'ガントレット開始',
+    'Start Boss Rush':'ボスラッシュ開始',
+    'Choose Green Flag':'グリーンフラッグを選ぶ',
+    'Open Concepts':'概念を開く',
+    'Randomize':'ランダム',
+    'Arcade Roster':'アーケード名簿',
+    'Choose a match.':'マッチを選んでください。',
+    'Choose anybody. Arcade ignores story logic.':'誰でも選べます。アーケードはストーリー整合性を気にしません。',
+    'Choose an entity/concept.':'存在／概念を選んでください。',
+    'Choose a green flag fake battle.':'グリーンフラッグ疑似バトルを選んでください。',
+    'Start':'開始',
+    'Back to Arcade':'アーケードへ戻る',
+    'End Arcade Run':'アーケード終了',
+    'Green Flag':'グリーンフラッグ',
+    'Red Flag':'地雷男',
+    'Bestie':'親友',
+    'Friend':'友達',
+    'Concept':'概念',
+    'Chaos':'カオス',
+    'Random':'ランダム',
+    'The Algorithm':'アルゴリズム',
+    'The Pattern':'パターン',
+    'James':'ジェームズ','Xavier':'ゼイヴィア','Andrew':'アンドリュー','Malik':'マリク','Min':'ミン','Mia':'ミア','Jade':'ジェイド','Chloe':'クロエ','Christy':'クリスティ','Amy':'エイミー','AMY':'エイミー',
+    'Afro Puff':'アフロパフ','Big Afro':'大きめアフロ','Twist-Out':'ツイストアウト','High Bun':'高めお団子','Bantu Knots':'バントゥーノット','Silk Press':'シルクプレス','Braided Ponytail':'編み込みポニーテール','Soft Curls':'ソフトカール',
+    'Heart Sunglasses':'ハートサングラス','Pearl Clips':'パールクリップ','Pink Headband':'ピンクヘッドバンド','Star Hair Pins':'星ヘアピン','None':'なし',
+    'Cropped Cardigan':'短めカーディガン','Off-Shoulder Top':'オフショルトップス','Satin Blouse':'サテンブラウス','Graphic Tee':'グラフィックTシャツ','Corset Top':'コルセットトップス',
+    'High-Waist Jeans':'ハイウエストジーンズ','Pleated Skirt':'プリーツスカート','Wide-Leg Pants':'ワイドパンツ','Mini Skirt':'ミニスカート','Tailored Shorts':'テーラードショーツ',
+    'Pink Slip Dress':'ピンクスリップドレス','Soft Lavender Dress':'やわらかラベンダーワンピ','Beach Sundress':'ビーチサンドレス','Black Date Dress':'黒デートワンピ','Sparkle Mini Dress':'きらきらミニドレス',
+    'Strappy Sandals':'ストラップサンダル','White Sneakers':'白スニーカー','Platform Heels':'厚底ヒール','Ballet Flats':'バレエシューズ','Ankle Boots':'アンクルブーツ',
+    'Mini Heart Bag':'ミニハートバッグ','Pearl Clutch':'パールクラッチ','Tiny Backpack':'ミニリュック','Beach Tote':'ビーチトート','Crossbody Bag':'クロスボディバッグ',
+    'Sun Hat':'サンハット','Beret':'ベレー帽','Baseball Cap':'キャップ','Fluffy Bucket Hat':'ふわふわバケットハット',
+    'Gold Necklace':'ゴールドネックレス','Pearl Set':'パールセット','Charm Bracelet':'チャームブレスレット','Layered Chains':'重ねづけチェーン','Statement Earrings':'主役イヤリング',
+    'Item purchased. New looks are best used in Date Fit Studio / Dress-Up Gallery mode.':'購入完了。新しい見た目はデートコーデスタジオ／コーデギャラリーで使うのが一番です。',
+    'Polaroid snapped:':'ポラロイドを撮影：',
+    'Saved to the Dress-Up Gallery.':'コーデギャラリーに保存しました。',
+    'Sharing is not supported here, so I downloaded the PNG instead.':'この環境では共有に対応していないため、PNGを保存しました。',
+    'Share was cancelled or not supported. Download PNG still works.':'共有がキャンセルされたか非対応です。PNG保存は使えます。',
+    'Pop-up blocked. Use Download PNG instead.':'ポップアップがブロックされました。PNG保存を使ってください。'
+  };
+  function isJa140(){return typeof state==='object' && state.lang==='ja';}
+  function tx140(s){
+    if(!isJa140())return s;
+    const raw=String(s ?? '');
+    if(J140[raw])return J140[raw];
+    let out=raw;
+    Object.keys(J140).sort((a,b)=>b.length-a.length).forEach(k=>{
+      if(k && out.includes(k)) out=out.split(k).join(J140[k]);
+    });
+    return out;
+  }
+  window.SLTS_JA_DYNAMIC_V140=J140;
+  if(typeof V111_JA==='object')Object.assign(V111_JA,J140);
+  function translateTextNodes140(root){
+    if(!isJa140()||!root)return;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(node){
+      const p=node.parentElement;
+      if(!p||['SCRIPT','STYLE','TEXTAREA','INPUT','CANVAS'].includes(p.tagName))return NodeFilter.FILTER_REJECT;
+      return node.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+    }});
+    const nodes=[]; while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(n=>{
+      const t=n.nodeValue;
+      const trimmed=t.trim();
+      if(!trimmed)return;
+      const next=tx140(trimmed);
+      if(next!==trimmed)n.nodeValue=t.replace(trimmed,next);
+    });
+    if(document.title==='Swipe Left to Survive')document.title='マッチング地獄サバイバル';
+    const title=document.querySelector('.brand h1'); if(title)title.textContent='マッチング地獄サバイバル';
+    const desc=document.querySelector('.brand small'); if(desc)desc.textContent='恋の地雷サバイバルRPG';
+  }
+  window.localizeDynamic140=function(root){translateTextNodes140(root||document.body);};
+  const baseShowScreen140=typeof showScreen==='function'?showScreen:null;
+  if(baseShowScreen140){showScreen=function(id){const r=baseShowScreen140(id);setTimeout(()=>translateTextNodes140(document.body),0);return r;};}
+  const baseSetActions140=typeof setActions==='function'?setActions:null;
+  if(baseSetActions140){setActions=function(actions){const mapped=(actions||[]).map(a=>Object.assign({},a,{label:tx140(a.label)}));const r=baseSetActions140(mapped);setTimeout(()=>translateTextNodes140(document.getElementById('actionGrid')),0);return r;};}
+  const baseRenderUnlockedCheats140=typeof renderUnlockedCheats==='function'?renderUnlockedCheats:null;
+  if(baseRenderUnlockedCheats140){renderUnlockedCheats=function(){const r=baseRenderUnlockedCheats140();translateTextNodes140(document.getElementById('unlockedCheatsBody'));return r;};}
+  const baseToggleAllHours140=window.toggleAllHoursCheat139;
+  if(baseToggleAllHours140){window.toggleAllHoursCheat139=function(){const r=baseToggleAllHours140();setTimeout(()=>translateTextNodes140(document.body),0);return r;};}
+  function partnerJa140(id){return ({james:'ジェームズ',xavier:'ゼイヴィア',andrew:'アンドリュー',malik:'マリク',min:'ミン',mia:'ミア',jade:'ジェイド',chloe:'クロエ',christy:'クリスティ',algorithm:'アルゴリズム',pattern:'パターン'}[id]||tx140(id));}
+  function locationJa140(id){return ({bar:'バー',library:'図書館',park:'公園',beach:'海辺',beachside_cafe:'海辺のカフェ',aquarium:'水族館',spa:'スパ',restaurant:'レストラン',mall:'モール',office:'オフィス',apartment:'アパート',dream_world:'記憶の空間',bedroom_glitch:'アルゴリズム空間'}[id]||tx140(id));}
+  function fitJa140(){
+    const d=state.dateFit||{};
+    const arr=(d.dress&&d.dress!=='None')?[d.dress,d.shoes,d.bag,d.jewelry]:[d.top,d.bottom,d.shoes,d.bag,d.jewelry];
+    return arr.map(tx140).join('、');
+  }
+  window.makeDateFitSnapshot112=function(){
+    const canvas=document.getElementById('dateFitCanvas');
+    if(!canvas||!state.dateFit)return;
+    const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+    const partner=isJa140()?partnerJa140(state.dateFit.partner):(state.dateFit.partner||'Date');
+    const loc=isJa140()?locationJa140(state.dateFit.location):(state.dateFit.location||'Location');
+    const fit=isJa140()?fitJa140():'';
+    ctx.fillStyle='#fff8ef';ctx.fillRect(0,0,w,h);
+    const g=ctx.createLinearGradient(70,70,w-70,h-210);g.addColorStop(0,'#ffd4eb');g.addColorStop(.48,'#c9f0ff');g.addColorStop(1,'#8b5cf6');ctx.fillStyle=g;ctx.fillRect(70,70,w-140,h-300);
+    ctx.fillStyle='rgba(42,23,43,.20)';ctx.fillRect(70,h-410,w-140,180);
+    function doll(x,name,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.roundRect(x,360,190,360,55);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 38px Trebuchet MS, sans-serif';ctx.textAlign='center';ctx.fillText(name,x+95,520);} 
+    doll(240,isJa140()?'エイミー':'AMY','#d85fb2');doll(470,partner.slice(0,6),'#423080');
+    ctx.fillStyle='#2a172b';ctx.textAlign='center';ctx.font='bold 44px Trebuchet MS, sans-serif';ctx.fillText(`${partner} × ${isJa140()?'エイミー':'Amy'}`,w/2,h-170);
+    ctx.font='30px Trebuchet MS, sans-serif';ctx.fillText(loc,w/2,h-124);
+    ctx.font='22px Trebuchet MS, sans-serif';ctx.fillText(`${isJa140()?'コーデ':'Fit'}: ${fit}`,w/2,h-86);
+    ctx.font='18px Trebuchet MS, sans-serif';ctx.fillText(isJa140()?'マッチング地獄サバイバル — デートコーデスタジオ':'Swipe Left to Survive — Date Fit Studio',w/2,h-34);
+    const snap={id:'df_'+Date.now(),created:new Date().toISOString(),...state.dateFit,partnerLabel:partner,locationLabel:loc,fit:fit,dataUrl:canvas.toDataURL('image/png')};
+    if(!Array.isArray(state.dateFitGallery))state.dateFitGallery=[];
+    state.dateFitGallery.unshift(snap);state.dateFitGallery=state.dateFitGallery.slice(0,20);
+    try{localStorage.setItem('slts_datefit_gallery_v1',JSON.stringify(state.dateFitGallery.slice(0,20)));}catch(e){}
+    if(typeof say==='function')say(isJa140()?'デートコーデスタジオ':'Date Fit Studio',isJa140()?`ポラロイドを撮影：${partner} × エイミー — ${loc}。コーデギャラリーに保存しました。`:`Polaroid snapped: ${partner} × Amy — ${loc}. Saved to the Dress-Up Gallery.`);
+    translateTextNodes140(document.body);
+  };
+  const baseUpdateHud140=typeof updateHud==='function'?updateHud:null;
+  if(baseUpdateHud140){updateHud=function(){const r=baseUpdateHud140();setTimeout(()=>translateTextNodes140(document.getElementById('hud')),0);return r;};}
+  window.addEventListener('load',()=>setTimeout(()=>translateTextNodes140(document.body),25));
+  setTimeout(()=>translateTextNodes140(document.body),0);
+})();
+
+
+
+/* =========================
+   v1.43 One-Page In-Place Localization Fix
+   - Single-page language toggle. No reload.
+   - Defaults to English, then EN/和 toggles the current running game in place.
+   - Keeps the translated Japanese text from v1.40 as the Japanese language layer.
+   - Restores safe splash behavior and Amy's torso-up card behavior.
+   ========================= */
+(function(){
+  const STATIC143 = { en:{"documentTitle": "Swipe Left to Survive", "brandTitle": "Swipe Left to Survive", "brandSubtitle": "A turn-based dating survival RPG prototype", "titleH2": "Swipe Left to Survive", "titleSubtitle": "A turn-based dating survival RPG prototype.", "titleBody": "Amy thought she was looking for love. LoveLoop thought she was looking for a boss rush.", "titleStart": "Start Prototype", "titleMap": "Open City Map", "titleCodex": "Villain Codex", "titleCloset": "Open Closet", "mapH2": "City Map", "mapSubtitle": "Tap a pink pin to travel.", "mapChip": "Location pins are clickable", "quickTravel": "Quick Travel", "closetH2": "Amy’s Closet", "closetSubtitle": "Selected outfit carries into scenes and battles.", "backToMap": "Back to Map", "shopH2": "Mall: Retail Therapy Rush", "shopSubtitle": "Buy buffs, outfits, and self-care items. MVP shopping placeholder.", "codexH2": "Villain Codex", "codexSubtitle": "Learn the red flags. The internet may still defend them. The group chat is tired.", "system": "System", "initialDialogue": "Welcome to Amy’s dating survival RPG prototype.", "effectPop": "GIRL, STAND UP!", "amy": "Amy", "enemy": "Enemy", "currentFit": "Current Fit"}, ja:{"documentTitle": "マッチング地獄サバイバル", "brandTitle": "マッチング地獄サバイバル", "brandSubtitle": "恋の地雷サバイバルRPG", "titleH2": "マッチング地獄サバイバル", "titleSubtitle": "恋の地雷を踏み抜け。笑って、見抜いて、生き残れ。", "titleBody": "エイミーは、恋愛くらい普通にできると思っていた。だが恋のプールは、ボス、デバフ、偽グリーンフラッグ、そして研究室で観察したほうがいい男たちでいっぱいだった。", "titleStart": "はじめる", "titleMap": "シティマップを開く", "titleCodex": "地雷男図鑑", "titleCloset": "クローゼットを開く", "mapH2": "シティマップ", "mapSubtitle": "ピンクのピンをタップして移動。", "mapChip": "ロケーションピンはクリック可能", "quickTravel": "クイック移動", "closetH2": "エイミーのクローゼット", "closetSubtitle": "選んだコーデはバトルやカットシーンにも反映されます。", "backToMap": "マップへ戻る", "shopH2": "モール：リテールセラピー・ラッシュ", "shopSubtitle": "バフ、服、自分ケア用品を購入。今はMVP版ショッピング仮置き。", "codexH2": "地雷男図鑑", "codexSubtitle": "赤旗を見抜け。ネット民はそれでも推す。グルチャはもう疲れている。", "system": "システム", "initialDialogue": "エイミーの恋愛サバイバルRPGプロトタイプへようこそ。", "effectPop": "立ちな！", "amy": "エイミー", "enemy": "敵", "currentFit": "現在のコーデ"} };
+  const V143_JA = {"Swipe Left to Survive": "マッチング地獄サバイバル", "A turn-based dating survival RPG prototype": "恋の地雷サバイバルRPG", "A turn-based dating survival RPG prototype.": "恋の地雷を踏み抜け。笑って、見抜いて、生き残れ。", "Amy thought she was looking for love. LoveLoop thought she was looking for a boss rush.": "エイミーは、恋愛くらい普通にできると思っていた。だが恋のプールは、ボス、デバフ、偽グリーンフラッグ、そして研究室で観察したほうがいい男たちでいっぱいだった。", "Welcome to Amy’s dating survival RPG prototype.": "エイミーの恋愛サバイバルRPGプロトタイプへようこそ。", "Start Prototype": "はじめる", "Open City Map": "シティマップを開く", "Open Closet": "クローゼットを開く", "Villain Codex": "地雷男図鑑", "City Map": "シティマップ", "Tap a pink pin to travel.": "ピンクのピンをタップして移動。", "Location pins are clickable": "ロケーションピンはクリック可能", "Quick Travel": "クイック移動", "Amy’s Closet": "エイミーのクローゼット", "Selected outfit carries into scenes and battles.": "選んだコーデはバトルやカットシーンにも反映されます。", "Back to Map": "マップへ戻る", "Mall: Retail Therapy Rush": "モール：リテールセラピー・ラッシュ", "Buy buffs, outfits, and self-care items. MVP shopping placeholder.": "バフ、服、自分ケア用品を購入。今はMVP版ショッピング仮置き。", "Learn the red flags. The internet may still defend them. The group chat is tired.": "赤旗を見抜け。ネット民はそれでも推す。グルチャはもう疲れている。", "System": "システム", "Enemy": "敵", "Amy": "エイミー", "Current Fit": "現在のコーデ", "GIRL, STAND UP!": "立ちな！", "Open Map": "マップを開く", "Closet": "クローゼット", "Enter Cheat Code": "チートコード入力", "Unlocked Cheats": "解放済みチート", "Start Game": "ゲーム開始", "Go": "行く", "Closed": "閉店中", "Open": "営業中", "Back": "戻る", "Hours": "営業時間", "Go Home": "帰宅する", "Original Endings": "初期エンディング", "Dress-Up Gallery": "着せ替えギャラリー", "Date Fit Studio": "デートコーデスタジオ", "Arcade Mode": "アーケードモード"};
+  if(typeof V111_JA==='object') Object.assign(V111_JA,V143_JA);
+
+  // One-time migration out of the broken hardcoded-JA/old reload-based builds.
+  try{
+    if(!localStorage.getItem('slts_v143_inplace_migrated')){
+      localStorage.setItem('slts_language','en');
+      localStorage.setItem('slts_v143_inplace_migrated','1');
+      if(typeof state==='object') state.lang='en';
+    }
+  }catch(e){ if(typeof state==='object') state.lang='en'; }
+
+  function lang143(){ return (typeof state==='object' && state.lang==='ja') ? 'ja' : 'en'; }
+  function setText143(sel,text){ const el=document.querySelector(sel); if(el) el.textContent=text; }
+  function setButton143(btn,text){ if(btn) btn.textContent=text; }
+  function translate143(s){
+    if(lang143()!=='ja') return s;
+    if(typeof V111_JA==='object' && V111_JA[s]) return V111_JA[s];
+    if(V143_JA[s]) return V143_JA[s];
+    return s;
+  }
+  function reverseTranslate143(s){
+    if(lang143()==='ja') return translate143(s);
+    for(const [en,ja] of Object.entries(V143_JA)) if(s===ja) return en;
+    return s;
+  }
+  window.T143=translate143;
+
+  function applyStaticLocalization143(){
+    const l=lang143(), tx=STATIC143[l];
+    document.documentElement.lang=l;
+    document.title=tx.documentTitle;
+    setText143('.brand h1',tx.brandTitle);
+    setText143('.brand small',tx.brandSubtitle);
+    setText143('#titleScreen h2',tx.titleH2);
+    setText143('#titleScreen .subtitle',tx.titleSubtitle);
+    const titleBody=document.querySelector('#titleScreen .panel p:not(.subtitle)'); if(titleBody) titleBody.textContent=tx.titleBody;
+    const titleBtns=document.querySelectorAll('#titleScreen .menu-grid button');
+    const labels=[tx.titleStart,tx.titleMap,tx.titleCodex,tx.titleCloset,translate143('Enter Cheat Code'),translate143('Unlocked Cheats'),translate143('Arcade Mode'),translate143('Date Fit Studio'),translate143('Dress-Up Gallery')];
+    titleBtns.forEach((b,i)=>{ if(labels[i]) b.textContent=labels[i]; });
+    setText143('#mapScreen h2',tx.mapH2);
+    setText143('#mapScreen .subtitle',tx.mapSubtitle);
+    const chips=document.querySelectorAll('#mapScreen .map-chip'); if(chips[1]) chips[1].textContent=tx.mapChip;
+    const quick=document.querySelector('#mapScreen h3[style*="margin-top"]'); if(quick) quick.textContent=tx.quickTravel;
+    setText143('#closetScreen h2',tx.closetH2); setText143('#closetScreen .subtitle',tx.closetSubtitle);
+    setText143('#shopScreen h2',tx.shopH2); setText143('#shopScreen .subtitle',tx.shopSubtitle);
+    setText143('#codexScreen h2',tx.codexH2); setText143('#codexScreen .subtitle',tx.codexSubtitle);
+    document.querySelectorAll('button.small-btn').forEach(b=>{ const t=b.textContent.trim(); if(t==='Back to Map'||t==='マップへ戻る') b.textContent=tx.backToMap; });
+    const speaker=document.getElementById('speaker'); if(speaker && (speaker.textContent==='System'||speaker.textContent==='システム')) speaker.textContent=tx.system;
+    const d=document.getElementById('dialogueText'); if(d && (d.textContent===STATIC143.en.initialDialogue || d.textContent===STATIC143.ja.initialDialogue)) d.textContent=tx.initialDialogue;
+    const amyLabel=document.getElementById('amyLabel'); if(amyLabel) amyLabel.textContent=tx.amy;
+    const enemyLabel=document.getElementById('enemyLabel'); if(enemyLabel && (enemyLabel.textContent==='Enemy'||enemyLabel.textContent==='敵')) enemyLabel.textContent=tx.enemy;
+    const enemyName=document.getElementById('enemyNameLabel'); if(enemyName && (enemyName.textContent==='Enemy'||enemyName.textContent==='敵')) enemyName.textContent=tx.enemy;
+    const eff=document.getElementById('effectPop'); if(eff && (eff.textContent===STATIC143.en.effectPop || eff.textContent===STATIC143.ja.effectPop)) eff.textContent=tx.effectPop;
+    if(typeof updateLanguageToggle111==='function') updateLanguageToggle111();
+  }
+
+  function rerenderCurrentLanguage143(){
+    try{ applyStaticLocalization143(); }catch(e){}
+    try{ if(typeof updateHud==='function') updateHud(); }catch(e){}
+    try{ if(typeof v111LastActions!=='undefined' && v111LastActions.length && typeof setActions==='function') setActions(v111LastActions); }catch(e){}
+    try{ if(!document.getElementById('mapScreen')?.classList.contains('hidden') && typeof renderLocations==='function') renderLocations(); }catch(e){}
+    try{ if(!document.getElementById('closetScreen')?.classList.contains('hidden') && typeof renderCloset==='function') renderCloset(); }catch(e){}
+    try{ if(!document.getElementById('shopScreen')?.classList.contains('hidden') && typeof renderShop==='function') renderShop(); }catch(e){}
+    try{ if(!document.getElementById('codexScreen')?.classList.contains('hidden') && typeof renderCodex==='function') renderCodex(); }catch(e){}
+    try{ if(!document.getElementById('unlockedCheatsScreen')?.classList.contains('hidden') && typeof renderUnlockedCheats==='function') renderUnlockedCheats(); }catch(e){}
+    try{ applyStaticLocalization143(); }catch(e){}
+  }
+  window.rerenderCurrentLanguage143=rerenderCurrentLanguage143;
+
+  // Override the language toggle to stay on the same page and same game state.
+  toggleLanguage111=function(){
+    state.lang = state.lang==='ja' ? 'en' : 'ja';
+    try{ localStorage.setItem('slts_language',state.lang); }catch(e){}
+    rerenderCurrentLanguage143();
+  };
+
+  // Make the sliding pill call the safe in-place toggle.
+  const prevInject143 = typeof injectLanguageToggle111==='function' ? injectLanguageToggle111 : null;
+  injectLanguageToggle111=function(){
+    if(prevInject143) prevInject143();
+    const btn=document.getElementById('languageToggleBtn'); if(btn) btn.onclick=toggleLanguage111;
+    applyStaticLocalization143();
+  };
+
+  // Extra exact-string translation layer for dialogue and labels, while leaving English default untouched.
+  const prevSay143 = typeof say==='function' ? say : null;
+  if(prevSay143){
+    say=function(speaker,text){ return prevSay143(reverseTranslate143(String(speaker||'')), reverseTranslate143(String(text||''))); };
+  }
+  const prevSetActions143 = typeof setActions==='function' ? setActions : null;
+  if(prevSetActions143){
+    setActions=function(actions){
+      const safe=(actions||[]).map(a=>Object.assign({},a,{label: reverseTranslate143(String(a.label||''))}));
+      return prevSetActions143(safe);
+    };
+  }
+  const prevUpdateHud143 = typeof updateHud==='function' ? updateHud : null;
+  if(prevUpdateHud143){ updateHud=function(){ const r=prevUpdateHud143(); applyStaticLocalization143(); return r; }; }
+
+  // Restore Amy torso-up card outside battle if later patches regress it.
+  const AMY_CARD_143='assets/characters/amy/amy_card_neutral.png';
+  if(typeof ASSETS==='object'){ ASSETS.characters=ASSETS.characters||{}; ASSETS.characters.amyCardNeutral=AMY_CARD_143; }
+  const prevSetAmyPose143 = typeof setAmyPose==='function' ? setAmyPose : null;
+  if(prevSetAmyPose143){
+    setAmyPose=function(pose='idle'){
+      const inBattle=!!state.currentBattle;
+      const card=document.getElementById('amySprite'); if(card) card.classList.toggle('amy-card-mode',!inBattle);
+      if(!inBattle){
+        state.currentAmyPose=pose;
+        const src=AMY_CARD_143;
+        const fallback=`${STATIC143[lang143()].amy}<br><small>${STATIC143[lang143()].currentFit}</small>`;
+        return renderSprite('amySpriteText',src,fallback,false);
+      }
+      return prevSetAmyPose143(pose);
+    };
+  }
+
+  // Splash fail-safe: no more splash-screen jail after refresh or language toggle.
+  function hideSplash143(){
+    const s=document.getElementById('studioSplash'); if(!s) return;
+    s.classList.add('fade-out');
+    setTimeout(()=>{ if(s) s.style.display='none'; },950);
+  }
+  document.addEventListener('DOMContentLoaded',()=>{ applyStaticLocalization143(); setTimeout(hideSplash143,4200); setTimeout(hideSplash143,6500); });
+  window.addEventListener('load',()=>{ if(typeof injectLanguageToggle111==='function') injectLanguageToggle111(); rerenderCurrentLanguage143(); setTimeout(hideSplash143,4200); setTimeout(hideSplash143,6500); });
+  setTimeout(()=>{ if(typeof state==='object') state.lang=localStorage.getItem('slts_language')||'en'; rerenderCurrentLanguage143(); },0);
+})();
+
+</script>
 </body>
 </html>
