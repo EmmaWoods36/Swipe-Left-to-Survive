@@ -139,7 +139,7 @@ const V18 = {
   },
   friendLines:{
     malik:{
-      bar:["Bar rule: if the message starts with ‘don’t be mad,’ we stop reading.","Amy. I love you. But your dating app is starting to feel like a haunted house with profile pictures.","Do not let a man with no bed frame reduce your self-esteem.","If confusion was cologne, he would be drenched."],
+      bar:["Bar rule: if the message starts with ‘don’t be mad,’ we stop reading.","Amy. I care about you. But your dating app is starting to feel like a haunted house with profile pictures.","Do not let a man with no bed frame reduce your self-esteem.","If confusion was cologne, he would be drenched."],
       restaurant:["Eat first. Spiral later. Men hate when pasta wins.","I support dinner. I do not support dinner becoming a job interview for a man with unresolved storage-unit energy.","If he says ‘I’m not hungry’ then eats your fries, I want legal permission to act."],
       park:["I’m not saying the jogger is cute. I’m saying I noticed God was in a good mood that day.","This park has trees, sunlight, and zero men asking for gas money. Healing."],
       beach:["The waves are healing. Your inbox is not.","This is peaceful. No men. No notifications. Just waves and consequences staying far away."],
@@ -365,7 +365,7 @@ startGame=function(){
   hideAllScreens();
   state.location="apartment";state.time="Day";state.day=1;state.appOpened=0;
   setBackground("apartment_day");showAmy(true,"idle");showEnemy(false);updateHud();
-  say("Narrator","Amy had a cute apartment, a job that paid the bills, friends who loved her, and one dating app she kept pretending she was done with.");
+  say("Narrator","Amy had a cute apartment, a job that paid the bills, friends who cared about her, and one dating app she kept pretending she was done with.");
   setActions([{label:"Continue",fn:()=>{
     say("Amy","I am simply opening myself up to possibility.");
     setActions([{label:"Download the App",fn:()=>{
@@ -1629,7 +1629,7 @@ const NPC_CHAT_114 = {"james": [["James", {"en": "You want the usual, or are we 
 const ITEMS_114 = {"cafe_drinks": [{"name": "Passion Fruit Iced Tea", "ja": "パッションフルーツアイスティー", "cost": 120, "effects": {"peace": 8, "clarity": 3}, "text": {"en": "Amy ordered passion fruit iced tea. Dramatic, refreshing, and emotionally correct.", "ja": "エイミーはパッションフルーツアイスティーを頼んだ。ドラマチックで爽やかで、感情的に正しい。"}}, {"name": "Iced Matcha", "ja": "アイス抹茶", "cost": 150, "effects": {"clarity": 8, "peace": 3}, "text": {"en": "Amy ordered iced matcha. Calm focus entered the chat.", "ja": "エイミーはアイス抹茶を頼んだ。落ち着いた集中力がログインした。"}}, {"name": "Classic Iced Tea", "ja": "アイスティー", "cost": 80, "effects": {"hp": 5, "peace": 3}, "text": {"en": "Amy ordered classic iced tea. Simple. Reliable. Not texting at 2 a.m.", "ja": "エイミーはアイスティーを頼んだ。シンプルで信頼できる。深夜二時に連絡してこない。"}}, {"name": "Boba", "ja": "ボバティー", "cost": 180, "effects": {"hp": 8, "peace": 5}, "text": {"en": "Amy ordered boba. Tiny tapioca joy restored morale.", "ja": "エイミーはボバティーを頼んだ。小さなタピオカの喜びが士気を回復した。"}}, {"name": "Coconut Drink", "ja": "ココナッツドリンク", "cost": 220, "effects": {"peace": 12, "selfRespect": 3}, "text": {"en": "Amy ordered a drink served in a coconut. Soft-life evidence acquired.", "ja": "エイミーはココナッツに入ったドリンクを頼んだ。ソフトライフの証拠を入手した。"}}], "cafe_food": [{"name": "Fruit Tart", "ja": "フルーツタルト", "cost": 250, "effects": {"hp": 10, "peace": 8}, "text": {"en": "Amy ordered a fruit tart. Regular joy is important.", "ja": "エイミーはフルーツタルトを頼んだ。普通の喜びは大事。"}}, {"name": "Croissant Sandwich", "ja": "クロワッサンサンド", "cost": 300, "effects": {"hp": 18, "clarity": 3}, "text": {"en": "Amy ordered a croissant sandwich. Flaky, buttery, and none of Amy's problem.", "ja": "エイミーはクロワッサンサンドを頼んだ。サクサクでバターたっぷり。エイミーの問題ではない。"}}, {"name": "Mango Cheesecake", "ja": "マンゴーチーズケーキ", "cost": 280, "effects": {"peace": 10, "hp": 8}, "text": {"en": "Amy ordered mango cheesecake. Peace came with a fork.", "ja": "エイミーはマンゴーチーズケーキを頼んだ。平和はフォークと一緒に来た。"}}, {"name": "Coconut Shrimp", "ja": "ココナッツシュリンプ", "cost": 360, "effects": {"hp": 18, "selfRespect": 4}, "text": {"en": "Amy ordered coconut shrimp. The plate understood the assignment.", "ja": "エイミーはココナッツシュリンプを頼んだ。皿が仕事を理解していた。"}}], "restaurant": [{"name": "Solo Pasta", "ja": "ひとりパスタ", "cost": 350, "effects": {"hp": 25, "peace": 5}, "text": {"en": "Amy ordered pasta alone. Romanticizing your own dinner is a valid strategy.", "ja": "エイミーはひとりでパスタを頼んだ。自分の夕食をロマンチックにするのは正しい戦略。"}}, {"name": "Fancy Salad", "ja": "おしゃれサラダ", "cost": 280, "effects": {"clarity": 8, "hp": 10}, "text": {"en": "Amy ordered a salad with ingredients that had full names. Clarity increased.", "ja": "エイミーは素材が全員フルネームを持っていそうなサラダを頼んだ。明晰度が上がった。"}}, {"name": "Steak Dinner", "ja": "ステーキディナー", "cost": 700, "effects": {"hp": 35, "selfRespect": 8}, "text": {"en": "Amy ordered steak. Standards looked expensive and tasted correct.", "ja": "エイミーはステーキを頼んだ。基準は高そうで、味も正しかった。"}}, {"name": "Seafood Plate", "ja": "シーフードプレート", "cost": 600, "effects": {"peace": 10, "hp": 25}, "text": {"en": "Amy ordered seafood. The plate had ocean energy without emotional undertow.", "ja": "エイミーはシーフードを頼んだ。皿には海の力があった。情緒の引き潮はなかった。"}}, {"name": "Dessert Sampler", "ja": "デザート盛り合わせ", "cost": 450, "effects": {"peace": 15, "selfRespect": 5}, "text": {"en": "Amy ordered the dessert sampler. Joy arrived in multiple fonts.", "ja": "エイミーはデザート盛り合わせを頼んだ。喜びが複数のフォントで届いた。"}}], "bar": [{"name": "Parmesan Fries", "ja": "パルメザンポテト", "cost": 250, "effects": {"hp": 15, "peace": 8}, "text": {"en": "Amy ordered Parmesan fries. The fries had more emotional availability than most matches.", "ja": "エイミーはパルメザンポテトを頼んだ。ポテトは大半のマッチより情緒的に頼れる。"}}, {"name": "Mocktail", "ja": "モクテル", "cost": 180, "effects": {"peace": 10}, "text": {"en": "Amy ordered a mocktail. Cute glass, clear decisions.", "ja": "エイミーはモクテルを頼んだ。かわいいグラス、クリアな判断。"}}, {"name": "Sparkling Water", "ja": "炭酸水", "cost": 80, "effects": {"clarity": 5, "hp": 5}, "text": {"en": "Amy ordered sparkling water. Hydration refused to be dramatic.", "ja": "エイミーは炭酸水を頼んだ。水分補給はドラマを拒否した。"}}, {"name": "Pink Cocktail", "ja": "ピンクカクテル", "cost": 300, "effects": {"peace": 12, "selfRespect": 3}, "text": {"en": "Amy ordered a pink cocktail. It matched the outfit and the boundary.", "ja": "エイミーはピンクのカクテルを頼んだ。服にも境界線にも合っていた。"}}, {"name": "Late-Night Sliders", "ja": "深夜スライダー", "cost": 400, "effects": {"hp": 25, "peace": 3}, "text": {"en": "Amy ordered sliders. Tiny burgers. Huge recovery.", "ja": "エイミーはスライダーを頼んだ。小さなバーガー、大きな回復。"}}]};
 const BOOK_GENRES_114 = [{"name": "Romance", "ja": "恋愛小説", "effects": {"peace": 10, "selfRespect": 3}, "text": {"en": "Amy read romance where nobody sent 'wyd' at midnight. Revolutionary.", "ja": "エイミーは深夜に『今何してる？』を送ってこない恋愛小説を読んだ。革命的。"}}, {"name": "Mystery", "ja": "ミステリー", "effects": {"clarity": 12}, "text": {"en": "Amy read a mystery. Unlike dating apps, the clues eventually made sense.", "ja": "エイミーはミステリーを読んだ。 dating app と違って、手がかりは最終的に筋が通った。"}}, {"name": "Self-Help", "ja": "セルフヘルプ", "effects": {"selfRespect": 12, "clarity": 5}, "text": {"en": "Amy read self-help and underlined a sentence hard enough to count as cardio.", "ja": "エイミーはセルフヘルプ本を読み、運動扱いできるほど強く線を引いた。"}}, {"name": "Fantasy", "ja": "ファンタジー", "effects": {"peace": 12, "hp": 5}, "text": {"en": "Amy read fantasy. Dragons were somehow less exhausting than men with podcasts.", "ja": "エイミーはファンタジーを読んだ。ドラゴンの方が、ポッドキャスト男より疲れない。"}}, {"name": "Poetry", "ja": "詩", "effects": {"peace": 8, "selfRespect": 5}, "text": {"en": "Amy read poetry and decided ambiguity is prettier when it is on purpose.", "ja": "エイミーは詩を読み、曖昧さは意図的なら美しいと判断した。"}}, {"name": "Let Xavier Choose", "ja": "ザビエルに選んでもらう", "effects": {"peace": 9, "clarity": 9, "selfRespect": 4}, "text": {"en": "Xavier chose something comforting and suspiciously devastating. Amy respected the range.", "ja": "ザビエルは癒やし系なのに妙に刺さる本を選んだ。エイミーはその振り幅を尊敬した。"}}];
 const OFFICE_TASKS_114 = [{"en": "Amy spends two hours making a PowerPoint that could have been one email.", "ja": "エイミーはメール一通で済む内容を二時間かけてPowerPointにした。", "effects": {"funds": 750, "clarity": -5}}, {"en": "Amy updates a spreadsheet with so many tabs it starts feeling sentient.", "ja": "エイミーはタブが多すぎて自我を持ちそうなスプレッドシートを更新した。", "effects": {"funds": 650, "clarity": 5}}, {"en": "Amy survives five meetings and says one sentence that somehow becomes an action item.", "ja": "エイミーは会議を五つ生き延び、一言だけ発言したらなぜかアクションアイテムになった。", "effects": {"funds": 800, "peace": -8}}, {"en": "Amy reformats a slide deck because someone said it needed to feel more strategic.", "ja": "『もっと戦略的に見せたい』と言われ、エイミーは資料の体裁を直した。", "effects": {"funds": 700, "selfRespect": 3}}, {"en": "Amy answers urgent emails from people who caused their own emergency.", "ja": "エイミーは自分で火事を起こした人たちの『至急』メールに対応した。", "effects": {"funds": 600, "peace": -5}}, {"en": "Amy makes a tracker to track the tracker that tracks the project.", "ja": "エイミーはプロジェクトを追跡するトラッカーを追跡するためのトラッカーを作った。", "effects": {"funds": 750, "clarity": 5}}, {"en": "Amy listens to someone say 'circle back' with the confidence of a war general.", "ja": "エイミーは『また確認しましょう』を将軍のような自信で言う人の話を聞いた。", "effects": {"funds": 650, "peace": -4}}, {"en": "Amy fixes a spreadsheet formula nobody admits they broke.", "ja": "エイミーは誰も壊したと認めない数式を直した。", "effects": {"funds": 700, "clarity": 8}}, {"en": "Amy attends a meeting where everyone agrees to schedule another meeting.", "ja": "全員が次の会議を設定することに合意する会議に、エイミーは参加した。", "effects": {"funds": 600, "peace": -6}}, {"en": "Amy turns raw chaos into a clean summary table. Nobody thanks her, but the table is beautiful.", "ja": "エイミーは生の混沌を美しい要約表にした。誰も感謝しない。でも表は美しい。", "effects": {"funds": 850, "selfRespect": 5}}, {"en": "Amy spends the morning in calendar combat.", "ja": "エイミーは午前中をカレンダー戦争に費やした。", "effects": {"funds": 650, "hp": -3}}, {"en": "Amy writes a status update so carefully neutral it should win an award.", "ja": "エイミーは表彰されてもいいくらい慎重に中立な進捗報告を書いた。", "effects": {"funds": 700, "clarity": 3}}, {"en": "Amy watches someone share their screen and slowly lose the file they were presenting.", "ja": "画面共有中の人が、発表するはずのファイルをゆっくり見失うのをエイミーは見守った。", "effects": {"funds": 600, "peace": -4}}, {"en": "Amy builds a dashboard and immediately gets asked if it can be exported to Excel.", "ja": "エイミーはダッシュボードを作り、すぐに『Excelに出せる？』と聞かれた。", "effects": {"funds": 850, "clarity": -2}}, {"en": "Amy finishes real work in thirty minutes, then spends three hours proving she did it.", "ja": "エイミーは本当の仕事を三十分で終わらせ、その後三時間かけてそれを証明した。", "effects": {"funds": 900, "selfRespect": 4}}];
-const FRIEND_SCENES_114 = {"bar": [{"participants": ["malik", "jade"], "lines": [["Malik", {"en": "This bar has fries and witnesses. That is community.", "ja": "このバーにはポテトと証人がいる。つまり共同体。"}], ["Jade", {"en": "And lighting good enough for a post-bad-date reset.", "ja": "しかもひどいデート後のリセットにちょうどいい照明。"}], ["Amy", {"en": "Why does that sound like a service package?", "ja": "なんでサービスプランみたいに聞こえるの？"}], ["Malik", {"en": "Because we are professionals.", "ja": "俺たちはプロだから。"}]]}, {"participants": ["chloe", "min"], "lines": [["Chloe", {"en": "I brought receipts, but I also ordered sliders. Balance.", "ja": "レシートは持ってきたけど、スライダーも頼んだ。バランス。"}], ["Min", {"en": "The sliders are doing more for morale.", "ja": "士気にはスライダーの方が効いてる。"}], ["Amy", {"en": "That was almost warm.", "ja": "今のちょっと優しかった。"}], ["Min", {"en": "Do not spread rumors.", "ja": "噂を流さないで。"}]]}, {"participants": ["mia", "jade"], "lines": [["Mia", {"en": "I am here for snacks and emotional containment.", "ja": "軽食と感情の封じ込めのために来た。"}], ["Jade", {"en": "And outfits. We always respect the outfit.", "ja": "あと服。服は常に尊重する。"}], ["Amy", {"en": "This is why I come here.", "ja": "だからここに来るんだよね。"}]]}], "beach": [{"participants": ["jade"], "lines": [["Jade", {"en": "This is exactly why you need more days outside.", "ja": "だから外に出る日がもっと必要なのよ。"}], ["Amy", {"en": "Because of the ocean?", "ja": "海があるから？"}], ["Jade", {"en": "Because nobody here is asking you to understand their childhood before appetizers.", "ja": "前菜の前に幼少期を理解してほしい男がいないから。"}], ["Amy", {"en": "That was still about men.", "ja": "結局男の話じゃん。"}], ["Jade", {"en": "Only spiritually.", "ja": "精神的にはね。"}]]}, {"participants": ["malik", "chloe"], "lines": [["Chloe", {"en": "I brought snacks.", "ja": "お菓子持ってきた。"}], ["Malik", {"en": "I brought emotional commentary.", "ja": "俺は感情コメントを持ってきた。"}], ["Amy", {"en": "One of those is more useful.", "ja": "どっちかは役に立つね。"}], ["Malik", {"en": "And yet you need both.", "ja": "でも両方必要だろ。"}]]}, {"participants": ["min", "mia"], "lines": [["Min", {"en": "The beach minds its business.", "ja": "海辺は余計なことを言わない。"}], ["Mia", {"en": "That is why we respect her.", "ja": "だから尊敬してる。"}], ["Amy", {"en": "The beach is a she?", "ja": "海辺って女の子なの？"}], ["Mia", {"en": "Today, yes.", "ja": "今日はそう。"}]]}], "library": [{"participants": ["min"], "lines": [["Min", {"en": "Good lighting. Low noise. Acceptable chairs.", "ja": "照明良し。騒音少なめ。椅子も許容範囲。"}], ["Amy", {"en": "That is basically a five-star review from you.", "ja": "それ、ミン的には星五レビューだよね。"}], ["Min", {"en": "Do not get greedy.", "ja": "調子に乗らないで。"}]]}, {"participants": ["chloe", "mia"], "lines": [["Chloe", {"en": "I found three books with emotionally available men.", "ja": "情緒が安定してる男性が出る本、三冊見つけた。"}], ["Mia", {"en": "Fiction is beautiful.", "ja": "フィクションって美しいね。"}], ["Amy", {"en": "Please let me enjoy the shelf.", "ja": "棚くらい楽しく見させて。"}], ["Chloe", {"en": "I am supporting you academically.", "ja": "学術的に支援してるの。"}]]}], "park": [{"participants": ["malik"], "lines": [["Malik", {"en": "Amy, I love you. I do. But where the hell are you finding these guys? Off the streets of Gotham?", "ja": "エイミー、愛してるよ。本当に。でもどこでそんな男見つけてるの？ ゴッサムの路地？"}], ["Amy", {"en": "Dating apps.", "ja": " dating app。"}], ["Malik", {"en": "No. These are escaped side quests.", "ja": "違う。こいつらは脱走したサイドクエストだよ。"}]]}, {"participants": ["jade", "mia"], "lines": [["Jade", {"en": "That jogger waved at you again.", "ja": "あのジョギングの人、また手振ってたよ。"}], ["Mia", {"en": "Normal behavior. Suspiciously refreshing.", "ja": "普通の行動。怪しいくらい爽やか。"}], ["Amy", {"en": "Can we not narrate my life?", "ja": "私の人生を実況しないでくれる？"}], ["Jade", {"en": "No.", "ja": "無理。"}]]}], "restaurant": [{"participants": ["jade", "chloe"], "lines": [["Jade", {"en": "Eat first. Spiral later.", "ja": "先に食べて。落ち込むのは後。"}], ["Chloe", {"en": "I categorized the appetizers by emotional value.", "ja": "前菜を感情的価値で分類した。"}], ["Amy", {"en": "Can dinner be normal?", "ja": "普通にご飯食べられない？"}], ["Jade", {"en": "We can try.", "ja": "努力はする。"}]]}, {"participants": ["mia"], "lines": [["Mia", {"en": "If someone ruins your appetite, I will take it personally.", "ja": "誰かが食欲を台無しにしたら、私が個人的に受け止める。"}], ["Amy", {"en": "That sounds comforting and threatening.", "ja": "安心するけど怖い。"}], ["Mia", {"en": "Good.", "ja": "よし。"}]]}], "mall": [{"participants": ["jade"], "lines": [["Jade", {"en": "Buy the outfit because you like it, not because a man might finally act right in it.", "ja": "男がまともに振る舞うかも、じゃなくて自分が好きだから服を買いな。"}], ["Amy", {"en": "That was a whole sermon.", "ja": "説教一個分あった。"}], ["Jade", {"en": "And free.", "ja": "しかも無料。"}]]}, {"participants": ["chloe", "mia"], "lines": [["Chloe", {"en": "The mall directory is wrong. I have feelings about it.", "ja": "モール案内図が間違ってる。感情がある。"}], ["Mia", {"en": "I can become a customer service incident if needed.", "ja": "必要なら接客トラブルになれるよ。"}], ["Amy", {"en": "Please do not.", "ja": "やめて。"}]]}], "spa": [{"participants": ["jade", "mia"], "lines": [["Jade", {"en": "The spa is not a reward. It is maintenance.", "ja": "スパはご褒美じゃない。メンテナンス。"}], ["Mia", {"en": "And maintenance can smell like eucalyptus.", "ja": "そしてメンテナンスはユーカリの香りがしていい。"}], ["Amy", {"en": "I support this policy.", "ja": "その方針を支持する。"}]]}, {"participants": ["chloe"], "lines": [["Chloe", {"en": "I budgeted for self-care and accidentally labeled it infrastructure.", "ja": "セルフケア予算を作ったら、うっかりインフラって分類しちゃった。"}], ["Amy", {"en": "Honestly? Correct.", "ja": "正直、正しい。"}]]}], "beachside_cafe": [{"participants": ["chloe"], "lines": [["Chloe", {"en": "This cafe has perfect lighting for pretending your life is together.", "ja": "このカフェ、人生が整ってるふりをするのに完璧な光。"}], ["Amy", {"en": "Pretending?", "ja": "ふり？"}], ["Chloe", {"en": "Manifesting with props.", "ja": "小道具ありの引き寄せ。"}]]}, {"participants": ["malik", "min"], "lines": [["Malik", {"en": "This place is cute. I hate when the aesthetic is right.", "ja": "ここ可愛いな。雰囲気が正しいと悔しい。"}], ["Min", {"en": "The cake is acceptable.", "ja": "ケーキは許容範囲。"}], ["Amy", {"en": "That is affection from both of you.", "ja": "二人ともそれ愛情表現だよね。"}], ["Malik", {"en": "Unfortunately.", "ja": "残念ながら。"}]]}]};
+const FRIEND_SCENES_114 = {"bar": [{"participants": ["malik", "jade"], "lines": [["Malik", {"en": "This bar has fries and witnesses. That is community.", "ja": "このバーにはポテトと証人がいる。つまり共同体。"}], ["Jade", {"en": "And lighting good enough for a post-bad-date reset.", "ja": "しかもひどいデート後のリセットにちょうどいい照明。"}], ["Amy", {"en": "Why does that sound like a service package?", "ja": "なんでサービスプランみたいに聞こえるの？"}], ["Malik", {"en": "Because we are professionals.", "ja": "俺たちはプロだから。"}]]}, {"participants": ["chloe", "min"], "lines": [["Chloe", {"en": "I brought receipts, but I also ordered sliders. Balance.", "ja": "レシートは持ってきたけど、スライダーも頼んだ。バランス。"}], ["Min", {"en": "The sliders are doing more for morale.", "ja": "士気にはスライダーの方が効いてる。"}], ["Amy", {"en": "That was almost warm.", "ja": "今のちょっと優しかった。"}], ["Min", {"en": "Do not spread rumors.", "ja": "噂を流さないで。"}]]}, {"participants": ["mia", "jade"], "lines": [["Mia", {"en": "I am here for snacks and emotional containment.", "ja": "軽食と感情の封じ込めのために来た。"}], ["Jade", {"en": "And outfits. We always respect the outfit.", "ja": "あと服。服は常に尊重する。"}], ["Amy", {"en": "This is why I come here.", "ja": "だからここに来るんだよね。"}]]}], "beach": [{"participants": ["jade"], "lines": [["Jade", {"en": "This is exactly why you need more days outside.", "ja": "だから外に出る日がもっと必要なのよ。"}], ["Amy", {"en": "Because of the ocean?", "ja": "海があるから？"}], ["Jade", {"en": "Because nobody here is asking you to understand their childhood before appetizers.", "ja": "前菜の前に幼少期を理解してほしい男がいないから。"}], ["Amy", {"en": "That was still about men.", "ja": "結局男の話じゃん。"}], ["Jade", {"en": "Only spiritually.", "ja": "精神的にはね。"}]]}, {"participants": ["malik", "chloe"], "lines": [["Chloe", {"en": "I brought snacks.", "ja": "お菓子持ってきた。"}], ["Malik", {"en": "I brought emotional commentary.", "ja": "俺は感情コメントを持ってきた。"}], ["Amy", {"en": "One of those is more useful.", "ja": "どっちかは役に立つね。"}], ["Malik", {"en": "And yet you need both.", "ja": "でも両方必要だろ。"}]]}, {"participants": ["min", "mia"], "lines": [["Min", {"en": "The beach minds its business.", "ja": "海辺は余計なことを言わない。"}], ["Mia", {"en": "That is why we respect her.", "ja": "だから尊敬してる。"}], ["Amy", {"en": "The beach is a she?", "ja": "海辺って女の子なの？"}], ["Mia", {"en": "Today, yes.", "ja": "今日はそう。"}]]}], "library": [{"participants": ["min"], "lines": [["Min", {"en": "Good lighting. Low noise. Acceptable chairs.", "ja": "照明良し。騒音少なめ。椅子も許容範囲。"}], ["Amy", {"en": "That is basically a five-star review from you.", "ja": "それ、ミン的には星五レビューだよね。"}], ["Min", {"en": "Do not get greedy.", "ja": "調子に乗らないで。"}]]}, {"participants": ["chloe", "mia"], "lines": [["Chloe", {"en": "I found three books with emotionally available men.", "ja": "情緒が安定してる男性が出る本、三冊見つけた。"}], ["Mia", {"en": "Fiction is beautiful.", "ja": "フィクションって美しいね。"}], ["Amy", {"en": "Please let me enjoy the shelf.", "ja": "棚くらい楽しく見させて。"}], ["Chloe", {"en": "I am supporting you academically.", "ja": "学術的に支援してるの。"}]]}], "park": [{"participants": ["malik"], "lines": [["Malik", {"en": "Amy, I care about you. I do. But where the hell are you finding these guys? Off the streets of Gotham?", "ja": "エイミー、大事に思ってるよ。本当に。でもどこでそんな男見つけてるの？ ゴッサムの路地？"}], ["Amy", {"en": "Dating apps.", "ja": " dating app。"}], ["Malik", {"en": "No. These are escaped side quests.", "ja": "違う。こいつらは脱走したサイドクエストだよ。"}]]}, {"participants": ["jade", "mia"], "lines": [["Jade", {"en": "That jogger waved at you again.", "ja": "あのジョギングの人、また手振ってたよ。"}], ["Mia", {"en": "Normal behavior. Suspiciously refreshing.", "ja": "普通の行動。怪しいくらい爽やか。"}], ["Amy", {"en": "Can we not narrate my life?", "ja": "私の人生を実況しないでくれる？"}], ["Jade", {"en": "No.", "ja": "無理。"}]]}], "restaurant": [{"participants": ["jade", "chloe"], "lines": [["Jade", {"en": "Eat first. Spiral later.", "ja": "先に食べて。落ち込むのは後。"}], ["Chloe", {"en": "I categorized the appetizers by emotional value.", "ja": "前菜を感情的価値で分類した。"}], ["Amy", {"en": "Can dinner be normal?", "ja": "普通にご飯食べられない？"}], ["Jade", {"en": "We can try.", "ja": "努力はする。"}]]}, {"participants": ["mia"], "lines": [["Mia", {"en": "If someone ruins your appetite, I will take it personally.", "ja": "誰かが食欲を台無しにしたら、私が個人的に受け止める。"}], ["Amy", {"en": "That sounds comforting and threatening.", "ja": "安心するけど怖い。"}], ["Mia", {"en": "Good.", "ja": "よし。"}]]}], "mall": [{"participants": ["jade"], "lines": [["Jade", {"en": "Buy the outfit because you like it, not because a man might finally act right in it.", "ja": "男がまともに振る舞うかも、じゃなくて自分が好きだから服を買いな。"}], ["Amy", {"en": "That was a whole sermon.", "ja": "説教一個分あった。"}], ["Jade", {"en": "And free.", "ja": "しかも無料。"}]]}, {"participants": ["chloe", "mia"], "lines": [["Chloe", {"en": "The mall directory is wrong. I have feelings about it.", "ja": "モール案内図が間違ってる。感情がある。"}], ["Mia", {"en": "I can become a customer service incident if needed.", "ja": "必要なら接客トラブルになれるよ。"}], ["Amy", {"en": "Please do not.", "ja": "やめて。"}]]}], "spa": [{"participants": ["jade", "mia"], "lines": [["Jade", {"en": "The spa is not a reward. It is maintenance.", "ja": "スパはご褒美じゃない。メンテナンス。"}], ["Mia", {"en": "And maintenance can smell like eucalyptus.", "ja": "そしてメンテナンスはユーカリの香りがしていい。"}], ["Amy", {"en": "I support this policy.", "ja": "その方針を支持する。"}]]}, {"participants": ["chloe"], "lines": [["Chloe", {"en": "I budgeted for self-care and accidentally labeled it infrastructure.", "ja": "セルフケア予算を作ったら、うっかりインフラって分類しちゃった。"}], ["Amy", {"en": "Honestly? Correct.", "ja": "正直、正しい。"}]]}], "beachside_cafe": [{"participants": ["chloe"], "lines": [["Chloe", {"en": "This cafe has perfect lighting for pretending your life is together.", "ja": "このカフェ、人生が整ってるふりをするのに完璧な光。"}], ["Amy", {"en": "Pretending?", "ja": "ふり？"}], ["Chloe", {"en": "Manifesting with props.", "ja": "小道具ありの引き寄せ。"}]]}, {"participants": ["malik", "min"], "lines": [["Malik", {"en": "This place is cute. I hate when the aesthetic is right.", "ja": "ここ可愛いな。雰囲気が正しいと悔しい。"}], ["Min", {"en": "The cake is acceptable.", "ja": "ケーキは許容範囲。"}], ["Amy", {"en": "That is affection from both of you.", "ja": "二人ともそれなりの好意表現だよね。"}], ["Malik", {"en": "Unfortunately.", "ja": "残念ながら。"}]]}]};
 const FRIEND_IDS_114 = ['malik','min','jade','chloe','mia'];
 const PUBLIC_FRIEND_LOCATIONS_114 = ['library','park','restaurant','mall','spa','beach','beachside_cafe'];
 function t114(x){ if(x && typeof x==='object')return state.lang==='ja'?(x.ja||x.en||''):(x.en||x.ja||''); return x==null?'':String(x); }
@@ -5429,7 +5429,7 @@ window.SLTS_FORCE_JA_DEFAULT = true;
     "Noise-Canceling Headphones": "ノイズキャンセリングヘッドホン"
   },
   "dialogue": {
-    "Amy had a cute apartment, a job that paid the bills, friends who loved her, and one dating app she kept pretending she was done with.": "エイミーには、かわいいアパート、生活費を払える仕事、愛してくれる友達、そして『もうやめた』と言いながら消していないデートアプリがあった。",
+    "Amy had a cute apartment, a job that paid the bills, friends who cared about her, and one dating app she kept pretending she was done with.": "エイミーには、かわいいアパート、生活費を払える仕事、大切にしてくれる友達、そして『もうやめた』と言いながら消していないデートアプリがあった。",
     "I am simply opening myself up to possibility.": "可能性に心を開いてるだけだから。",
     "The phone buzzed like it had been waiting for weakness.": "スマホが震えた。弱った瞬間を待っていたみたいに。",
     "The library is quiet. Xavier is in the background, reshelving books and minding his business.": "図書館は静かだ。ゼイヴィアが奥で本を戻している。ちゃんと自分の仕事だけしている。",
@@ -5456,7 +5456,7 @@ window.SLTS_FORCE_JA_DEFAULT = true;
       ],
       "bar": [
         "メッセージが『怒らないで』から始まったら、そこで読むのやめよ。",
-        "エイミー。愛してる。でもそのアプリ、プロフィール写真つきのお化け屋敷になってる。",
+        "エイミー。大事に思ってる。でもそのアプリ、プロフィール写真つきのお化け屋敷になってる。",
         "ベッドフレームもない男に自己肯定感を下げさせないで。",
         "混乱が香水なら、あいつ全身びしょびしょ。"
       ],
@@ -6479,6 +6479,1292 @@ window.SLTS_FORCE_JA_DEFAULT = true;
   document.addEventListener('DOMContentLoaded',()=>{ applyStaticLocalization143(); setTimeout(hideSplash143,4200); setTimeout(hideSplash143,6500); });
   window.addEventListener('load',()=>{ if(typeof injectLanguageToggle111==='function') injectLanguageToggle111(); rerenderCurrentLanguage143(); setTimeout(hideSplash143,4200); setTimeout(hideSplash143,6500); });
   setTimeout(()=>{ if(typeof state==='object') state.lang=localStorage.getItem('slts_language')||'en'; rerenderCurrentLanguage143(); },0);
+})();
+
+
+/* =========================
+   v1.45 Localization Stability + Amy Card Hard Fix
+   - Keeps ONE index.html and ONE running game state.
+   - Makes EN/和 reversible so toggling JA -> EN cannot leave Japanese text behind.
+   - Renders action buttons from canonical English labels every time.
+   - Forces Amy's purple panel to use the torso-up card outside battle.
+   ========================= */
+(function(){
+  const LANG_KEY='slts_language';
+  const AMY_CARD='assets/characters/amy/amy_card_neutral.png';
+  const EXTRA_JA={
+    'Swipe Left to Survive':'マッチング地獄サバイバル',
+    'A turn-based dating survival RPG prototype':'恋の地雷サバイバルRPG',
+    'A turn-based dating survival RPG prototype.':'恋の地雷を踏み抜け。笑って、見抜いて、生き残れ。',
+    'Amy thought she was looking for love. LoveLoop thought she was looking for a boss rush.':'エイミーは、恋愛くらい普通にできると思っていた。だが恋のプールは、ボス、デバフ、偽グリーンフラッグ、そして研究室で観察したほうがいい男たちでいっぱいだった。',
+    'Welcome to Amy’s dating survival RPG prototype.':'エイミーの恋愛サバイバルRPGプロトタイプへようこそ。',
+    'Start Prototype':'はじめる',
+    'Open City Map':'シティマップを開く',
+    'Open Map':'マップを開く',
+    'Villain Codex':'地雷男図鑑',
+    'Open Closet':'クローゼットを開く',
+    'Closet':'クローゼット',
+    'City Map':'シティマップ',
+    'Tap a pink pin to travel.':'ピンクのピンをタップして移動。',
+    'Location pins are clickable':'ロケーションピンはクリック可能',
+    'Quick Travel':'クイック移動',
+    'Amy’s Closet':'エイミーのクローゼット',
+    'Selected outfit carries into scenes and battles.':'選んだコーデはバトルやカットシーンにも反映されます。',
+    'Mall: Retail Therapy Rush':'モール：リテールセラピー・ラッシュ',
+    'Buy buffs, outfits, and self-care items. MVP shopping placeholder.':'バフ、服、自分ケア用品を購入。今はMVP版ショッピング仮置き。',
+    'Learn the red flags. The internet may still defend them. The group chat is tired.':'赤旗を見抜け。ネット民はそれでも推す。グルチャはもう疲れている。',
+    'System':'システム','Enemy':'敵','Amy':'エイミー','AMY':'エイミー','Current Fit':'現在のコーデ',
+    'GIRL, STAND UP!':'立ちな！','Go':'行く','Back':'戻る','Back to Map':'マップへ戻る','Go Home':'帰宅する',
+    'Check Phone':'スマホを確認','Check Dating App':'恋活アプリを見る','Text the Group Chat':'グルチャに送る','Open City Map':'シティマップを開く',
+    'Go to Bedroom':'寝室へ行く','Open Closet':'クローゼットを開く','Reply':'返信する','Ignore':'無視する','Send to Group Chat':'グルチャに送る','Block':'ブロックする',
+    'Continue':'続ける','Amy’s Turn':'エイミーのターン','Summon Friend':'友達を呼ぶ','Run / Block':'逃げる／ブロック',
+    'Boundary Slash':'境界線スラッシュ','Phone Punch':'スマホパンチ','Kick of Discernment':'見極めキック','Check Receipts':'証拠確認',
+    'Bag':'バッグ','Back to Actions':'アクションへ戻る','Use':'使う','Buy':'買う','Cost':'価格','Not enough Soft Life Funds.':'Soft Life Fundsが足りません。',
+    'Buy Something Else':'他のものを買う','Back to Location':'場所へ戻る','Back to Mall':'モールへ戻る',
+    'Office':'オフィス','Library':'図書館','Bar':'バー','Park':'公園','Mall':'モール','Restaurant':'レストラン','Beach':'海辺','Bedroom':'寝室','Spa':'スパ','Car':'車','Apartment':'アパート',
+    'Amy’s Apartment':'エイミーのアパート','Villain Man Apartment':'ヤバい男の部屋','Beachside Cafe':'海辺のカフェ','Aquarium':'水族館',
+    'Open':'営業中','Closed':'閉店中','Hours':'営業時間','24H OPEN cheat':'24時間営業チート',
+    'Enter Cheat Code':'チートコード入力','Unlocked Cheats':'解放済みチート','Arcade Mode':'アーケードモード','Date Fit Studio':'デートコーデスタジオ','Dress-Up Gallery':'着せ替えギャラリー',
+    'Original Endings':'初期エンディング','Activate':'有効にする','Deactivate':'無効にする','Active':'有効','Unlocked, not active':'解放済み・未使用','Locked':'未解放','Complete':'完了',
+    'Start Game':'ゲーム開始','Title':'タイトル','Return to Title':'タイトルへ戻る','Choose Another Location':'別の場所を選ぶ','Go to Beach':'海辺へ行く',
+    'Talk to Xavier':'ゼイヴィアと話す','Talk to James':'ジェームズと話す','Talk to Andrew':'アンドリューと話す','Ask Xavier Out / Green Flag Battle':'ゼイヴィアを誘う／グリーンフラッグ戦',
+    'Ask James Out / Green Flag Battle':'ジェームズを誘う／グリーンフラッグ戦','Ask Andrew Out / Green Flag Battle':'アンドリューを誘う／グリーンフラッグ戦',
+    'Order Food/Drink From James':'ジェームズに注文する','Read in Peace':'静かに読む','Check Out a Book':'本を借りる','Chat With Friends':'友達と話す',
+    'Take a Walk':'散歩する','Sit on Bench':'ベンチに座る','Notice / Talk to Cute Stranger':'かわいい人に気づく／話す',
+    'Go Shopping':'買い物する','Visit Spa':'スパへ行く','Grab Food Court Snack':'フードコートで軽食','Meet Friends':'友達と会う',
+    'Eat Alone':'ひとりで食べる','Meet Friends for Dinner':'友達と夕食','Visit Beachside Cafe':'海辺のカフェへ行く','Back to Beach':'海辺へ戻る',
+    'Order Cake':'ケーキを注文する','Sit by the Window':'窓辺に座る','Breathe':'深呼吸する','Block Him Again':'もう一度ブロック確認',
+    'Rest':'休む','Sleep / Advance Day':'寝る／翌日に進む','Sleep... Enter Dream World':'眠る……夢の世界へ',
+    'Give Up on LoveLoop':'LoveLoopを諦める','Go Home and Face The Algorithm':'帰宅してアルゴリズムと向き合う','Go Home and Give Up':'帰宅して諦める',
+    '24 HOUR BADDIE':'24時間バディー','ALWAYS OPEN':'いつでも営業','OPEN 24 HOURS':'24時間営業'
+  };
+
+  function currentLang(){
+    if(typeof state==='object' && state.lang==='ja') return 'ja';
+    return 'en';
+  }
+  function jaDict(){
+    return Object.assign({}, window.SLTS_JA_DYNAMIC_V140||{}, (typeof V111_JA==='object'?V111_JA:{}), EXTRA_JA);
+  }
+  function reverseDict(){
+    const rev={}; const j=jaDict();
+    Object.keys(j).forEach(en=>{ const ja=j[en]; if(typeof ja==='string' && ja) rev[ja]=en; });
+    return rev;
+  }
+  function canonicalText(value){
+    if(value==null) return '';
+    let out=String(value);
+    const rev=reverseDict();
+    if(rev[out]) return rev[out];
+    Object.keys(rev).sort((a,b)=>b.length-a.length).forEach(ja=>{ if(ja && out.includes(ja)) out=out.split(ja).join(rev[ja]); });
+    return out;
+  }
+  function translateText(value){
+    const en=canonicalText(value);
+    if(currentLang()!=='ja') return en;
+    const j=jaDict();
+    if(j[en]) return j[en];
+    let out=en;
+    Object.keys(j).sort((a,b)=>b.length-a.length).forEach(k=>{ if(k && out.includes(k)) out=out.split(k).join(j[k]); });
+    return out;
+  }
+  window.SLTS_T145=translateText;
+  window.SLTS_CANONICAL145=canonicalText;
+
+  function setText(sel,en){ const el=document.querySelector(sel); if(el) el.textContent=translateText(en); }
+  function safeTextNodes(root){
+    if(!root) return;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(node){
+      const p=node.parentElement;
+      if(!p || ['SCRIPT','STYLE','TEXTAREA','INPUT','CANVAS'].includes(p.tagName)) return NodeFilter.FILTER_REJECT;
+      if(p.id==='dialogueText' || p.id==='speaker') return NodeFilter.FILTER_REJECT;
+      return node.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+    }});
+    const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(n=>{
+      const raw=n.nodeValue, trimmed=raw.trim();
+      if(!trimmed) return;
+      const next=translateText(trimmed);
+      if(next!==trimmed) n.nodeValue=raw.replace(trimmed,next);
+    });
+  }
+
+  function rebuildLanguageButton(){
+    const hud=document.getElementById('hud'); if(!hud) return;
+    let btn=document.getElementById('languageToggleBtn');
+    if(!btn){ btn=document.createElement('button'); btn.id='languageToggleBtn'; btn.type='button'; hud.appendChild(btn); }
+    btn.className='lang-toggle-switch '+currentLang();
+    btn.innerHTML='<span class="lang-knob"></span><span class="lang-track"><span class="lang-option en">EN</span><span class="lang-option ja">和</span></span>';
+    btn.onclick=function(e){ e.preventDefault(); toggleLanguage111(); };
+  }
+
+  function forceAmyCard(){
+    if(typeof state==='object' && state.currentBattle) return;
+    const card=document.getElementById('amySprite');
+    const box=document.getElementById('amySpriteText');
+    const label=document.getElementById('amyLabel');
+    if(card) card.classList.add('amy-card-mode');
+    if(label) label.textContent=translateText('Amy');
+    if(box && !box.querySelector('img[data-amy-card-v145="1"]')){
+      box.innerHTML='<img data-amy-card-v145="1" class="sprite-art amy-card-img-v145" alt="Amy" src="'+AMY_CARD+'">';
+      const img=box.querySelector('img');
+      img.onerror=function(){ box.innerHTML=translateText('Amy')+'<br><small>'+translateText('Current Fit')+'</small>'; };
+    }
+  }
+
+  function directRenderActions(actions){
+    const grid=document.getElementById('actionGrid'); if(!grid) return;
+    const canonical=(actions||[]).map(a=>Object.assign({},a,{label:canonicalText(a.label||'')}));
+    window.SLTS_ACTIONS_V145=canonical;
+    try{ if(typeof v111LastActions!=='undefined') v111LastActions=canonical; }catch(e){}
+    grid.innerHTML='';
+    canonical.forEach(x=>{
+      const b=document.createElement('button');
+      b.className='action-btn '+(x.className||'');
+      b.textContent=translateText(x.label);
+      b.disabled=!!x.disabled;
+      b.onclick=x.fn;
+      grid.appendChild(b);
+    });
+  }
+
+  function applyCoreText(){
+    document.documentElement.lang=currentLang();
+    document.title=translateText('Swipe Left to Survive');
+    setText('.brand h1','Swipe Left to Survive');
+    setText('.brand small','A turn-based dating survival RPG prototype');
+    setText('#titleScreen h2','Swipe Left to Survive');
+    setText('#titleScreen .subtitle','A turn-based dating survival RPG prototype.');
+    const titleP=document.querySelector('#titleScreen .panel p:not(.subtitle)'); if(titleP) titleP.textContent=translateText('Amy thought she was looking for love. LoveLoop thought she was looking for a boss rush.');
+    const tBtns=document.querySelectorAll('#titleScreen .menu-grid button');
+    ['Start Prototype','Open City Map','Villain Codex','Open Closet','Enter Cheat Code','Unlocked Cheats','Arcade Mode','Date Fit Studio','Dress-Up Gallery'].forEach((txt,i)=>{ if(tBtns[i]) tBtns[i].textContent=translateText(txt); });
+    setText('#mapScreen h2','City Map'); setText('#mapScreen .subtitle','Tap a pink pin to travel.');
+    const chips=document.querySelectorAll('#mapScreen .map-chip'); if(chips[1]) chips[1].textContent=translateText('Location pins are clickable');
+    const quick=document.querySelector('#mapScreen h3[style*="margin-top"]'); if(quick) quick.textContent=translateText('Quick Travel');
+    setText('#closetScreen h2','Amy’s Closet'); setText('#closetScreen .subtitle','Selected outfit carries into scenes and battles.');
+    setText('#shopScreen h2','Mall: Retail Therapy Rush'); setText('#shopScreen .subtitle','Buy buffs, outfits, and self-care items. MVP shopping placeholder.');
+    setText('#codexScreen h2','Villain Codex'); setText('#codexScreen .subtitle','Learn the red flags. The internet may still defend them. The group chat is tired.');
+    const speaker=document.getElementById('speaker'); if(speaker) speaker.textContent=translateText(canonicalText(speaker.textContent||'System'));
+    const d=document.getElementById('dialogueText'); if(d) d.textContent=translateText(canonicalText(d.textContent||'Welcome to Amy’s dating survival RPG prototype.'));
+    const amy=document.getElementById('amyLabel'); if(amy) amy.textContent=translateText('Amy');
+    const enemy=document.getElementById('enemyLabel'); if(enemy) enemy.textContent=translateText(canonicalText(enemy.textContent||'Enemy'));
+    const enemyName=document.getElementById('enemyNameLabel'); if(enemyName) enemyName.textContent=translateText(canonicalText(enemyName.textContent||'Enemy'));
+    const eff=document.getElementById('effectPop'); if(eff) eff.textContent=translateText(canonicalText(eff.textContent||'GIRL, STAND UP!'));
+    rebuildLanguageButton();
+    safeTextNodes(document.getElementById('mainStage'));
+    safeTextNodes(document.getElementById('bottomPanel'));
+    if(window.SLTS_ACTIONS_V145) directRenderActions(window.SLTS_ACTIONS_V145);
+    forceAmyCard();
+  }
+  window.SLTS_APPLY_LOCALIZATION145=applyCoreText;
+
+  // Replace previous fragile wrappers with direct, reversible behavior.
+  setActions=function(actions){ directRenderActions(actions); };
+  const prevSay145=typeof say==='function'?say:null;
+  say=function(speaker,text){
+    const enSpeaker=canonicalText(speaker||'System');
+    const enText=canonicalText(text||'');
+    if(prevSay145){ try{ prevSay145(enSpeaker,enText); }catch(e){} }
+    const sp=document.getElementById('speaker'), dt=document.getElementById('dialogueText');
+    if(sp) sp.textContent=translateText(enSpeaker);
+    if(dt) dt.textContent=translateText(enText);
+    safeTextNodes(document.getElementById('mainStage'));
+  };
+  updateLanguageToggle111=rebuildLanguageButton;
+  injectLanguageToggle111=function(){ rebuildLanguageButton(); };
+  toggleLanguage111=function(){
+    if(typeof state==='object') state.lang=currentLang()==='ja'?'en':'ja';
+    try{ localStorage.setItem(LANG_KEY,state.lang); }catch(e){}
+    applyCoreText();
+  };
+
+  const prevUpdateHud=typeof updateHud==='function'?updateHud:null;
+  if(prevUpdateHud){ updateHud=function(){ const r=prevUpdateHud(); applyCoreText(); return r; }; }
+  const prevShowScreen=typeof showScreen==='function'?showScreen:null;
+  if(prevShowScreen){ showScreen=function(id){ const r=prevShowScreen(id); setTimeout(applyCoreText,0); return r; }; }
+  const prevGoLocation=typeof goLocation==='function'?goLocation:null;
+  if(prevGoLocation){ goLocation=function(id){ const r=prevGoLocation(id); setTimeout(applyCoreText,0); return r; }; }
+  const prevRenderLocations=typeof renderLocations==='function'?renderLocations:null;
+  if(prevRenderLocations){ renderLocations=function(){ const r=prevRenderLocations(); setTimeout(applyCoreText,0); return r; }; }
+  const prevRenderCloset=typeof renderCloset==='function'?renderCloset:null;
+  if(prevRenderCloset){ renderCloset=function(){ const r=prevRenderCloset(); setTimeout(applyCoreText,0); return r; }; }
+  const prevRenderShop=typeof renderShop==='function'?renderShop:null;
+  if(prevRenderShop){ renderShop=function(){ const r=prevRenderShop(); setTimeout(applyCoreText,0); return r; }; }
+  const prevRenderCodex=typeof renderCodex==='function'?renderCodex:null;
+  if(prevRenderCodex){ renderCodex=function(){ const r=prevRenderCodex(); setTimeout(applyCoreText,0); return r; }; }
+  const prevSetAmyPose=typeof setAmyPose==='function'?setAmyPose:null;
+  if(prevSetAmyPose){ setAmyPose=function(pose){ if(typeof state==='object' && state.currentBattle) return prevSetAmyPose(pose); forceAmyCard(); }; }
+  const prevShowAmy=typeof showAmy==='function'?showAmy:null;
+  if(prevShowAmy){ showAmy=function(show,pose){ const r=prevShowAmy(show,pose); if(show) setTimeout(forceAmyCard,0); return r; }; }
+
+  function hideSplash(){ const s=document.getElementById('studioSplash'); if(!s) return; s.classList.add('fade-out'); setTimeout(()=>{ if(s) s.style.display='none'; },900); }
+  function boot145(){
+    try{ if(typeof state==='object') state.lang=localStorage.getItem(LANG_KEY)||'en'; }catch(e){ if(typeof state==='object') state.lang='en'; }
+    applyCoreText();
+    setTimeout(applyCoreText,25); setTimeout(forceAmyCard,50); setTimeout(hideSplash,4200); setTimeout(hideSplash,6500);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot145); else boot145();
+  window.addEventListener('load',boot145);
+})();
+
+
+
+/* =========================
+   v1.46 Daily Interaction + Dialogue Localization + Story Portrait Fix
+   - Softens platonic Japanese “愛してる” wording.
+   - Limits guy/NPC chats and friend hangouts per in-game day.
+   - Removes infinite Chat More loops from NPC chats.
+   - Re-translates visible dialogue/cutscene boxes when EN/和 is toggled mid-scene.
+   - Uses character card portraits in story/cutscene UI when card assets exist.
+   ========================= */
+(function(){
+  const CARD146 = {
+    amy:'assets/characters/cards/amy_card.png',
+    xavier:'assets/characters/cards/xavier_card.png',
+    james:'assets/characters/cards/james_card.png',
+    andrew:'assets/characters/cards/andrew_card.png',
+    min:'assets/characters/cards/min_card.png',
+    jade:'assets/characters/cards/jade_card.png',
+    chloe:'assets/characters/cards/chloe_card.png',
+    mia:'assets/characters/cards/mia_card.png',
+    christy:'assets/characters/cards/christy_card.png',
+    lucien:'assets/characters/villains/lucien_reservation_mirage_card.png',
+    roman:'assets/characters/villains/roman_vega_industry_mystery_card.png',
+    nico:'assets/characters/villains/nico_hart_boundary_pusher_card.png',
+    blake:'assets/characters/villains/blake_sterling_disruptor_card.png',
+    julian:'assets/characters/villains/julian_cross_softboi_savior_card.png',
+    lucien_moreau:'assets/characters/villains/lucien_reservation_mirage_card.png',
+    roman_vega:'assets/characters/villains/roman_vega_industry_mystery_card.png',
+    nico_hart:'assets/characters/villains/nico_hart_boundary_pusher_card.png',
+    blake_sterling:'assets/characters/villains/blake_sterling_disruptor_card.png',
+    julian_cross:'assets/characters/villains/julian_cross_softboi_savior_card.png'
+  };
+  const NAME_TO_KEY146 = {
+    'Amy':'amy','エイミー':'amy',
+    'Xavier':'xavier','ザビエル':'xavier','ゼイヴィア':'xavier',
+    'James':'james','ジェームズ':'james',
+    'Andrew':'andrew','アンドリュー':'andrew',
+    'Min':'min','ミン':'min',
+    'Jade':'jade','ジェイド':'jade',
+    'Chloe':'chloe','クロエ':'chloe',
+    'Mia':'mia','ミア':'mia',
+    'Christy':'christy','クリスティ':'christy',
+    'Lucien':'lucien','Lucien Moreau':'lucien_moreau','ルシアン':'lucien','ルシアン・モロー':'lucien_moreau',
+    'Roman':'roman','Roman Vega':'roman_vega','ロマン':'roman','ロマン・ベガ':'roman_vega',
+    'Nico':'nico','Nico Hart':'nico_hart','ニコ':'nico','ニコ・ハート':'nico_hart',
+    'Blake':'blake','Blake Sterling':'blake_sterling','ブレイク':'blake','ブレイク・スターリング':'blake_sterling',
+    'Julian':'julian','Julian Cross':'julian_cross','ジュリアン':'julian','ジュリアン・クロス':'julian_cross'
+  };
+  const EXTRA_JA146 = {
+    'You already talked to Xavier today. Let the slow-burn breathe.':'今日はもうザビエルと話しました。スローバーンには余白が必要です。',
+    'You already talked to James today. Let the bartender actually do his job.':'今日はもうジェームズと話しました。バーテンダーにも仕事をさせましょう。',
+    'You already talked to Andrew today. A green flag still needs pacing.':'今日はもうアンドリューと話しました。グリーンフラッグにもペース配分が必要です。',
+    'You already talked to Christy today. Let the cafe breathe.':'今日はもうクリスティと話しました。カフェにも余白が必要です。',
+    'Amy already had a friend hangout here today. The group chat needs time to recharge.':'エイミーは今日はもうここで友達と過ごしました。グルチャにも充電時間が必要です。',
+    'Daily chat used':'本日の会話済み',
+    'Talked Today':'本日会話済み',
+    'Friend Hangout Used':'本日の友達イベント済み',
+    'No more chatting today':'今日はこれ以上話さない',
+    'Back to Location':'場所へ戻る',
+    'Let the slow-burn breathe.':'スローバーンには余白が必要です。',
+    'Let the bartender actually do his job.':'バーテンダーにも仕事をさせましょう。',
+    'A green flag still needs pacing.':'グリーンフラッグにもペース配分が必要です。',
+    'Let the cafe breathe.':'カフェにも余白が必要です。',
+    'Amy, I care about you. I do. But where the hell are you finding these guys? Off the streets of Gotham?':'エイミー、大事に思ってるよ。本当に。でもどこでそんな男見つけてるの？ ゴッサムの路地？',
+    'Amy. I care about you. But your dating app is starting to feel like a haunted house with profile pictures.':'エイミー。大事に思ってる。でもそのアプリ、プロフィール写真つきのお化け屋敷になってる。',
+    'Amy had a cute apartment, a job that paid the bills, friends who cared about her, and one dating app she kept pretending she was done with.':'エイミーには、かわいいアパート、生活費を払える仕事、大切にしてくれる友達、そして「もうやめた」と言いながら消していないデートアプリがあった。'
+  };
+  function currentLang146(){ return (typeof state==='object' && state.lang==='ja')?'ja':'en'; }
+  function deepSoften146(obj, seen){
+    if(!obj || typeof obj!=='object')return; seen=seen||new Set(); if(seen.has(obj))return; seen.add(obj);
+    Object.keys(obj).forEach(k=>{
+      const v=obj[k];
+      if(typeof v==='string'){
+        obj[k]=v
+          .replace(/愛してくれる友達/g,'大切にしてくれる友達')
+          .replace(/愛してるよ。本当に。/g,'大事に思ってるよ。本当に。')
+          .replace(/愛してる。/g,'大事に思ってる。')
+          .replace(/愛してる/g,'大事に思ってる')
+          .replace(/それ愛情表現だよね/g,'それなりの好意表現だよね');
+      }else if(v && typeof v==='object') deepSoften146(v,seen);
+    });
+  }
+  try{ if(window.SLTS_JA_DYNAMIC_V140) Object.assign(window.SLTS_JA_DYNAMIC_V140, EXTRA_JA146); deepSoften146(window.SLTS_JA_DYNAMIC_V140); }catch(e){}
+  try{ if(typeof V111_JA==='object'){ Object.assign(V111_JA, EXTRA_JA146); deepSoften146(V111_JA); } }catch(e){}
+  function canon146(x){
+    if(x==null)return '';
+    let s=String(x);
+    try{ if(window.SLTS_CANONICAL145) s=window.SLTS_CANONICAL145(s); }catch(e){}
+    return s
+      .replace('Amy, I love you. I do. But where the hell are you finding these guys? Off the streets of Gotham?','Amy, I care about you. I do. But where the hell are you finding these guys? Off the streets of Gotham?')
+      .replace('Amy. I love you. But your dating app is starting to feel like a haunted house with profile pictures.','Amy. I care about you. But your dating app is starting to feel like a haunted house with profile pictures.')
+      .replace('friends who loved her','friends who cared about her');
+  }
+  function tr146(x){
+    const en=canon146(x);
+    if(currentLang146()!=='ja')return en;
+    if(EXTRA_JA146[en])return EXTRA_JA146[en];
+    try{ if(window.SLTS_T145) return window.SLTS_T145(en); }catch(e){}
+    return en;
+  }
+  window.SLTS_T146=tr146; window.SLTS_CANONICAL146=canon146;
+  function cardKey146(name){
+    const raw=canon146(name).trim();
+    if(NAME_TO_KEY146[raw])return NAME_TO_KEY146[raw];
+    const lower=raw.toLowerCase();
+    if(lower.includes('xavier'))return 'xavier'; if(lower.includes('james'))return 'james'; if(lower.includes('andrew'))return 'andrew';
+    if(lower.includes('malik'))return 'malik'; if(lower.includes('min'))return 'min'; if(lower.includes('jade'))return 'jade'; if(lower.includes('chloe'))return 'chloe'; if(lower.includes('mia'))return 'mia'; if(lower.includes('christy'))return 'christy';
+    if(lower.includes('lucien'))return 'lucien'; if(lower.includes('roman'))return 'roman'; if(lower.includes('nico'))return 'nico'; if(lower.includes('blake'))return 'blake'; if(lower.includes('julian'))return 'julian';
+    return '';
+  }
+  function cardPath146(name){ const k=cardKey146(name); return k && CARD146[k] ? CARD146[k] : ''; }
+  function ensureStyle146(){
+    if(document.getElementById('v146Style'))return;
+    const st=document.createElement('style'); st.id='v146Style'; st.textContent=`
+      .cs-avatar.has-card-146{overflow:hidden;background:rgba(255,255,255,.08)!important;border-radius:18px!important;padding:0!important}
+      .cs-avatar.has-card-146 img,.two-friend-tab.has-card-146 img,.support-face.has-card-146 img{width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block}
+      .two-friend-tab.has-card-146{overflow:hidden;padding:0!important}
+      .two-friend-tab.has-card-146 span{display:none!important}
+      .support-face.has-card-146{overflow:hidden;padding:0!important}
+      .daily-disabled-146{opacity:.55!important;filter:grayscale(.2);cursor:not-allowed!important}
+    `; document.head.appendChild(st);
+  }
+  function decorateCutscenePortrait146(speaker){
+    ensureStyle146(); const path=cardPath146(speaker); if(!path)return;
+    const layer=document.getElementById('cutsceneDialogueLayer'); if(!layer)return;
+    const av=layer.querySelector('.cs-avatar'); if(!av)return;
+    av.classList.add('has-card-146'); av.innerHTML='<img alt="" src="'+path+'">';
+    const img=av.querySelector('img'); img.onerror=function(){ av.classList.remove('has-card-146'); av.textContent=(canon146(speaker)||'?').slice(0,3).toUpperCase(); };
+  }
+  function decorateSupportPortrait146(idOrName){
+    ensureStyle146(); const path=cardPath146(idOrName); if(!path)return;
+    const el=document.getElementById('supportCutin113'); if(!el)return;
+    const face=el.querySelector('.support-face'); if(!face)return;
+    face.classList.add('has-card-146'); face.innerHTML='<img alt="" src="'+path+'">';
+  }
+  const oldShowCutscene146 = window.showCutsceneUi113;
+  if(typeof oldShowCutscene146==='function'){
+    window.showCutsceneUi113=function(speaker,text){
+      const sp=canon146(speaker), tx=canon146(text);
+      window.SLTS_LAST_DIALOGUE146={mode:'cutscene',speaker:sp,text:tx};
+      const r=oldShowCutscene146.call(this,tr146(sp),tr146(tx));
+      decorateCutscenePortrait146(sp); return r;
+    };
+  }
+  const oldSupport146=window.showSupportCutin113;
+  if(typeof oldSupport146==='function'){
+    window.showSupportCutin113=function(id,caption){
+      const cap=canon146(caption||'');
+      const r=oldSupport146.call(this,id,tr146(cap));
+      decorateSupportPortrait146(id); return r;
+    };
+  }
+  const oldSay146=window.say || say;
+  say=function(speaker,text){
+    const sp=canon146(speaker||'System'), tx=canon146(text||'');
+    window.SLTS_LAST_DIALOGUE146={mode:'dialogue',speaker:sp,text:tx};
+    return oldSay146.call(this,sp,tx);
+  };
+  window.say=say;
+  function refreshVisibleDialogue146(){
+    const last=window.SLTS_LAST_DIALOGUE146;
+    if(last){
+      const sp=document.getElementById('speaker'), dt=document.getElementById('dialogueText');
+      if(sp)sp.textContent=tr146(last.speaker); if(dt)dt.textContent=tr146(last.text);
+      const layer=document.getElementById('cutsceneDialogueLayer');
+      if(layer && layer.classList.contains('visible') && typeof window.showCutsceneUi113==='function') window.showCutsceneUi113(last.speaker,last.text);
+    }
+    const two=document.getElementById('twoFriendCutscene114');
+    if(two && two.classList.contains('visible')){
+      const sp=two.querySelector('.two-friend-speaker'); const line=two.querySelector('.two-friend-line');
+      if(sp)sp.textContent=tr146(canon146(sp.textContent)); if(line)line.textContent=tr146(canon146(line.textContent));
+    }
+    try{ if(window.SLTS_APPLY_LOCALIZATION145) window.SLTS_APPLY_LOCALIZATION145(); }catch(e){}
+  }
+  const oldToggle146=toggleLanguage111;
+  toggleLanguage111=function(){ const r=oldToggle146(); setTimeout(refreshVisibleDialogue146,0); return r; };
+  window.toggleLanguage111=toggleLanguage111;
+
+  function ensureDaily146(){
+    if(!state.dailyLimits146 || state.dailyLimits146.day!==state.day){ state.dailyLimits146={day:state.day,npc:{},friend:{}}; }
+    return state.dailyLimits146;
+  }
+  function npcUsed146(id){ return !!ensureDaily146().npc[id]; }
+  function markNpc146(id){ ensureDaily146().npc[id]=true; }
+  function friendUsed146(loc){ return !!ensureDaily146().friend[loc||state.location||'general']; }
+  function markFriend146(loc){ ensureDaily146().friend[loc||state.location||'general']=true; }
+  function backToLocationAction146(loc){ return {label:'Back to Location',fn:()=>goLocation(loc||state.location),className:'wide'}; }
+  function dailyNpcMessage146(id){
+    const names={xavier:'Xavier',james:'James',andrew:'Andrew',christy:'Christy'}; const name=names[id]||id;
+    const msgs={
+      xavier:'You already talked to Xavier today. Let the slow-burn breathe.',
+      james:'You already talked to James today. Let the bartender actually do his job.',
+      andrew:'You already talked to Andrew today. A green flag still needs pacing.',
+      christy:'You already talked to Christy today. Let the cafe breathe.'
+    };
+    say(name,msgs[id]||'No more chatting today'); setActions([backToLocationAction146(state.location)]);
+  }
+  function dailyFriendMessage146(loc){ say('Friends','Amy already had a friend hangout here today. The group chat needs time to recharge.'); setActions([backToLocationAction146(loc||state.location)]); }
+  function identifyLimitedNpc146(label){
+    const l=canon146(label).toLowerCase();
+    if(l.includes('xavier') || l.includes('check out a book'))return 'xavier';
+    if(l.includes('james'))return 'james';
+    if(l.includes('andrew') || l.includes('cute stranger'))return 'andrew';
+    if(l.includes('christy'))return 'christy';
+    return '';
+  }
+  function isFriendAction146(label){
+    const l=canon146(label).toLowerCase();
+    return l.includes('meet a friend') || l.includes('hang with friends') || l.includes('meet friends') || l.includes('chat with friends');
+  }
+  function patchAction146(a){
+    const out=Object.assign({},a); const label=canon146(out.label||''); const loc=state.location||'apartment';
+    if(label==='Chat More'){
+      out.label='Daily chat used'; out.disabled=true; out.className=((out.className||'')+' daily-disabled-146').trim(); return out;
+    }
+    const npc=identifyLimitedNpc146(label);
+    if(npc && !/ask .*out|green flag battle|date battle/i.test(label)){
+      const original=out.fn; out.label=npcUsed146(npc)?'Talked Today':label; out.disabled=!!npcUsed146(npc); out.className=((out.className||'')+(out.disabled?' daily-disabled-146':'')).trim();
+      out.fn=function(){ if(npcUsed146(npc))return dailyNpcMessage146(npc); markNpc146(npc); if(typeof original==='function')original(); setTimeout(()=>{ setActions([backToLocationAction146(loc)]); refreshVisibleDialogue146(); },0); };
+      return out;
+    }
+    if(isFriendAction146(label)){
+      const original=out.fn; out.label=friendUsed146(loc)?'Friend Hangout Used':label; out.disabled=!!friendUsed146(loc); out.className=((out.className||'')+(out.disabled?' daily-disabled-146':'')).trim();
+      out.fn=function(){ if(friendUsed146(loc))return dailyFriendMessage146(loc); markFriend146(loc); if(typeof original==='function')original(); };
+      return out;
+    }
+    return out;
+  }
+  const oldSetActions146=setActions;
+  setActions=function(actions){ return oldSetActions146((actions||[]).map(patchAction146)); };
+  window.setActions=setActions;
+  const oldSleepAdvance146=typeof sleepAdvance==='function'?sleepAdvance:null;
+  if(oldSleepAdvance146){ sleepAdvance=function(){ const r=oldSleepAdvance146(); state.dailyLimits146={day:state.day,npc:{},friend:{}}; return r; }; window.sleepAdvance=sleepAdvance; }
+  const oldAdvanceTime146=typeof advanceTime==='function'?advanceTime:null;
+  if(oldAdvanceTime146){ advanceTime=function(){ const before=state.day; const r=oldAdvanceTime146(); if(state.day!==before)state.dailyLimits146={day:state.day,npc:{},friend:{}}; return r; }; window.advanceTime=advanceTime; }
+  // Apply softened visible text and localization immediately after boot.
+  function boot146(){ ensureStyle146(); ensureDaily146(); refreshVisibleDialogue146(); }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot146); else boot146();
+  window.addEventListener('load',()=>setTimeout(boot146,60));
+})();
+
+
+/* =========================
+   v1.47 Social Battery + Time-Block Interaction Patch
+   - Interactions are limited per named NPC / per location / per time block, not once per whole day.
+   - Adds Social Battery meter, reset on new day/sleep.
+   - Talking drains battery; food/drinks/spa/rest restore it.
+   - Villain fights drain Social Battery hard.
+   ========================= */
+(function(){
+  const MAX_SOCIAL_147 = 100;
+  const COSTS_147 = { npc:15, friendHangout:20, screenshot:10, deepRoute:30, villain:35, boss:45, enemyTurn:8 };
+  const JA_147 = {
+    'Social Battery':'社交バッテリー',
+    'Morning':'朝',
+    'Afternoon':'昼',
+    'Evening':'夕方',
+    'Night':'夜',
+    'Talked this block':'この時間帯は会話済み',
+    'Friend hangout used this block':'この時間帯は友達と会話済み',
+    'Battery Low':'バッテリー不足',
+    'Social Battery Low':'社交バッテリー不足',
+    'Amy’s social battery has entered power-saving mode. Grab a drink, snack, meal, spa treatment, rest, or sleep before trying to be emotionally available again.':'エイミーの社交バッテリーは省電力モードです。もう一度ちゃんと人と話す前に、飲み物、軽食、食事、スパ、休息、睡眠で回復しましょう。',
+    'Amy already had this conversation during this time block. Let the slow-burn breathe.':'エイミーはこの時間帯にもうこの会話をしました。スローバーンには呼吸が必要です。',
+    'Amy already had a friend hangout here during this time block. The group chat needs time to recharge.':'エイミーはこの場所でこの時間帯にもう友達と過ごしました。グルチャにも充電時間が必要です。',
+    'Back to Location':'場所へ戻る',
+    'Social Battery +':'社交バッテリー +',
+    'Social Battery -':'社交バッテリー -',
+    'Time Block':'時間帯',
+    'Talk later':'あとで話す',
+    'Get snacks, drinks, rest, or sleep to recharge.':'軽食、飲み物、休息、睡眠で回復しましょう。'
+  };
+  function lang147(){ return (state && state.lang)==='ja' ? 'ja' : 'en'; }
+  function t147(s){
+    if(lang147()==='ja'){
+      if(JA_147[s])return JA_147[s];
+      try{ if(window.SLTS_T146)return window.SLTS_T146(s); }catch(e){}
+      try{ if(window.SLTS_T145)return window.SLTS_T145(s); }catch(e){}
+    }
+    return s;
+  }
+  function canon147(s){
+    s = String(s==null?'':s);
+    try{ if(window.SLTS_CANONICAL146)s=window.SLTS_CANONICAL146(s); }catch(e){}
+    try{ if(window.SLTS_CANONICAL145)s=window.SLTS_CANONICAL145(s); }catch(e){}
+    return s;
+  }
+  function clamp147(n,max=100){ return Math.max(0,Math.min(max,n)); }
+  function ensureStyle147(){
+    if(document.getElementById('v147Style'))return;
+    const st=document.createElement('style'); st.id='v147Style'; st.textContent=`
+      .social-stat-147{background:linear-gradient(180deg,rgba(126,224,131,.22),rgba(255,124,199,.18));border-color:rgba(126,224,131,.52)}
+      .social-stat-147.low{background:linear-gradient(180deg,rgba(255,76,102,.24),rgba(255,124,199,.16));border-color:rgba(255,76,102,.62)}
+      .timeblock-disabled-147{opacity:.55!important;filter:grayscale(.18);cursor:not-allowed!important}
+      .battery-low-147{background:linear-gradient(180deg,rgba(255,76,102,.75),rgba(111,16,36,.78))!important}
+    `; document.head.appendChild(st);
+  }
+  function ensureSocial147(){
+    if(typeof state.socialBatteryMax!=='number')state.socialBatteryMax=MAX_SOCIAL_147;
+    if(typeof state.socialBattery!=='number')state.socialBattery=MAX_SOCIAL_147;
+    state.socialBattery=clamp147(state.socialBattery,state.socialBatteryMax||MAX_SOCIAL_147);
+    if(!state.socialLimits147 || state.socialLimits147.day!==state.day){
+      state.socialLimits147={day:state.day,npc:{},friend:{}};
+    }
+    return state.socialLimits147;
+  }
+  function currentMinutes147(){
+    if(typeof state.clockMinutes==='number')return ((state.clockMinutes%1440)+1440)%1440;
+    if(state.time==='Night')return 21*60;
+    if(state.time==='Evening')return 18*60;
+    return 9*60;
+  }
+  function block147(){
+    const m=currentMinutes147();
+    if(m>=330 && m<720)return 'Morning';
+    if(m>=720 && m<1080)return 'Afternoon';
+    if(m>=1080 && m<1320)return 'Evening';
+    return 'Night';
+  }
+  function key147(id){ return String(id||'general')+'|'+block147(); }
+  function npcUsed147(id){ return !!ensureSocial147().npc[key147(id)]; }
+  function markNpc147(id){ ensureSocial147().npc[key147(id)]=true; }
+  function friendUsed147(loc){ return !!ensureSocial147().friend[key147(loc||state.location||'general')]; }
+  function markFriend147(loc){ ensureSocial147().friend[key147(loc||state.location||'general')]=true; }
+  function resetSocialDay147(){
+    state.socialBatteryMax=MAX_SOCIAL_147;
+    state.socialBattery=MAX_SOCIAL_147;
+    state.socialLimits147={day:state.day,npc:{},friend:{}};
+  }
+  function spendSocial147(amount,reason,opts={}){
+    ensureSocial147();
+    amount=Math.max(0,Math.round(amount||0));
+    if(amount<=0)return true;
+    if(!opts.force && state.socialBattery<amount)return false;
+    state.socialBattery=clamp147(state.socialBattery-amount,state.socialBatteryMax||MAX_SOCIAL_147);
+    if(!opts.silent){ updateHud(); if(opts.pop!==false && typeof popEffect==='function')popEffect(`${t147('Social Battery -')}${amount}`); }
+    return true;
+  }
+  function restoreSocial147(amount,opts={}){
+    ensureSocial147(); amount=Math.max(0,Math.round(amount||0)); if(amount<=0)return;
+    const before=state.socialBattery;
+    state.socialBattery=clamp147(state.socialBattery+amount,state.socialBatteryMax||MAX_SOCIAL_147);
+    if(!opts.silent && state.socialBattery>before){ updateHud(); if(opts.pop!==false && typeof popEffect==='function')popEffect(`${t147('Social Battery +')}${state.socialBattery-before}`); }
+    else updateHud();
+  }
+  window.SLTS_RESTORE_SOCIAL147=restoreSocial147;
+  window.SLTS_SPEND_SOCIAL147=spendSocial147;
+  function lowBattery147(cost){
+    say(t147('Social Battery Low'),t147('Amy’s social battery has entered power-saving mode. Grab a drink, snack, meal, spa treatment, rest, or sleep before trying to be emotionally available again.'));
+    setActions([{label:'Back to Location',fn:()=>goLocation(state.location||'apartment'),className:'wide'}]);
+  }
+  function timeBlockedNpc147(id){
+    const names={xavier:'Xavier',james:'James',andrew:'Andrew',christy:'Christy'};
+    say(names[id]||'Social',t147('Amy already had this conversation during this time block. Let the slow-burn breathe.'));
+    setActions([{label:'Back to Location',fn:()=>goLocation(state.location||'apartment'),className:'wide'}]);
+  }
+  function timeBlockedFriend147(loc){
+    say('Friends',t147('Amy already had a friend hangout here during this time block. The group chat needs time to recharge.'));
+    setActions([{label:'Back to Location',fn:()=>goLocation(loc||state.location||'apartment'),className:'wide'}]);
+  }
+  function identifyNpc147(label){
+    const l=canon147(label).toLowerCase();
+    if(l.includes('xavier') || l.includes('check out a book'))return 'xavier';
+    if(l.includes('james') || l.includes('order food/drink'))return 'james';
+    if(l.includes('andrew') || l.includes('cute stranger'))return 'andrew';
+    if(l.includes('christy'))return 'christy';
+    return '';
+  }
+  function isAskOut147(label){ return /ask .*out|green flag battle|date battle/i.test(canon147(label)); }
+  function isFriendHangout147(label){
+    const l=canon147(label).toLowerCase();
+    return l.includes('meet a friend') || l.includes('hang with friends') || l.includes('meet friends') || l.includes('chat with friends') || l.includes('text the group chat') || l.includes('meet friends for dinner');
+  }
+  function isFriendIndividual147(label){ return /^talk to (malik|min|jade|chloe|mia)/i.test(canon147(label)); }
+  function isScreenshot147(label){ return /send .*screenshot|send dating app screenshot/i.test(canon147(label)); }
+  function socialLabel147(label,cost){ return `${label} (${t147('Battery Low')})`; }
+  function patchAction147(a){
+    const out=Object.assign({},a||{}); const label=canon147(out.label||''); const loc=state.location||'apartment';
+    if(out.disabled)return out;
+    if(label==='Chat More'){
+      out.label='Talk later'; out.disabled=true; out.className=((out.className||'')+' timeblock-disabled-147').trim(); return out;
+    }
+    const npc=identifyNpc147(label);
+    if(npc && !isAskOut147(label)){
+      const original=out.fn; const used=npcUsed147(npc); out.label=used?'Talked this block':label; out.disabled=used; out.className=((out.className||'')+(used?' timeblock-disabled-147':'')).trim();
+      out.fn=function(){ if(npcUsed147(npc))return timeBlockedNpc147(npc); if(!spendSocial147(COSTS_147.npc,'npc'))return lowBattery147(COSTS_147.npc); markNpc147(npc); if(typeof original==='function')original(); setTimeout(()=>{ setActions([{label:'Back to Location',fn:()=>goLocation(loc),className:'wide'}]); },0); };
+      return out;
+    }
+    if(isAskOut147(label)){
+      const original=out.fn; out.fn=function(){ if(!spendSocial147(COSTS_147.deepRoute,'deep route'))return lowBattery147(COSTS_147.deepRoute); if(typeof original==='function')original(); };
+      if(state.socialBattery<COSTS_147.deepRoute){ out.label=socialLabel147(label,COSTS_147.deepRoute); out.className=((out.className||'')+' battery-low-147').trim(); }
+      return out;
+    }
+    if(isFriendHangout147(label)){
+      const original=out.fn; const used=friendUsed147(loc); out.label=used?'Friend hangout used this block':label; out.disabled=used; out.className=((out.className||'')+(used?' timeblock-disabled-147':'')).trim();
+      out.fn=function(){ if(friendUsed147(loc))return timeBlockedFriend147(loc); if(!spendSocial147(COSTS_147.friendHangout,'friend hangout'))return lowBattery147(COSTS_147.friendHangout); markFriend147(loc); if(typeof original==='function')original(); };
+      return out;
+    }
+    if(isScreenshot147(label)){
+      const original=out.fn; out.fn=function(){ if(!spendSocial147(COSTS_147.screenshot,'screenshot'))return lowBattery147(COSTS_147.screenshot); if(typeof original==='function')original(); };
+      if(state.socialBattery<COSTS_147.screenshot){ out.label=socialLabel147(label,COSTS_147.screenshot); out.className=((out.className||'')+' battery-low-147').trim(); }
+      return out;
+    }
+    if(isFriendIndividual147(label)){
+      const original=out.fn; out.fn=function(){ if(typeof original==='function')original(); setTimeout(()=>{ setActions([{label:'Back to Location',fn:()=>goLocation(loc),className:'wide'}]); },0); };
+      return out;
+    }
+    return out;
+  }
+  function displayLabel147(label){ return t147(canon147(label)); }
+  function renderActions147(actions){
+    ensureStyle147(); ensureSocial147(); window.SLTS_LAST_ACTIONS147=actions||[];
+    const grid=document.getElementById('actionGrid'); if(!grid)return;
+    grid.innerHTML='';
+    (actions||[]).map(patchAction147).forEach(x=>{
+      const b=document.createElement('button'); b.className=`action-btn ${x.className||''}`.trim();
+      b.textContent=displayLabel147(x.label||''); b.disabled=!!x.disabled;
+      b.onclick=typeof x.fn==='function'?x.fn:null; grid.appendChild(b);
+    });
+  }
+  setActions=function(actions){ renderActions147(actions); };
+  window.setActions=setActions;
+
+  const oldUpdateHud147=updateHud;
+  updateHud=function(){
+    ensureStyle147(); ensureSocial147();
+    const r=oldUpdateHud147?oldUpdateHud147():undefined;
+    const hud=document.getElementById('hud');
+    if(hud){
+      const old=hud.querySelector('.social-stat-147'); if(old)old.remove();
+      const stat=document.createElement('div'); stat.className='stat social-stat-147'+(state.socialBattery<=25?' low':'');
+      stat.innerHTML=`${t147('Social Battery')} <b>${state.socialBattery}/${state.socialBatteryMax||MAX_SOCIAL_147}</b>`;
+      const toggle=hud.querySelector('#languageToggleBtn');
+      if(toggle)hud.insertBefore(stat,toggle); else hud.appendChild(stat);
+    }
+    return r;
+  };
+  window.updateHud=updateHud;
+
+  const oldStartGame147=startGame;
+  startGame=function(){ resetSocialDay147(); const r=oldStartGame147?oldStartGame147():undefined; updateHud(); return r; };
+  window.startGame=startGame;
+
+  const oldSleep147=typeof sleepAdvance==='function'?sleepAdvance:null;
+  if(oldSleep147){ sleepAdvance=function(){ const r=oldSleep147(); resetSocialDay147(); updateHud(); return r; }; window.sleepAdvance=sleepAdvance; }
+
+  const oldAdvMin147=window.advanceGameMinutes134;
+  if(typeof oldAdvMin147==='function'){
+    window.advanceGameMinutes134=function(minutes,opts={}){ const before=state.day; const r=oldAdvMin147.call(this,minutes,opts); if(state.day!==before)resetSocialDay147(); updateHud(); return r; };
+  }
+  const oldAdvance147=typeof advanceTime==='function'?advanceTime:null;
+  if(oldAdvance147){ advanceTime=function(){ const before=state.day; const r=oldAdvance147(); if(state.day!==before)resetSocialDay147(); updateHud(); return r; }; window.advanceTime=advanceTime; }
+
+  const oldTalkFriend147=typeof talkToFriend==='function'?talkToFriend:null;
+  if(oldTalkFriend147){ talkToFriend=function(id,location=state.location){ const r=oldTalkFriend147(id,location); setTimeout(()=>{ setActions([{label:'Back to Location',fn:()=>goLocation(location||state.location),className:'wide'}]); },0); return r; }; window.talkToFriend=talkToFriend; }
+
+  const oldInteractJames147=typeof interactJames==='function'?interactJames:null;
+  if(oldInteractJames147){ interactJames=function(){ const r=oldInteractJames147(); restoreSocial147(15,{silent:true}); updateHud(); return r; }; window.interactJames=interactJames; }
+
+  const oldLocationActivity147=typeof locationActivity==='function'?locationActivity:null;
+  if(oldLocationActivity147){
+    locationActivity=function(speaker,text,effects={}){
+      const r=oldLocationActivity147(speaker,text,effects);
+      const sp=canon147(speaker).toLowerCase(); const tx=canon147(text).toLowerCase(); let amt=0;
+      if(sp.includes('spa') || tx.includes('massage') || tx.includes('steam') || tx.includes('facial'))amt=35;
+      else if(sp.includes('restaurant') || tx.includes('pasta') || tx.includes('steak') || tx.includes('meal') || tx.includes('dinner'))amt=25;
+      else if(sp.includes('beachside cafe') || sp.includes('cafe') || sp.includes('food court') || tx.includes('cake') || tx.includes('dessert') || tx.includes('snack'))amt=20;
+      else if(sp.includes('bar') || tx.includes('fries') || tx.includes('drink'))amt=15;
+      else if(sp.includes('amy’s bedroom') || sp.includes('amy\'s bedroom') || tx.includes('rested'))amt=30;
+      if(amt)restoreSocial147(amt,{silent:true});
+      updateHud(); return r;
+    }; window.locationActivity=locationActivity;
+  }
+
+  const oldRest147=typeof restAtHome==='function'?restAtHome:null;
+  if(oldRest147){ restAtHome=function(){ const r=oldRest147(); restoreSocial147(30,{silent:false}); return r; }; window.restAtHome=restAtHome; }
+
+  const oldStartBattle147=typeof startBattle==='function'?startBattle:null;
+  if(oldStartBattle147){
+    startBattle=function(id){
+      try{ if(typeof peacefulModeActive111==='function' && peacefulModeActive111())return oldStartBattle147(id); }catch(e){}
+      if(typeof villains!=='undefined' && villains[id]){
+        const cost=(id==='algorithm'||id==='pattern')?COSTS_147.boss:COSTS_147.villain;
+        spendSocial147(cost,'villain fight',{force:true,silent:false,pop:true});
+      }
+      return oldStartBattle147(id);
+    }; window.startBattle=startBattle;
+  }
+  const oldEnemyTurn147=typeof enemyTurn==='function'?enemyTurn:null;
+  if(oldEnemyTurn147){ enemyTurn=function(){ if(state.currentBattle&&state.currentBattle.type==='villain')spendSocial147(COSTS_147.enemyTurn,'villain pressure',{force:true,silent:true}); const r=oldEnemyTurn147(); updateHud(); return r; }; window.enemyTurn=enemyTurn; }
+
+  const oldToggle147=typeof toggleLanguage111==='function'?toggleLanguage111:null;
+  if(oldToggle147){ toggleLanguage111=function(){ const r=oldToggle147(); setTimeout(()=>{ updateHud(); if(window.SLTS_LAST_ACTIONS147)setActions(window.SLTS_LAST_ACTIONS147); },0); return r; }; window.toggleLanguage111=toggleLanguage111; }
+
+  function boot147(){ ensureStyle147(); ensureSocial147(); updateHud(); }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot147); else boot147();
+  window.addEventListener('load',()=>setTimeout(boot147,80));
+})();
+
+
+/* =========================
+   v1.48 Adrian Vale / The Love Bomber
+   Adds full LoveLoop texting/date/pre-battle flow, EN/JA lines,
+   enemy moves, defeat/victory/game-over dialogue, and story art.
+   ========================= */
+(function(){
+  const ID='love_bomber';
+  const JA={
+    "Adrian": "エイドリアン",
+    "Adrian Vale": "エイドリアン・ヴェイル",
+    "The Love Bomber": "ラブボマー",
+    "Master of Manipulation": "操作の達人",
+    "Love Bomber / Master of Manipulation": "ラブボマー／操作の達人",
+    "Nobody will love you like I do. You’re mine. Forever.": "俺ほど君を愛せる人はいない。君は俺のものだ。永遠に。",
+    "Slow Down, Boundaries, Receipts, Group Chat Reality Check, and “You don’t even know me.”": "落ち着かせること、境界線、証拠、グルチャ現実チェック、「私のこと知らないでしょ」。",
+    "LoveLoop: Adrian sent you a message: “I know this sounds crazy, but I saw your smile and felt like I was supposed to find you.”": "LoveLoop：エイドリアンからメッセージ。「変に聞こえるかもしれないけど、君の笑顔を見た瞬間、君を見つける運命だった気がしたんだ。」",
+    "Adrian sent you a message: “I know this sounds crazy, but I saw your smile and felt like I was supposed to find you.”": "エイドリアンからメッセージ。「変に聞こえるかもしれないけど、君の笑顔を見た瞬間、君を見つける運命だった気がしたんだ。」",
+    "I know this sounds crazy, but I saw your smile and felt like I was supposed to find you.": "変に聞こえるかもしれないけど、君の笑顔を見た瞬間、君を見つける運命だった気がしたんだ。",
+    "Supposed to find me? Sir, this is a dating app.": "運命？ ここ、ただのマッチングアプリなんだけど。",
+    "I’m serious. I don’t usually do this, but you feel different.": "本気だよ。普段はこんなこと言わない。でも君は違う気がする。",
+    "We have exchanged three messages.": "まだ三通しかやり取りしてないよね。",
+    "That’s what scares me. It already feels deeper than that.": "だから怖いんだ。もう、それ以上のものを感じてる。",
+    "That is not romantic. That is a speedrun.": "それ、ロマンチックじゃなくてタイムアタックだよ。",
+    "Let me prove it. Dinner tonight. Roses. No games.": "証明させて。今夜、ディナー。バラも用意する。駆け引きなしで。",
+    "A tiny pink bomb rolled across Amy’s phone screen and exploded into heart-shaped confetti.": "エイミーのスマホ画面に小さなピンクの爆弾が転がり込み、ハート型の紙吹雪をまき散らした。",
+    "I got you roses.": "君にバラを用意した。",
+    "That is… a lot of roses.": "それは……かなり多いバラだね。",
+    "Not enough, honestly. You deserve to feel chosen.": "正直、これでも足りないくらいだよ。君には「選ばれた」って感じてほしい。",
+    "I appreciate the gesture, but we just met.": "気持ちはありがたいけど、私たち今日会ったばかりだよ。",
+    "I know. But I’m not like other men. I know what I want.": "わかってる。でも俺は他の男とは違う。自分が何を求めてるか、ちゃんとわかってる。",
+    "And what you want is… me? After one conversation?": "その求めてるものが……私？ 一回話しただけで？",
+    "I’ve been waiting for someone like you.": "君みたいな人をずっと待ってた。",
+    "You do not know what “someone like me” means yet.": "「君みたいな人」がどういう意味か、まだ知らないでしょ。",
+    "I know enough. I can see us traveling together. Moving in. Building something real.": "十分わかってる。俺たち、一緒に旅行して、同棲して、本物の関係を築けると思う。",
+    "You skipped appetizers and went straight to joint lease.": "前菜を飛ばして、いきなり共同名義の契約まで行ったね。",
+    "Why waste time when it’s right?": "正しい相手なら、時間を無駄にする必要ないだろ？",
+    "The candlelight dimmed. Every rose on the table clicked like a tiny timer.": "キャンドルの光が暗くなった。テーブルのバラが一輪ずつ、小さな時限爆弾のようにカチリと鳴った。",
+    "Adrian, slow down.": "エイドリアン、ちょっと落ち着いて。",
+    "Why are you pushing me away?": "なんで俺を遠ざけるの？",
+    "I’m asking for normal pacing.": "普通のペースで進めたいって言ってるだけ。",
+    "Normal pacing is for people who are unsure. I’m sure.": "普通のペースは、迷ってる人たちのためのものだよ。俺は迷ってない。",
+    "You are not sure. You are intense.": "迷ってないんじゃなくて、重いの。",
+    "I’m giving you what every woman says she wants.": "女の人が求めてるものをあげてるだけだろ。",
+    "No. You are giving me pressure with flowers on it.": "違う。花で包んだ圧力を渡してるだけ。",
+    "I just care about you so much.": "ただ、君のことが大切すぎるんだ。",
+    "You do not know me enough to care about me this loudly.": "そんな大声で大切にできるほど、まだ私のこと知らないでしょ。",
+    "Nobody will love you like I do.": "俺ほど君を愛せる人はいない。",
+    "You met me after work.": "仕事帰りに会っただけだよね。",
+    "Adrian’s bouquet split open. Pink heart bombs floated into the air, each one ticking with a compliment that felt like a trap.": "エイドリアンの花束が裂けた。ピンクのハート爆弾が空中に浮かび上がり、罠みたいな褒め言葉を刻みながらカチカチと音を立てた。",
+    "The Love Bomber appeared.": "ラブボマーが現れた。",
+    "I was ready to give you everything.": "俺は君にすべてを捧げるつもりだった。",
+    "You were ready to overwhelm me and call it romance.": "私を圧倒して、それを恋愛って呼ぶつもりだったんでしょ。",
+    "I just wanted you to feel loved.": "君に愛されてるって感じてほしかっただけだ。",
+    "Love does not need a countdown timer.": "愛にカウントダウンタイマーはいらない。",
+    "Compliment Pop": "コンプリメント・ポップ",
+    "Future Fake Grenade": "未来詐欺グレネード",
+    "Bouquet Barrage": "ブーケ・バラージ",
+    "Constant Contact": "コンスタント・コンタクト",
+    "Grand Gesture Trap": "グランド・ジェスチャー・トラップ",
+    "Love Bomb Airstrike": "ラブボム空爆",
+    "Adrian throws a tiny heart bomb that bursts into empty flattery. “You’re perfect. You’re different. You’re everything.”": "エイドリアンが小さなハート爆弾を投げる。空っぽの褒め言葉が弾ける。「君は完璧だ。君は特別だ。君がすべてなんだ。」",
+    "Adrian shows visions of vacations, apartments, matching outfits, and a future that does not exist.": "旅行、同棲、ペアルック、存在しない未来の幻が広がる。",
+    "A bouquet explodes into petals, red flags, and emotional obligation.": "花束が爆発し、花びらと赤旗と感情的な負債が降り注ぐ。",
+    "Amy’s phone floods with texts: Good morning beautiful. wyd? Miss you. Why are you distant? Hello???": "エイミーのスマホにメッセージが大量に届く。「おはよう、きれいだね」「何してる？」「会いたい」「なんで距離置くの？」「ねえ？？？」",
+    "A teddy bear, roses, and a gift box drop onto the battlefield.": "テディベア、バラ、プレゼント箱が戦場に落ちてくる。",
+    "Heart bombs rain from above while Adrian shouts, “I just care about you so much!”": "空からハート爆弾が降り注ぎ、エイドリアンが叫ぶ。「ただ君を大切に思ってるだけなんだ！」",
+    "You’re perfect. You’re different. You’re everything.": "君は完璧だ。君は特別だ。君がすべてなんだ。",
+    "I already know what our life could look like.": "俺たちの人生がどんなものになるか、もう見えてるんだ。",
+    "I did all this for you. You can’t even appreciate it?": "ここまでしてるのに、感謝もできないの？",
+    "I’m trying harder than anyone ever has.": "誰よりも努力してるのに。",
+    "Slow Down": "落ち着いて",
+    "Boundaries": "境界線",
+    "Receipts": "証拠確認",
+    "Group Chat Reality Check": "グルチャ現実チェック",
+    "You Don’t Even Know Me": "私のこと知らないでしょ",
+    "You are not in love. You are sprinting.": "それは恋じゃない。全力疾走してるだけ。",
+    "A boundary is not rejection. But your reaction to one tells me a lot.": "境界線は拒絶じゃない。でも、それに対する反応で色々わかる。",
+    "You said “forever” before you asked my favorite food. That is evidence.": "私の好きな食べ物を聞く前に「永遠」って言ったよね。証拠として提出します。",
+    "Be so for real. He does not know your middle name.": "マジで現実見て。そいつ、君のミドルネームも知らないでしょ。",
+    "Too much.": "重すぎ。",
+    "Flowers are not a personality.": "花は人格じゃない。",
+    "I made a timeline. It is alarming.": "時系列を作ったけど、普通に怖い。",
+    "If romance feels like a hostage situation, leave.": "恋愛が人質事件みたいに感じるなら、帰ろ。",
+    "You do not love me. You love how fast you can make someone fall.": "あなたは私を愛してるんじゃない。誰かを早く落とせる自分が好きなだけ。",
+    "After everything I did for you?": "俺がここまでしてあげたのに？",
+    "You’re just scared of real love.": "本物の愛が怖いだけだろ。",
+    "So what, you want someone who does less?": "じゃあ、もっと何もしない男がいいってこと？",
+    "I was ready to make you my whole world.": "君を俺の世界のすべてにするつもりだったのに。",
+    "You’re going to regret pushing me away.": "俺を突き放したこと、後悔するよ。",
+    "Wait. No. You’re not supposed to leave.": "待って。違う。君は離れていくはずじゃない。",
+    "That sentence is exactly why I’m leaving.": "その言い方が、まさに私が離れる理由だよ。",
+    "I gave you roses. I gave you my time. I told you I loved you.": "バラも渡した。時間も使った。愛してるって言った。",
+    "You gave me pressure, fantasy, and a countdown timer.": "渡されたのは、圧力と妄想とカウントダウンタイマーだった。",
+    "Good.": "よかった。",
+    "The heart bombs fizzled out one by one. The roses fell harmlessly to the floor. For the first time all night, Amy’s phone was quiet.": "ハート爆弾が一つずつ火花を失っていった。バラはただ床に落ちた。その夜初めて、エイミーのスマホは静かになった。",
+    "Real love does not need to rush me, trap me, or make me prove I deserve air.": "本物の愛は、私を急かしたり、閉じ込めたり、息をする権利まで証明させたりしない。",
+    "Game Over: Love Bombed": "ゲームオーバー：ラブボムに飲み込まれた",
+    "Adrian’s grand gestures became the whole room. Every text needed an answer. Every boundary became proof Amy did not care enough.": "エイドリアンの大げさな愛情表現が部屋全体を埋め尽くした。すべてのメッセージに返事が必要で、すべての境界線は「愛が足りない証拠」に変えられた。",
+    "See? I told you. Nobody understands you like I do.": "ほらね。君を理解できるのは俺だけだって言っただろ。",
+    "I’m so tired.": "もう疲れた。",
+    "Amy stayed, not because it felt safe, but because leaving started to feel cruel.": "エイミーは残った。安心できたからではなく、離れることがひどいことのように思えてしまったから。",
+    "He said forever before dessert. Jail.": "デザートの前に「永遠」って言ったの？ 逮捕。",
+    "Bad pacing. Worse reaction.": "ペースが悪い。反応はもっと悪い。",
+    "A bouquet is cute. A bouquet with emotional debt is a weapon.": "花束はかわいい。でも感情的な借金付きの花束は武器。",
+    "I have documented seven red flags and one suspicious teddy bear.": "赤旗七件と不審なテディベア一体を記録しました。",
+    "He was not romantic. He was loud.": "ロマンチックじゃなかった。ただ声が大きかっただけ。",
+    "Love Bomber defeated.": "ラブボマーを倒した。",
+    "Post-battle friend comments": "バトル後の友達コメント",
+    "Continue": "続ける",
+    "Decompress in Car": "車で気持ちを整える",
+    "Check Phone": "スマホを確認",
+    "Back to Map": "マップへ戻る"
+};
+  window.SLTS_JA_DYNAMIC_V140=Object.assign(window.SLTS_JA_DYNAMIC_V140||{}, JA);
+  if(typeof V111_JA==='object') Object.assign(V111_JA, JA);
+
+  ASSETS.loveBomber = Object.assign(ASSETS.loveBomber||{}, {
+    card:'assets/characters/villains/adrian_vale_love_bomber_card.jpg',
+    sprite:'assets/characters/villains/adrian_vale_love_bomber_sprite.png',
+    ultimate:'assets/characters/villains/adrian_vale_love_bomber_ultimate.png',
+    profile:'assets/characters/villains/adrian_vale_love_bomber_profile.png'
+  });
+  if(ASSETS.portraits) ASSETS.portraits.adrian_vale_love_bomber_profile=ASSETS.loveBomber.profile;
+  if(ASSETS.redFlags) ASSETS.redFlags[ID]={realName:'Adrian Vale',archetype:'The Love Bomber',portrait:ASSETS.loveBomber.profile,art:ASSETS.loveBomber.sprite};
+
+  villains[ID]={
+    realName:'Adrian Vale',
+    name:'The Love Bomber', jpName:'ラブボマー',
+    className:'Master of Manipulation', jpClassName:'操作の達人',
+    villainName:'The Love Bomber', archetypeName:'Love Bomber',
+    bg:'restaurant_night', maxHp:132,
+    quote:'Nobody will love you like I do. You’re mine. Forever.',
+    jpQuote:'俺ほど君を愛せる人はいない。君は俺のものだ。永遠に。',
+    weakness:'Slow Down, Boundaries, Receipts, Group Chat Reality Check, and “You don’t even know me.”',
+    jpWeakness:'落ち着かせること、境界線、証拠、グルチャ現実チェック、「私のこと知らないでしょ」。',
+    lessonLearned:'Intensity is not intimacy.',
+    jpLessonLearned:'激しさは親密さではない。',
+    attacks:[
+      {
+            "name": "Compliment Pop",
+            "jaName": "コンプリメント・ポップ",
+            "damage": 17,
+            "delusion": 14,
+            "text": "Adrian throws a tiny heart bomb that bursts into empty flattery. “You’re perfect. You’re different. You’re everything.”",
+            "jaText": "エイドリアンが小さなハート爆弾を投げる。空っぽの褒め言葉が弾ける。「君は完璧だ。君は特別だ。君がすべてなんだ。」",
+            "moveType": "normal"
+      },
+      {
+            "name": "Future Fake Grenade",
+            "jaName": "未来詐欺グレネード",
+            "damage": 20,
+            "delusion": 18,
+            "text": "Adrian shows visions of vacations, apartments, matching outfits, and a future that does not exist.",
+            "jaText": "旅行、同棲、ペアルック、存在しない未来の幻が広がる。",
+            "moveType": "normal"
+      },
+      {
+            "name": "Bouquet Barrage",
+            "jaName": "ブーケ・バラージ",
+            "damage": 22,
+            "delusion": 16,
+            "text": "A bouquet explodes into petals, red flags, and emotional obligation.",
+            "jaText": "花束が爆発し、花びらと赤旗と感情的な負債が降り注ぐ。",
+            "moveType": "normal"
+      },
+      {
+            "name": "Constant Contact",
+            "jaName": "コンスタント・コンタクト",
+            "damage": 24,
+            "delusion": 20,
+            "text": "Amy’s phone floods with texts: Good morning beautiful. wyd? Miss you. Why are you distant? Hello???",
+            "jaText": "エイミーのスマホにメッセージが大量に届く。「おはよう、きれいだね」「何してる？」「会いたい」「なんで距離置くの？」「ねえ？？？」",
+            "moveType": "normal"
+      },
+      {
+            "name": "Grand Gesture Trap",
+            "jaName": "グランド・ジェスチャー・トラップ",
+            "damage": 26,
+            "delusion": 18,
+            "text": "A teddy bear, roses, and a gift box drop onto the battlefield.",
+            "jaText": "テディベア、バラ、プレゼント箱が戦場に落ちてくる。",
+            "moveType": "normal"
+      },
+      {
+            "name": "Love Bomb Airstrike",
+            "jaName": "ラブボム空爆",
+            "damage": 42,
+            "delusion": 28,
+            "text": "Heart bombs rain from above while Adrian shouts, “I just care about you so much!”",
+            "jaText": "空からハート爆弾が降り注ぎ、エイドリアンが叫ぶ。「ただ君を大切に思ってるだけなんだ！」",
+            "moveType": "special"
+      }
+]
+  };
+  ENEMY_ART.villains[ID]=ASSETS.loveBomber.sprite;
+
+  V18.appNotifications[ID]={app:'LoveLoop',msg:'Adrian sent you a message: “I know this sounds crazy, but I saw your smile and felt like I was supposed to find you.”',battleBg:'restaurant_night'};
+  V18.cutscenes[ID]=[
+    [
+        "LoveLoop",
+        "Adrian sent you a message: “I know this sounds crazy, but I saw your smile and felt like I was supposed to find you.”"
+    ],
+    [
+        "Amy",
+        "Supposed to find me? Sir, this is a dating app."
+    ],
+    [
+        "Adrian",
+        "I’m serious. I don’t usually do this, but you feel different."
+    ],
+    [
+        "Amy",
+        "We have exchanged three messages."
+    ],
+    [
+        "Adrian",
+        "That’s what scares me. It already feels deeper than that."
+    ],
+    [
+        "Amy",
+        "That is not romantic. That is a speedrun."
+    ],
+    [
+        "Adrian",
+        "Let me prove it. Dinner tonight. Roses. No games."
+    ],
+    [
+        "Narrator",
+        "A tiny pink bomb rolled across Amy’s phone screen and exploded into heart-shaped confetti."
+    ],
+    [
+        "Adrian",
+        "I got you roses."
+    ],
+    [
+        "Amy",
+        "That is… a lot of roses."
+    ],
+    [
+        "Adrian",
+        "Not enough, honestly. You deserve to feel chosen."
+    ],
+    [
+        "Amy",
+        "I appreciate the gesture, but we just met."
+    ],
+    [
+        "Adrian",
+        "I know. But I’m not like other men. I know what I want."
+    ],
+    [
+        "Amy",
+        "And what you want is… me? After one conversation?"
+    ],
+    [
+        "Adrian",
+        "I’ve been waiting for someone like you."
+    ],
+    [
+        "Amy",
+        "You do not know what “someone like me” means yet."
+    ],
+    [
+        "Adrian",
+        "I know enough. I can see us traveling together. Moving in. Building something real."
+    ],
+    [
+        "Amy",
+        "You skipped appetizers and went straight to joint lease."
+    ],
+    [
+        "Adrian",
+        "Why waste time when it’s right?"
+    ],
+    [
+        "Narrator",
+        "The candlelight dimmed. Every rose on the table clicked like a tiny timer."
+    ],
+    [
+        "Amy",
+        "Adrian, slow down."
+    ],
+    [
+        "Adrian",
+        "Why are you pushing me away?"
+    ],
+    [
+        "Amy",
+        "I’m asking for normal pacing."
+    ],
+    [
+        "Adrian",
+        "Normal pacing is for people who are unsure. I’m sure."
+    ],
+    [
+        "Amy",
+        "You are not sure. You are intense."
+    ],
+    [
+        "Adrian",
+        "I’m giving you what every woman says she wants."
+    ],
+    [
+        "Amy",
+        "No. You are giving me pressure with flowers on it."
+    ],
+    [
+        "Adrian",
+        "I just care about you so much."
+    ],
+    [
+        "Amy",
+        "You do not know me enough to care about me this loudly."
+    ],
+    [
+        "Adrian",
+        "Nobody will love you like I do."
+    ],
+    [
+        "Amy",
+        "You met me after work."
+    ],
+    [
+        "Narrator",
+        "Adrian’s bouquet split open. Pink heart bombs floated into the air, each one ticking with a compliment that felt like a trap."
+    ]
+];
+  V18.carLines[ID]='Amy sat in the car and stared at the silent phone. “If love needs me trapped to feel real, it is not love.”';
+  JA['Amy sat in the car and stared at the silent phone. “If love needs me trapped to feel real, it is not love.”']='エイミーは車の中で静かなスマホを見つめた。「閉じ込めないと本物に見えない愛なら、それは愛じゃない。」';
+  window.SLTS_JA_DYNAMIC_V140['Amy sat in the car and stared at the silent phone. “If love needs me trapped to feel real, it is not love.”']=JA['Amy sat in the car and stared at the silent phone. “If love needs me trapped to feel real, it is not love.”'];
+  if(typeof V111_JA==='object') V111_JA['Amy sat in the car and stared at the silent phone. “If love needs me trapped to feel real, it is not love.”']=JA['Amy sat in the car and stared at the silent phone. “If love needs me trapped to feel real, it is not love.”'];
+
+  function addUnique(arr,id,after){
+    if(!Array.isArray(arr)||arr.includes(id))return;
+    const idx=after?arr.indexOf(after):-1;
+    if(idx>=0)arr.splice(idx+1,0,id); else arr.push(id);
+  }
+  addUnique(V18.villainOrder,ID,'millionaire');
+  addUnique(window.AMY_RANDOM_VILLAIN_POOL_125,ID,'millionaire');
+
+  function tr(en){
+    try{ if(window.SLTS_T146) return window.SLTS_T146(en); }catch(e){}
+    try{ if(window.SLTS_T145) return window.SLTS_T145(en); }catch(e){}
+    return (state.lang==='ja' && JA[en]) ? JA[en] : en;
+  }
+  function sayT(speaker,text){ say(speaker,text); }
+
+  function decorateAdrianPortrait(){
+    const layer=document.getElementById('cutsceneDialogueLayer'); if(!layer)return;
+    const label=(layer.querySelector('.cs-tab-label')?.textContent||'').toLowerCase();
+    if(!/adrian|エイドリアン|love bomber|ラブボマー/.test(label))return;
+    const av=layer.querySelector('.cs-avatar'); if(!av)return;
+    av.classList.add('has-card-146');
+    av.innerHTML='<img alt="" src="'+ASSETS.loveBomber.profile+'">';
+  }
+  const prevShowCutscene148=window.showCutsceneUi113;
+  if(typeof prevShowCutscene148==='function'){
+    window.showCutsceneUi113=function(speaker,text){
+      const r=prevShowCutscene148.call(this,speaker,text);
+      decorateAdrianPortrait();
+      return r;
+    };
+  }
+
+  const prevStartBattle148=startBattle;
+  startBattle=function(id){
+    const r=prevStartBattle148(id);
+    if(id===ID && state.currentBattle && state.currentBattle.id===ID){
+      setTimeout(()=>{
+        showSeq148([['The Love Bomber','The Love Bomber appeared.'],['Adrian','I was ready to give you everything.'],['Amy','You were ready to overwhelm me and call it romance.'],['Adrian','I just wanted you to feel loved.'],['Amy','Love does not need a countdown timer.']],0,()=>{setActions([{label:'Amy’s Turn',fn:setBattleActions,className:'primary wide'}]);});
+      },0);
+    }
+    return r;
+  };
+  window.startBattle=startBattle;
+
+  const prevEnemyTurn148=enemyTurn;
+  enemyTurn=function(){
+    const b=state.currentBattle;
+    if(b && b.id===ID){
+      const v=villains[ID];
+      const atk=v.attacks[Math.floor(Math.random()*v.attacks.length)];
+      setAmyPose('hurt');
+      const sprite=atk.moveType==='special'?ASSETS.loveBomber.ultimate:ASSETS.loveBomber.sprite;
+      renderSprite('enemySpriteText',sprite,'The Love Bomber',true);
+      let dmg=Math.max(9,Math.round(atk.damage*1.15)-Math.floor(state.selfRespect/28));
+      if(state.delusion>55)dmg+=8;
+      state.hp=Math.max(0,state.hp-dmg);
+      state.delusion=clamp(state.delusion+atk.delusion);
+      state.peace=clamp(state.peace-Math.floor(dmg/2));
+      if(typeof state.socialBattery==='number') state.socialBattery=Math.max(0,state.socialBattery-(atk.moveType==='special'?18:10));
+      popEffect(state.lang==='ja'?(atk.jaName||atk.name):atk.name);
+      sayT('Adrian', state.lang==='ja'?(atk.jaText||atk.text):atk.text);
+      if(state.currentBattle && state.currentBattle.enemyHp <= Math.ceil(state.currentBattle.enemyMaxHp*.35) && !state.loveBomberLowHp148){
+        state.loveBomberLowHp148=true;
+        const lows=["After everything I did for you?", "You’re just scared of real love.", "So what, you want someone who does less?", "I was ready to make you my whole world.", "You’re going to regret pushing me away."];
+        setTimeout(()=>sayT('Adrian',lows[Math.floor(Math.random()*lows.length)]),120);
+      }
+      updateHud();
+      if(state.hp<=0||state.delusion>=100)return gameOver(ID);
+      return setActions([{label:'Amy’s Turn',fn:setBattleActions}]);
+    }
+    return prevEnemyTurn148();
+  };
+  window.enemyTurn=enemyTurn;
+
+  const COUNTERS={
+    'Boundary Slash':'A boundary is not rejection. But your reaction to one tells me a lot.',
+    'Check Receipts':'You said “forever” before you asked my favorite food. That is evidence.',
+    'Girl, Stand Up!':'You do not love me. You love how fast you can make someone fall.'
+  };
+  const prevAmyAttack148=typeof amyAttack==='function'?amyAttack:null;
+  if(prevAmyAttack148){
+    amyAttack=function(move,dmg,text){
+      if(state.currentBattle && state.currentBattle.id===ID && COUNTERS[move]) text=COUNTERS[move];
+      return prevAmyAttack148(move,dmg,text);
+    };
+    window.amyAttack=amyAttack;
+  }
+  const prevUseFriend148=typeof useFriend==='function'?useFriend:null;
+  if(prevUseFriend148){
+    useFriend=function(id){
+      if(state.currentBattle && state.currentBattle.id===ID){
+        const lines={
+          malik:'Be so for real. He does not know your middle name.',
+          min:'Too much.',
+          jade:'Flowers are not a personality.',
+          chloe:'I made a timeline. It is alarming.',
+          mia:'If romance feels like a hostage situation, leave.'
+        };
+        if(lines[id]){
+          if(state.groupChat<10){ say('Group Chat','Group Chat Meter too low.'); return setActions([{label:'Back',fn:setBattleActions}]); }
+          state.groupChat=clamp(state.groupChat-10);
+          state.currentBattle.enemyHp=Math.max(0,state.currentBattle.enemyHp-16);
+          state.clarity=clamp(state.clarity+10); state.selfRespect=clamp(state.selfRespect+10); state.delusion=clamp(state.delusion-12);
+          popEffect(id==='min'?'SIDE-EYE':id==='chloe'?'RECEIPTS':'REALITY CHECK');
+          say(friends[id]?.name||'Friend',lines[id]); updateHud();
+          if(state.currentBattle.enemyHp<=0)return winBattle();
+          return setActions([{label:'Continue',fn:enemyTurn}]);
+        }
+      }
+      return prevUseFriend148(id);
+    };
+    window.useFriend=useFriend;
+  }
+
+  function showSeq148(seq,index,done){
+    if(index>=seq.length) return done&&done();
+    const [speaker,text]=seq[index];
+    sayT(speaker,text);
+    setActions([{label:index>=seq.length-1?'Continue':'Continue',fn:()=>showSeq148(seq,index+1,done),className:'primary wide'}]);
+  }
+  const defeatSeq=[
+    [
+        "Adrian",
+        "Wait. No. You’re not supposed to leave."
+    ],
+    [
+        "Amy",
+        "That sentence is exactly why I’m leaving."
+    ],
+    [
+        "Adrian",
+        "I gave you roses. I gave you my time. I told you I loved you."
+    ],
+    [
+        "Amy",
+        "You gave me pressure, fantasy, and a countdown timer."
+    ],
+    [
+        "Adrian",
+        "Nobody will love you like I do."
+    ],
+    [
+        "Amy",
+        "Good."
+    ],
+    [
+        "Narrator",
+        "The heart bombs fizzled out one by one. The roses fell harmlessly to the floor. For the first time all night, Amy’s phone was quiet."
+    ],
+    [
+        "Amy",
+        "Real love does not need to rush me, trap me, or make me prove I deserve air."
+    ]
+];
+  const postComments=[
+    [
+        "Malik",
+        "He said forever before dessert. Jail."
+    ],
+    [
+        "Min",
+        "Bad pacing. Worse reaction."
+    ],
+    [
+        "Jade",
+        "A bouquet is cute. A bouquet with emotional debt is a weapon."
+    ],
+    [
+        "Chloe",
+        "I have documented seven red flags and one suspicious teddy bear."
+    ],
+    [
+        "Mia",
+        "He was not romantic. He was loud."
+    ]
+];
+  const prevWinBattle148=winBattle;
+  winBattle=function(){
+    const b=state.currentBattle;
+    if(!b || b.id!==ID) return prevWinBattle148();
+    setAmyPose('victory');
+    state.defeated.add(ID); state.currentBattle=null; state.loveBomberLowHp148=false;
+    state.redFlagData++; state.groupChat=clamp(state.groupChat+14); state.clarity=clamp(state.clarity+10); state.selfRespect=clamp(state.selfRespect+14); state.peace=clamp(state.peace+6);
+    document.getElementById('battleUi').classList.add('hidden'); showEnemy(false); updateHud();
+    showSeq148(defeatSeq,0,()=>{
+      sayT('Victory','Love Bomber defeated.');
+      setActions([{label:'Post-battle friend comments',fn:()=>showSeq148(postComments,0,()=>{
+        setActions([{label:'Decompress in Car',fn:()=>goCarAfterDate(ID),className:'green'},{label:'Back to Map',fn:()=>showScreen('mapScreen'),className:'primary'},{label:'Check Phone',fn:openDatingApp,className:'danger'}]);
+      }),className:'primary wide'},{label:'Back to Map',fn:()=>showScreen('mapScreen'),className:'primary'}]);
+    });
+  };
+  window.winBattle=winBattle;
+
+  const prevGameOver148=gameOver;
+  const gameOverSeq=[
+    [
+        "Narrator",
+        "Adrian’s grand gestures became the whole room. Every text needed an answer. Every boundary became proof Amy did not care enough."
+    ],
+    [
+        "Adrian",
+        "See? I told you. Nobody understands you like I do."
+    ],
+    [
+        "Amy",
+        "I’m so tired."
+    ],
+    [
+        "Narrator",
+        "Amy stayed, not because it felt safe, but because leaving started to feel cruel."
+    ]
+];
+  gameOver=function(id){
+    if(id!==ID) return prevGameOver148(id);
+    setAmyPose('defeat'); state.currentBattle=null; document.getElementById('battleUi').classList.add('hidden'); showEnemy(false);
+    sayT('Game Over: Love Bombed','Adrian’s grand gestures became the whole room. Every text needed an answer. Every boundary became proof Amy did not care enough.');
+    setActions([{label:'Continue',fn:()=>showSeq148(gameOverSeq.slice(1),0,()=>{setActions([{label:'Try Again',fn:()=>{state.hp=state.maxHp;state.delusion=20;state.peace=70;showScreen('mapScreen')},className:'primary'},{label:'Title Screen',fn:()=>showScreen('titleScreen')}]);}),className:'danger wide'}]);
+    updateHud();
+  };
+  window.gameOver=gameOver;
+
+  function boot148(){
+    try{ if(window.SLTS_APPLY_LOCALIZATION145) window.SLTS_APPLY_LOCALIZATION145(); }catch(e){}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot148); else boot148();
+  window.addEventListener('load',()=>setTimeout(boot148,80));
 })();
 
 </script>
