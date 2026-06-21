@@ -1,0 +1,918 @@
+{
+  "project": "Swipe Left to Survive",
+  "version": "v1.55",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "note": "VFX uploads contained scaffold/manifest/pending text files, not final PNG overlays. The code is wired to these expected PNG paths and will display them when real PNGs are added. Missing batch 04 placeholders were created.",
+  "registry": {
+    "two_am": {
+      "name": "THE 2AM SUMMONER",
+      "class": "Low-Effort Hookup Texter",
+      "moves": {
+        "Wyd Wave": "assets/vfx/red_flags/two_am/01_wyd_wave.png",
+        "You Up Beam": "assets/vfx/red_flags/two_am/02_you_up_beam.png",
+        "Come Through Curse": "assets/vfx/red_flags/two_am/03_come_through_curse.png",
+        "No Pressure Pressure": "assets/vfx/red_flags/two_am/04_no_pressure_pressure.png",
+        "Midnight Doorway": "assets/vfx/red_flags/two_am/05_midnight_doorway.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Wyd Wave",
+          "slug": "wyd_wave",
+          "path": "assets/vfx/red_flags/two_am/01_wyd_wave.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "You Up Beam",
+          "slug": "you_up_beam",
+          "path": "assets/vfx/red_flags/two_am/02_you_up_beam.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Come Through Curse",
+          "slug": "come_through_curse",
+          "path": "assets/vfx/red_flags/two_am/03_come_through_curse.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "No Pressure Pressure",
+          "slug": "no_pressure_pressure",
+          "path": "assets/vfx/red_flags/two_am/04_no_pressure_pressure.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Midnight Doorway",
+          "slug": "midnight_doorway",
+          "path": "assets/vfx/red_flags/two_am/05_midnight_doorway.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "preference": {
+      "name": "THE PREFERENCE PALADIN",
+      "class": "Fetishizer Knight",
+      "moves": {
+        "You Look Like Beyoncé": "assets/vfx/red_flags/preference/01_you_look_like_beyonc.png",
+        "Preference Not Fetish": "assets/vfx/red_flags/preference/02_preference_not_fetish.png",
+        "I Grew Up Around It": "assets/vfx/red_flags/preference/03_i_grew_up_around_it.png",
+        "Parents Would Never Accept You": "assets/vfx/red_flags/preference/04_parents_would_never_accept_you.png",
+        "Exotic Compliment Chain": "assets/vfx/red_flags/preference/05_exotic_compliment_chain.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "You Look Like Beyoncé",
+          "slug": "you_look_like_beyonc",
+          "path": "assets/vfx/red_flags/preference/01_you_look_like_beyonc.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Preference Not Fetish",
+          "slug": "preference_not_fetish",
+          "path": "assets/vfx/red_flags/preference/02_preference_not_fetish.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "I Grew Up Around It",
+          "slug": "i_grew_up_around_it",
+          "path": "assets/vfx/red_flags/preference/03_i_grew_up_around_it.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Parents Would Never Accept You",
+          "slug": "parents_would_never_accept_you",
+          "path": "assets/vfx/red_flags/preference/04_parents_would_never_accept_you.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Exotic Compliment Chain",
+          "slug": "exotic_compliment_chain",
+          "path": "assets/vfx/red_flags/preference/05_exotic_compliment_chain.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "coworker": {
+      "name": "THE EXPERIMENTAL COWORKER",
+      "class": "Office Happy Hour Creep",
+      "moves": {
+        "After-Hours Ping": "assets/vfx/red_flags/coworker/01_after_hours_ping.png",
+        "You’re Different": "assets/vfx/red_flags/coworker/02_youre_different.png",
+        "I’m Just Curious": "assets/vfx/red_flags/coworker/03_im_just_curious.png",
+        "Don’t Make It Weird": "assets/vfx/red_flags/coworker/04_dont_make_it_weird.png",
+        "HR Poster Peels Off": "assets/vfx/red_flags/coworker/05_hr_poster_peels_off.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "After-Hours Ping",
+          "slug": "after_hours_ping",
+          "path": "assets/vfx/red_flags/coworker/01_after_hours_ping.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "You’re Different",
+          "slug": "youre_different",
+          "path": "assets/vfx/red_flags/coworker/02_youre_different.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "I’m Just Curious",
+          "slug": "im_just_curious",
+          "path": "assets/vfx/red_flags/coworker/03_im_just_curious.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Don’t Make It Weird",
+          "slug": "dont_make_it_weird",
+          "path": "assets/vfx/red_flags/coworker/04_dont_make_it_weird.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "HR Poster Peels Off",
+          "slug": "hr_poster_peels_off",
+          "path": "assets/vfx/red_flags/coworker/05_hr_poster_peels_off.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "love_bomber": {
+      "name": "THE LOVE BOMBER",
+      "class": "Love Bomber",
+      "moves": {
+        "Move 1": "assets/vfx/red_flags/love_bomber/01_move_1.png",
+        "Move 2": "assets/vfx/red_flags/love_bomber/02_move_2.png",
+        "Move 3": "assets/vfx/red_flags/love_bomber/03_move_3.png",
+        "Move 4": "assets/vfx/red_flags/love_bomber/04_move_4.png",
+        "Special": "assets/vfx/red_flags/love_bomber/05_special.png",
+        "Compliment Pop": "assets/vfx/red_flags/love_bomber/01_move_1.png",
+        "Future Fake Grenade": "assets/vfx/red_flags/love_bomber/02_move_2.png",
+        "Future Fake": "assets/vfx/red_flags/love_bomber/02_move_2.png",
+        "Bouquet Barrage": "assets/vfx/red_flags/love_bomber/03_move_3.png",
+        "Constant Contact": "assets/vfx/red_flags/love_bomber/04_move_4.png",
+        "Love Bomb Airstrike": "assets/vfx/red_flags/love_bomber/05_special.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Move 1",
+          "slug": "move_1",
+          "path": "assets/vfx/red_flags/love_bomber/01_move_1.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Move 2",
+          "slug": "move_2",
+          "path": "assets/vfx/red_flags/love_bomber/02_move_2.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Move 3",
+          "slug": "move_3",
+          "path": "assets/vfx/red_flags/love_bomber/03_move_3.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Move 4",
+          "slug": "move_4",
+          "path": "assets/vfx/red_flags/love_bomber/04_move_4.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Special",
+          "slug": "special",
+          "path": "assets/vfx/red_flags/love_bomber/05_special.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ],
+      "note": "Package uses generic move_1/move_2 placeholders; v1.55 maps them to coded Love Bomber moves. Grand Gesture Trap does not yet have a distinct VFX path in this uploaded package."
+    },
+    "dark_humor": {
+      "name": "DARK HUMOR GUY",
+      "class": "Boundary Tester",
+      "moves": {
+        "Just Kidding Jab": "assets/vfx/red_flags/dark_humor/01_just_kidding_jab.png",
+        "Too Sensitive Slash": "assets/vfx/red_flags/dark_humor/02_too_sensitive_slash.png",
+        "Dark Humor Defense": "assets/vfx/red_flags/dark_humor/03_dark_humor_defense.png",
+        "Relax, I’m Playing": "assets/vfx/red_flags/dark_humor/04_relax_im_playing.png",
+        "Schrödinger’s Threat": "assets/vfx/red_flags/dark_humor/05_schr_dingers_threat.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Just Kidding Jab",
+          "slug": "just_kidding_jab",
+          "path": "assets/vfx/red_flags/dark_humor/01_just_kidding_jab.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Too Sensitive Slash",
+          "slug": "too_sensitive_slash",
+          "path": "assets/vfx/red_flags/dark_humor/02_too_sensitive_slash.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Dark Humor Defense",
+          "slug": "dark_humor_defense",
+          "path": "assets/vfx/red_flags/dark_humor/03_dark_humor_defense.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Relax, I’m Playing",
+          "slug": "relax_im_playing",
+          "path": "assets/vfx/red_flags/dark_humor/04_relax_im_playing.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Schrödinger’s Threat",
+          "slug": "schr_dingers_threat",
+          "path": "assets/vfx/red_flags/dark_humor/05_schr_dingers_threat.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "demon": {
+      "name": "THE DEMON FIGHTER",
+      "class": "Hot Disaster",
+      "moves": {
+        "Fighting My Demons": "assets/vfx/red_flags/demon/01_fighting_my_demons.png",
+        "Loyalty Test": "assets/vfx/red_flags/demon/02_loyalty_test.png",
+        "Military School Flashback": "assets/vfx/red_flags/demon/03_military_school_flashback.png",
+        "Hot Disaster Aura": "assets/vfx/red_flags/demon/04_hot_disaster_aura.png",
+        "Handle Me At My Worst": "assets/vfx/red_flags/demon/05_handle_me_at_my_worst.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Fighting My Demons",
+          "slug": "fighting_my_demons",
+          "path": "assets/vfx/red_flags/demon/01_fighting_my_demons.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Loyalty Test",
+          "slug": "loyalty_test",
+          "path": "assets/vfx/red_flags/demon/02_loyalty_test.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Military School Flashback",
+          "slug": "military_school_flashback",
+          "path": "assets/vfx/red_flags/demon/03_military_school_flashback.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Hot Disaster Aura",
+          "slug": "hot_disaster_aura",
+          "path": "assets/vfx/red_flags/demon/04_hot_disaster_aura.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Handle Me At My Worst",
+          "slug": "handle_me_at_my_worst",
+          "path": "assets/vfx/red_flags/demon/05_handle_me_at_my_worst.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "lucien_reservation_mirage": {
+      "name": "RESERVATION MIRAGE",
+      "class": "Fake Fancy / Promise Merchant",
+      "moves": {
+        "Table for Never": "assets/vfx/red_flags/lucien_reservation_mirage/01_table_for_never.png",
+        "Promise Loop": "assets/vfx/red_flags/lucien_reservation_mirage/02_promise_loop.png",
+        "Plan Swap": "assets/vfx/red_flags/lucien_reservation_mirage/03_plan_swap.png",
+        "Charm Fog": "assets/vfx/red_flags/lucien_reservation_mirage/04_charm_fog.png",
+        "Next Time, I Swear": "assets/vfx/red_flags/lucien_reservation_mirage/05_next_time_i_swear.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Table for Never",
+          "slug": "table_for_never",
+          "path": "assets/vfx/red_flags/lucien_reservation_mirage/01_table_for_never.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Promise Loop",
+          "slug": "promise_loop",
+          "path": "assets/vfx/red_flags/lucien_reservation_mirage/02_promise_loop.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Plan Swap",
+          "slug": "plan_swap",
+          "path": "assets/vfx/red_flags/lucien_reservation_mirage/03_plan_swap.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Charm Fog",
+          "slug": "charm_fog",
+          "path": "assets/vfx/red_flags/lucien_reservation_mirage/04_charm_fog.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Next Time, I Swear",
+          "slug": "next_time_i_swear",
+          "path": "assets/vfx/red_flags/lucien_reservation_mirage/05_next_time_i_swear.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "roman_industry_mystery": {
+      "name": "INDUSTRY MYSTERY",
+      "class": "Vague Entertainment Flexer",
+      "moves": {
+        "Ambiguous Income": "assets/vfx/red_flags/roman_industry_mystery/01_ambiguous_income.png",
+        "Retirement Flex": "assets/vfx/red_flags/roman_industry_mystery/02_retirement_flex.png",
+        "Shock Reveal": "assets/vfx/red_flags/roman_industry_mystery/03_shock_reveal.png",
+        "Open-Mindedness Check": "assets/vfx/red_flags/roman_industry_mystery/04_open_mindedness_check.png",
+        "I Broke Her": "assets/vfx/red_flags/roman_industry_mystery/05_i_broke_her.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Ambiguous Income",
+          "slug": "ambiguous_income",
+          "path": "assets/vfx/red_flags/roman_industry_mystery/01_ambiguous_income.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Retirement Flex",
+          "slug": "retirement_flex",
+          "path": "assets/vfx/red_flags/roman_industry_mystery/02_retirement_flex.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Shock Reveal",
+          "slug": "shock_reveal",
+          "path": "assets/vfx/red_flags/roman_industry_mystery/03_shock_reveal.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Open-Mindedness Check",
+          "slug": "open_mindedness_check",
+          "path": "assets/vfx/red_flags/roman_industry_mystery/04_open_mindedness_check.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "I Broke Her",
+          "slug": "i_broke_her",
+          "path": "assets/vfx/red_flags/roman_industry_mystery/05_i_broke_her.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "house_date": {
+      "name": "THE HOUSE DATE ECONOMIST",
+      "class": "Bare Minimum Accountant",
+      "moves": {
+        "Couch Date Trap": "assets/vfx/red_flags/house_date/01_couch_date_trap.png",
+        "I Don’t Want To Be Used": "assets/vfx/red_flags/house_date/02_i_dont_want_to_be_used.png",
+        "You Pay Then": "assets/vfx/red_flags/house_date/03_you_pay_then.png",
+        "Coffee Is Expensive": "assets/vfx/red_flags/house_date/04_coffee_is_expensive.png",
+        "Bare Minimum Audit": "assets/vfx/red_flags/house_date/05_bare_minimum_audit.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Couch Date Trap",
+          "slug": "couch_date_trap",
+          "path": "assets/vfx/red_flags/house_date/01_couch_date_trap.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "I Don’t Want To Be Used",
+          "slug": "i_dont_want_to_be_used",
+          "path": "assets/vfx/red_flags/house_date/02_i_dont_want_to_be_used.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "You Pay Then",
+          "slug": "you_pay_then",
+          "path": "assets/vfx/red_flags/house_date/03_you_pay_then.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Coffee Is Expensive",
+          "slug": "coffee_is_expensive",
+          "path": "assets/vfx/red_flags/house_date/04_coffee_is_expensive.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Bare Minimum Audit",
+          "slug": "bare_minimum_audit",
+          "path": "assets/vfx/red_flags/house_date/05_bare_minimum_audit.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "broke_dreamer": {
+      "name": "JOEY DELIVERY",
+      "class": "The Broke Balladeer",
+      "moves": {
+        "Unreleased Track": "assets/vfx/red_flags/broke_dreamer/01_unreleased_track.png",
+        "Value Meal Serenade": "assets/vfx/red_flags/broke_dreamer/02_value_meal_serenade.png",
+        "Manifesting": "assets/vfx/red_flags/broke_dreamer/03_manifesting.png",
+        "Can You Spot Me?": "assets/vfx/red_flags/broke_dreamer/04_can_you_spot_me.png",
+        "You Don’t Support Dreams": "assets/vfx/red_flags/broke_dreamer/05_you_dont_support_dreams.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Unreleased Track",
+          "slug": "unreleased_track",
+          "path": "assets/vfx/red_flags/broke_dreamer/01_unreleased_track.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Value Meal Serenade",
+          "slug": "value_meal_serenade",
+          "path": "assets/vfx/red_flags/broke_dreamer/02_value_meal_serenade.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Manifesting",
+          "slug": "manifesting",
+          "path": "assets/vfx/red_flags/broke_dreamer/03_manifesting.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Can You Spot Me?",
+          "slug": "can_you_spot_me",
+          "path": "assets/vfx/red_flags/broke_dreamer/04_can_you_spot_me.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "You Don’t Support Dreams",
+          "slug": "you_dont_support_dreams",
+          "path": "assets/vfx/red_flags/broke_dreamer/05_you_dont_support_dreams.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "millionaire": {
+      "name": "THE LOW-KEY MILLIONAIRE",
+      "class": "Wallet Illusionist",
+      "moves": {
+        "Low-Key Millionaire Mirage": "assets/vfx/red_flags/millionaire/01_low_key_millionaire_mirage.png",
+        "Believe In Me Barrage": "assets/vfx/red_flags/millionaire/02_believe_in_me_barrage.png",
+        "Between Opportunities": "assets/vfx/red_flags/millionaire/03_between_opportunities.png",
+        "Do You Want My Kids?": "assets/vfx/red_flags/millionaire/04_do_you_want_my_kids.png",
+        "Real Woman Requirement": "assets/vfx/red_flags/millionaire/05_real_woman_requirement.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Low-Key Millionaire Mirage",
+          "slug": "low_key_millionaire_mirage",
+          "path": "assets/vfx/red_flags/millionaire/01_low_key_millionaire_mirage.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Believe In Me Barrage",
+          "slug": "believe_in_me_barrage",
+          "path": "assets/vfx/red_flags/millionaire/02_believe_in_me_barrage.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Between Opportunities",
+          "slug": "between_opportunities",
+          "path": "assets/vfx/red_flags/millionaire/03_between_opportunities.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Do You Want My Kids?",
+          "slug": "do_you_want_my_kids",
+          "path": "assets/vfx/red_flags/millionaire/04_do_you_want_my_kids.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Real Woman Requirement",
+          "slug": "real_woman_requirement",
+          "path": "assets/vfx/red_flags/millionaire/05_real_woman_requirement.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "normal_fake": {
+      "name": "GUY WHO SEEMS NORMAL",
+      "class": "Advanced Threat",
+      "moves": {
+        "Normal Guy Mask": "assets/vfx/red_flags/normal_fake/01_normal_guy_mask.png",
+        "My Ex Was Crazy": "assets/vfx/red_flags/normal_fake/02_my_ex_was_crazy.png",
+        "Brutal Honesty": "assets/vfx/red_flags/normal_fake/03_brutal_honesty.png",
+        "You’re Overthinking It": "assets/vfx/red_flags/normal_fake/04_youre_overthinking_it.png",
+        "Advanced Threat Reveal": "assets/vfx/red_flags/normal_fake/05_advanced_threat_reveal.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Normal Guy Mask",
+          "slug": "normal_guy_mask",
+          "path": "assets/vfx/red_flags/normal_fake/01_normal_guy_mask.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "My Ex Was Crazy",
+          "slug": "my_ex_was_crazy",
+          "path": "assets/vfx/red_flags/normal_fake/02_my_ex_was_crazy.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Brutal Honesty",
+          "slug": "brutal_honesty",
+          "path": "assets/vfx/red_flags/normal_fake/03_brutal_honesty.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "You’re Overthinking It",
+          "slug": "youre_overthinking_it",
+          "path": "assets/vfx/red_flags/normal_fake/04_youre_overthinking_it.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Advanced Threat Reveal",
+          "slug": "advanced_threat_reveal",
+          "path": "assets/vfx/red_flags/normal_fake/05_advanced_threat_reveal.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "old_young": {
+      "name": "THE OLD YOUNG-GIRL GUY",
+      "class": "Midlife Side Quest",
+      "moves": {
+        "Young Girl Comment": "assets/vfx/red_flags/old_young/01_young_girl_comment.png",
+        "Mature For Your Age": "assets/vfx/red_flags/old_young/02_mature_for_your_age.png",
+        "Drink Theft": "assets/vfx/red_flags/old_young/03_drink_theft.png",
+        "Women My Age Are Bitter": "assets/vfx/red_flags/old_young/04_women_my_age_are_bitter.png",
+        "Midlife Trophy Case": "assets/vfx/red_flags/old_young/05_midlife_trophy_case.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Young Girl Comment",
+          "slug": "young_girl_comment",
+          "path": "assets/vfx/red_flags/old_young/01_young_girl_comment.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Mature For Your Age",
+          "slug": "mature_for_your_age",
+          "path": "assets/vfx/red_flags/old_young/02_mature_for_your_age.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Drink Theft",
+          "slug": "drink_theft",
+          "path": "assets/vfx/red_flags/old_young/03_drink_theft.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Women My Age Are Bitter",
+          "slug": "women_my_age_are_bitter",
+          "path": "assets/vfx/red_flags/old_young/04_women_my_age_are_bitter.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "Midlife Trophy Case",
+          "slug": "midlife_trophy_case",
+          "path": "assets/vfx/red_flags/old_young/05_midlife_trophy_case.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "julian_softboi_savior": {
+      "name": "THE SOFTBOI SAVIOR",
+      "class": "Performative Feminist Softboi",
+      "moves": {
+        "Therapy-Speak Trap": "assets/vfx/red_flags/julian_softboi_savior/01_therapy_speak_trap.png",
+        "Hold Space Shield": "assets/vfx/red_flags/julian_softboi_savior/02_hold_space_shield.png",
+        "Not Like Other Men": "assets/vfx/red_flags/julian_softboi_savior/03_not_like_other_men.png",
+        "Weaponized Vulnerability": "assets/vfx/red_flags/julian_softboi_savior/04_weaponized_vulnerability.png",
+        "The Healing Era Monologue": "assets/vfx/red_flags/julian_softboi_savior/05_the_healing_era_monologue.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Therapy-Speak Trap",
+          "slug": "therapy_speak_trap",
+          "path": "assets/vfx/red_flags/julian_softboi_savior/01_therapy_speak_trap.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Hold Space Shield",
+          "slug": "hold_space_shield",
+          "path": "assets/vfx/red_flags/julian_softboi_savior/02_hold_space_shield.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Not Like Other Men",
+          "slug": "not_like_other_men",
+          "path": "assets/vfx/red_flags/julian_softboi_savior/03_not_like_other_men.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Weaponized Vulnerability",
+          "slug": "weaponized_vulnerability",
+          "path": "assets/vfx/red_flags/julian_softboi_savior/04_weaponized_vulnerability.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "The Healing Era Monologue",
+          "slug": "the_healing_era_monologue",
+          "path": "assets/vfx/red_flags/julian_softboi_savior/05_the_healing_era_monologue.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "blake_disruptor": {
+      "name": "THE DISRUPTOR",
+      "class": "Crypto / Tech Bro Webinar Date",
+      "moves": {
+        "Blockchain Monologue": "assets/vfx/red_flags/blake_disruptor/01_blockchain_monologue.png",
+        "Passive Income Flex": "assets/vfx/red_flags/blake_disruptor/02_passive_income_flex.png",
+        "Founder Aura": "assets/vfx/red_flags/blake_disruptor/03_founder_aura.png",
+        "Actually, Let Me Explain": "assets/vfx/red_flags/blake_disruptor/04_actually_let_me_explain.png",
+        "The Pitch Deck": "assets/vfx/red_flags/blake_disruptor/05_the_pitch_deck.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Blockchain Monologue",
+          "slug": "blockchain_monologue",
+          "path": "assets/vfx/red_flags/blake_disruptor/01_blockchain_monologue.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_09_disruptor.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 2,
+          "move": "Passive Income Flex",
+          "slug": "passive_income_flex",
+          "path": "assets/vfx/red_flags/blake_disruptor/02_passive_income_flex.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_09_disruptor.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 3,
+          "move": "Founder Aura",
+          "slug": "founder_aura",
+          "path": "assets/vfx/red_flags/blake_disruptor/03_founder_aura.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_09_disruptor.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 4,
+          "move": "Actually, Let Me Explain",
+          "slug": "actually_let_me_explain",
+          "path": "assets/vfx/red_flags/blake_disruptor/04_actually_let_me_explain.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_09_disruptor.zip",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "number": 5,
+          "move": "The Pitch Deck",
+          "slug": "the_pitch_deck",
+          "path": "assets/vfx/red_flags/blake_disruptor/05_the_pitch_deck.png",
+          "sourceZip": "SwipeLeft_GuyRedFlag_VFX_09_disruptor.zip",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    "body_bag": {
+      "name": "TRUE CRIME DATE",
+      "class": "Parking Lot Menace",
+      "moves": {
+        "Choose One": "assets/vfx/red_flags/body_bag/01_choose_one.png",
+        "Trunk Click": "assets/vfx/red_flags/body_bag/02_trunk_click.png",
+        "Don’t Be Scared": "assets/vfx/red_flags/body_bag/03_dont_be_scared.png",
+        "Empty Parking Lot": "assets/vfx/red_flags/body_bag/04_empty_parking_lot.png",
+        "Dateline Cold Open": "assets/vfx/red_flags/body_bag/05_dateline_cold_open.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Choose One",
+          "slug": "choose_one",
+          "path": "assets/vfx/red_flags/body_bag/01_choose_one.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        },
+        {
+          "number": 2,
+          "move": "Trunk Click",
+          "slug": "trunk_click",
+          "path": "assets/vfx/red_flags/body_bag/02_trunk_click.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        },
+        {
+          "number": 3,
+          "move": "Don’t Be Scared",
+          "slug": "dont_be_scared",
+          "path": "assets/vfx/red_flags/body_bag/03_dont_be_scared.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        },
+        {
+          "number": 4,
+          "move": "Empty Parking Lot",
+          "slug": "empty_parking_lot",
+          "path": "assets/vfx/red_flags/body_bag/04_empty_parking_lot.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        },
+        {
+          "number": 5,
+          "move": "Dateline Cold Open",
+          "slug": "dateline_cold_open",
+          "path": "assets/vfx/red_flags/body_bag/05_dateline_cold_open.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        }
+      ],
+      "missingSourceZip": "SwipeLeft_GuyRedFlag_VFX_04_true_crime_boundary.zip"
+    },
+    "nico_boundary_pusher": {
+      "name": "BOUNDARY PUSHER",
+      "class": "Pushy Playfulness Specialist",
+      "moves": {
+        "Boundary Creep": "assets/vfx/red_flags/nico_boundary_pusher/01_boundary_creep.png",
+        "Just Kidding Touch": "assets/vfx/red_flags/nico_boundary_pusher/02_just_kidding_touch.png",
+        "Why So Serious?": "assets/vfx/red_flags/nico_boundary_pusher/03_why_so_serious.png",
+        "Read-the-Room Failure": "assets/vfx/red_flags/nico_boundary_pusher/04_read_the_room_failure.png",
+        "Pushy Playfulness": "assets/vfx/red_flags/nico_boundary_pusher/05_pushy_playfulness.png"
+      },
+      "moveOrder": [
+        {
+          "number": 1,
+          "move": "Boundary Creep",
+          "slug": "boundary_creep",
+          "path": "assets/vfx/red_flags/nico_boundary_pusher/01_boundary_creep.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        },
+        {
+          "number": 2,
+          "move": "Just Kidding Touch",
+          "slug": "just_kidding_touch",
+          "path": "assets/vfx/red_flags/nico_boundary_pusher/02_just_kidding_touch.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        },
+        {
+          "number": 3,
+          "move": "Why So Serious?",
+          "slug": "why_so_serious",
+          "path": "assets/vfx/red_flags/nico_boundary_pusher/03_why_so_serious.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        },
+        {
+          "number": 4,
+          "move": "Read-the-Room Failure",
+          "slug": "read_the_room_failure",
+          "path": "assets/vfx/red_flags/nico_boundary_pusher/04_read_the_room_failure.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        },
+        {
+          "number": 5,
+          "move": "Pushy Playfulness",
+          "slug": "pushy_playfulness",
+          "path": "assets/vfx/red_flags/nico_boundary_pusher/05_pushy_playfulness.png",
+          "sourceZip": "MISSING_BATCH_04_CREATED_PENDING_PLACEHOLDER",
+          "status": "missing_zip_pending_generation_or_upload"
+        }
+      ],
+      "missingSourceZip": "SwipeLeft_GuyRedFlag_VFX_04_true_crime_boundary.zip"
+    }
+  }
+}
