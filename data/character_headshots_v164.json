@@ -1,0 +1,383 @@
+{
+  "version": "v1.64",
+  "notes": "Transparent PNG headshot mapping for Swipe Left to Survive. Simone Brooks replaces previous Nia naming; Nia aliases retained for compatibility. Paths are repo-relative.",
+  "characters": {
+    "amy": "assets/characters/main/amy_headshot.png",
+    "goddess_amy": "assets/characters/main/goddess_amy_headshot.png",
+    "min": "assets/characters/friends/min_headshot.png",
+    "malik": "assets/characters/friends/malik_headshot.png",
+    "chloe": "assets/characters/friends/chloe_headshot.png",
+    "mia": "assets/characters/friends/mia_headshot.png",
+    "jade": "assets/characters/friends/jade_headshot.png",
+    "xavier": "assets/characters/green_flags/xavier_headshot.png",
+    "james": "assets/characters/green_flags/james_headshot.png",
+    "andrew": "assets/characters/green_flags/andrew_headshot.png",
+    "algorithm": "assets/characters/bosses/algorithm_headshot.png",
+    "pattern": "assets/characters/bosses/pattern_headshot.png",
+    "simone_brooks": "assets/characters/villains/girl_red_flags/simone_brooks_headshot.png",
+    "nia_brooks": "assets/characters/villains/girl_red_flags/simone_brooks_headshot.png",
+    "gold_star_gatekeeper": "assets/characters/villains/girl_red_flags/simone_brooks_headshot.png",
+    "ivy_mercer": "assets/characters/villains/girl_red_flags/ivy_mercer_headshot.png",
+    "breadcrumb_poet": "assets/characters/villains/girl_red_flags/ivy_mercer_headshot.png",
+    "camila_reyes": "assets/characters/villains/girl_red_flags/camila_reyes_headshot.png",
+    "soft_launch_siren": "assets/characters/villains/girl_red_flags/camila_reyes_headshot.png",
+    "preference": "assets/characters/villains/preference_paladin_headshot.png",
+    "preference_paladin": "assets/characters/villains/preference_paladin_headshot.png",
+    "body_bag": "assets/characters/villains/true_crime_date_headshot.png",
+    "true_crime_date": "assets/characters/villains/true_crime_date_headshot.png",
+    "demon": "assets/characters/villains/fighting_demons_headshot.png",
+    "fighting_demons": "assets/characters/villains/fighting_demons_headshot.png",
+    "millionaire": "assets/characters/villains/fake_millionaire_headshot.png",
+    "fake_millionaire": "assets/characters/villains/fake_millionaire_headshot.png",
+    "house_date": "assets/characters/villains/house_date_economist_headshot.png",
+    "house_date_economist": "assets/characters/villains/house_date_economist_headshot.png",
+    "two_am": "assets/characters/villains/two_am_summoner_headshot.png",
+    "two_am_summoner": "assets/characters/villains/two_am_summoner_headshot.png",
+    "coworker": "assets/characters/villains/experimental_coworker_headshot.png",
+    "experimental_coworker": "assets/characters/villains/experimental_coworker_headshot.png",
+    "broke_dreamer": "assets/characters/villains/broke_balladeer_headshot.png",
+    "broke_balladeer": "assets/characters/villains/broke_balladeer_headshot.png",
+    "old_young": "assets/characters/villains/young_old_guy_headshot.png",
+    "young_old_guy": "assets/characters/villains/young_old_guy_headshot.png",
+    "industry_mystery": "assets/characters/villains/industry_mystery_headshot.png",
+    "boundary_pusher": "assets/characters/villains/boundary_pusher_headshot.png",
+    "disruptor": "assets/characters/villains/disruptor_headshot.png",
+    "softboi": "assets/characters/villains/softboi_headshot.png",
+    "normal_fake": "assets/characters/villains/guy_who_seems_normal_headshot.png",
+    "guy_who_seems_normal": "assets/characters/villains/guy_who_seems_normal_headshot.png",
+    "dark_humor": "assets/characters/villains/dark_humor_guy_headshot.png",
+    "dark_humor_guy": "assets/characters/villains/dark_humor_guy_headshot.png"
+  },
+  "files": [
+    {
+      "id": "amy",
+      "assetKey": "amy_headshot",
+      "path": "assets/characters/main/amy_headshot.png",
+      "source": "confident_smile_and_warm_style.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "goddess_amy",
+      "assetKey": "goddess_amy_headshot",
+      "path": "assets/characters/main/goddess_amy_headshot.png",
+      "source": "regal_goddess_in_golden_crown.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "min",
+      "assetKey": "min_headshot",
+      "path": "assets/characters/friends/min_headshot.png",
+      "source": "confident_young_man_in_navy_jacket.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "malik",
+      "assetKey": "malik_headshot",
+      "path": "assets/characters/friends/malik_headshot.png",
+      "source": "confident_smile_with_stylish_layers.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "chloe",
+      "assetKey": "chloe_headshot",
+      "path": "assets/characters/friends/chloe_headshot.png",
+      "source": "confident_smile_and_chic_style.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "mia",
+      "assetKey": "mia_headshot",
+      "path": "assets/characters/friends/mia_headshot.png",
+      "source": "flirtatious_charm_and_soft_elegance.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "jade",
+      "assetKey": "jade_headshot",
+      "path": "assets/characters/friends/jade_headshot.png",
+      "source": "confident_elegance_in_lavender_and_gold.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "xavier",
+      "assetKey": "xavier_headshot",
+      "path": "assets/characters/green_flags/xavier_headshot.png",
+      "source": "warm_smile_and_stylish_confidence.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "james",
+      "assetKey": "james_headshot",
+      "path": "assets/characters/green_flags/james_headshot.png",
+      "source": "confident_young_man_in_smart_attire.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "andrew",
+      "assetKey": "andrew_headshot",
+      "path": "assets/characters/green_flags/andrew_headshot.png",
+      "source": "friendly_smile_with_olive_jacket.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "algorithm",
+      "assetKey": "algorithm_headshot",
+      "path": "assets/characters/bosses/algorithm_headshot.png",
+      "source": "neon_hacker_with_glowing_pixel_heart.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "pattern",
+      "assetKey": "pattern_headshot",
+      "path": "assets/characters/bosses/pattern_headshot.png",
+      "source": "brooding_figure_with_glowing_hearts_and_chains.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "simone_brooks",
+      "assetKey": "simone_brooks_headshot",
+      "path": "assets/characters/villains/girl_red_flags/simone_brooks_headshot.png",
+      "source": "confident_and_poised_portrait_of_a_woman.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "ivy_mercer",
+      "assetKey": "ivy_mercer_headshot",
+      "path": "assets/characters/villains/girl_red_flags/ivy_mercer_headshot.png",
+      "source": "gothic_elegance_in_dark_beauty.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "camila_reyes",
+      "assetKey": "camila_reyes_headshot",
+      "path": "assets/characters/villains/girl_red_flags/camila_reyes_headshot.png",
+      "source": "confident_allure_and_delicate_details.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "preference_paladin",
+      "assetKey": "preference_paladin_headshot",
+      "path": "assets/characters/villains/preference_paladin_headshot.png",
+      "source": "confident_charm_in_a_stylish_suit.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "true_crime_date",
+      "assetKey": "true_crime_date_headshot",
+      "path": "assets/characters/villains/true_crime_date_headshot.png",
+      "source": "smirking_confidence_with_a_dangerous_edge.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "fighting_demons",
+      "assetKey": "fighting_demons_headshot",
+      "path": "assets/characters/villains/fighting_demons_headshot.png",
+      "source": "dark_flame_summoner_with_glowing_eyes.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "fake_millionaire",
+      "assetKey": "fake_millionaire_headshot",
+      "path": "assets/characters/villains/fake_millionaire_headshot.png",
+      "source": "confident_and_stylish_man_with_sunglasses.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "house_date_economist",
+      "assetKey": "house_date_economist_headshot",
+      "path": "assets/characters/villains/house_date_economist_headshot.png",
+      "source": "confident_youth_in_a_hoodie.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "two_am_summoner",
+      "assetKey": "two_am_summoner_headshot",
+      "path": "assets/characters/villains/two_am_summoner_headshot.png",
+      "source": "confident_guy_with_purple_magic_accents.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "experimental_coworker",
+      "assetKey": "experimental_coworker_headshot",
+      "path": "assets/characters/villains/experimental_coworker_headshot.png",
+      "source": "confident_toast_with_whiskey_glass.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "broke_balladeer",
+      "assetKey": "broke_balladeer_headshot",
+      "path": "assets/characters/villains/broke_balladeer_headshot.png",
+      "source": "confident_young_man_in_casual_style.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "young_old_guy",
+      "assetKey": "young_old_guy_headshot",
+      "path": "assets/characters/villains/young_old_guy_headshot.png",
+      "source": "confident_man_with_a_smirk.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "industry_mystery",
+      "assetKey": "industry_mystery_headshot",
+      "path": "assets/characters/villains/industry_mystery_headshot.png",
+      "source": "charming_gentleman_with_swag_and_style.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "boundary_pusher",
+      "assetKey": "boundary_pusher_headshot",
+      "path": "assets/characters/villains/boundary_pusher_headshot.png",
+      "source": "confident_and_charismatic_portrait_of_man.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "disruptor",
+      "assetKey": "disruptor_headshot",
+      "path": "assets/characters/villains/disruptor_headshot.png",
+      "source": "confident_tech_savvy_finance_expert.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "softboi",
+      "assetKey": "softboi_headshot",
+      "path": "assets/characters/villains/softboi_headshot.png",
+      "source": "gentle_confidence_and_soft_truths.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "guy_who_seems_normal",
+      "assetKey": "guy_who_seems_normal_headshot",
+      "path": "assets/characters/villains/guy_who_seems_normal_headshot.png",
+      "source": "confident_portrait_in_bomber_jacket.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "dark_humor_guy",
+      "assetKey": "dark_humor_guy_headshot",
+      "path": "assets/characters/villains/dark_humor_guy_headshot.png",
+      "source": "confident_in_dark_streetwear_accents.png",
+      "transparentPng": true,
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    }
+  ]
+}

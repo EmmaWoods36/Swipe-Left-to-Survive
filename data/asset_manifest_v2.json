@@ -1,0 +1,19 @@
+{
+  "project": "Swipe Left to Survive v2 Clean Rebuild",
+  "purpose": "Code references existing repo assets instead of embedding everything in one index file.",
+  "critical_paths": {
+    "amy_headshot_primary": "assets/characters/main/amy_headshot.png",
+    "amy_headshot_legacy_jpg": "assets/characters/main/amy_headshot.jpg",
+    "opening_cg_candidates": [
+      "assets/cgs/amy_couch_evening.png",
+      "assets/cgs/amy_on_couch_evening.png",
+      "assets/cgs/opening_amy_couch.png",
+      "assets/backgrounds/apartment_sunset.png"
+    ],
+    "paper_doll_base": "assets/dressup/base/amy_paper_doll_base.png",
+    "red_flag_vfx_root": "assets/vfx/red_flags/",
+    "friend_scene_sprites_root": "assets/sprites/scenes/friends/",
+    "boss_scene_sprites_root": "assets/sprites/scenes/bosses/"
+  },
+  "missing_asset_policy": "Show a missing/coming-soon card in dev UI. Do not use blob placeholders. Do not delete repo assets."
+}
