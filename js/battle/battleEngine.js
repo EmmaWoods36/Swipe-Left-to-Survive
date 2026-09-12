@@ -10,6 +10,36 @@ import {supportMenu,useSupport} from './supports.js';
 import {playBossCutscene} from '../scenes/bossScenes.js';
 
 let onMapHandlers = {};
+
+// Portrait art and battle art serve different UI roles. Several red flags already
+// have dedicated standing/full-body combat sprites in the repository; route those
+// here instead of stretching their profile headshots into the fighter slot.
+const VERIFIED_BATTLE_SPRITES = Object.freeze({
+  dark_humor: ['assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_stance.png'],
+  lucien_reservation_mirage: [
+    'assets/characters/villains/lucien_moreau_battle_standing.png',
+    'assets/characters/villains/lucien_moreau_standing_phone.png',
+    'assets/characters/villains/lucien_moreau_fullbody.png'
+  ],
+  blake_disruptor: ['assets/characters/villains/blake_sterling_standing_tablet.png'],
+  julian_softboi_savior: [
+    'assets/characters/villains/julian_cross_standing_book.png',
+    'assets/characters/villains/julian_cross_softboi_fullbody.png'
+  ],
+  nico_boundary_pusher: ['assets/characters/villains/nico_hart_battle_standing.png'],
+  ivy_mercer: ['assets/characters/villains/girl_red_flags/ivy_mercer_battle_standing.png'],
+  simone_brooks: ['assets/sprites/enemies/red_flag_girls/Simone_Brooks/simone_neutral_standing.png'],
+  camila_reyes: ['assets/sprites/enemies/red_flag_girls/Camila_Reyes/camila_neutral_standing.png']
+});
+
+function enemyPortrait(enemy){
+  return enemy?.portrait || enemy?.sprite;
+}
+
+function enemyBattleSprite(enemy){
+  return enemy?.battleSprite || VERIFIED_BATTLE_SPRITES[enemy?.id] || enemy?.sprite;
+}
+
 export function configureBattleRoutes(handlers){ onMapHandlers = handlers || {}; }
 
 export function nextRedFlagId(){
@@ -47,7 +77,7 @@ export function startBattleRaw(id){
     playerName:'Amy', enemyName:state.lang==='ja'?enemy.jaName:enemy.name,
     enemySub:state.lang==='ja'?enemy.jaClassName:enemy.className,
     playerImg:Asset.portraits.amy,
-    enemyImg:enemy.sprite
+    enemyImg:enemyPortrait(enemy)
   }, ()=>renderBattle());
 }
 
@@ -77,7 +107,7 @@ function renderBattle({green=false}={}){
       </div>
     </div>`;
   document.getElementById('amyFighter').append(imageWithFallback(Asset.sprites.amy.idle, 'Amy'));
-  document.getElementById('enemyFighter').append(imageWithFallback(b.enemy.sprite, name));
+  document.getElementById('enemyFighter').append(imageWithFallback(enemyBattleSprite(b.enemy), name));
   setBattleLog(green ? tx('Green flag encounter. This is not a trauma boss rush.','グリーンフラッグ遭遇。これはトラウマボスラッシュではない。') : tx(`${name} appeared.`,`${name}が現れた。`));
   updateBattleUi();
   green ? setGreenActions() : setAmyActions();
