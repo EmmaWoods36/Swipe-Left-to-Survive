@@ -27,6 +27,9 @@ export const Asset = {
     james: ['assets/characters/green_flags/james_headshot.png','assets/characters/cards/james_card.png'],
     andrew: ['assets/characters/green_flags/andrew_headshot.png','assets/characters/cards/andrew_card.png'],
     christy: ['assets/characters/green_flags/christy_headshot.png','assets/characters/cards/christy_card.png'],
+    eli: ['assets/sprites/scenes/npcs/eli/eli_scene_01.png'],
+    sabrina: ['assets/sprites/scenes/npcs/sabrina/sabrina_scene_01.png'],
+    val: ['assets/sprites/scenes/npcs/val/val_scene_01.png'],
     algorithm: ['assets/characters/bosses/algorithm_headshot.png'],
     pattern: ['assets/characters/bosses/pattern_headshot.png'],
     // Villain portraits for VN scenes

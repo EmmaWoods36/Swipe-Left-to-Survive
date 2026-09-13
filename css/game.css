@@ -22,3 +22,76 @@
 @keyframes cutinShow{0%{opacity:0}15%{opacity:1}85%{opacity:1}100%{opacity:0}}
 @keyframes cutinZoom{0%{transform:scale(0.7) rotate(-2deg);opacity:0;filter:brightness(2)}15%{transform:scale(1.02) rotate(0);opacity:1;filter:brightness(1.3)}85%{transform:scale(1);opacity:1;filter:brightness(1)}100%{transform:scale(1.05);opacity:0;filter:brightness(1.2)}}
 .cutin-flash{overflow:hidden}
+
+/* === Multi-Speaker Conversation Box System === */
+.vn-wrap { display:flex; flex-direction:column; align-items:stretch; gap:0; }
+
+/* Speaker tabs row — overlaid tabs at the top */
+.vn-tabs-row {
+  display: flex; flex-direction: row; align-items: flex-end;
+  gap: 0; padding: 0 8px; position: relative; z-index: 2;
+}
+.vn-tab {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 4px 12px 6px; margin-right: -8px;
+  border-radius: 12px 12px 0 0;
+  cursor: default; transition: all 0.2s ease;
+  position: relative; min-width: 60px; max-width: 90px;
+  border: 2px solid transparent; border-bottom: none;
+  opacity: 0.5; filter: grayscale(0.5);
+}
+.vn-tab.active {
+  opacity: 1; filter: none;
+  z-index: 10;
+  transform: translateY(-4px) scale(1.05);
+}
+.vn-tab.inactive { opacity: 0.4; }
+.vn-tab-img {
+  width: 44px; height: 44px; border-radius: 50%;
+  object-fit: cover; border: 2px solid rgba(255,255,255,0.6);
+  margin-bottom: 2px;
+}
+.vn-tab-name {
+  font-size: 0.65rem; font-weight: 600; color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 80px;
+}
+
+/* Tab colors by speaker type */
+.vn-tab-purple { background: linear-gradient(180deg, #7c3aed, #6d28d9); border-color: #8b5cf6; }
+.vn-tab-red { background: linear-gradient(180deg, #dc2626, #991b1b); border-color: #ef4444; }
+.vn-tab-green { background: linear-gradient(180deg, #16a34a, #15803d); border-color: #22c55e; }
+.vn-tab-blue { background: linear-gradient(180deg, #2563eb, #1d4ed8); border-color: #3b82f6; }
+
+/* Active box — the main dialogue box */
+.vn-box {
+  border-radius: 14px 14px 12px 12px;
+  padding: 16px 20px; position: relative; z-index: 1;
+  border: 2px solid; transition: border-color 0.3s ease, background 0.3s ease;
+  background: rgba(15, 15, 25, 0.92);
+  backdrop-filter: blur(8px);
+}
+.vn-box-purple { border-color: #8b5cf6; background: rgba(30, 15, 50, 0.92); }
+.vn-box-red { border-color: #ef4444; background: rgba(50, 15, 15, 0.92); }
+.vn-box-green { border-color: #22c55e; background: rgba(15, 35, 20, 0.92); }
+.vn-box-blue { border-color: #3b82f6; background: rgba(15, 25, 45, 0.92); }
+
+/* Active box animation when speaker changes */
+@keyframes boxToFront {
+  0% { transform: scale(0.97); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.vn-box.box-change { animation: boxToFront 0.25s ease-out; }
+
+/* Portrait styles */
+.vn-portrait { flex-shrink: 0; }
+.vn-portrait-img {
+  width: 80px; height: 80px; border-radius: 12px;
+  object-fit: cover; border: 2px solid rgba(255,255,255,0.3);
+}
+
+/* Multi-friend scene: overlaid boxes */
+.vn-wrap.multi-speaker .vn-box {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+}

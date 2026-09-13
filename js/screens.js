@@ -1,6 +1,8 @@
 import {state,hasSaveData} from './state.js';
 import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
+import {visitSafeArea} from './scenes/safeAreas.js';
+import {SAFE_AREAS} from '../data/conversationBank.js';
 
 const screenLayer = () => document.getElementById('screenLayer');
 const hud = () => document.getElementById('hud');
@@ -72,15 +74,30 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
     ['apartment',tx('Amy’s Apartment','エイミーの部屋'),tx('Rest, check LoveLoop, open closet.','休む、LoveLoopを見る、クローゼットを開く。')],
     ['closet',tx('Closet / Boutique','クローゼット / ブティック'),tx('Dress Amy with visual thumbnails.','画像サムネでエイミーを着せ替える。')],
     ['battle',tx('LoveLoop Date Battle','LoveLoopデートバトル'),tx('Fight the next red flag.','次の地雷と戦う。')],
-    ['photo',tx('Date Fit Studio','デートコーデスタジオ'),tx('Take a Polaroid after dressing Amy.','着せ替え後にポラロイドを撮る。')]
+    ['photo',tx('Date Fit Studio','デートコーデスタジオ'),tx('Take a Polaroid after dressing Amy.','着せ替え後にポラロイドを撮る。')],
+    ['restaurant',tx('Restaurant','レストラン'),tx('Grab food. Maybe run into a friend.','ご飯を食べる。友達に会うかも。')],
+    ['park',tx('Park','公園'),tx('Take a walk. Clear your head.','散歩する。頭を整理する。')],
+    ['beach',tx('Beach','ビーチ'),tx('Sun, sand, and zero red flags.','太陽、砂、地雷ゼロ。')],
+    ['bar',tx('Bar','バー'),tx('Drinks with the girls. Or a quiet corner.','女子会で飲む。静かな隅っこも。')],
+    ['library',tx('Library','図書館'),tx('Quiet. Books. No notifications.','静か。本。通知なし。')],
+    ['cafe',tx('Beachside Cafe','海辺のカフェ'),tx('Coffee, ocean view, good company.','コーヒー、海の景色、良い仲間。')]
   ];
   const grid = document.getElementById('mapGrid');
   places.forEach(([id,name,desc])=>{
     const div = document.createElement('div');
     div.className = 'card';
     div.innerHTML = `<h3>${name}</h3><p class="muted">${desc}</p>`;
-    const action = id==='closet'?showCloset:id==='battle'?goBattle:id==='photo'?showPhoto:()=>showMap({goBattle,showCloset,showPhoto});
-    div.append(button(tx('Go','行く'), action, id==='battle'?'danger':''));
+    const isBattle = id==='battle';
+    const isCloset = id==='closet';
+    const isPhoto = id==='photo';
+    const isSafeArea = SAFE_AREAS[id];
+    let action;
+    if(isBattle) action = goBattle;
+    else if(isCloset) action = showCloset;
+    else if(isPhoto) action = showPhoto;
+    else if(isSafeArea) action = () => visitSafeArea(id, () => showMap({goBattle, showCloset, showPhoto}));
+    else action = () => showMap({goBattle, showCloset, showPhoto});
+    div.append(button(tx('Go','行く'), action, isBattle?'danger':''));
     grid.append(div);
   });
   renderHud();

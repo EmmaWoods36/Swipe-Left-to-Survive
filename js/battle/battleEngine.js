@@ -43,6 +43,28 @@ function enemyBattleSprite(enemy){
   return enemy?.battleSprite || VERIFIED_BATTLE_SPRITES[enemy?.id] || enemy?.sprite;
 }
 
+// Attack pose sprites — shown briefly when enemy attacks
+const ATTACK_SPRITES = {
+  love_bomber: 'assets/sprites/enemies/red_flag_guys/love_bomber/adrian_vale_attack.png',
+  algorithm: 'assets/sprites/enemies/bosses/the_algorithm/algorithm_attack.png',
+  pattern: 'assets/sprites/enemies/bosses/the_pattern/pattern_attack_chain.png'
+};
+
+function swapEnemyAttackPose(enemyId, duration=800){
+  const el = document.getElementById('enemyFighter');
+  if(!el) return;
+  const attackSprite = ATTACK_SPRITES[enemyId];
+  if(!attackSprite) return;
+  const original = el.innerHTML;
+  const name = el.querySelector('img')?.alt || 'Enemy';
+  el.innerHTML = '';
+  el.append(imageWithFallback(attackSprite, name + ' Attack'));
+  setTimeout(()=>{
+    if(!state.battle) return;
+    el.innerHTML = original;
+  }, duration);
+}
+
 export function configureBattleRoutes(handlers){ onMapHandlers = handlers || {}; }
 
 export function nextRedFlagId(){
@@ -191,6 +213,7 @@ function afterAmyAction(){
 function enemyTurn(){
   const b=state.battle; if(!b) return;
   const atk = b.enemy.moves[Math.floor(Math.random()*b.enemy.moves.length)];
+  swapEnemyAttackPose(b.enemy.id, atk.type==='special' ? 1200 : 700);
   const run = ()=>{
     let dmg = atk.damage;
     if(b.enemy.id === 'algorithm') dmg += 3;
