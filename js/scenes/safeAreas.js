@@ -15,6 +15,7 @@ import {
 import {setBackground,Asset} from '../assets.js';
 import {playScene} from '../dialogueEngine.js';
 import {showMessage,clearStage,renderHud,button} from '../screens.js';
+import {AudioManager} from '../audioManager.js';
 
 // Check if green flags are officially unlocked (after beating Algorithm and Pattern)
 function greenFlagsUnlocked(){
@@ -32,6 +33,8 @@ export function visitSafeArea(areaId, onReturn){
   // Clear the map UI first — show the location's scene background
   clearStage();
   setBackground(area.bg);
+  // Play location-specific music
+  AudioManager.playSceneMusic(area.musicTrack || area.bg);
 
   // Decide who appears:
   // 1. If green flags are unlocked, they appear as official green flags (green box)

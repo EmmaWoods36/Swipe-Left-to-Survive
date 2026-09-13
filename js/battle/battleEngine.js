@@ -9,6 +9,7 @@ import {popFx,playVsIntro,playSpecialCutin,screenShake,popEnemyVfx,getCutinPath}
 import {supportMenu,useSupport} from './supports.js';
 import {playBossCutscene} from '../scenes/bossScenes.js';
 import {hasPreBattleScene,playPreBattleScene,hasPostDefeatScene,playPostDefeatScene} from '../scenes/redFlagScenes.js';
+import {AudioManager} from '../audioManager.js';
 
 let onMapHandlers = {};
 
@@ -91,6 +92,10 @@ export function startBattle(id){
 export function startBattleRaw(id){
   const enemy = RED_FLAGS[id];
   if(!enemy) return;
+  // Play boss music for algorithm/pattern, regular battle music otherwise
+  if(id === 'algorithm') AudioManager.playSceneMusic('algorithm_boss');
+  else if(id === 'pattern') AudioManager.playSceneMusic('pattern_boss');
+  else AudioManager.playSceneMusic('battle');
   syncAmyHp();
   const enemyBars = enemyBarCount(enemy);
   const enemyMaxHp = hpForBars(enemyBars);
@@ -185,6 +190,7 @@ function amyAttack(move){
     }
     b.enemyHp = Math.max(0, b.enemyHp - Math.max(0, damage));
     state.selfRespect = clamp(state.selfRespect+2); state.clarity = clamp(state.clarity+1);
+    AudioManager.playSfx('attack');
     popFx(move.name); screenShake(); updateBattleUi();
     if(b.enemyHp <= 0) return winBattle();
     if(b.enemy.id === 'pattern' && b.patternClarity >= 100 && !state.unlocked.patternTransform){
@@ -222,6 +228,7 @@ function enemyTurn(){
     state.amyHp = Math.max(0, state.amyHp - Math.max(1,dmg));
     state.delusion = clamp(state.delusion + (atk.delusion||0));
     state.peace = clamp(state.peace - Math.floor(dmg/2));
+    AudioManager.playSfx('damage');
     const moveName = state.lang==='ja'?(atk.jaName||atk.name):atk.name;
     popFx(moveName); popEnemyVfx(b.enemy.id, atk.name); screenShake();
     setBattleLog(atk.text || `${b.enemy.name} attacked.`);
@@ -242,6 +249,8 @@ function winBattle(){
   if(id === 'pattern') state.unlocked.postPattern = true;
   autosave();
   syncAmyHp({healOnWin:true});
+  AudioManager.playSceneMusic('victory');
+  AudioManager.playSfx('levelup');
   popFx(tx('VICTORY','勝利'));
   updateBattleUi();
   const name = state.lang==='ja'?(b.enemy.jaName||b.enemy.name):b.enemy.name;
@@ -254,7 +263,7 @@ function winBattle(){
 
 function showVictoryMessage(name){
   showMessage(tx('Victory','勝利'), tx(`${name} was defeated. Amy gained clarity, receipts, and self-respect.`,`${name}を倒した。エイミーはクラリティ、証拠、自尊心を手に入れた。`), [
-    {label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:()=>showMap(onMapHandlers)},
+    {label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:()=>{ AudioManager.playSceneMusic('city_map'); showMap(onMapHandlers); }},
     ...(state.defeated.has('normal_fake')?[{label:tx('Give Up on LoveLoop','LoveLoopをやめる'), className:'danger', onClick:()=>startBattle('algorithm')}]:[]),
     ...(state.defeated.has('algorithm')?[{label:tx('Go to Sleep — Major Cutscene','眠る — 重要なカットシーン'), className:'danger', onClick:()=>startBattle('pattern')}]:[])
   ]);
@@ -262,12 +271,15 @@ function showVictoryMessage(name){
 
 function gameOver(){
   state.battle = null;
+  AudioManager.playSceneMusic('defeat');
+  AudioManager.playSfx('damage');
   showMessage(tx('Match Made in Hell','地獄のマッチ'), tx('Amy needs to regroup. This is not the end; this is a reload with better boundaries.','エイミーは立て直す必要がある。終わりではない。もっと強い境界線でリロードするだけ。'), [
-    {label:tx('Back to Map','マップへ戻る'), onClick:()=>showMap(onMapHandlers), className:'primary'}
+    {label:tx('Back to Map','マップへ戻る'), onClick:()=>{ AudioManager.playSceneMusic('city_map'); showMap(onMapHandlers); }, className:'primary'}
   ]);
 }
 
 function escapeBattle(){
+  AudioManager.playSceneMusic('city_map');
   showMessage(tx('Blocked and Left','ブロックして離脱'), tx('Amy chose peace over unnecessary labor. Valid.','エイミーは不要な労働より平和を選んだ。正しい。'), [
     {label:tx('Back to Map','マップへ戻る'), onClick:()=>showMap(onMapHandlers), className:'primary'}
   ]);

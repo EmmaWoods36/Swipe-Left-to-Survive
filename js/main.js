@@ -5,6 +5,7 @@ import {startOpening} from './scenes/opening.js';
 import {startNextBattle,configureBattleRoutes,startGreenFlagBattle} from './battle/battleEngine.js';
 import {showCloset,configureCloset} from './closet/closetEngine.js';
 import {showDateFitStudio,configurePhoto} from './photo/dateFitStudio.js';
+import {AudioManager} from './audioManager.js';
 
 function routes(){
   return {
@@ -21,6 +22,16 @@ function routes(){
 function boot(){
   setLanguage(state.lang);
   updateStaticText();
+  // Initialize audio system
+  AudioManager.init();
+  // Resume audio on first user interaction (browser autoplay policy)
+  const _resumeAudio = () => {
+    AudioManager.resume();
+    document.removeEventListener('click', _resumeAudio);
+    document.removeEventListener('keydown', _resumeAudio);
+  };
+  document.addEventListener('click', _resumeAudio);
+  document.addEventListener('keydown', _resumeAudio);
   const r = routes();
   configureBattleRoutes({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio});
   configureCloset({showMap:r.showMap, showPhoto:showDateFitStudio});

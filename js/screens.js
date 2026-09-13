@@ -3,6 +3,7 @@ import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
 import {SAFE_AREAS} from '../data/conversationBank.js';
+import {AudioManager} from './audioManager.js';
 
 const screenLayer = () => document.getElementById('screenLayer');
 const hud = () => document.getElementById('hud');
@@ -18,14 +19,17 @@ export function clearStage(){
 }
 
 export function renderHud(){
+  const muted = AudioManager._isMuted;
   hud().innerHTML = `
     <span class="hud-chip">${t('day')} <b>${state.day}</b></span>
     <span class="hud-chip">${t('time')} <b>${state.time}</b></span>
     <span class="hud-chip">${t('hp')} <b>${state.amyHp}/${state.amyMaxHp}</b></span>
     <span class="hud-chip">${t('funds')} <b>${state.funds}</b></span>
     <button id="langToggle" class="lang-toggle" type="button"><b>${state.lang==='ja'?'和':'EN'}</b> / ${state.lang==='ja'?'EN':'和'}</button>
+    <button id="muteToggle" class="lang-toggle" type="button" title="${muted?'Unmute':'Mute'}">${muted?'🔇':'🔊'}</button>
   `;
   document.getElementById('langToggle').onclick = toggleLanguage;
+  document.getElementById('muteToggle').onclick = () => { AudioManager.toggleMute(); renderHud(); };
 }
 
 export function button(label, onClick, classes=''){
@@ -41,6 +45,7 @@ export function showTitle({startGame, showMap, showCloset, showPhoto, continueGa
   state.screen = 'title';
   clearStage();
   setBackground('apartmentEvening');
+  AudioManager.playSceneMusic('cutscene');
   screenLayer().innerHTML = `
     <div class="center-screen"><section class="panel">
       <h2>${tx('Swipe Left to Survive','マッチング地獄サバイバル')}</h2>
@@ -64,6 +69,7 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
   state.screen = 'map';
   clearStage();
   setBackground('map');
+  AudioManager.playSceneMusic('city_map');
   // No big white panel — just location buttons on the map background
   const places = [
     ['apartment',tx('Amy’s Apartment','エイミーの部屋'),tx('Rest, check LoveLoop, open closet.','休む、LoveLoopを見る、クローゼットを開く。')],

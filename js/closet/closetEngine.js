@@ -4,13 +4,14 @@ import {clearStage,button,renderHud} from '../screens.js';
 import {setBackground,imageWithFallback} from '../assets.js';
 import {CLOSET_CATEGORIES,CLOSET_ITEMS} from '../../data/closetManifest.js';
 import {renderPaperDoll} from './paperDoll.js';
+import {AudioManager} from '../audioManager.js';
 
 let currentCategory = 'hair';
 let routes = {};
 export function configureCloset(handlers){ routes = handlers || {}; }
 
 export function showCloset(){
-  clearStage(); setBackground('closet'); renderHud();
+  clearStage(); setBackground('closet'); AudioManager.playSceneMusic('mall'); renderHud();
   const layer = document.getElementById('screenLayer');
   layer.innerHTML = `
     <div class="center-screen"><section class="panel">
