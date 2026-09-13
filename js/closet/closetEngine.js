@@ -35,18 +35,25 @@ export function showCloset(){
 function renderCategories(){
   const box = document.getElementById('closetCats'); box.innerHTML='';
   CLOSET_CATEGORIES.forEach(c=>{
-    const b = button(state.lang==='ja'?c.ja:c.label, ()=>{currentCategory=c.id; renderCategories(); renderItems();}, currentCategory===c.id?'selected':'');
+    const b = button(state.lang==='ja'?c.ja:c.label, ()=>{currentCategory=c.id; currentPage=0; renderCategories(); renderItems();}, currentCategory===c.id?'selected':'');
     box.append(b);
   });
 }
 
 function renderItems(){
   const grid = document.getElementById('closetThumbs'); grid.innerHTML='';
+  const pager = document.getElementById('closetPager'); if(pager) pager.innerHTML='';
   const items = CLOSET_ITEMS.filter(i=>i.category===currentCategory);
   if(!items.length){
     grid.innerHTML = `<div class="thumb-card locked"><div class="asset-missing">${tx('Coming soon. No blob placeholder.','準備中。ブロブ代替なし。')}</div></div>`; return;
   }
-  items.forEach(item=>{
+  // Pagination
+  const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+  if(currentPage >= totalPages) currentPage = totalPages - 1;
+  if(currentPage < 0) currentPage = 0;
+  const start = currentPage * ITEMS_PER_PAGE;
+  const pageItems = items.slice(start, start + ITEMS_PER_PAGE);
+  pageItems.forEach(item=>{
     const isOwned = item.ownedByDefault || isItemOwned(item.id);
     const canAfford = state.funds >= item.price;
     const card = document.createElement('button'); card.className='thumb-card'; card.type='button';
@@ -60,6 +67,27 @@ function renderItems(){
     }
     grid.append(card);
   });
+  // Render pager controls
+  if(totalPages > 1 && pager){
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'btn pager-btn';
+    prevBtn.type = 'button';
+    prevBtn.textContent = '‹';
+    prevBtn.disabled = currentPage === 0;
+    prevBtn.onclick = ()=>{ currentPage--; renderItems(); };
+    pager.append(prevBtn);
+    const pageLabel = document.createElement('span');
+    pageLabel.className = 'pager-label';
+    pageLabel.textContent = `${currentPage + 1} / ${totalPages}`;
+    pager.append(pageLabel);
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn pager-btn';
+    nextBtn.type = 'button';
+    nextBtn.textContent = '›';
+    nextBtn.disabled = currentPage >= totalPages - 1;
+    nextBtn.onclick = ()=>{ currentPage++; renderItems(); };
+    pager.append(nextBtn);
+  }
 }
 
 function isItemOwned(itemId){
