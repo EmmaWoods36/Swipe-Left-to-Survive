@@ -1,2 +1,0 @@
-Pending generated PNG for: Plan Swap
-Expected final PNG path: assets/vfx/red_flags/lucien_reservation_mirage/03_plan_swap.png

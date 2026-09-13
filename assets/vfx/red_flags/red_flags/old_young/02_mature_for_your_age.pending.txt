@@ -1,2 +1,0 @@
-Pending generated PNG for: Mature For Your Age
-Expected final PNG path: assets/vfx/red_flags/old_young/02_mature_for_your_age.png

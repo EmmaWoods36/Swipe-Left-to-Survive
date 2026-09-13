@@ -1,2 +1,0 @@
-Pending generated PNG for: Boundary Creep
-Expected final PNG path: assets/vfx/red_flags/nico_boundary_pusher/01_boundary_creep.png

@@ -1,2 +1,0 @@
-Pending generated PNG for: Don’t Make It Weird
-Expected final PNG path: assets/vfx/red_flags/coworker/04_dont_make_it_weird.png

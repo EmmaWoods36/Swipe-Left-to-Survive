@@ -1,2 +1,0 @@
-Pending generated PNG for: You’re Overthinking It
-Expected final PNG path: assets/vfx/red_flags/normal_fake/04_youre_overthinking_it.png

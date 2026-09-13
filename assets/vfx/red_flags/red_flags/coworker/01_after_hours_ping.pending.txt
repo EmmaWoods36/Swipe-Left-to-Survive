@@ -1,2 +1,0 @@
-Pending generated PNG for: After-Hours Ping
-Expected final PNG path: assets/vfx/red_flags/coworker/01_after_hours_ping.png

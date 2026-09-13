@@ -1,2 +1,0 @@
-Pending generated PNG for: Too Sensitive Slash
-Expected final PNG path: assets/vfx/red_flags/dark_humor/02_too_sensitive_slash.png

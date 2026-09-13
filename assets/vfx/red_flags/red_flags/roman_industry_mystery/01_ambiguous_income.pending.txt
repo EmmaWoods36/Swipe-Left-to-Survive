@@ -1,2 +1,0 @@
-Pending generated PNG for: Ambiguous Income
-Expected final PNG path: assets/vfx/red_flags/roman_industry_mystery/01_ambiguous_income.png

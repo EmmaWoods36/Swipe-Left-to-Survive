@@ -1,2 +1,0 @@
-Pending generated PNG for: Low-Key Millionaire Mirage
-Expected final PNG path: assets/vfx/red_flags/millionaire/01_low_key_millionaire_mirage.png

@@ -1,2 +1,0 @@
-Pending generated PNG for: Dateline Cold Open
-Expected final PNG path: assets/vfx/red_flags/body_bag/05_dateline_cold_open.png

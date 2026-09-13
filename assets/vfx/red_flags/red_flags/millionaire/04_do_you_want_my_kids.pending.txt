@@ -1,2 +1,0 @@
-Pending generated PNG for: Do You Want My Kids?
-Expected final PNG path: assets/vfx/red_flags/millionaire/04_do_you_want_my_kids.png

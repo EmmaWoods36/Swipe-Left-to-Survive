@@ -1,2 +1,0 @@
-Pending generated PNG for: Read-the-Room Failure
-Expected final PNG path: assets/vfx/red_flags/nico_boundary_pusher/04_read_the_room_failure.png

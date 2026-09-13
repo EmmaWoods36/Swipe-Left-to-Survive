@@ -1,2 +1,0 @@
-Pending generated PNG for: Come Through Curse
-Expected final PNG path: assets/vfx/red_flags/two_am/03_come_through_curse.png

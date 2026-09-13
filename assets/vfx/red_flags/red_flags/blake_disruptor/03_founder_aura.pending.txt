@@ -1,2 +1,0 @@
-Pending generated PNG for: Founder Aura
-Expected final PNG path: assets/vfx/red_flags/blake_disruptor/03_founder_aura.png

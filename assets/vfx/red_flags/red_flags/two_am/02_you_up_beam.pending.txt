@@ -1,2 +1,0 @@
-Pending generated PNG for: You Up Beam
-Expected final PNG path: assets/vfx/red_flags/two_am/02_you_up_beam.png

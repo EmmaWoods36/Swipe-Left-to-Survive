@@ -1,2 +1,0 @@
-Pending generated PNG for: Move 3
-Expected final PNG path: assets/vfx/red_flags/love_bomber/03_move_3.png

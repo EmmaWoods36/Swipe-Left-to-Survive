@@ -1,2 +1,0 @@
-Pending generated PNG for: Empty Parking Lot
-Expected final PNG path: assets/vfx/red_flags/body_bag/04_empty_parking_lot.png

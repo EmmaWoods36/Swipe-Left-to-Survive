@@ -1,2 +1,0 @@
-Pending generated PNG for: Not Like Other Men
-Expected final PNG path: assets/vfx/red_flags/julian_softboi_savior/03_not_like_other_men.png

@@ -1,2 +1,0 @@
-Pending generated PNG for: Pushy Playfulness
-Expected final PNG path: assets/vfx/red_flags/nico_boundary_pusher/05_pushy_playfulness.png

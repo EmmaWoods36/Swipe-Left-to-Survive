@@ -1,2 +1,0 @@
-Pending generated PNG for: I Broke Her
-Expected final PNG path: assets/vfx/red_flags/roman_industry_mystery/05_i_broke_her.png

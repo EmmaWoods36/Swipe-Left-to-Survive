@@ -1,2 +1,0 @@
-Pending generated PNG for: Manifesting
-Expected final PNG path: assets/vfx/red_flags/broke_dreamer/03_manifesting.png

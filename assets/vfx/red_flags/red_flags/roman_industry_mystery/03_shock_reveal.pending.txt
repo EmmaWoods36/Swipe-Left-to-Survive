@@ -1,2 +1,0 @@
-Pending generated PNG for: Shock Reveal
-Expected final PNG path: assets/vfx/red_flags/roman_industry_mystery/03_shock_reveal.png

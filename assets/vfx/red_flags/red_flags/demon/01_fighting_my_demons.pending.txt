@@ -1,2 +1,0 @@
-Pending generated PNG for: Fighting My Demons
-Expected final PNG path: assets/vfx/red_flags/demon/01_fighting_my_demons.png

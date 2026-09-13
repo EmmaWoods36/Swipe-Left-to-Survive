@@ -1,2 +1,0 @@
-Pending generated PNG for: Relax, I’m Playing
-Expected final PNG path: assets/vfx/red_flags/dark_humor/04_relax_im_playing.png

@@ -1,2 +1,0 @@
-Pending generated PNG for: Between Opportunities
-Expected final PNG path: assets/vfx/red_flags/millionaire/03_between_opportunities.png

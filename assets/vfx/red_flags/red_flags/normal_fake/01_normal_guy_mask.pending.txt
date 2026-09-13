@@ -1,2 +1,0 @@
-Pending generated PNG for: Normal Guy Mask
-Expected final PNG path: assets/vfx/red_flags/normal_fake/01_normal_guy_mask.png

@@ -1,2 +1,0 @@
-Pending generated PNG for: Military School Flashback
-Expected final PNG path: assets/vfx/red_flags/demon/03_military_school_flashback.png

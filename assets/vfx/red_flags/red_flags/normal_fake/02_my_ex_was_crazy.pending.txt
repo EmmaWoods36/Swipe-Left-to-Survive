@@ -1,2 +1,0 @@
-Pending generated PNG for: My Ex Was Crazy
-Expected final PNG path: assets/vfx/red_flags/normal_fake/02_my_ex_was_crazy.png

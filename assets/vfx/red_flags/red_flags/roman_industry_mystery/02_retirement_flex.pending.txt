@@ -1,2 +1,0 @@
-Pending generated PNG for: Retirement Flex
-Expected final PNG path: assets/vfx/red_flags/roman_industry_mystery/02_retirement_flex.png

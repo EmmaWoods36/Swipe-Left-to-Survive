@@ -1,2 +1,0 @@
-Pending generated PNG for: Next Time, I Swear
-Expected final PNG path: assets/vfx/red_flags/lucien_reservation_mirage/05_next_time_i_swear.png

@@ -1,2 +1,0 @@
-Pending generated PNG for: Hold Space Shield
-Expected final PNG path: assets/vfx/red_flags/julian_softboi_savior/02_hold_space_shield.png

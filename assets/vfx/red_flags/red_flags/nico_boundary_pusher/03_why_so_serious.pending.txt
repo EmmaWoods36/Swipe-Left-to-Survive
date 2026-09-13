@@ -1,2 +1,0 @@
-Pending generated PNG for: Why So Serious?
-Expected final PNG path: assets/vfx/red_flags/nico_boundary_pusher/03_why_so_serious.png
