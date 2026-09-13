@@ -43,7 +43,8 @@ export const FRIEND_CONVERSATIONS = {
   ],
 
   // === JADE ===
-  [
+  jade: [
+    [
       {character:'jade', speaker:{en:'Jade',ja:'ジェード'}, text:{en:'Okay, spill. I saw your last LoveLoop match and I already have notes.',ja:'さあ、話して。前回のLoveLoopマッチ見たけど、もうメモあるから。'}},
       {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You have notes?',ja:'メモあるの？'}},
       {character:'jade', speaker:{en:'Jade',ja:'ジェード'}, text:{en:'Amy, babe, I ALWAYS have notes. The man said "I don\'t usually go for girls like you." That\'s not a compliment. That\'s a hate crime.',ja:'エイミー、ベイビー、いつもあるの。その男「普段君みたいな子はタイプじゃないんだ」って言ったでしょ。それは褒め言葉じゃない。ヘイトクライムだよ。'}},
@@ -114,16 +115,16 @@ export const NPC_CONVERSATIONS = {
   ],
   sabrina: [
     [
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'Amy! Come in, come in. You look like you need a cocktail and a reality check.',ja('エイミー！おいで、おいで。カクテルと現実確認が必要そうな顔してるよ。'}},
+      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'Amy! Come in, come in. You look like you need a cocktail and a reality check.',ja:'エイミー！おいで、おいで。カクテルと現実確認が必要そうな顔してるよ。'}},
       {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Can I get the reality check without the cocktail?',ja:'カクテルなしで現実確認だけもらえる？'}},
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'No. They come as a pair. That\'s the deal.',ja('ダメ。セットなの。それがルール。'}}
+      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'No. They come as a pair. That\'s the deal.',ja:'ダメ。セットなの。それがルール。'}}
     ]
   ],
   val: [
     [
-      {character:'val', speaker:{en:'Val',ja:'ヴァル'}, text:{en:'Back again? You\'re becoming a regular.',ja('また来たの？常連になりつつあるね。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Bad dates keep bringing me back.',ja('悪いデートが連れ戻すの。'}},
-      {character:'val', speaker:{en:'Val',ja:'ヴァル'}, text:{en:'At least your taste in bars is improving. That\'s something.',ja('少なくともバーのセンスは上がってるね。それは何かだ。'}}
+      {character:'val', speaker:{en:'Val',ja:'ヴァル'}, text:{en:'Back again? You\'re becoming a regular.',ja:'また来たの？常連になりつつあるね。'}},
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Bad dates keep bringing me back.',ja:'悪いデートが連れ戻すの。'}},
+      {character:'val', speaker:{en:'Val',ja:'ヴァル'}, text:{en:'At least your taste in bars is improving. That\'s something.',ja:'少なくともバーのセンスは上がってるね。それは何かだ。'}}
     ]
   ]
 };
@@ -134,37 +135,37 @@ export const GREEN_FLAG_NPC_CONVERSATIONS = {
   xavier: [
     [
       {character:'xavier', speaker:{en:'Xavier',ja:'ザビエル'}, text:{en:'Oh, hey. You\'re the girl from the library, right? Amy?',ja:'あ、君は図書館の……エイミーだっけ？'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You remembered my name.',ja('名前覚えてたの。'}},
-      {character:'xavier', speaker:{en:'Xavier',ja:'ザビエル'}, text:{en:'I remember the books you checked out. You have good taste. Most people just grab whatever\'s on the display table.',ja('借りた本を覚えてたんだ。センスいいね。ほとんどの人は展示台のやつを適当に持っていくけど。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'That\'s... the nicest thing a stranger has said to me in months.',ja('それは……数ヶ月で初めての、知らない人からの一番優しい言葉だよ。'}},
-      {character:'xavier', speaker:{en:'Xavier',ja:'ザビエル'}, text:{en:'Well, we\'re not really strangers anymore, are we? Same shelf, same taste. That\'s practically destiny.',ja('もう知らない人じゃないでしょ？同じ棚、同じセンス。それはほぼ運命だよ。'}}
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You remembered my name.',ja:'名前覚えてたの。'}},
+      {character:'xavier', speaker:{en:'Xavier',ja:'ザビエル'}, text:{en:'I remember the books you checked out. You have good taste. Most people just grab whatever\'s on the display table.',ja:'借りた本を覚えてたんだ。センスいいね。ほとんどの人は展示台のやつを適当に持っていくけど。'}},
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'That\'s... the nicest thing a stranger has said to me in months.',ja:'それは……数ヶ月で初めての、知らない人からの一番優しい言葉だよ。'}},
+      {character:'xavier', speaker:{en:'Xavier',ja:'ザビエル'}, text:{en:'Well, we\'re not really strangers anymore, are we? Same shelf, same taste. That\'s practically destiny.',ja:'もう知らない人じゃないでしょ？同じ棚、同じセンス。それはほぼ運命だよ。'}}
     ]
   ],
   james: [
     [
-      {character:'james', speaker:{en:'James',ja:'ジェームズ'}, text:{en:'Hey! Amy, right? I saved you a seat. The fries are on me tonight.',ja('や！エイミーだよね？席取っておいたよ。今夜のポテトは俺のおごり。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You saved me a seat? We\'ve talked twice.',ja('席取っておいたの？2回しか話してないのに。'}},
-      {character:'james', speaker:{en:'James',ja:'ジェームズ'}, text:{en:'Three times, actually. You always sit at the bar. I figured I\'d make it easier.',ja('3回だよ。いつもバーに座るから、楽にしてあげようと思って。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'That\'s either very sweet or very concerning.',ja('とても優しいか、とても心配かどっちかだね。'}},
-      {character:'james', speaker:{en:'James',ja:'ジェームズ'}, text:{en:'Let\'s go with sweet. I promise I\'m not weird. Just... observant. And I like fries.',ja('優しいにしよう。変じゃないよ、約束する。ただ……観察好きなだけ。あとポテトが好き。'}}
+      {character:'james', speaker:{en:'James',ja:'ジェームズ'}, text:{en:'Hey! Amy, right? I saved you a seat. The fries are on me tonight.',ja:'や！エイミーだよね？席取っておいたよ。今夜のポテトは俺のおごり。'}},
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You saved me a seat? We\'ve talked twice.',ja:'席取っておいたの？2回しか話してないのに。'}},
+      {character:'james', speaker:{en:'James',ja:'ジェームズ'}, text:{en:'Three times, actually. You always sit at the bar. I figured I\'d make it easier.',ja:'3回だよ。いつもバーに座るから、楽にしてあげようと思って。'}},
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'That\'s either very sweet or very concerning.',ja:'とても優しいか、とても心配かどっちかだね。'}},
+      {character:'james', speaker:{en:'James',ja:'ジェームズ'}, text:{en:'Let\'s go with sweet. I promise I\'m not weird. Just... observant. And I like fries.',ja:'優しいにしよう。変じゃないよ、約束する。ただ……観察好きなだけ。あとポテトが好き。'}}
     ]
   ],
   andrew: [
     [
-      {character:'andrew', speaker:{en:'Andrew',ja:'アンドリュー'}, text:{en:'Oh, hey Amy! Beautiful day, right? I was just walking the dog.',ja('あ、エイミー！いい天気だね。犬の散歩してたんだ。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You have a dog?',ja('犬飼ってるの？'}},
-      {character:'andrew', speaker:{en:'Andrew',ja:'アンドリュー'}, text:{en:'Yeah, this is Biscuit. He\'s a rescue. He\'s also the reason I get up before 7 AM every day.',ja('うん、これはビスケット。保護犬なんだ。毎朝7時前に起きる理由でもある。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'A man who rescues dogs and wakes up early. Are you real?',ja('犬を保護して早起きする男。本物？'}},
-      {character:'andrew', speaker:{en:'Andrew',ja:'アンドリュー'}, text:{en:'Very real. Biscuit can vouch for me. He\'s not a great reference, but he\'s honest.',ja('本物だよ。ビスケットが保証するよ。あんまりいい参考人じゃないけど、正直だよ。'}}
+      {character:'andrew', speaker:{en:'Andrew',ja:'アンドリュー'}, text:{en:'Oh, hey Amy! Beautiful day, right? I was just walking the dog.',ja:'あ、エイミー！いい天気だね。犬の散歩してたんだ。'}},
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You have a dog?',ja:'犬飼ってるの？'}},
+      {character:'andrew', speaker:{en:'Andrew',ja:'アンドリュー'}, text:{en:'Yeah, this is Biscuit. He\'s a rescue. He\'s also the reason I get up before 7 AM every day.',ja:'うん、これはビスケット。保護犬なんだ。毎朝7時前に起きる理由でもある。'}},
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'A man who rescues dogs and wakes up early. Are you real?',ja:'犬を保護して早起きする男。本物？'}},
+      {character:'andrew', speaker:{en:'Andrew',ja:'アンドリュー'}, text:{en:'Very real. Biscuit can vouch for me. He\'s not a great reference, but he\'s honest.',ja:'本物だよ。ビスケットが保証するよ。あんまりいい参考人じゃないけど、正直だよ。'}}
     ]
   ],
   christy: [
     [
-      {character:'christy', speaker:{en:'Christy',ja:'クリスティ'}, text:{en:'Amy! I was hoping I\'d run into you. I tried that tea you recommended. You were right — it\'s amazing.',ja('エイミー！会えると思ってたの。勧めてもらったお茶試したよ。やっぱり合ってた——すごくおいしい。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You actually tried it?',ja('実際に試したの？'}},
-      {character:'christy', speaker:{en:'Christy',ja:'クリスティ'}, text:{en:'Of course! When someone with good taste recommends something, you listen. That\'s my rule.',ja('もちろん！いいセンスの人が勧めてくれたら聞くの。それが私のルール。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Christy, you might be the most thoughtful person I\'ve met this year.',ja('クリスティ、今年会った中で一番思いやりがある人かもしれない。'}},
-      {character:'christy', speaker:{en:'Christy',ja:'クリスティ'}, text:{en:'That\'s because you\'ve been dating the wrong people, sweetie. Stick around — I\'ll show you what "normal" looks like.',ja('それは間違った人たちとデートしてるからよ、ハニー。ここにいて——「普通」がどういうものか見せてあげる。'}}
+      {character:'christy', speaker:{en:'Christy',ja:'クリスティ'}, text:{en:'Amy! I was hoping I\'d run into you. I tried that tea you recommended. You were right — it\'s amazing.',ja:'エイミー！会えると思ってたの。勧めてもらったお茶試したよ。やっぱり合ってた——すごくおいしい。'}},
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You actually tried it?',ja:'実際に試したの？'}},
+      {character:'christy', speaker:{en:'Christy',ja:'クリスティ'}, text:{en:'Of course! When someone with good taste recommends something, you listen. That\'s my rule.',ja:'もちろん！いいセンスの人が勧めてくれたら聞くの。それが私のルール。'}},
+      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Christy, you might be the most thoughtful person I\'ve met this year.',ja:'クリスティ、今年会った中で一番思いやりがある人かもしれない。'}},
+      {character:'christy', speaker:{en:'Christy',ja:'クリスティ'}, text:{en:'That\'s because you\'ve been dating the wrong people, sweetie. Stick around — I\'ll show you what "normal" looks like.',ja:'それは間違った人たちとデートしてるからよ、ハニー。ここにいて——「普通」がどういうものか見せてあげる。'}}
     ]
   ]
 };
