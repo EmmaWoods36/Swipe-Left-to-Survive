@@ -28,6 +28,7 @@ export const state = {
     top: null,
     bottom: null,
     dress: null,
+    outerwear: null,
     swim: null,
     shoes: null,
     accessories: []
@@ -55,8 +56,44 @@ export function setLanguage(lang){
   document.documentElement.lang = state.lang;
 }
 
+export const SAVE_KEY = 'slts_v2_save';
+
+export function saveGame(){
+  try {
+    const data = serializeState();
+    data._savedAt = Date.now();
+    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+    return true;
+  } catch(e) { console.warn('Save failed:', e); return false; }
+}
+
+export function loadGame(){
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return false;
+    const saved = JSON.parse(raw);
+    hydrateState(saved);
+    return true;
+  } catch(e) { console.warn('Load failed:', e); return false; }
+}
+
+export function hasSaveData(){
+  return !!localStorage.getItem(SAVE_KEY);
+}
+
+export function deleteSave(){
+  localStorage.removeItem(SAVE_KEY);
+}
+
 export function countDefeatedRedFlags(){
   return [...state.defeated].filter(id => !['algorithm','pattern'].includes(id)).length;
+}
+
+// Auto-save whenever key state changes (battle results, screen transitions)
+let saveDebounce = null;
+export function autosave(){
+  if(saveDebounce) clearTimeout(saveDebounce);
+  saveDebounce = setTimeout(()=>{ saveGame(); saveDebounce = null; }, 2000);
 }
 
 export function clamp(n,min=0,max=100){ return Math.max(min, Math.min(max, n)); }

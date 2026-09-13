@@ -1,4 +1,4 @@
-import {state,setLanguage} from './state.js';
+import {state,setLanguage,hasSaveData,loadGame,saveGame,autosave} from './state.js';
 import {updateStaticText} from './localization.js';
 import {showTitle,showMap,renderHud} from './screens.js';
 import {startOpening} from './scenes/opening.js';
@@ -9,6 +9,7 @@ import {showDateFitStudio,configurePhoto} from './photo/dateFitStudio.js';
 function routes(){
   return {
     startGame: startOpening,
+    continueGame: () => { loadGame(); showMap({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio}); },
     showMap: () => showMap({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio}),
     showCloset,
     showPhoto: showDateFitStudio,
@@ -24,8 +25,14 @@ function boot(){
   configureBattleRoutes({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio});
   configureCloset({showMap:r.showMap, showPhoto:showDateFitStudio});
   configurePhoto({showMap:r.showMap, showCloset});
+  // If save data exists, show Continue button
+  if(hasSaveData()){
+    loadGame();
+  }
   showTitle(r);
   renderHud();
+  // Auto-save every 30 seconds
+  setInterval(()=>{ if(state.screen !== 'title') autosave(); }, 30000);
 }
 
 window.addEventListener('slts:languageChanged', () => {

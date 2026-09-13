@@ -1,5 +1,6 @@
 import {state} from './state.js';
 import {t} from './localization.js';
+import {imageWithFallback,Asset} from './assets.js';
 
 let current = null;
 let typingTimer = null;
@@ -16,9 +17,13 @@ export function playScene(lines, {onComplete=null, skippable=true}={}){
   layer().classList.remove('hidden');
   layer().innerHTML = `
     <div class="vn-wrap"><div class="vn-box">
-      <div class="vn-pulse">VN MODE</div>
-      <div id="vnSpeaker" class="vn-speaker"></div>
-      <div id="vnText" class="vn-text"></div>
+      <div class="vn-portrait-row">
+        <div id="vnPortrait" class="vn-portrait"></div>
+        <div class="vn-content">
+          <div id="vnSpeaker" class="vn-speaker"></div>
+          <div id="vnText" class="vn-text"></div>
+        </div>
+      </div>
       <div class="vn-actions">
         <button id="vnSkip" class="btn vn-skip">${t('skip')}</button>
         <button id="vnContinue" class="btn primary vn-continue">${t('continue')}</button>
@@ -55,6 +60,17 @@ function lineSpeaker(line){
   return (line.speaker && (line.speaker[state.lang] || line.speaker.en)) || '';
 }
 
+function resolvePortrait(line){
+  if(!line) return null;
+  // Explicit portrait path on the line
+  if(line.portrait) return line.portrait;
+  // Named character lookup in Asset.portraits
+  if(line.character && Asset.portraits[line.character]){
+    return Asset.portraits[line.character];
+  }
+  return null;
+}
+
 function renderLine(){
   if(!current) return;
   const line = current.lines[current.index];
@@ -65,6 +81,15 @@ function renderLine(){
   current.fullLine = lineText(line);
   document.getElementById('vnSpeaker').textContent = lineSpeaker(line);
   document.getElementById('vnText').textContent = '';
+  // Show portrait
+  const portraitEl = document.getElementById('vnPortrait');
+  if(portraitEl){
+    portraitEl.innerHTML = '';
+    const portraitPath = resolvePortrait(line);
+    if(portraitPath){
+      portraitEl.append(imageWithFallback(portraitPath, lineSpeaker(line), 'vn-portrait-img'));
+    }
+  }
   if(line.fx) window.dispatchEvent(new CustomEvent('slts:sceneFx',{detail:line.fx}));
   typingTimer = setInterval(()=>{
     charIndex += 1;

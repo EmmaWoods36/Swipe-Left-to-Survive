@@ -28,7 +28,27 @@ export const Asset = {
     andrew: ['assets/characters/green_flags/andrew_headshot.png','assets/characters/cards/andrew_card.png'],
     christy: ['assets/characters/green_flags/christy_headshot.png','assets/characters/cards/christy_card.png'],
     algorithm: ['assets/characters/bosses/algorithm_headshot.png','assets/sprites/scenes/bosses/the_algorithm/algorithm_scene_01.png'],
-    pattern: ['assets/characters/bosses/pattern_headshot.png','assets/sprites/scenes/bosses/the_pattern/pattern_scene_01.png']
+    pattern: ['assets/characters/bosses/pattern_headshot.png','assets/sprites/scenes/bosses/the_pattern/pattern_scene_01.png'],
+    // Villain portraits for VN scenes
+    two_am: ['assets/characters/villains/jay_2am_summoner_headshot.png'],
+    preference: ['assets/characters/villains/connor_preference_paladin_headshot.png'],
+    coworker: ['assets/characters/villains/experimental_coworker_reference.png'],
+    house_date: ['assets/characters/villains/terrence_house_date_economist_headshot.png'],
+    demon: ['assets/characters/villains/dante_demon_fighter_headshot.png'],
+    broke_dreamer: ['assets/characters/villains/joey_broke_balladeer_headshot.png'],
+    millionaire: ['assets/characters/villains/marquis_low_key_millionaire_headshot.png'],
+    body_bag: ['assets/characters/villains/reggie_true_crime_headshot.png'],
+    dark_humor: ['assets/characters/villains/derrick_dark_humor_headshot.png'],
+    old_young: ['assets/characters/villains/victor_old_young_girl_headshot.png'],
+    lucien_reservation_mirage: ['assets/characters/villains/lucien_reservation_mirage_card.png'],
+    roman_industry_mystery: ['assets/characters/villains/roman_vega_industry_mystery_card.png'],
+    nico_boundary_pusher: ['assets/characters/villains/boundary_pusher_headshot.png'],
+    blake_disruptor: ['assets/characters/villains/blake_sterling_profile.png'],
+    julian_softboi_savior: ['assets/characters/villains/julian_cross_softboi_fullbody.png'],
+    normal_fake: ['assets/characters/villains/guy_who_seems_normal_headshot.png'],
+    ivy_mercer: ['assets/characters/villains/girl_red_flags/ivy_mercer_headshot.png'],
+    simone_brooks: ['assets/characters/villains/girl_red_flags/simone_brooks_headshot.png'],
+    camila_reyes: ['assets/characters/villains/girl_red_flags/camila_reyes_headshot.png']
   },
   sprites: {
     amy: {
@@ -47,7 +67,7 @@ export const Asset = {
     pattern: ['assets/cutins/bosses/pattern_cutin.png']
   },
   paperDoll: {
-    base: ['assets/dressup/base/amy_paper_doll_base.png','assets/dressup/base/amy_base.png'],
+    base: ['assets/dressup/00_base/001_amy_paper_doll_base.png','assets/dressup/base/amy_paper_doll_base.png','assets/dressup/base/amy_base.png'],
     placeholder: ['assets/characters/main/amy_headshot.png']
   }
 };

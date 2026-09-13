@@ -1,4 +1,4 @@
-import {state} from './state.js';
+import {state,hasSaveData} from './state.js';
 import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 
@@ -35,7 +35,7 @@ export function button(label, onClick, classes=''){
   return b;
 }
 
-export function showTitle({startGame, showMap, showCloset, showPhoto}={}){
+export function showTitle({startGame, showMap, showCloset, showPhoto, continueGame}={}){
   state.screen = 'title';
   clearStage();
   setBackground('apartmentEvening');
@@ -47,7 +47,11 @@ export function showTitle({startGame, showMap, showCloset, showPhoto}={}){
       <div id="titleButtons" class="menu-grid"></div>
     </section></div>`;
   const g = document.getElementById('titleButtons');
-  g.append(button(t('start'), startGame, 'primary'));
+  // Show Continue button if save data exists
+  if(hasSaveData() && continueGame){
+    g.append(button(tx('Continue','続きから'), continueGame, 'primary'));
+  }
+  g.append(button(t('start'), startGame, hasSaveData() ? '' : 'primary'));
   g.append(button(t('map'), showMap));
   g.append(button(t('closet'), showCloset));
   g.append(button(t('dateFit'), showPhoto));

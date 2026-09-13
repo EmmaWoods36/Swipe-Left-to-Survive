@@ -1,11 +1,11 @@
-import {state,clamp} from '../state.js';
+import {state,clamp,autosave} from '../state.js';
 import {tx} from '../localization.js';
 import {clearStage,setActions,renderHud,showMap,showMessage} from '../screens.js';
 import {setBackground,imageWithFallback,Asset} from '../assets.js';
 import {RED_FLAGS,STORY_ORDER,GIRL_RED_FLAGS} from '../../data/redFlags.js';
 import {GREEN_FLAGS} from '../../data/greenFlags.js';
 import {syncAmyHp,enemyBarCount,hpForBars,renderHealthBar} from './healthBars.js';
-import {popFx,playVsIntro,playSpecialCutin,screenShake} from './vfx.js';
+import {popFx,playVsIntro,playSpecialCutin,screenShake,popEnemyVfx} from './vfx.js';
 import {supportMenu,useSupport} from './supports.js';
 import {playBossCutscene} from '../scenes/bossScenes.js';
 
@@ -15,7 +15,8 @@ let onMapHandlers = {};
 // have dedicated standing/full-body combat sprites in the repository; route those
 // here instead of stretching their profile headshots into the fighter slot.
 const VERIFIED_BATTLE_SPRITES = Object.freeze({
-  dark_humor: ['assets/sprites/enemies/red_flag_guys/dark_humor_guy/derrick_dark_humor_stance.png'],
+  dark_humor: ['assets/sprites/enemies/red_flag_guys/dark_humor_guy/dark_humor_guy_derrick_normal_standing.png'],
+  normal_fake: ['assets/sprites/enemies/red_flag_guys/normal_fake/guy_who_seems_normal_evan_normal_standing.png'],
   lucien_reservation_mirage: [
     'assets/characters/villains/lucien_moreau_battle_standing.png',
     'assets/characters/villains/lucien_moreau_standing_phone.png',
@@ -166,7 +167,7 @@ function amyAttack(move){
     }
     afterAmyAction();
   };
-  if(move.type === 'special') playSpecialCutin(move.name,'player',perform); else perform();
+  if(move.type === 'special') playSpecialCutin(move.name,'player',perform, move.vfx||null); else perform();
 }
 
 function unlockPatternTransform(){
@@ -194,7 +195,8 @@ function enemyTurn(){
     state.amyHp = Math.max(0, state.amyHp - Math.max(1,dmg));
     state.delusion = clamp(state.delusion + (atk.delusion||0));
     state.peace = clamp(state.peace - Math.floor(dmg/2));
-    popFx(state.lang==='ja'?(atk.jaName||atk.name):atk.name); screenShake();
+    const moveName = state.lang==='ja'?(atk.jaName||atk.name):atk.name;
+    popFx(moveName); popEnemyVfx(b.enemy.id, atk.name); screenShake();
     setBattleLog(atk.text || `${b.enemy.name} attacked.`);
     updateBattleUi();
     if(state.amyHp<=0 || state.delusion>=100) return gameOver();
@@ -210,6 +212,7 @@ function winBattle(){
   if(id === 'normal_fake') state.unlocked.algorithm = true;
   if(id === 'algorithm') state.unlocked.pattern = true;
   if(id === 'pattern') state.unlocked.postPattern = true;
+  autosave();
   syncAmyHp({healOnWin:true});
   popFx(tx('VICTORY','勝利'));
   updateBattleUi();
