@@ -17,6 +17,7 @@ let onMapHandlers = {};
 const VERIFIED_BATTLE_SPRITES = Object.freeze({
   dark_humor: ['assets/sprites/enemies/red_flag_guys/dark_humor_guy/dark_humor_guy_derrick_normal_standing.png'],
   normal_fake: ['assets/sprites/enemies/red_flag_guys/normal_fake/guy_who_seems_normal_evan_normal_standing.png'],
+  love_bomber: ['assets/sprites/enemies/red_flag_guys/love_bomber/adrian_vale_battle_standing.png'],
   lucien_reservation_mirage: [
     'assets/characters/villains/lucien_moreau_battle_standing.png',
     'assets/characters/villains/lucien_moreau_standing_phone.png',

@@ -28,11 +28,9 @@ const VFX_SPRITES = {
     'HR Poster Peels Off': 'assets/vfx/red_flags/coworker/05_hr_poster_peels_off.png'
   },
   love_bomber: {
-    'Love Bomb Barrage': 'assets/vfx/red_flags/love_bomber/01_move_1.png',
-    'Future Faking Beam': 'assets/vfx/red_flags/love_bomber/02_move_2.png',
-    'Soulmate Spiral': 'assets/vfx/red_flags/love_bomber/03_move_3.png',
-    'Isolation Fog': 'assets/vfx/red_flags/love_bomber/04_move_4.png',
-    'Bomb Detonation': 'assets/vfx/red_flags/love_bomber/05_special.png'
+    'Compliment Pop': 'assets/vfx/red_flags/love_bomber/01_move_1.png',
+    'Future Fake Grenade': 'assets/vfx/red_flags/love_bomber/02_move_2.png',
+    'Love Bomb Airstrike': 'assets/vfx/red_flags/love_bomber/05_special.png'
   },
   dark_humor: {
     'Just Kidding': 'assets/vfx/red_flags/dark_humor/01_just_kidding_jab.png',

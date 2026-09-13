@@ -46,6 +46,7 @@ export const Asset = {
     blake_disruptor: ['assets/characters/villains/blake_sterling_profile.png'],
     julian_softboi_savior: ['assets/characters/villains/julian_cross_softboi_fullbody.png'],
     normal_fake: ['assets/characters/villains/evan_guy_who_seems_normal_headshot.png','assets/characters/villains/evan_guy_who_seems_normal_headshot.jpg'],
+    love_bomber: ['assets/characters/villains/adrian_vale_headshot.png'],
     ivy_mercer: ['assets/characters/villains/girl_red_flags/ivy_mercer_headshot.png'],
     simone_brooks: ['assets/characters/villains/girl_red_flags/simone_brooks_headshot.png'],
     camila_reyes: ['assets/characters/villains/girl_red_flags/camila_reyes_headshot.png']
