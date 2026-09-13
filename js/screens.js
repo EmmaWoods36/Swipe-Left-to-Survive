@@ -68,42 +68,53 @@ export function showTitle({startGame, showMap, showCloset, showPhoto, continueGa
 export function showMap({goBattle, showCloset, showPhoto}={}){
   state.screen = 'map';
   clearStage();
-  setBackground('map');
+  // Pick map background based on game time
+  const timeMap = {
+    'Morning': 'mapMorning',
+    'Afternoon': 'mapAfternoon',
+    'Evening': 'mapEvening',
+    'Dusk': 'mapDusk',
+    'Night': 'mapNight'
+  };
+  const mapBg = timeMap[state.time] || 'mapEvening';
+  setBackground(mapBg);
   AudioManager.playSceneMusic('city_map');
-  // No big white panel — just location buttons on the map background
-  const places = [
-    ['apartment',tx('Amy’s Apartment','エイミーの部屋'),tx('Rest, check LoveLoop, open closet.','休む、LoveLoopを見る、クローゼットを開く。')],
-    ['closet',tx('Closet / Boutique','クローゼット / ブティック'),tx('Dress Amy with visual thumbnails.','画像サムネでエイミーを着せ替える。')],
-    ['battle',tx('LoveLoop Date Battle','LoveLoopデートバトル'),tx('Fight the next red flag.','次の地雷と戦う。')],
-    ['photo',tx('Date Fit Studio','デートコーデスタジオ'),tx('Take a Polaroid after dressing Amy.','着せ替え後にポラロイドを撮る。')],
-    ['restaurant',tx('Restaurant','レストラン'),tx('Grab food. Maybe run into a friend.','ご飯を食べる。友達に会うかも。')],
-    ['park',tx('Park','公園'),tx('Take a walk. Clear your head.','散歩する。頭を整理する。')],
-    ['beach',tx('Beach','ビーチ'),tx('Sun, sand, and zero red flags.','太陽、砂、地雷ゼロ。')],
-    ['bar',tx('Bar','バー'),tx('Drinks with the girls. Or a quiet corner.','女子会で飲む。静かな隅っこも。')],
-    ['library',tx('Library','図書館'),tx('Quiet. Books. No notifications.','静か。本。通知なし。')],
-    ['cafe',tx('Beachside Cafe','海辺のカフェ'),tx('Coffee, ocean view, good company.','コーヒー、海の景色、良い仲間。')]
+  // Location pins positioned on the city map
+  const locations = [
+    { id:'apartment',  name:tx('Amy\'s Apartment','エイミーの部屋'),     x:15, y:72, icon:'🏠', type:'home' },
+    { id:'closet',     name:tx('Closet / Boutique','クローゼット'),       x:30, y:45, icon:'👗', type:'shop' },
+    { id:'battle',     name:tx('LoveLoop','LoveLoop'),                 x:50, y:25, icon:'❤️', type:'battle' },
+    { id:'photo',      name:tx('Date Fit Studio','スタジオ'),            x:72, y:38, icon:'📸', type:'studio' },
+    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:82, y:60, icon:'🍽️', type:'social' },
+    { id:'park',       name:tx('Park','公園'),                           x:40, y:62, icon:'🌳', type:'social' },
+    { id:'beach',      name:tx('Beach','ビーチ'),                        x:65, y:82, icon:'🏖️', type:'social' },
+    { id:'bar',        name:tx('Bar','バー'),                             x:55, y:50, icon:'🍸', type:'social' },
+    { id:'library',    name:tx('Library','図書館'),                      x:25, y:30, icon:'📚', type:'social' },
+    { id:'cafe',       name:tx('Beachside Cafe','海辺のカフェ'),           x:75, y:75, icon:'☕', type:'social' }
   ];
-  // Render locations as a simple button grid on the map background
-  const container = document.createElement('div');
-  container.className = 'map-locations';
-  places.forEach(([id,name,desc])=>{
-    const loc = document.createElement('div');
-    loc.className = 'map-location';
-    loc.innerHTML = `<h3>${name}</h3><p class="muted">${desc}</p>`;
-    const isBattle = id==='battle';
-    const isCloset = id==='closet';
-    const isPhoto = id==='photo';
-    const isSafeArea = SAFE_AREAS[id];
+  const mapWrap = document.createElement('div');
+  mapWrap.className = 'city-map-pins';
+  locations.forEach(loc => {
+    const isBattle = loc.id==='battle';
+    const isCloset = loc.id==='closet';
+    const isPhoto = loc.id==='photo';
+    const isSafeArea = SAFE_AREAS[loc.id];
     let action;
     if(isBattle) action = goBattle;
     else if(isCloset) action = showCloset;
     else if(isPhoto) action = showPhoto;
-    else if(isSafeArea) action = () => visitSafeArea(id, () => showMap({goBattle, showCloset, showPhoto}));
+    else if(isSafeArea) action = () => visitSafeArea(loc.id, () => showMap({goBattle, showCloset, showPhoto}));
     else action = () => showMap({goBattle, showCloset, showPhoto});
-    loc.append(button(tx('Go','行く'), action, isBattle?'danger':''));
-    container.append(loc);
+    const pin = document.createElement('button');
+    pin.className = `map-pin pin-${loc.type}`;
+    pin.type = 'button';
+    pin.style.left = loc.x + '%';
+    pin.style.top = loc.y + '%';
+    pin.innerHTML = `<span class="pin-icon">${loc.icon}</span><span class="pin-label">${loc.name}</span>`;
+    pin.onclick = action;
+    mapWrap.append(pin);
   });
-  screenLayer().append(container);
+  screenLayer().append(mapWrap);
   renderHud();
 }
 
