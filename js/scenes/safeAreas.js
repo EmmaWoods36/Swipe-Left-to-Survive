@@ -1,9 +1,6 @@
 // Safe Area Encounter System
 // When Amy visits a non-battle location, randomly spawn 1-2 friends/NPCs
 // and play a conversation from the conversation bank
-import {setBackground} from '../assets.js';
-import {playScene} from '../dialogueEngine.js';
-import {showMessage} from '../screens.js';
 import {state} from '../state.js';
 import {tx} from '../localization.js';
 import {
@@ -15,6 +12,9 @@ import {
   FRIEND_CONVERSATIONS,
   GREEN_FLAG_NPC_CONVERSATIONS
 } from '../../data/conversationBank.js';
+import {setBackground,Asset} from '../assets.js';
+import {playScene} from '../dialogueEngine.js';
+import {showMessage,clearStage,renderHud,button} from '../screens.js';
 
 // Check if green flags are officially unlocked (after beating Algorithm and Pattern)
 function greenFlagsUnlocked(){
@@ -25,11 +25,12 @@ function greenFlagsUnlocked(){
 export function visitSafeArea(areaId, onReturn){
   const area = SAFE_AREAS[areaId];
   if(!area){
-    // Unknown area, just return
     if(onReturn) onReturn();
     return;
   }
 
+  // Clear the map UI first — show the location's scene background
+  clearStage();
   setBackground(area.bg);
 
   // Decide who appears:

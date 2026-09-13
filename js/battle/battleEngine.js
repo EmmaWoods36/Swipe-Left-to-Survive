@@ -207,7 +207,8 @@ function unlockPatternTransform(){
 
 function afterAmyAction(){
   const b=state.battle; if(!b || b.enemyHp<=0) return;
-  setActions([{label:tx('Enemy Turn','敵のターン'), className:'danger wide', onClick:enemyTurn}]);
+  setActions([]);
+  setTimeout(()=>{ if(state.battle) enemyTurn(); }, 700);
 }
 
 function enemyTurn(){
@@ -226,7 +227,8 @@ function enemyTurn(){
     setBattleLog(atk.text || `${b.enemy.name} attacked.`);
     updateBattleUi();
     if(state.amyHp<=0 || state.delusion>=100) return gameOver();
-    setActions([{label:tx('Amy’s Turn','エイミーのターン'), className:'primary wide', onClick:setAmyActions}]);
+    setActions([]);
+    setTimeout(()=>{ if(state.battle) setAmyActions(); }, 600);
   };
   if(atk.type==='special') playSpecialCutin(state.lang==='ja'?(atk.jaName||atk.name):atk.name,'enemy',run, atk.fx||null, getCutinPath(b.enemy.id)); else run();
 }

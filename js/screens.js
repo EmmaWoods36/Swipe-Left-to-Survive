@@ -64,12 +64,7 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
   state.screen = 'map';
   clearStage();
   setBackground('map');
-  screenLayer().innerHTML = `
-    <div class="center-screen"><section class="panel light">
-      <h2>${tx('City Map','シティマップ')}</h2>
-      <p class="subtitle">${tx('Choose where Amy goes next.','次にエイミーが行く場所を選んでください。')}</p>
-      <div id="mapGrid" class="map-grid"></div>
-    </section></div>`;
+  // No big white panel — just location buttons on the map background
   const places = [
     ['apartment',tx('Amy’s Apartment','エイミーの部屋'),tx('Rest, check LoveLoop, open closet.','休む、LoveLoopを見る、クローゼットを開く。')],
     ['closet',tx('Closet / Boutique','クローゼット / ブティック'),tx('Dress Amy with visual thumbnails.','画像サムネでエイミーを着せ替える。')],
@@ -82,11 +77,13 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
     ['library',tx('Library','図書館'),tx('Quiet. Books. No notifications.','静か。本。通知なし。')],
     ['cafe',tx('Beachside Cafe','海辺のカフェ'),tx('Coffee, ocean view, good company.','コーヒー、海の景色、良い仲間。')]
   ];
-  const grid = document.getElementById('mapGrid');
+  // Render locations as a simple button grid on the map background
+  const container = document.createElement('div');
+  container.className = 'map-locations';
   places.forEach(([id,name,desc])=>{
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.innerHTML = `<h3>${name}</h3><p class="muted">${desc}</p>`;
+    const loc = document.createElement('div');
+    loc.className = 'map-location';
+    loc.innerHTML = `<h3>${name}</h3><p class="muted">${desc}</p>`;
     const isBattle = id==='battle';
     const isCloset = id==='closet';
     const isPhoto = id==='photo';
@@ -97,9 +94,10 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
     else if(isPhoto) action = showPhoto;
     else if(isSafeArea) action = () => visitSafeArea(id, () => showMap({goBattle, showCloset, showPhoto}));
     else action = () => showMap({goBattle, showCloset, showPhoto});
-    div.append(button(tx('Go','行く'), action, isBattle?'danger':''));
-    grid.append(div);
+    loc.append(button(tx('Go','行く'), action, isBattle?'danger':''));
+    container.append(loc);
   });
+  screenLayer().append(container);
   renderHud();
 }
 
