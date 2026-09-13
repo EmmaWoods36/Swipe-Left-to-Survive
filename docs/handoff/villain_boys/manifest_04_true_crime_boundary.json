@@ -1,0 +1,97 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "04_true_crime_boundary",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "TRUE CRIME DATE",
+      "id": "body_bag",
+      "class": "Parking Lot Menace",
+      "vfx_notes": "Headlights, trunk, shadow, caution-stripe dread, true crime atmosphere.",
+      "dialogue_name": "Reggie",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Choose One",
+          "move_slug": "choose_one",
+          "expected_file": "assets/vfx/red_flags/body_bag/01_choose_one.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Trunk Click",
+          "move_slug": "trunk_click",
+          "expected_file": "assets/vfx/red_flags/body_bag/02_trunk_click.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Don’t Be Scared",
+          "move_slug": "dont_be_scared",
+          "expected_file": "assets/vfx/red_flags/body_bag/03_dont_be_scared.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Empty Parking Lot",
+          "move_slug": "empty_parking_lot",
+          "expected_file": "assets/vfx/red_flags/body_bag/04_empty_parking_lot.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Dateline Cold Open",
+          "move_slug": "dateline_cold_open",
+          "expected_file": "assets/vfx/red_flags/body_bag/05_dateline_cold_open.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    {
+      "name": "BOUNDARY PUSHER",
+      "id": "nico_boundary_pusher",
+      "class": "Pushy Playfulness Specialist",
+      "vfx_notes": "Reaching hand, broken boundary circle, playful pressure effects.",
+      "real_name": "Nico Hart",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Boundary Creep",
+          "move_slug": "boundary_creep",
+          "expected_file": "assets/vfx/red_flags/nico_boundary_pusher/01_boundary_creep.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Just Kidding Touch",
+          "move_slug": "just_kidding_touch",
+          "expected_file": "assets/vfx/red_flags/nico_boundary_pusher/02_just_kidding_touch.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Why So Serious?",
+          "move_slug": "why_so_serious",
+          "expected_file": "assets/vfx/red_flags/nico_boundary_pusher/03_why_so_serious.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Read-the-Room Failure",
+          "move_slug": "read_the_room_failure",
+          "expected_file": "assets/vfx/red_flags/nico_boundary_pusher/04_read_the_room_failure.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Pushy Playfulness",
+          "move_slug": "pushy_playfulness",
+          "expected_file": "assets/vfx/red_flags/nico_boundary_pusher/05_pushy_playfulness.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

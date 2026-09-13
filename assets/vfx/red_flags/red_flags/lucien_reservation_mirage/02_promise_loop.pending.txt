@@ -1,0 +1,2 @@
+Pending generated PNG for: Promise Loop
+Expected final PNG path: assets/vfx/red_flags/lucien_reservation_mirage/02_promise_loop.png

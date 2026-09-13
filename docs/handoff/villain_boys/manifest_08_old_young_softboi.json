@@ -1,0 +1,97 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "08_old_young_softboi",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "THE OLD YOUNG-GIRL GUY",
+      "id": "old_young",
+      "class": "Midlife Side Quest",
+      "vfx_notes": "Lounge/bar motifs, trophy symbols, self-satisfied age-gap weirdness.",
+      "dialogue_name": "Victor",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Young Girl Comment",
+          "move_slug": "young_girl_comment",
+          "expected_file": "assets/vfx/red_flags/old_young/01_young_girl_comment.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Mature For Your Age",
+          "move_slug": "mature_for_your_age",
+          "expected_file": "assets/vfx/red_flags/old_young/02_mature_for_your_age.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Drink Theft",
+          "move_slug": "drink_theft",
+          "expected_file": "assets/vfx/red_flags/old_young/03_drink_theft.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Women My Age Are Bitter",
+          "move_slug": "women_my_age_are_bitter",
+          "expected_file": "assets/vfx/red_flags/old_young/04_women_my_age_are_bitter.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Midlife Trophy Case",
+          "move_slug": "midlife_trophy_case",
+          "expected_file": "assets/vfx/red_flags/old_young/05_midlife_trophy_case.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    {
+      "name": "THE SOFTBOI SAVIOR",
+      "id": "julian_softboi_savior",
+      "class": "Performative Feminist Softboi",
+      "vfx_notes": "Soft colors corrupted by red/black, gentle aura, emotional traps, faux-healing motifs.",
+      "real_name": "Julian Cross",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Therapy-Speak Trap",
+          "move_slug": "therapy_speak_trap",
+          "expected_file": "assets/vfx/red_flags/julian_softboi_savior/01_therapy_speak_trap.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Hold Space Shield",
+          "move_slug": "hold_space_shield",
+          "expected_file": "assets/vfx/red_flags/julian_softboi_savior/02_hold_space_shield.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Not Like Other Men",
+          "move_slug": "not_like_other_men",
+          "expected_file": "assets/vfx/red_flags/julian_softboi_savior/03_not_like_other_men.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Weaponized Vulnerability",
+          "move_slug": "weaponized_vulnerability",
+          "expected_file": "assets/vfx/red_flags/julian_softboi_savior/04_weaponized_vulnerability.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "The Healing Era Monologue",
+          "move_slug": "the_healing_era_monologue",
+          "expected_file": "assets/vfx/red_flags/julian_softboi_savior/05_the_healing_era_monologue.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

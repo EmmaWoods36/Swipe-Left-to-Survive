@@ -1,0 +1,2 @@
+Pending generated PNG for: Value Meal Serenade
+Expected final PNG path: assets/vfx/red_flags/broke_dreamer/02_value_meal_serenade.png

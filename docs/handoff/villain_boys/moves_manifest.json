@@ -1,0 +1,33 @@
+{
+  "two_am_summoner": {
+    "found": [
+      "magical_chat_wave_with_glowing_emojis.png",
+      "whimsical_glowing_emoji_swirl.png",
+      "cosmic_emoji_blast_with_glowing_hearts.png",
+      "magical_bedroom_portal_with_glowing_emojis.png",
+      "mystical_portal_with_cosmic_elements.png",
+      "cosmic_energy_blast_with_playful_symbols.png"
+    ],
+    "missing": []
+  },
+  "preference_paladin": {
+    "found": [
+      "magical_pink_heartburst_with_sparkles.png",
+      "magical_heart_shaped_energy_burst.png",
+      "magical_heartbeam_with_whimsical_symbols.png",
+      "magical_energy_blast_with_heart_motif.png",
+      "romantic_heart_chain_magic_burst.png"
+    ],
+    "missing": []
+  },
+  "experimental_coworker": {
+    "found": [
+      "magical_notification_blast_with_heart_icons.png",
+      "magical_pink_energy_blast_with_icons.png",
+      "magical_energy_blast_with_playful_icons.png",
+      "magical_energy_blast_with_attitude.png",
+      "torn_hr_portal_with_magical_flair.png"
+    ],
+    "missing": []
+  }
+}

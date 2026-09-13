@@ -1,0 +1,149 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "roster_count": 17,
+  "batch_count": 9,
+  "important_note": "Corrected guy-only VFX split. Ivy, Camila, and Simone are already handled and intentionally excluded. Algorithm and Pattern are boss/cinematic packages, not included here.",
+  "expected_file_pattern": "assets/vfx/red_flags/<red_flag_id>/<move_number>_<move_slug>.png",
+  "batches": [
+    {
+      "batch_id": "01_two_am_preference",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_01_two_am_preference.zip",
+      "red_flags": [
+        {
+          "id": "two_am",
+          "name": "THE 2AM SUMMONER",
+          "class": "Low-Effort Hookup Texter"
+        },
+        {
+          "id": "preference",
+          "name": "THE PREFERENCE PALADIN",
+          "class": "Fetishizer Knight"
+        }
+      ]
+    },
+    {
+      "batch_id": "02_coworker_love_bomber",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_02_coworker_love_bomber.zip",
+      "red_flags": [
+        {
+          "id": "coworker",
+          "name": "THE EXPERIMENTAL COWORKER",
+          "class": "Office Happy Hour Creep"
+        },
+        {
+          "id": "love_bomber",
+          "name": "THE LOVE BOMBER",
+          "class": "Love Bomber"
+        }
+      ]
+    },
+    {
+      "batch_id": "03_dark_humor_demon",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_03_dark_humor_demon.zip",
+      "red_flags": [
+        {
+          "id": "dark_humor",
+          "name": "DARK HUMOR GUY",
+          "class": "Boundary Tester"
+        },
+        {
+          "id": "demon",
+          "name": "THE DEMON FIGHTER",
+          "class": "Hot Disaster"
+        }
+      ]
+    },
+    {
+      "batch_id": "04_true_crime_boundary",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_04_true_crime_boundary.zip",
+      "red_flags": [
+        {
+          "id": "body_bag",
+          "name": "TRUE CRIME DATE",
+          "class": "Parking Lot Menace"
+        },
+        {
+          "id": "nico_boundary_pusher",
+          "name": "BOUNDARY PUSHER",
+          "class": "Pushy Playfulness Specialist"
+        }
+      ]
+    },
+    {
+      "batch_id": "05_reservation_industry",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_05_reservation_industry.zip",
+      "red_flags": [
+        {
+          "id": "lucien_reservation_mirage",
+          "name": "RESERVATION MIRAGE",
+          "class": "Fake Fancy / Promise Merchant"
+        },
+        {
+          "id": "roman_industry_mystery",
+          "name": "INDUSTRY MYSTERY",
+          "class": "Vague Entertainment Flexer"
+        }
+      ]
+    },
+    {
+      "batch_id": "06_house_date_broke_dreamer",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_06_house_date_broke_dreamer.zip",
+      "red_flags": [
+        {
+          "id": "house_date",
+          "name": "THE HOUSE DATE ECONOMIST",
+          "class": "Bare Minimum Accountant"
+        },
+        {
+          "id": "broke_dreamer",
+          "name": "JOEY DELIVERY",
+          "class": "The Broke Balladeer"
+        }
+      ]
+    },
+    {
+      "batch_id": "07_fake_millionaire_normal",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_07_fake_millionaire_normal.zip",
+      "red_flags": [
+        {
+          "id": "millionaire",
+          "name": "THE LOW-KEY MILLIONAIRE",
+          "class": "Wallet Illusionist"
+        },
+        {
+          "id": "normal_fake",
+          "name": "GUY WHO SEEMS NORMAL",
+          "class": "Advanced Threat"
+        }
+      ]
+    },
+    {
+      "batch_id": "08_old_young_softboi",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_08_old_young_softboi.zip",
+      "red_flags": [
+        {
+          "id": "old_young",
+          "name": "THE OLD YOUNG-GIRL GUY",
+          "class": "Midlife Side Quest"
+        },
+        {
+          "id": "julian_softboi_savior",
+          "name": "THE SOFTBOI SAVIOR",
+          "class": "Performative Feminist Softboi"
+        }
+      ]
+    },
+    {
+      "batch_id": "09_disruptor",
+      "zip_name": "SwipeLeft_GuyRedFlag_VFX_09_disruptor.zip",
+      "red_flags": [
+        {
+          "id": "blake_disruptor",
+          "name": "THE DISRUPTOR",
+          "class": "Crypto / Tech Bro Webinar Date"
+        }
+      ]
+    }
+  ]
+}

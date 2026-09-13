@@ -1,0 +1,95 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "01_two_am_preference",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "THE 2AM SUMMONER",
+      "id": "two_am",
+      "class": "Low-Effort Hookup Texter",
+      "vfx_notes": "Late-night phone glow, lazy hookup energy, text bubbles, doorway/midnight motifs.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Wyd Wave",
+          "move_slug": "wyd_wave",
+          "expected_file": "assets/vfx/red_flags/two_am/01_wyd_wave.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "You Up Beam",
+          "move_slug": "you_up_beam",
+          "expected_file": "assets/vfx/red_flags/two_am/02_you_up_beam.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Come Through Curse",
+          "move_slug": "come_through_curse",
+          "expected_file": "assets/vfx/red_flags/two_am/03_come_through_curse.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "No Pressure Pressure",
+          "move_slug": "no_pressure_pressure",
+          "expected_file": "assets/vfx/red_flags/two_am/04_no_pressure_pressure.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Midnight Doorway",
+          "move_slug": "midnight_doorway",
+          "expected_file": "assets/vfx/red_flags/two_am/05_midnight_doorway.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    {
+      "name": "THE PREFERENCE PALADIN",
+      "id": "preference",
+      "class": "Fetishizer Knight",
+      "vfx_notes": "Fake chivalry, fetishizer knight energy, gold/red compliment effects, patronizing charm.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "You Look Like Beyoncé",
+          "move_slug": "you_look_like_beyonc",
+          "expected_file": "assets/vfx/red_flags/preference/01_you_look_like_beyonc.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Preference Not Fetish",
+          "move_slug": "preference_not_fetish",
+          "expected_file": "assets/vfx/red_flags/preference/02_preference_not_fetish.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "I Grew Up Around It",
+          "move_slug": "i_grew_up_around_it",
+          "expected_file": "assets/vfx/red_flags/preference/03_i_grew_up_around_it.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Parents Would Never Accept You",
+          "move_slug": "parents_would_never_accept_you",
+          "expected_file": "assets/vfx/red_flags/preference/04_parents_would_never_accept_you.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Exotic Compliment Chain",
+          "move_slug": "exotic_compliment_chain",
+          "expected_file": "assets/vfx/red_flags/preference/05_exotic_compliment_chain.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

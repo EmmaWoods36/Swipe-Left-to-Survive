@@ -1,0 +1,2 @@
+Pending generated PNG for: Choose One
+Expected final PNG path: assets/vfx/red_flags/body_bag/01_choose_one.png

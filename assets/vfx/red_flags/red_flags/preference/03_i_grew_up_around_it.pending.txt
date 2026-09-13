@@ -1,0 +1,2 @@
+Pending generated PNG for: I Grew Up Around It
+Expected final PNG path: assets/vfx/red_flags/preference/03_i_grew_up_around_it.png

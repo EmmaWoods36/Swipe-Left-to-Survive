@@ -1,0 +1,95 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "06_house_date_broke_dreamer",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "THE HOUSE DATE ECONOMIST",
+      "id": "house_date",
+      "class": "Bare Minimum Accountant",
+      "vfx_notes": "Couch, receipts, wallet defense, coffee cup, budget motifs.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Couch Date Trap",
+          "move_slug": "couch_date_trap",
+          "expected_file": "assets/vfx/red_flags/house_date/01_couch_date_trap.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "I Don’t Want To Be Used",
+          "move_slug": "i_dont_want_to_be_used",
+          "expected_file": "assets/vfx/red_flags/house_date/02_i_dont_want_to_be_used.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "You Pay Then",
+          "move_slug": "you_pay_then",
+          "expected_file": "assets/vfx/red_flags/house_date/03_you_pay_then.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Coffee Is Expensive",
+          "move_slug": "coffee_is_expensive",
+          "expected_file": "assets/vfx/red_flags/house_date/04_coffee_is_expensive.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Bare Minimum Audit",
+          "move_slug": "bare_minimum_audit",
+          "expected_file": "assets/vfx/red_flags/house_date/05_bare_minimum_audit.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    {
+      "name": "JOEY DELIVERY",
+      "id": "broke_dreamer",
+      "class": "The Broke Balladeer",
+      "vfx_notes": "Takeout bag, mic, music notes, cheap meal motifs.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Unreleased Track",
+          "move_slug": "unreleased_track",
+          "expected_file": "assets/vfx/red_flags/broke_dreamer/01_unreleased_track.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Value Meal Serenade",
+          "move_slug": "value_meal_serenade",
+          "expected_file": "assets/vfx/red_flags/broke_dreamer/02_value_meal_serenade.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Manifesting",
+          "move_slug": "manifesting",
+          "expected_file": "assets/vfx/red_flags/broke_dreamer/03_manifesting.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Can You Spot Me?",
+          "move_slug": "can_you_spot_me",
+          "expected_file": "assets/vfx/red_flags/broke_dreamer/04_can_you_spot_me.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "You Don’t Support Dreams",
+          "move_slug": "you_dont_support_dreams",
+          "expected_file": "assets/vfx/red_flags/broke_dreamer/05_you_dont_support_dreams.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

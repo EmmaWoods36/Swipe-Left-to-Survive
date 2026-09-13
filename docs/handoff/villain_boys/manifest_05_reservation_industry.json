@@ -1,0 +1,97 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "05_reservation_industry",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "RESERVATION MIRAGE",
+      "id": "lucien_reservation_mirage",
+      "class": "Fake Fancy / Promise Merchant",
+      "vfx_notes": "Canceled reservation card, rose-gold smoke, disappearing candlelight, charm fog.",
+      "real_name": "Lucien Moreau",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Table for Never",
+          "move_slug": "table_for_never",
+          "expected_file": "assets/vfx/red_flags/lucien_reservation_mirage/01_table_for_never.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Promise Loop",
+          "move_slug": "promise_loop",
+          "expected_file": "assets/vfx/red_flags/lucien_reservation_mirage/02_promise_loop.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Plan Swap",
+          "move_slug": "plan_swap",
+          "expected_file": "assets/vfx/red_flags/lucien_reservation_mirage/03_plan_swap.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Charm Fog",
+          "move_slug": "charm_fog",
+          "expected_file": "assets/vfx/red_flags/lucien_reservation_mirage/04_charm_fog.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Next Time, I Swear",
+          "move_slug": "next_time_i_swear",
+          "expected_file": "assets/vfx/red_flags/lucien_reservation_mirage/05_next_time_i_swear.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    {
+      "name": "INDUSTRY MYSTERY",
+      "id": "roman_industry_mystery",
+      "class": "Vague Entertainment Flexer",
+      "vfx_notes": "VIP rope, camera flashes, mysterious status symbols, luxury shadows.",
+      "real_name": "Roman Vega",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Ambiguous Income",
+          "move_slug": "ambiguous_income",
+          "expected_file": "assets/vfx/red_flags/roman_industry_mystery/01_ambiguous_income.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Retirement Flex",
+          "move_slug": "retirement_flex",
+          "expected_file": "assets/vfx/red_flags/roman_industry_mystery/02_retirement_flex.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Shock Reveal",
+          "move_slug": "shock_reveal",
+          "expected_file": "assets/vfx/red_flags/roman_industry_mystery/03_shock_reveal.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Open-Mindedness Check",
+          "move_slug": "open_mindedness_check",
+          "expected_file": "assets/vfx/red_flags/roman_industry_mystery/04_open_mindedness_check.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "I Broke Her",
+          "move_slug": "i_broke_her",
+          "expected_file": "assets/vfx/red_flags/roman_industry_mystery/05_i_broke_her.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

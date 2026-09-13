@@ -1,0 +1,2 @@
+Pending generated PNG for: I’m Just Curious
+Expected final PNG path: assets/vfx/red_flags/coworker/03_im_just_curious.png

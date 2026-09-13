@@ -1,0 +1,96 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "03_dark_humor_demon",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "DARK HUMOR GUY",
+      "id": "dark_humor",
+      "class": "Boundary Tester",
+      "vfx_notes": "Jagged speech marks, sharp comedy effects, dark red/black humor energy.",
+      "dialogue_name": "Derrick",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Just Kidding Jab",
+          "move_slug": "just_kidding_jab",
+          "expected_file": "assets/vfx/red_flags/dark_humor/01_just_kidding_jab.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Too Sensitive Slash",
+          "move_slug": "too_sensitive_slash",
+          "expected_file": "assets/vfx/red_flags/dark_humor/02_too_sensitive_slash.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Dark Humor Defense",
+          "move_slug": "dark_humor_defense",
+          "expected_file": "assets/vfx/red_flags/dark_humor/03_dark_humor_defense.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Relax, I’m Playing",
+          "move_slug": "relax_im_playing",
+          "expected_file": "assets/vfx/red_flags/dark_humor/04_relax_im_playing.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Schrödinger’s Threat",
+          "move_slug": "schr_dingers_threat",
+          "expected_file": "assets/vfx/red_flags/dark_humor/05_schr_dingers_threat.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    {
+      "name": "THE DEMON FIGHTER",
+      "id": "demon",
+      "class": "Hot Disaster",
+      "vfx_notes": "Shadow/fire/cracked aura, unstable trauma-dump combat energy.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Fighting My Demons",
+          "move_slug": "fighting_my_demons",
+          "expected_file": "assets/vfx/red_flags/demon/01_fighting_my_demons.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Loyalty Test",
+          "move_slug": "loyalty_test",
+          "expected_file": "assets/vfx/red_flags/demon/02_loyalty_test.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Military School Flashback",
+          "move_slug": "military_school_flashback",
+          "expected_file": "assets/vfx/red_flags/demon/03_military_school_flashback.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Hot Disaster Aura",
+          "move_slug": "hot_disaster_aura",
+          "expected_file": "assets/vfx/red_flags/demon/04_hot_disaster_aura.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Handle Me At My Worst",
+          "move_slug": "handle_me_at_my_worst",
+          "expected_file": "assets/vfx/red_flags/demon/05_handle_me_at_my_worst.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "02_coworker_love_bomber",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "THE EXPERIMENTAL COWORKER",
+      "id": "coworker",
+      "class": "Office Happy Hour Creep",
+      "vfx_notes": "Slack pings, office badge, HR poster, after-work drink motifs.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "After-Hours Ping",
+          "move_slug": "after_hours_ping",
+          "expected_file": "assets/vfx/red_flags/coworker/01_after_hours_ping.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "You’re Different",
+          "move_slug": "youre_different",
+          "expected_file": "assets/vfx/red_flags/coworker/02_youre_different.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "I’m Just Curious",
+          "move_slug": "im_just_curious",
+          "expected_file": "assets/vfx/red_flags/coworker/03_im_just_curious.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Don’t Make It Weird",
+          "move_slug": "dont_make_it_weird",
+          "expected_file": "assets/vfx/red_flags/coworker/04_dont_make_it_weird.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "HR Poster Peels Off",
+          "move_slug": "hr_poster_peels_off",
+          "expected_file": "assets/vfx/red_flags/coworker/05_hr_poster_peels_off.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    {
+      "name": "THE LOVE BOMBER",
+      "id": "love_bomber",
+      "class": "Love Bomber",
+      "vfx_notes": "Love-bombing VFX placeholder names until exact move names are confirmed.",
+      "real_name": "Adrian Vale",
+      "status_note": "Included because user listed him in the guy roster, even though older note said verify later.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Move 1",
+          "move_slug": "move_1",
+          "expected_file": "assets/vfx/red_flags/love_bomber/01_move_1.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Move 2",
+          "move_slug": "move_2",
+          "expected_file": "assets/vfx/red_flags/love_bomber/02_move_2.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Move 3",
+          "move_slug": "move_3",
+          "expected_file": "assets/vfx/red_flags/love_bomber/03_move_3.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Move 4",
+          "move_slug": "move_4",
+          "expected_file": "assets/vfx/red_flags/love_bomber/04_move_4.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Special",
+          "move_slug": "special",
+          "expected_file": "assets/vfx/red_flags/love_bomber/05_special.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

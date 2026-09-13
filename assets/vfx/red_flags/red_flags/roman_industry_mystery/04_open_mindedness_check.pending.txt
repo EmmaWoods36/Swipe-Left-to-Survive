@@ -1,0 +1,2 @@
+Pending generated PNG for: Open-Mindedness Check
+Expected final PNG path: assets/vfx/red_flags/roman_industry_mystery/04_open_mindedness_check.png

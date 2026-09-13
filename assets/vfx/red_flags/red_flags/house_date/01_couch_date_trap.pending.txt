@@ -1,0 +1,2 @@
+Pending generated PNG for: Couch Date Trap
+Expected final PNG path: assets/vfx/red_flags/house_date/01_couch_date_trap.png

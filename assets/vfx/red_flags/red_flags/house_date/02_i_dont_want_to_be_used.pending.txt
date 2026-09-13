@@ -1,0 +1,2 @@
+Pending generated PNG for: I Don’t Want To Be Used
+Expected final PNG path: assets/vfx/red_flags/house_date/02_i_dont_want_to_be_used.png

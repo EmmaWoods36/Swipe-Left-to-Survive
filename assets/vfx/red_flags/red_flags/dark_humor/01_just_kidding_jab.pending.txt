@@ -1,0 +1,2 @@
+Pending generated PNG for: Just Kidding Jab
+Expected final PNG path: assets/vfx/red_flags/dark_humor/01_just_kidding_jab.png

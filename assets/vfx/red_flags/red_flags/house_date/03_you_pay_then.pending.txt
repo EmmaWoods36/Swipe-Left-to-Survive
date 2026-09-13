@@ -1,0 +1,2 @@
+Pending generated PNG for: You Pay Then
+Expected final PNG path: assets/vfx/red_flags/house_date/03_you_pay_then.png

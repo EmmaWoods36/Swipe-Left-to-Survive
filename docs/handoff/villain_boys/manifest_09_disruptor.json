@@ -1,0 +1,53 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "09_disruptor",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "THE DISRUPTOR",
+      "id": "blake_disruptor",
+      "class": "Crypto / Tech Bro Webinar Date",
+      "vfx_notes": "Pitch deck, charts, startup arrows, blockchain panels, neon UI.",
+      "real_name": "Blake Sterling",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Blockchain Monologue",
+          "move_slug": "blockchain_monologue",
+          "expected_file": "assets/vfx/red_flags/blake_disruptor/01_blockchain_monologue.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Passive Income Flex",
+          "move_slug": "passive_income_flex",
+          "expected_file": "assets/vfx/red_flags/blake_disruptor/02_passive_income_flex.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Founder Aura",
+          "move_slug": "founder_aura",
+          "expected_file": "assets/vfx/red_flags/blake_disruptor/03_founder_aura.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Actually, Let Me Explain",
+          "move_slug": "actually_let_me_explain",
+          "expected_file": "assets/vfx/red_flags/blake_disruptor/04_actually_let_me_explain.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "The Pitch Deck",
+          "move_slug": "the_pitch_deck",
+          "expected_file": "assets/vfx/red_flags/blake_disruptor/05_the_pitch_deck.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "project": "Swipe Left to Survive",
+  "asset_type": "guy_red_flag_energy_blast_vfx_overlays",
+  "batch_id": "07_fake_millionaire_normal",
+  "contains_actual_pngs": false,
+  "note": "Scaffold/manifest package for generated transparent PNG energy blast VFX. Add final PNGs into the listed folders.",
+  "red_flags": [
+    {
+      "name": "THE LOW-KEY MILLIONAIRE",
+      "id": "millionaire",
+      "class": "Wallet Illusionist",
+      "vfx_notes": "Illusion money, fake luxury, gold shimmer, cracked wealth symbols.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Low-Key Millionaire Mirage",
+          "move_slug": "low_key_millionaire_mirage",
+          "expected_file": "assets/vfx/red_flags/millionaire/01_low_key_millionaire_mirage.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "Believe In Me Barrage",
+          "move_slug": "believe_in_me_barrage",
+          "expected_file": "assets/vfx/red_flags/millionaire/02_believe_in_me_barrage.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Between Opportunities",
+          "move_slug": "between_opportunities",
+          "expected_file": "assets/vfx/red_flags/millionaire/03_between_opportunities.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "Do You Want My Kids?",
+          "move_slug": "do_you_want_my_kids",
+          "expected_file": "assets/vfx/red_flags/millionaire/04_do_you_want_my_kids.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Real Woman Requirement",
+          "move_slug": "real_woman_requirement",
+          "expected_file": "assets/vfx/red_flags/millionaire/05_real_woman_requirement.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    },
+    {
+      "name": "GUY WHO SEEMS NORMAL",
+      "id": "normal_fake",
+      "class": "Advanced Threat",
+      "vfx_notes": "Mask cracking, subtle distortion, pleasant-but-off energy.",
+      "moves": [
+        {
+          "move_number": 1,
+          "move_name": "Normal Guy Mask",
+          "move_slug": "normal_guy_mask",
+          "expected_file": "assets/vfx/red_flags/normal_fake/01_normal_guy_mask.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 2,
+          "move_name": "My Ex Was Crazy",
+          "move_slug": "my_ex_was_crazy",
+          "expected_file": "assets/vfx/red_flags/normal_fake/02_my_ex_was_crazy.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 3,
+          "move_name": "Brutal Honesty",
+          "move_slug": "brutal_honesty",
+          "expected_file": "assets/vfx/red_flags/normal_fake/03_brutal_honesty.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 4,
+          "move_name": "You’re Overthinking It",
+          "move_slug": "youre_overthinking_it",
+          "expected_file": "assets/vfx/red_flags/normal_fake/04_youre_overthinking_it.png",
+          "status": "pending_generation_or_verify"
+        },
+        {
+          "move_number": 5,
+          "move_name": "Advanced Threat Reveal",
+          "move_slug": "advanced_threat_reveal",
+          "expected_file": "assets/vfx/red_flags/normal_fake/05_advanced_threat_reveal.png",
+          "status": "pending_generation_or_verify"
+        }
+      ]
+    }
+  ]
+}

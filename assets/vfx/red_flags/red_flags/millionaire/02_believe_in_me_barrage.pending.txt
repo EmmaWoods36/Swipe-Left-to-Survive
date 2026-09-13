@@ -1,0 +1,2 @@
+Pending generated PNG for: Believe In Me Barrage
+Expected final PNG path: assets/vfx/red_flags/millionaire/02_believe_in_me_barrage.png

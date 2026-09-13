@@ -1,0 +1,2 @@
+Pending generated PNG for: Loyalty Test
+Expected final PNG path: assets/vfx/red_flags/demon/02_loyalty_test.png

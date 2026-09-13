@@ -1,0 +1,2 @@
+Pending generated PNG for: Midnight Doorway
+Expected final PNG path: assets/vfx/red_flags/two_am/05_midnight_doorway.png

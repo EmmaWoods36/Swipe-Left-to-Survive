@@ -1,0 +1,2 @@
+Pending generated PNG for: The Healing Era Monologue
+Expected final PNG path: assets/vfx/red_flags/julian_softboi_savior/05_the_healing_era_monologue.png

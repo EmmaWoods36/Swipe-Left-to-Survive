@@ -1,0 +1,2 @@
+Pending generated PNG for: Brutal Honesty
+Expected final PNG path: assets/vfx/red_flags/normal_fake/03_brutal_honesty.png

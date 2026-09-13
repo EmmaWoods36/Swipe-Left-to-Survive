@@ -1,0 +1,2 @@
+Pending generated PNG for: Exotic Compliment Chain
+Expected final PNG path: assets/vfx/red_flags/preference/05_exotic_compliment_chain.png

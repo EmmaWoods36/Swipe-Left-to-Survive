@@ -1,0 +1,2 @@
+Pending generated PNG for: Table for Never
+Expected final PNG path: assets/vfx/red_flags/lucien_reservation_mirage/01_table_for_never.png

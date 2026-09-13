@@ -1,0 +1,2 @@
+Pending generated PNG for: Midlife Trophy Case
+Expected final PNG path: assets/vfx/red_flags/old_young/05_midlife_trophy_case.png

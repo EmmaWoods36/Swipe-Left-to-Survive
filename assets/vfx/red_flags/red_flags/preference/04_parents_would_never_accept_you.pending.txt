@@ -1,0 +1,2 @@
+Pending generated PNG for: Parents Would Never Accept You
+Expected final PNG path: assets/vfx/red_flags/preference/04_parents_would_never_accept_you.png
