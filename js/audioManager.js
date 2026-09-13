@@ -16,27 +16,27 @@ const AudioManager = {
 
   // Music track definitions
   TRACKS: {
-    chill: 'assets/audio/music/chill_ambient.wav',
-    mall: 'assets/audio/music/mall.wav',
-    restaurant: 'assets/audio/music/restaurant.wav',
-    bar: 'assets/audio/music/bar.wav',
-    cutscene: 'assets/audio/music/cutscene.wav',
-    battle: 'assets/audio/music/battle.wav',
-    victory: 'assets/audio/music/victory.wav',
-    defeat: 'assets/audio/music/defeat.wav',
-    algorithm: 'assets/audio/music/algorithm_boss.wav',
-    pattern: 'assets/audio/music/pattern_boss.wav',
+    chill: 'assets/audio/music/chill_ambient.mp3',
+    mall: 'assets/audio/music/mall.mp3',
+    restaurant: 'assets/audio/music/restaurant.mp3',
+    bar: 'assets/audio/music/bar.mp3',
+    cutscene: 'assets/audio/music/cutscene.mp3',
+    battle: 'assets/audio/music/battle.mp3',
+    victory: 'assets/audio/music/victory.mp3',
+    defeat: 'assets/audio/music/defeat.mp3',
+    algorithm: 'assets/audio/music/algorithm_boss.mp3',
+    pattern: 'assets/audio/music/pattern_boss.mp3',
   },
 
   // SFX definitions
   SFX: {
-    click: 'assets/audio/sfx/click.wav',
-    notification: 'assets/audio/sfx/notification.wav',
-    attack: 'assets/audio/sfx/attack.wav',
-    damage: 'assets/audio/sfx/damage.wav',
-    levelup: 'assets/audio/sfx/levelup.wav',
-    match: 'assets/audio/sfx/match.wav',
-    swipe: 'assets/audio/sfx/swipe.wav',
+    click: 'assets/audio/sfx/click.mp3',
+    notification: 'assets/audio/sfx/notification.mp3',
+    attack: 'assets/audio/sfx/attack.mp3',
+    damage: 'assets/audio/sfx/damage.mp3',
+    levelup: 'assets/audio/sfx/levelup.mp3',
+    match: 'assets/audio/sfx/match.mp3',
+    swipe: 'assets/audio/sfx/swipe.mp3',
   },
 
   // Scene to track mapping
