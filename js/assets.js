@@ -1,14 +1,14 @@
 export const Asset = {
   backgrounds: {
     apartmentDay: ['assets/backgrounds/apartment_day.png','Assets/backgrounds/apartment_day.png'],
-    apartmentEvening: ['assets/cgs/amy_couch_evening.png','assets/cgs/amy_on_couch_evening.png','assets/cgs/opening_amy_couch.png','assets/backgrounds/apartment_sunset.png','Assets/cgs/amy_couch_evening.png'],
+    apartmentEvening: ['assets/backgrounds/apartment_sunset.png','Assets/backgrounds/apartment_sunset.png'],
     apartmentNight: ['assets/backgrounds/apartment_night.png'],
     map: ['assets/backgrounds/city_map_day.png','assets/backgrounds/city_map_afternoon.png'],
-    closet: ['assets/backgrounds/closet.png','assets/backgrounds/boutique.png'],
+    closet: ['assets/backgrounds/closet.png','assets/backgrounds/bg_closet.png'],
     loveLoop: ['assets/backgrounds/apartment_sunset.png'],
     battle: ['assets/backgrounds/apartment_night.png'],
-    algorithm: ['assets/backgrounds/bedroom_glitch_algorithm.png','assets/backgrounds/dream_world_algorithm.png'],
-    pattern: ['assets/backgrounds/dream_world_pattern.png','assets/backgrounds/bedroom_glitch_pattern.png'],
+    algorithm: ['assets/backgrounds/bedroom_glitch_algorithm.png','assets/backgrounds/bg_dream_world.png'],
+    pattern: ['assets/backgrounds/dream_world_pattern.png','assets/backgrounds/bedroom_glitch_algorithm.png'],
     beach: ['assets/backgrounds/beach_sunset.png'],
     library: ['assets/backgrounds/library.png'],
     bar: ['assets/backgrounds/bar.png'],
@@ -18,7 +18,7 @@ export const Asset = {
   portraits: {
     amy: ['assets/characters/main/amy_headshot.png','assets/characters/main/amy_headshot.jpg','Assets/characters/main/amy_headshot.jpg','assets/characters/cards/amy_card.png'],
     goddessAmy: ['assets/characters/main/goddess_amy_headshot.png'],
-    malik: ['assets/characters/friends/malik_headshot.png','assets/characters/cards/malik_card.png'],
+    malik: ['assets/characters/friends/malik_headshot.png','assets/characters/friends/malik_headshot.jpg'],
     min: ['assets/characters/friends/min_headshot.png','assets/characters/cards/min_card.png'],
     jade: ['assets/characters/friends/jade_headshot.png','assets/characters/cards/jade_card.png'],
     chloe: ['assets/characters/friends/chloe_headshot.png','assets/characters/cards/chloe_card.png'],
@@ -27,8 +27,8 @@ export const Asset = {
     james: ['assets/characters/green_flags/james_headshot.png','assets/characters/cards/james_card.png'],
     andrew: ['assets/characters/green_flags/andrew_headshot.png','assets/characters/cards/andrew_card.png'],
     christy: ['assets/characters/green_flags/christy_headshot.png','assets/characters/cards/christy_card.png'],
-    algorithm: ['assets/characters/bosses/algorithm_headshot.png','assets/sprites/scenes/bosses/the_algorithm/algorithm_scene_01.png'],
-    pattern: ['assets/characters/bosses/pattern_headshot.png','assets/sprites/scenes/bosses/the_pattern/pattern_scene_01.png'],
+    algorithm: ['assets/characters/bosses/algorithm_headshot.png'],
+    pattern: ['assets/characters/bosses/pattern_headshot.png'],
     // Villain portraits for VN scenes
     two_am: ['assets/characters/villains/jay_2am_summoner_headshot.png'],
     preference: ['assets/characters/villains/connor_preference_paladin_headshot.png'],
@@ -45,7 +45,7 @@ export const Asset = {
     nico_boundary_pusher: ['assets/characters/villains/boundary_pusher_headshot.png'],
     blake_disruptor: ['assets/characters/villains/blake_sterling_profile.png'],
     julian_softboi_savior: ['assets/characters/villains/julian_cross_softboi_fullbody.png'],
-    normal_fake: ['assets/characters/villains/guy_who_seems_normal_headshot.png'],
+    normal_fake: ['assets/characters/villains/evan_guy_who_seems_normal_headshot.png','assets/characters/villains/evan_guy_who_seems_normal_headshot.jpg'],
     ivy_mercer: ['assets/characters/villains/girl_red_flags/ivy_mercer_headshot.png'],
     simone_brooks: ['assets/characters/villains/girl_red_flags/simone_brooks_headshot.png'],
     camila_reyes: ['assets/characters/villains/girl_red_flags/camila_reyes_headshot.png']
@@ -61,13 +61,13 @@ export const Asset = {
     }
   },
   cutins: {
-    amy: ['assets/cutins/amy/amy_special_cutin.png','assets/sprites/amy/amy_ultimate_girl_stand_up.png'],
-    support: ['assets/cutins/support/malik_support_cutin.png','assets/cutins/support/min_support_cutin.png'],
-    algorithm: ['assets/cutins/bosses/algorithm_cutin.png'],
-    pattern: ['assets/cutins/bosses/pattern_cutin.png']
+    amy: ['assets/sprites/amy/amy_ultimate_girl_stand_up.png','assets/characters/main/amy_headshot.png'],
+    support: ['assets/cutins/bosses/algorithm/digital_reaper_of_hearts.png','assets/cutins/bosses/pattern/dark_heart_of_chains_and_smoke.png'],
+    algorithm: ['assets/cutins/bosses/algorithm/digital_reaper_of_hearts.png','assets/cutins/bosses/algorithm/neon_rogue_with_digital_heart_attack.png'],
+    pattern: ['assets/cutins/bosses/pattern/dark_heart_of_chains_and_smoke.png','assets/cutins/bosses/pattern/shadowed_figure_with_glowing_chains_and_spirits.png']
   },
   paperDoll: {
-    base: ['assets/dressup/00_base/001_amy_paper_doll_base.png','assets/dressup/base/amy_paper_doll_base.png','assets/dressup/base/amy_base.png'],
+    base: ['assets/dressup/00_base/001_amy_paper_doll_base.png'],
     placeholder: ['assets/characters/main/amy_headshot.png']
   }
 };
