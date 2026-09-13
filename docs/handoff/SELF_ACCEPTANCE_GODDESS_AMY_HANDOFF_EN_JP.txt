@@ -1,0 +1,94 @@
+SWIPE LEFT TO SURVIVE — SELF-ACCEPTANCE GODDESS AMY HANDOFF
+EN / JP TRANSFORMATION, MOVESET, SPRITES, AND ATTACK EFFECTS
+
+CHARACTER NAME
+EN: Self-Acceptance Goddess Amy
+JP: 自己受容の女神 Amy
+
+STORY FUNCTION
+Self-Acceptance Goddess Amy is Amy’s final transformation during the Pattern battle.
+This form should unlock only after the Pattern has pushed Amy hard enough that normal Amy cannot win.
+The transformation is not “Amy stops wanting love.”
+The transformation is “Amy stops abandoning herself for love.”
+
+LOCKED TRANSFORMATION TEXT
+EN:
+Amy remembered who she was.
+Not because she stopped wanting love.
+Because she stopped abandoning herself for it.
+
+JP:
+Amyは、自分が誰なのかを思い出した。
+愛を欲しがらなくなったからじゃない。
+愛のために、自分を捨てるのをやめたからだ。
+
+BATTLE DESIGN NOTES
+- Goddess Amy is for the Pattern battle / endgame self-love climax.
+- She should feel radiant, divine, soft, powerful, and emotionally clear.
+- Palette: pink, lavender, gold, and soft white.
+- She is still Amy, but elevated into self-acceptance, boundaries, clarity, and power.
+- This is not a villain form. It is Amy choosing herself.
+- In side-view battle, Amy faces right toward the Pattern.
+- Use the generated sprites as story-mode/turn-based RPG battle poses.
+- Use the generated attack effects as code-animated overlays/projectiles.
+
+CORE SPRITES
+- goddess_amy_neutral_standing.png
+- goddess_amy_hurt.png
+- goddess_amy_defeated_or_calm.png
+
+MOVESET
+1. Name the Pattern
+   JP: パターンに名前をつける
+   Sprite: goddess_amy_move_01_name_the_pattern.png
+   FX: goddess_amy_fx_01_name_the_pattern.png
+   Concept: Amy identifies the hidden loop instead of reacting to it unconsciously.
+
+2. No More Maybe
+   JP: もう「たぶん」はいらない
+   Sprite: goddess_amy_move_02_no_more_maybe.png
+   FX: goddess_amy_fx_02_no_more_maybe.png
+   Concept: Amy rejects ambiguity and chooses clarity.
+
+3. I Know This Feeling
+   JP: この感覚、知ってる
+   Sprite: goddess_amy_move_03_i_know_this_feeling.png
+   FX: goddess_amy_fx_03_i_know_this_feeling.png
+   Concept: Amy recognizes the emotional pattern before it controls her.
+
+4. That’s Not Love
+   JP: それは愛じゃない
+   Sprite: goddess_amy_move_04_thats_not_love.png
+   FX: goddess_amy_fx_04_thats_not_love.png
+   Concept: Amy separates manipulation/obsession from actual love.
+
+5. Choose Myself
+   JP: 自分を選ぶ
+   Sprite: goddess_amy_move_05_choose_myself.png
+   FX: goddess_amy_fx_05_choose_myself.png
+   Concept: Amy heals, restores, and re-centers herself.
+
+6. Block and Delete
+   JP: ブロックして削除
+   Sprite: goddess_amy_move_06_block_and_delete.png
+   FX: goddess_amy_fx_06_block_and_delete.png
+   Concept: Amy cuts energetic cords and removes the loop from her reality.
+
+7. Girl, Stand Up!
+   JP: 立ち上がれ！
+   Sprite: goddess_amy_move_07_girl_stand_up_finisher.png
+   FX: goddess_amy_fx_07_girl_stand_up_finisher.png
+   Concept: Finisher. Amy fully breaks the Pattern and rises into self-acceptance.
+
+OPTIONAL BATTLE FLOW
+1. Normal Amy fights the Pattern.
+2. The Pattern cannot drop below the 80% HP floor before Goddess Mode.
+3. Friend supports are disabled as normal summons, but their love/support can appear as echoes.
+4. Amy reaches the transformation beat.
+5. Display transformation text in EN or JP based on language setting.
+6. Switch Amy’s battle sprite set to Self-Acceptance Goddess Amy.
+7. Enable the Goddess move list.
+8. Girl, Stand Up! becomes the finisher.
+
+DEV REMINDER
+Keep English and Japanese in the same index/game file structure. Do not create a separate localization patch that only partially overrides English.

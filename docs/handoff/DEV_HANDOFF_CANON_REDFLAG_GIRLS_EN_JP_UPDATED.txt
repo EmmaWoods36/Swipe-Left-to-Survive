@@ -1,0 +1,352 @@
+SWIPE LEFT TO SURVIVE — CANON RED-FLAG GIRLS DEV HANDOFF (UPDATED)
+EN / JP STORY, SEQUENCE, CUTSCENES, BATTLE LINES, AMY RESPONSES, SUPPORT SUMMONS
+
+============================================================
+GLOBAL IMPLEMENTATION NOTES
+============================================================
+- These three characters are CANON red-flag girls.
+- Active names:
+  1) Ivy Mercer / The Breadcrumb Poet
+  2) Simone Brooks / The Gold-Star Gatekeeper
+  3) Camila Reyes / The Soft Launch Siren
+- Simone was previously named Nia during early concepting. Use SIMONE everywhere in active game data, UI, dialogue, localization, filenames, and code. The older Nia sheet is included only as a legacy archive reference.
+- Camila is the red-flag girl. Mia is NOT a red flag.
+- Camila is a lesbian. Her visual motifs should show women / sapphic silhouettes or abstract cropped soft-launch imagery only. Do not use men in her cut-ins or move effects.
+- Girl red flags are part of the normal pool when LoveLoop is set to “Guys and girls.” They count toward the 6 red flags needed to unlock “Give Up on LoveLoop.”
+- There is NO “women only” route because there are only 3 canon girl red flags.
+- Body diversity is not being force-added into this roster. Existing diversity is race, gender/sexuality, style, and dynamics.
+
+============================================================
+PROFILE SETUP / MATCH PREFERENCE LOGIC
+============================================================
+At the beginning of the game, LoveLoop profile setup should ask:
+EN:
+1. What name should appear on Amy’s profile?
+2. Who should LoveLoop show Amy?
+   - Guys
+   - Guys and girls
+
+JP:
+1. プロフィールに表示する名前は？
+2. LoveLoopに表示させる相手は？
+   - 男性
+   - 男性と女性
+
+Important logic:
+- “Guys” = male red flags only.
+- “Guys and girls” = male red flags + Ivy + Simone + Camila in the normal pool.
+- Amy can change match preferences later in LoveLoop settings.
+- There is no women-only option.
+- Previously defeated red flags stay defeated even if the player later changes preferences.
+
+Suggested setup dialogue:
+EN:
+LOVELOOP: Profile setup complete. Who should Amy be shown?
+AMY: You say that like I’m ordering from a menu.
+LOVELOOP: Please select a match preference.
+AMY (Guys and girls): Fine. Let’s see if disappointment comes in more than one font.
+
+JP:
+LOVELOOP: プロフィール設定が完了しました。表示する相手を選択してください。
+AMY: メニュー注文みたいに言わんといて。
+LOVELOOP: マッチ対象を選択してください。
+AMY（男性と女性）: ほな、失望にもフォント違いがあるか見てみよか。
+
+Suggested later settings dialogue:
+EN:
+LOVELOOP: Match preferences updated. New profiles may now appear.
+AMY: Great. Equal-opportunity disappointment.
+
+JP:
+LOVELOOP: マッチ対象を更新しました。新しいプロフィールが表示される可能性があります。
+AMY: ええやん。失望も機会均等やな。
+
+============================================================
+BATTLE / ART DIRECTION NOTES
+============================================================
+- Keep the existing side-view/versus-style turn-based RPG presentation.
+- Story Mode and Arcade Mode should use the same turn-based battle system with fighting-game presentation.
+- Do NOT restart the art style to front-facing Pokemon/Final Fantasy enemy framing.
+- For these girls, the required core story-mode battle assets are:
+  neutral standing, hurt, defeated, five move sprites, VS cut-in, special move cut-in.
+- Extra walk/crouch/back sprites can be faked with code tweening or placeholders unless absolutely required.
+- All battle sprites face LEFT toward Amy.
+- Hurt sprites should look like they got blasted back / staggered, not physically gory or bleeding.
+- VS cut-ins = top-half overlay feel.
+- Special cut-ins = middle-screen overlay feel.
+- Cut-in crop = forehead to nose / upper face emphasis. Eyes open. Looking left.
+
+============================================================
+CHARACTER 1 — IVY MERCER / THE BREADCRUMB POET
+============================================================
+CLASS: Hot-and-Cold Romantic
+AESTHETIC: white goth/alt, black lace, silver jewelry, pale skin, dark wavy hair.
+RED FLAG: breadcrumbing / inconsistency dressed up as emotional depth.
+DO NOT frame “being goth” as the red flag. Goth is only her style.
+
+PRE-BATTLE CUTSCENE
+EN:
+IVY: You look like someone who always notices exits.
+AMY: That is either romantic or concerning.
+IVY: Probably both.
+AMY: You always talk like you’re about to disappear into fog.
+IVY: Maybe I just don’t like being held too tightly.
+AMY: Nobody is holding you. I’m asking for consistency.
+IVY: Consistency is such a heavy word.
+AMY: It is actually very light when people mean what they say.
+SYSTEM: Red-flag battle start.
+
+JP:
+IVY: Amyって、いつも出口に気づいてる目してるよね。
+AMY: それ、ロマンチックなんか不穏なんか分からへん。
+IVY: たぶん両方。
+AMY: Ivyって、いつも霧の中に消える直前みたいな話し方するな。
+IVY: ただ、きつく縛られるのが苦手なだけかも。
+AMY: 誰も縛ってへん。うちは一貫性を求めてるだけ。
+IVY: 一貫性って、重い言葉やね。
+AMY: 本気で言ってる人には、めっちゃ軽い言葉やで。
+SYSTEM: 赤信号バトル開始。
+
+MOVESET + BATTLE LINES + AMY RESPONSES
+1) Midnight Poem / 真夜中の詩
+EN Ivy: “I only text when the feeling is real.”
+EN Amy: “Then make reality show up before midnight too.”
+JP Ivy: 「気持ちが本物の時しか送らへんの。」
+JP Amy: 「ほな、その本物を深夜以外にも出して。」
+Effect: charm damage / emotional pull.
+
+2) Three-Day Silence / 三日間の沈黙
+EN Ivy: “Silence creates mystery.”
+EN Amy: “No. Silence creates unnecessary follow-up.”
+JP Ivy: 「沈黙には余韻があるの。」
+JP Amy: 「違う。沈黙は無駄な追撃連絡を生むだけや。」
+Effect: confusion / anxiety.
+
+3) Almost Vulnerable / ほぼ本音
+EN Ivy: “I almost told you everything.”
+EN Amy: “Almost honesty is still incomplete.”
+JP Ivy: 「もう少しで全部話せたのに。」
+JP Amy: 「もう少し、は結局足りてへん。」
+Effect: lowers guard, then retracts.
+
+4) Read Receipt Ritual / 既読の儀式
+EN Ivy: “You felt that, didn’t you?”
+EN Amy: “Yes. It’s called avoidable stress.”
+JP Ivy: 「今の、刺さったやろ？」
+JP Amy: 「刺さったな。名前は“回避できたストレス”や。」
+Effect: relive ignored-message pain.
+
+5) Special: Breadcrumb Moon / 特殊：パンくずの月
+EN Ivy: “I leave just enough for you to keep coming back.”
+EN Amy: “And I leave once I notice the trail goes nowhere.”
+JP Ivy: 「戻ってきたくなる分だけ、ちゃんと残してるの。」
+JP Amy: 「その道がどこにも続いてへんって気づいたら、うちは帰るで。」
+Effect: false hope / charm loop.
+
+DEFEAT LINE
+EN Ivy: “So that’s what consistency feels like when it hits back.”
+JP Ivy: 「一貫性って、殴り返してくるとこういう感じなんや…。」
+
+SUPPORT SUMMON LINES (use as optional support callouts during Ivy battle)
+Malik EN: “Be so for real! Poetry is not a substitute for consistency.”
+Malik JP: 「ほんまそれ！ ポエムで一貫性の代わりにはならへん！」
+Min EN: “A late reply is not a personality.”
+Min JP: 「返信が遅いのは個性ちゃう。」
+Jade EN: “If she likes you, she can act like it in daylight.”
+Jade JP: 「好きなら、昼間にもちゃんと態度で見せられるやろ。」
+Chloe EN: “Mysterious is cute. Inconsistent is tiring.”
+Chloe JP: 「ミステリアスは可愛いけど、不安定なんはしんどい。」
+Mia EN: “Romance should not feel like guessing on hard mode.”
+Mia JP: 「恋って、高難易度の推理ゲームちゃうはずやで。」
+
+============================================================
+CHARACTER 2 — SIMONE BROOKS / THE GOLD-STAR GATEKEEPER
+============================================================
+CLASS: Queer Purity Tester
+AESTHETIC: Black masc presentation, sharp undercut, tailored dark outfit with crimson accents.
+RED FLAG: queer gatekeeping / biphobia / making Amy prove she is “queer enough.”
+DO NOT frame masc presentation itself as the red flag.
+
+PRE-BATTLE CUTSCENE
+EN:
+SIMONE: So are you actually into women, or are you just tired of men?
+AMY: Starting with a pop quiz is crazy.
+SIMONE: I don’t date straight girls playing tourist.
+AMY: Good thing I’m not one.
+SIMONE: A lot of women say that until things get real.
+AMY: And a lot of people hide disrespect inside “standards.”
+SIMONE: I protect my space.
+AMY: You can protect your space without putting my identity on trial.
+SYSTEM: Red-flag battle start.
+
+JP:
+SIMONE: で、ほんまに女の人が好きなん？ それとも男に疲れただけ？
+AMY: 初手で抜き打ちテストはやばいやろ。
+SIMONE: 観光気分のストレート女子とは付き合わへん。
+AMY: ほな安心して。うちはそうちゃう。
+SIMONE: そう言う人、結構多いねん。本気になるまではな。
+AMY: で、“基準”って言いながら失礼を隠す人も多いよな。
+SIMONE: 自分の場は守る。
+AMY: 守るんはええ。でも、うちのアイデンティティを裁判にかけんでええ。
+SYSTEM: 赤信号バトル開始。
+
+MOVESET + BATTLE LINES + AMY RESPONSES
+1) Are You Actually Queer? / 本当にクィアなん？
+EN Simone: “Answer carefully.”
+EN Amy: “My identity is not a customer-service survey.”
+JP Simone: 「ちゃんと答えて。」
+JP Amy: 「うちのアイデンティティはアンケートちゃうねん。」
+Effect: doubt / pressure.
+
+2) Straight Girl Energy / ストレート女子オーラ
+EN Simone: “You give curious.”
+EN Amy: “You give exhausting.”
+JP Simone: 「なんか“興味本位”っぽい。」
+JP Amy: 「そっちは“めんどくさい”っぽいな。」
+Effect: shame / emotional damage.
+
+3) Gold-Star Shield / ゴールドスターシールド
+EN Simone: “I’m not lowering my standards.”
+EN Amy: “Standards are fine. Disrespect is not.”
+JP Simone: 「基準は下げへん。」
+JP Amy: 「基準はええ。でも失礼なんはあかん。」
+Effect: defense / blocks romance attempts.
+
+4) Prove It Pressure / 証明しろプレッシャー
+EN Simone: “Then prove you belong here.”
+EN Amy: “Belonging is not something you get to stamp.”
+JP Simone: 「ほな、ここにおる資格を証明して。」
+JP Amy: 「居場所って、あんたが認定するもんちゃうやろ。」
+Effect: stress over time.
+
+5) Special: Queer Enough Trial / 特殊：クィア認定裁判
+EN Simone: “If you fail, don’t waste my time.”
+EN Amy: “Valid caution. Wrong accusation.”
+JP Simone: 「落ちるなら、うちの時間を無駄にせんといて。」
+JP Amy: 「警戒する気持ちは分かる。でも、当てつける相手間違ってる。」
+Effect: identity judgment / trial arena.
+
+DEFEAT LINE
+EN Simone: “Maybe I crossed the line between caution and contempt.”
+JP Simone: 「警戒と侮りの線、越えてたんかもしれへんな…。」
+
+SUPPORT SUMMON LINES
+Malik EN: “Be so for real! You can ask questions without acting like a gate.”
+Malik JP: 「ほんまそれ！ 聞くんはええけど、門番みたいに振る舞うなや！」
+Min EN: “Interrogation is not intimacy.”
+Min JP: 「尋問は親密さちゃう。」
+Jade EN: “Amy does not need your stamp of approval.”
+Jade JP: 「Amyにあんたの認定スタンプはいらん。」
+Chloe EN: “Protection is not an excuse to be condescending.”
+Chloe JP: 「守るって言葉で見下しを正当化せんといて。」
+Mia EN: “You can have boundaries without invalidating somebody.”
+Mia JP: 「境界線を持つんはええ。でも、人の存在を否定したらあかん。」
+
+============================================================
+CHARACTER 3 — CAMILA REYES / THE SOFT LAUNCH SIREN
+============================================================
+CLASS: Validation Collector
+AESTHETIC: hyper-feminine, glamorous, heart motifs, bows, pink coquette styling.
+RED FLAG: visibility / flirtation / aesthetic intimacy without clarity.
+SOFT LAUNCH BLUR RULE: “No Face, No Case.” Use cropped hands, silhouettes, drinks, backs of heads, shoulders, story circles, and suggestive sapphic imagery. Do NOT use obvious hard-launch couple photos.
+
+PRE-BATTLE CUTSCENE
+EN:
+CAMILA: You’re cute. I like our vibe.
+AMY: “Our vibe” is not a relationship status.
+CAMILA: Why make it serious? It’s fun like this.
+AMY: Fun for who?
+CAMILA: For both of us, if you stop asking questions.
+AMY: If asking for clarity ruins it, then it was built on confusion.
+CAMILA: You think too much.
+AMY: And you define too little.
+SYSTEM: Red-flag battle start.
+
+JP:
+CAMILA: かわいい。うちら、めっちゃいい感じやん。
+AMY: “いい感じ”は関係性の定義ちゃうで。
+CAMILA: そんな真面目にせんでもええやん。今のまま楽しいやん？
+AMY: それ、誰にとって楽しいん？
+CAMILA: 質問やめたら、二人とも楽しいよ。
+AMY: はっきりしてって言うだけで壊れるなら、最初から混乱の上に立ってただけや。
+CAMILA: 考えすぎやって。
+AMY: そっちは定義不足やねん。
+SYSTEM: 赤信号バトル開始。
+
+MOVESET + BATTLE LINES + AMY RESPONSES
+1) Vibe Check Trap / 雰囲気チェックの罠
+EN Camila: “Come on. Don’t ruin the vibe.”
+EN Amy: “A vibe that can’t survive a question was never stable.”
+JP Camila: 「ねえ、雰囲気壊さんといて。」
+JP Amy: 「質問ひとつで壊れる雰囲気なら、最初から安定してへん。」
+Effect: charm / self-doubt.
+
+2) Soft Launch Blur / ソフトローンチぼかし
+EN Camila: “No face, no case.”
+EN Amy: “Then no clarity, no access.”
+JP Camila: 「顔出しなし、問題なし。」
+JP Amy: 「ほな、明確さなし、アクセスもなしや。」
+Effect: blurred intimacy / ambiguity.
+
+3) No Labels Glitter Bomb / ラベルなしグリッターボム
+EN Camila: “Why do we need labels?”
+EN Amy: “Because confusion is not a love language.”
+JP Camila: 「なんでラベルなんか必要なん？」
+JP Amy: 「混乱はラブランゲージちゃうからや。」
+Effect: overwhelms with charm and vagueness.
+
+4) Attention Refill / 注目リフィル
+EN Camila: “I just like feeling wanted.”
+EN Amy: “Then want attention honestly instead of renting hearts.”
+JP Camila: 「求められてる感じが好きなだけ。」
+JP Amy: 「ほな、ハートを借りパクせんと正直に注目って言いな。」
+Effect: drains validation from target.
+
+5) Special: Close Friends Confusion / 特殊：親しい友だちの混乱
+EN Camila: “If they can’t define us, they can’t leave us.”
+EN Amy: “You don’t get intimacy benefits with maybe energy.”
+JP Camila: 「定義できへん関係なら、離れられへんやろ？」
+JP Amy: 「“たぶん”のままで親密さの特典だけ取るんは無理や。」
+Effect: traps target in “what are we?” status.
+
+DEFEAT LINE
+EN Camila: “Wow. You really picked clarity over chemistry.”
+JP Camila: 「へえ。ほんまに化学反応より明確さ選ぶんや。」
+
+SUPPORT SUMMON LINES
+Malik EN: “Be so for real! You cannot soft-launch somebody’s sanity!”
+Malik JP: 「ほんまそれ！ 人の正気をソフトローンチすな！」
+Min EN: “Ambiguity is not romantic. It is inefficient.”
+Min JP: 「曖昧さはロマンちゃう。非効率や。」
+Jade EN: “If she wants you, she can say it with her whole chest.”
+Jade JP: 「本気なら、ちゃんと言葉で全部見せられるやろ。」
+Chloe EN: “Pretty confusion is still confusion.”
+Chloe JP: 「可愛い混乱でも、混乱は混乱や。」
+Mia EN: “You can crop a photo. You cannot crop accountability.”
+Mia JP: 「写真は切り取れても、責任までは切り取れへんで。」
+
+============================================================
+IMPLEMENTATION SUMMARY FOR DEV CHAT
+============================================================
+1. Add Ivy, Simone, and Camila as canon red-flag girl matches.
+2. Add profile setup at game start with displayed profile name + match preference:
+   - Guys
+   - Guys and girls
+3. Let Amy change match preferences later in LoveLoop settings.
+4. No women-only route.
+5. When “Guys and girls” is active, Ivy, Simone, and Camila enter the normal red-flag pool and count toward the 6 required to unlock “Give Up on LoveLoop.”
+6. Use the included concept cards, move sprites, neutral/hurt/defeated sprites, and cut-ins.
+7. Keep all EN and JP text in the same index / same game files, not split into separate isolated patches.
+8. Use Simone everywhere (not Nia) in active content.
+9. Camila’s approved cut-ins are already chosen in this pack:
+   - camila_vs_cutin.png
+   - camila_special_cutin.png
+10. Camila visuals must never use men in her sapphic/red-flag motifs.
+
+
+============================================================
+ATTACK EFFECTS IMPLEMENTATION NOTE
+============================================================
+- See folder 06_Attack_Effects for per-move projectile / blast assets for Ivy, Simone, and Camila.
+- These should be animated in code via tweening, movement, opacity, shake, and impact flashes as needed.
+- Ivy's Breadcrumb Moon projectile has been corrected/mirrored so it points toward Amy.

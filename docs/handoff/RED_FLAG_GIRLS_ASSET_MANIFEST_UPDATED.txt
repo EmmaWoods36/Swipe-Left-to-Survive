@@ -1,0 +1,89 @@
+SWIPE LEFT TO SURVIVE — RED-FLAG GIRLS ASSET MANIFEST (UPDATED)
+
+PACKAGE CONTENTS
+
+01_Concept_Art/
+- ivy_mercer_concept_card.png
+- simone_brooks_concept_card.png
+- camila_reyes_concept_card.png
+- legacy/nia_brooks_legacy_concept_card.png  (archive only; do not use in active game)
+
+02_Battle_Sprites/Ivy_Mercer/
+- ivy_neutral_standing.png
+- ivy_hurt.png
+- ivy_defeated.png
+- ivy_move_01_midnight_poem.png
+- ivy_move_02_three_day_silence.png
+- ivy_move_03_almost_vulnerable.png
+- ivy_move_04_read_receipt_ritual.png
+- ivy_move_05_breadcrumb_moon.png
+
+02_Battle_Sprites/Simone_Brooks/
+- simone_neutral_standing.png
+- simone_hurt.png
+- simone_defeated.png
+- simone_move_01_are_you_actually_queer.png
+- simone_move_02_straight_girl_energy.png
+- simone_move_03_gold_star_shield.png
+- simone_move_04_prove_it_pressure.png
+- simone_move_05_queer_enough_trial.png
+
+02_Battle_Sprites/Camila_Reyes/
+- camila_neutral_standing.png
+- camila_hurt.png
+- camila_defeated.png
+- camila_move_01_vibe_check_trap.png
+- camila_move_02_soft_launch_blur.png
+- camila_move_03_no_labels_glitter_bomb.png
+- camila_move_04_attention_refill.png
+- camila_move_05_close_friends_confusion.png
+
+03_Cutins/Ivy_Mercer/
+- ivy_vs_cutin.png
+- ivy_special_cutin.png
+
+03_Cutins/Simone_Brooks/
+- simone_vs_cutin.png
+- simone_special_cutin.png
+
+03_Cutins/Camila_Reyes/
+- camila_vs_cutin.png   (approved by user)
+- camila_special_cutin.png   (approved by user)
+
+04_Documentation/
+- DEV_HANDOFF_CANON_REDFLAG_GIRLS_EN_JP_UPDATED.txt
+- RED_FLAG_GIRLS_ASSET_MANIFEST_UPDATED.txt
+
+IMPLEMENTATION REMINDERS
+- All girl battle sprites face LEFT toward Amy.
+- Story / Arcade should keep the same turn-based, side-view, versus-style presentation.
+- Neutral / hurt / defeated are core story-mode sprites. Walk/crouch/back can be faked or added later only if absolutely required.
+- Simone is the active name. Nia is legacy/archive only.
+- Camila is the red-flag girl, not Mia.
+- Camila is lesbian; no men should appear in her motifs.
+- Soft Launch Blur = “No Face, No Case.” Use cropped sapphic imagery or abstract soft-launch motifs, not hard-launch couple shots.
+
+
+06_Attack_Effects/Ivy_Mercer/
+- ivy_fx_01_midnight_poem.png
+- ivy_fx_02_three_day_silence.png
+- ivy_fx_03_almost_vulnerable.png
+- ivy_fx_04_read_receipt_ritual.png
+- ivy_fx_05_breadcrumb_moon.png
+
+06_Attack_Effects/Simone_Brooks/
+- simone_fx_01_are_you_actually_queer.png
+- simone_fx_02_straight_girl_energy.png
+- simone_fx_03_gold_star_shield.png
+- simone_fx_04_prove_it_pressure.png
+- simone_fx_05_queer_enough_trial.png
+
+06_Attack_Effects/Camila_Reyes/
+- camila_fx_01_vibe_check_trap.png
+- camila_fx_02_soft_launch_blur.png
+- camila_fx_03_no_labels_glitter_bomb.png
+- camila_fx_04_attention_refill.png
+- camila_fx_05_close_friends_confusion.png
+
+Additional note:
+- Ivy's Breadcrumb Moon effect uses the corrected mirrored projectile so it points toward Amy.

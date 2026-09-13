@@ -382,7 +382,13 @@ export const Manifest = Object.freeze({
       special:        'assets/cutins/red_flag_girls/Camila_Reyes/camila_special_cutin.png',
       vs:             'assets/cutins/red_flag_girls/Camila_Reyes/camila_vs_cutin.png'
     },
-    vfx:              null,  // MISSING — effects/red_flag_girls/Camila_Reyes/ is empty
+    vfx: {
+      vibeCheckTrap:  'assets/effects/red_flag_girls/Camila_Reyes/camila_fx_01_vibe_check_trap.png',
+      softLaunchBlur: 'assets/effects/red_flag_girls/Camila_Reyes/camila_fx_02_soft_launch_blur.png',
+      noLabelsGlitterBomb:'assets/effects/red_flag_girls/Camila_Reyes/camila_fx_03_no_labels_glitter_bomb.png',
+      attentionRefill:'assets/effects/red_flag_girls/Camila_Reyes/camila_fx_04_attention_refill.png',
+      closeFriendsConfusion:'assets/effects/red_flag_girls/Camila_Reyes/camila_fx_05_close_friends_confusion.png'
+    },
     profileCard:      null   // MISSING
   },
 

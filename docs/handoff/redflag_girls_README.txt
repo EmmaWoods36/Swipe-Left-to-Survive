@@ -1,0 +1,1 @@
+Swipe Left to Survive red-flag girls handoff package v4. Includes concept art, portraits, battle sprites, cut-ins, reusable ghost sprite, attack effects, and EN/JP documentation. Start with 04_Documentation/DEV_HANDOFF_CANON_REDFLAG_GIRLS_EN_JP_UPDATED.txt
