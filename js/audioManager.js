@@ -266,12 +266,5 @@ const AudioManager = {
   },
 };
 
-// Make available globally
-if (typeof window !== 'undefined') {
-  window.AudioManager = AudioManager;
-}
-
 // Export for ES module usage
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = AudioManager;
-}
+export { AudioManager };
