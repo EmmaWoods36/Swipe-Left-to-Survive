@@ -139,6 +139,93 @@ function findVfxSprite(enemyId, moveName){
   return charVfx[moveName] || null;
 }
 
+// Cutin art lookup: character_id -> [array of cutin image paths]
+// Used for dramatic full-screen flashes during special moves
+const CUTIN_SPRITES = {
+  love_bomber: [
+    'assets/cutins/red_flag_guys/love_bomber/adrian_vale_special_cutin.png',
+    'assets/cutins/red_flag_guys/love_bomber/magical_warrior_surrounded_by_heart_bombs.png',
+    'assets/cutins/red_flag_guys/love_bomber/magical_heart_bomb_attack_in_motion.png',
+    'assets/cutins/red_flag_guys/love_bomber/magical_fighter_with_glowing_bomb.png',
+    'assets/cutins/red_flag_guys/love_bomber/confident_hero_with_glowing_bomb.png',
+    'assets/cutins/red_flag_guys/love_bomber/smug_charisma_and_playful_charm.png',
+    'assets/cutins/red_flag_guys/love_bomber/magical_heart_bomber_in_action.png'
+  ],
+  blake_disruptor: [
+    'assets/cutins/red_flag_guys/blake_disruptor/blake_sterling_the_disruptor.png',
+    'assets/cutins/red_flag_guys/blake_disruptor/tech_pitch_with_confidence_and_style.png',
+    'assets/cutins/red_flag_guys/blake_disruptor/crypto_pitch_with_confident_presentation.png',
+    'assets/cutins/red_flag_guys/blake_disruptor/cyberpunk_tech_operator_with_holographic_aura.png',
+    'assets/cutins/red_flag_guys/blake_disruptor/futuristic_entrepreneur_with_neon_tech_vibes.png',
+    'assets/cutins/red_flag_guys/blake_disruptor/tech_mage_with_holographic_data_visuals.png'
+  ],
+  julian_softboi_savior: [
+    'assets/cutins/red_flag_guys/julian_softboi_savior/julian_cross_the_performative_softboi.png',
+    'assets/cutins/red_flag_guys/julian_softboi_savior/magical_aura_and_poetic_charm.png',
+    'assets/cutins/red_flag_guys/julian_softboi_savior/healing_thoughts_and_soft_light.png',
+    'assets/cutins/red_flag_guys/julian_softboi_savior/soft_truths_and_gentle_healing.png',
+    'assets/cutins/red_flag_guys/julian_softboi_savior/confident_smile_and_soft_truths.png'
+  ],
+  lucien_reservation_mirage: [
+    'assets/cutins/red_flag_guys/lucien_reservation_mirage/reservation_mirage_villainous_charm_at_play.png',
+    'assets/cutins/red_flag_guys/lucien_reservation_mirage/reserved_allure_in_a_dreamlike_atmosphere.png',
+    'assets/cutins/red_flag_guys/lucien_reservation_mirage/reserved_for_the_charismatic_hero.png',
+    'assets/cutins/red_flag_guys/lucien_reservation_mirage/reserved_for_the_bold_charm.png'
+  ],
+  normal_fake: [
+    'assets/cutins/red_flag_guys/normal_fake/evan_generated_option_01.png',
+    'assets/cutins/red_flag_guys/normal_fake/evan_generated_option_02.png',
+    'assets/cutins/red_flag_guys/normal_fake/evan_generated_option_03.png',
+    'assets/cutins/red_flag_guys/normal_fake/evan_generated_option_04.png',
+    'assets/cutins/red_flag_guys/normal_fake/evan_generated_option_05.png',
+    'assets/cutins/red_flag_guys/normal_fake/evan_generated_option_06.png'
+  ],
+  algorithm: [
+    'assets/cutins/bosses/algorithm/digital_reaper_of_hearts.png',
+    'assets/cutins/bosses/algorithm/neon_rogue_with_digital_heart_attack.png',
+    'assets/cutins/bosses/algorithm/neon_sorcery_and_cyberpunk_magic.png',
+    'assets/cutins/bosses/algorithm/neon_cyberpunk_avatar_with_glitch_effects.png',
+    'assets/cutins/bosses/algorithm/digital_sorcerer_of_love_and_chaos.png'
+  ],
+  pattern: [
+    'assets/cutins/bosses/pattern/dark_heart_of_chains_and_smoke.png',
+    'assets/cutins/bosses/pattern/shadowed_figure_with_glowing_chains_and_spirits.png',
+    'assets/cutins/bosses/pattern/shadowy_spirit_with_heart_chains.png',
+    'assets/cutins/bosses/pattern/shadowed_heart_of_chains_and_fire.png',
+    'assets/cutins/bosses/pattern/ethereal_figure_with_glowing_chains_and_mist.png',
+    'assets/cutins/bosses/pattern/heartbroken_shadow_warrior_in_chaos.png',
+    'assets/cutins/bosses/pattern/shadowed_goddess_with_a_ghostly_trail.png',
+    'assets/cutins/bosses/pattern/shadowy_figure_with_energy_blast.png',
+    'assets/cutins/bosses/pattern/defender_of_broken_hearts_and_chains.png'
+  ],
+  ivy_mercer: [
+    'assets/cutins/red_flag_girls/Ivy_Mercer/ivy_special_cutin.png',
+    'assets/cutins/red_flag_girls/Ivy_Mercer/ivy_vs_cutin.png'
+  ],
+  simone_brooks: [
+    'assets/cutins/red_flag_girls/Simone_Brooks/simone_special_cutin.png',
+    'assets/cutins/red_flag_girls/Simone_Brooks/simone_vs_cutin.png'
+  ],
+  camila_reyes: [
+    'assets/cutins/red_flag_girls/Camila_Reyes/camila_special_cutin.png',
+    'assets/cutins/red_flag_girls/Camila_Reyes/camila_vs_cutin.png'
+  ],
+  amy: [
+    'assets/sprites/amy/amy_ultimate_girl_stand_up.png',
+    'assets/sprites/amy/amy_special_flag_beam.png'
+  ]
+};
+
+let cutinIndex = 0;
+
+export function getCutinPath(characterId){
+  const cutins = CUTIN_SPRITES[characterId];
+  if(!cutins || !cutins.length) return null;
+  const path = cutins[cutinIndex % cutins.length];
+  cutinIndex++;
+  return path;
+}
+
 export function popFx(text, opts={}){
   const el = document.createElement('div');
   el.className = 'fx-pop';
@@ -207,10 +294,21 @@ export function playSupportSummon(name, done){
   setTimeout(()=>{wrap.remove(); done&&done();}, 1000);
 }
 
-export function playSpecialCutin(label, side='player', done, vfxPath=null){
+export function playSpecialCutin(label, side='player', done, vfxPath=null, cutinPath=null){
+  // Full-screen cutin art flash
+  if(cutinPath){
+    const cutinEl = document.createElement('div');
+    cutinEl.className = 'cutin-flash';
+    cutinEl.style.cssText = 'position:absolute;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);animation:cutinShow 1.2s ease-out forwards;pointer-events:none;';
+    const cutinImg = imageWithFallback(cutinPath, label + ' Cutin');
+    cutinImg.style.cssText = 'max-width:90%;max-height:90%;object-fit:contain;animation:cutinZoom 1.2s ease-out;';
+    cutinEl.append(cutinImg);
+    fx().append(cutinEl);
+    setTimeout(()=>cutinEl.remove(), 1200);
+  }
   popFx(label, {vfxPath});
   screenShake();
-  setTimeout(()=>done&&done(), 650);
+  setTimeout(()=>done&&done(), cutinPath ? 1100 : 650);
 }
 
 export function playCameraFlash(){

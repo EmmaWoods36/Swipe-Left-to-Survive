@@ -65,7 +65,15 @@ export const Asset = {
     amy: ['assets/sprites/amy/amy_ultimate_girl_stand_up.png','assets/characters/main/amy_headshot.png'],
     support: ['assets/cutins/bosses/algorithm/digital_reaper_of_hearts.png','assets/cutins/bosses/pattern/dark_heart_of_chains_and_smoke.png'],
     algorithm: ['assets/cutins/bosses/algorithm/digital_reaper_of_hearts.png','assets/cutins/bosses/algorithm/neon_rogue_with_digital_heart_attack.png'],
-    pattern: ['assets/cutins/bosses/pattern/dark_heart_of_chains_and_smoke.png','assets/cutins/bosses/pattern/shadowed_figure_with_glowing_chains_and_spirits.png']
+    pattern: ['assets/cutins/bosses/pattern/dark_heart_of_chains_and_smoke.png','assets/cutins/bosses/pattern/shadowed_figure_with_glowing_chains_and_spirits.png'],
+    love_bomber: ['assets/cutins/red_flag_guys/love_bomber/adrian_vale_special_cutin.png','assets/cutins/red_flag_guys/love_bomber/magical_warrior_surrounded_by_heart_bombs.png'],
+    blake_disruptor: ['assets/cutins/red_flag_guys/blake_disruptor/blake_sterling_the_disruptor.png'],
+    julian_softboi_savior: ['assets/cutins/red_flag_guys/julian_softboi_savior/julian_cross_the_performative_softboi.png'],
+    lucien_reservation_mirage: ['assets/cutins/red_flag_guys/lucien_reservation_mirage/reservation_mirage_villainous_charm_at_play.png'],
+    normal_fake: ['assets/cutins/red_flag_guys/normal_fake/evan_generated_option_01.png'],
+    ivy_mercer: ['assets/cutins/red_flag_girls/Ivy_Mercer/ivy_special_cutin.png'],
+    simone_brooks: ['assets/cutins/red_flag_girls/Simone_Brooks/simone_special_cutin.png'],
+    camila_reyes: ['assets/cutins/red_flag_girls/Camila_Reyes/camila_special_cutin.png']
   },
   paperDoll: {
     base: ['assets/dressup/00_base/001_amy_paper_doll_base.png'],

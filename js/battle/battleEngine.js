@@ -5,9 +5,10 @@ import {setBackground,imageWithFallback,Asset} from '../assets.js';
 import {RED_FLAGS,STORY_ORDER,GIRL_RED_FLAGS} from '../../data/redFlags.js';
 import {GREEN_FLAGS} from '../../data/greenFlags.js';
 import {syncAmyHp,enemyBarCount,hpForBars,renderHealthBar} from './healthBars.js';
-import {popFx,playVsIntro,playSpecialCutin,screenShake,popEnemyVfx} from './vfx.js';
+import {popFx,playVsIntro,playSpecialCutin,screenShake,popEnemyVfx,getCutinPath} from './vfx.js';
 import {supportMenu,useSupport} from './supports.js';
 import {playBossCutscene} from '../scenes/bossScenes.js';
+import {hasPreBattleScene,playPreBattleScene,hasPostDefeatScene,playPostDefeatScene} from '../scenes/redFlagScenes.js';
 
 let onMapHandlers = {};
 
@@ -61,6 +62,7 @@ export function startNextBattle(){ startBattle(nextRedFlagId()); }
 
 export function startBattle(id){
   if(id === 'algorithm' || id === 'pattern') return playBossCutscene(id);
+  if(hasPreBattleScene(id)) return playPreBattleScene(id, () => startBattleRaw(id));
   startBattleRaw(id);
 }
 
@@ -168,7 +170,7 @@ function amyAttack(move){
     }
     afterAmyAction();
   };
-  if(move.type === 'special') playSpecialCutin(move.name,'player',perform, move.vfx||null); else perform();
+  if(move.type === 'special') playSpecialCutin(move.name,'player',perform, move.vfx||null, getCutinPath('amy')); else perform();
 }
 
 function unlockPatternTransform(){
@@ -203,7 +205,7 @@ function enemyTurn(){
     if(state.amyHp<=0 || state.delusion>=100) return gameOver();
     setActions([{label:tx('Amy’s Turn','エイミーのターン'), className:'primary wide', onClick:setAmyActions}]);
   };
-  if(atk.type==='special') playSpecialCutin(state.lang==='ja'?(atk.jaName||atk.name):atk.name,'enemy',run); else run();
+  if(atk.type==='special') playSpecialCutin(state.lang==='ja'?(atk.jaName||atk.name):atk.name,'enemy',run, atk.fx||null, getCutinPath(b.enemy.id)); else run();
 }
 
 function winBattle(){
@@ -219,10 +221,17 @@ function winBattle(){
   updateBattleUi();
   const name = state.lang==='ja'?(b.enemy.jaName||b.enemy.name):b.enemy.name;
   state.battle = null;
+  if(hasPostDefeatScene(id)){
+    return playPostDefeatScene(id, () => showVictoryMessage(name));
+  }
+  showVictoryMessage(name);
+}
+
+function showVictoryMessage(name){
   showMessage(tx('Victory','勝利'), tx(`${name} was defeated. Amy gained clarity, receipts, and self-respect.`,`${name}を倒した。エイミーはクラリティ、証拠、自尊心を手に入れた。`), [
     {label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:()=>showMap(onMapHandlers)},
-    ...(id==='normal_fake'?[{label:tx('Give Up on LoveLoop','LoveLoopをやめる'), className:'danger', onClick:()=>startBattle('algorithm')}]:[]),
-    ...(id==='algorithm'?[{label:tx('Go to Sleep — Major Cutscene','眠る — 重要なカットシーン'), className:'danger', onClick:()=>startBattle('pattern')}]:[])
+    ...(state.defeated.has('normal_fake')?[{label:tx('Give Up on LoveLoop','LoveLoopをやめる'), className:'danger', onClick:()=>startBattle('algorithm')}]:[]),
+    ...(state.defeated.has('algorithm')?[{label:tx('Go to Sleep — Major Cutscene','眠る — 重要なカットシーン'), className:'danger', onClick:()=>startBattle('pattern')}]:[])
   ]);
 }
 
