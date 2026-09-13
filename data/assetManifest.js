@@ -428,12 +428,31 @@ export const Manifest = Object.freeze({
     vfx:               null   // MISSING
   },
 
-  // ---- FRIENDS ----
+  // ---- NPCS (scene sprites) ----
+  eli: {
+    sceneSprites: 'assets/sprites/scenes/npcs/eli/',  // 9 poses: neutral, guiding, welcoming, sheepish, clasped, etc.
+    role: 'spa_attendant',
+    description: 'Male spa attendant, sage green uniform, wavy dark hair'
+  },
+
+  sabrina: {
+    sceneSprites: 'assets/sprites/scenes/npcs/sabrina/',  // 11 poses: waving, guiding, thinking, delighted, etc.
+    role: 'receptionist',
+    description: 'East Asian woman, pink cardigan, floral scarf, high bun'
+  },
+
+  val: {
+    sceneSprites: 'assets/sprites/scenes/npcs/val/',  // 10 poses: serving, menu, attentive, confident, etc.
+    role: 'server_waitress',
+    description: 'Tan woman, black service shirt, burgundy apron, high ponytail'
+  },
+
+  // ---- FRIENDS (scene sprites now available) ----
   malik: {
     headshot:         'assets/characters/friends/malik_headshot.png',
     reference:        'assets/characters/friends/malik_reference.png',
     card:             'assets/characters/cards/malik_card.png',
-    sceneSprite:      null,  // MISSING
+    sceneSprite:      null,  // MISSING - still need scene sprites
     supportCutin:     null,  // MISSING
     endingCG:         'assets/cgs/endings/cg_ending_malik_beach.png'
   },
@@ -442,7 +461,7 @@ export const Manifest = Object.freeze({
     headshot:         'assets/characters/friends/min_headshot.png',
     reference:        'assets/characters/friends/min_reference.png',
     card:             'assets/characters/cards/min_card.png',
-    sceneSprite:      null,  // MISSING
+    sceneSprite:      null,  // MISSING - still need scene sprites
     supportCutin:     null,  // MISSING
     endingCG:         'assets/cgs/endings/cg_ending_min_aquarium.png'
   },
@@ -451,7 +470,7 @@ export const Manifest = Object.freeze({
     headshot:         'assets/characters/friends/jade_headshot.png',
     reference:        'assets/characters/friends/jade_final_reference.png',
     card:             'assets/characters/cards/jade_card.png',
-    sceneSprite:      null,  // MISSING
+    sceneSprites:     'assets/sprites/scenes/friends/jade/',  // 26 poses: sassy, laughing, skeptical, confident, etc.
     supportCutin:     null,  // MISSING
     endingCG:         null   // MISSING
   },
@@ -460,7 +479,7 @@ export const Manifest = Object.freeze({
     headshot:         'assets/characters/friends/chloe_headshot.png',
     reference:        'assets/characters/friends/chloe_reference.png',
     card:             'assets/characters/cards/chloe_card.png',
-    sceneSprite:      null,  // MISSING
+    sceneSprites:     'assets/sprites/scenes/friends/chloe/',  // 26 poses: cheerful, shocked, angry, laughing, etc.
     supportCutin:     null,  // MISSING
     endingCG:         null   // MISSING
   },
@@ -469,7 +488,7 @@ export const Manifest = Object.freeze({
     headshot:         'assets/characters/friends/mia_headshot.png',
     reference:        'assets/characters/friends/mia_reference.png',
     card:             'assets/characters/cards/mia_card.png',
-    sceneSprite:      null,  // MISSING
+    sceneSprites:     'assets/sprites/scenes/friends/mia/',  // 30 poses: shy, blushing, tsundere, pouting, etc.
     supportCutin:     null,  // MISSING
     endingCG:         'assets/cgs/endings/cg_ending_mia_beachside_cafe.png'
   },
