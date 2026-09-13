@@ -40,7 +40,7 @@ export const Manifest = Object.freeze({
     },
     cutin:            null,  // MISSING — assets/cutins/amy/amy_special_cutin.png
     vfx:              null,  // MISSING — no VFX sprites for Amy's attacks
-    paperDollBase:    null,  // MISSING — assets/dressup/base/amy_paper_doll_base.png
+    paperDollBase:    'assets/dressup/00_base/001_amy_paper_doll_base.png',  // FOUND — was missing, now available
     reactions: {
       blushingSoft:   'assets/cgs/amy_reactions/amy_reaction_blushing_soft.png',
       creepedOut:     'assets/cgs/amy_reactions/amy_reaction_creeped_out.png',
