@@ -5,7 +5,7 @@ import {visitSafeArea} from './scenes/safeAreas.js';
 import {SAFE_AREAS} from '../data/conversationBank.js';
 import {AudioManager} from './audioManager.js';
 
-const screenLayer = () => document.getElementById('screenLayer');
+export const screenLayer = () => document.getElementById('screenLayer');
 const hud = () => document.getElementById('hud');
 const spriteLayer = () => document.getElementById('spriteLayer');
 const dialogueLayer = () => document.getElementById('dialogueLayer');

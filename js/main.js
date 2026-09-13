@@ -1,6 +1,6 @@
 import {state,setLanguage,hasSaveData,loadGame,saveGame,autosave} from './state.js';
-import {updateStaticText} from './localization.js';
-import {showTitle,showMap,renderHud} from './screens.js';
+import {updateStaticText,tx} from './localization.js';
+import {showTitle,showMap,renderHud,clearStage,screenLayer} from './screens.js';
 import {startOpening} from './scenes/opening.js';
 import {startNextBattle,configureBattleRoutes,startGreenFlagBattle} from './battle/battleEngine.js';
 import {showCloset,configureCloset} from './closet/closetEngine.js';
@@ -19,12 +19,36 @@ function routes(){
   };
 }
 
+function showSplash(onComplete){
+  state.screen = 'splash';
+  clearStage();
+  const splash = document.createElement('div');
+  splash.className = 'splash-screen';
+  splash.innerHTML = `
+    <img src="assets/splash/emma_woods_studio_splash.png" alt="Emma Woods Studio" />
+    <div class="splash-hint">${tx('Click to continue','クリックして続行')}</div>
+  `;
+  screenLayer().append(splash);
+  document.getElementById('hud').style.display = 'none';
+  AudioManager.playSceneMusic('cutscene');
+  let dismissed = false;
+  const dismiss = () => {
+    if(dismissed) return;
+    dismissed = true;
+    splash.classList.add('fade-out');
+    setTimeout(() => {
+      document.getElementById('hud').style.display = '';
+      if(onComplete) onComplete();
+    }, 600);
+  };
+  splash.addEventListener('click', dismiss);
+  setTimeout(dismiss, 5000);
+}
+
 function boot(){
   setLanguage(state.lang);
   updateStaticText();
-  // Initialize audio system
   AudioManager.init();
-  // Resume audio on first user interaction (browser autoplay policy)
   const _resumeAudio = () => {
     AudioManager.resume();
     document.removeEventListener('click', _resumeAudio);
@@ -36,14 +60,9 @@ function boot(){
   configureBattleRoutes({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio});
   configureCloset({showMap:r.showMap, showPhoto:showDateFitStudio});
   configurePhoto({showMap:r.showMap, showCloset});
-  // If save data exists, show Continue button
-  if(hasSaveData()){
-    loadGame();
-  }
-  showTitle(r);
-  renderHud();
-  // Auto-save every 30 seconds
-  setInterval(()=>{ if(state.screen !== 'title') autosave(); }, 30000);
+  if(hasSaveData()) loadGame();
+  showSplash(() => { showTitle(r); renderHud(); });
+  setInterval(()=>{ if(state.screen !== 'title' && state.screen !== 'splash') autosave(); }, 30000);
 }
 
 window.addEventListener('slts:languageChanged', () => {

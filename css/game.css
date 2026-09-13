@@ -210,3 +210,12 @@
   .vn-tab { width: 72px; }
   .vn-tab-img, .vn-tab-obscured, .vn-tab-placeholder { height: 80px; }
 }
+
+/* Splash Screen */
+.splash-screen{position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#0a0408;cursor:pointer;animation:splashIn .8s ease forwards}
+.splash-screen img{max-width:min(90vw,820px);max-height:80vh;object-fit:contain;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.splash-hint{color:rgba(255,230,244,.6);font-size:14px;letter-spacing:.1em;text-transform:uppercase;animation:pulse 2s ease infinite}
+.splash-screen.fade-out{animation:splashOut .6s ease forwards}
+@keyframes splashIn{from{opacity:0}to{opacity:1}}
+@keyframes splashOut{from{opacity:1}to{opacity:0;pointer-events:none}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.8}}
