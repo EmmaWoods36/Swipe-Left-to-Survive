@@ -7,7 +7,7 @@ import {AudioManager} from './audioManager.js';
 import {
   MAP_PINS, LOCATION_BACKGROUNDS, getLocationBg, getMapDaypart,
   isLocationOpen, formatHours, LOCATION_HOURS,
-  OFFICE_EVENTS, LIBRARY_BOOKS, RESTAURANT_MENU, BAR_MENU, CAFE_MENU, SPA_PACKAGES,
+  OFFICE_EVENTS, LIBRARY_BOOKS, RESTAURANT_MENU, BAR_MENU, CAFE_DRINKS, CAFE_FOOD, SPA_PACKAGES,
   LOCATION_PEOPLE, APARTMENT_ACTIONS, BEACH_SUBLOCATIONS, MALL_SUBLOCATIONS
 } from '../data/locations.js';
 
@@ -232,7 +232,7 @@ function showOfficeMenu({goBattle, showCloset, showPhoto, startBattle}={}){
 }
 
 // === LIBRARY ===
-// Reading choices with stat effects — books cost time, not funds
+// Hierarchical: Read → book menu, Socialize, Return to Map
 function showLibraryMenu({goBattle, showCloset, showPhoto}={}){
   if(!isLocationOpen('library', state.time)){
     showClosedOverlay(tx('Library','図書館'), formatHours('library'), () => showMap({goBattle, showCloset, showPhoto}));
@@ -247,29 +247,43 @@ function showLibraryMenu({goBattle, showCloset, showPhoto}={}){
     <div id="libActions" class="menu-grid"></div>
   </section></div>`;
   const g = document.getElementById('libActions');
-  // 5 reading choices with stat effects
+  // Read → opens book genre submenu
+  g.append(button(tx('Read','読む'), () => showLibraryReadMenu({goBattle, showCloset, showPhoto}), 'primary'));
+  // Socialize
+  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('library', () => showMap({goBattle, showCloset, showPhoto}))));
+  g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  renderHud();
+}
+
+// === LIBRARY READ SUBMENU ===
+function showLibraryReadMenu({goBattle, showCloset, showPhoto}={}){
+  clearStage();
+  setLocationBg('library');
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Read','読む')}</h2>
+    <p class="muted">${tx('Pick a genre. Books cost time, not funds.','ジャンルを選んで。本は時間を消費し、お金はかからない。')}</p>
+    <div id="libReadActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('libReadActions');
   LIBRARY_BOOKS.forEach(book => {
     const label = tx(book.label.en, book.label.ja);
     const statDesc = Object.entries(book.stats).map(([k,v]) => `${k} ${v>0?'+':''}${v}`).join(', ');
     g.append(button(label, () => {
-      // Apply stat effects
       if(book.stats.peace) state.peace = Math.min(100, (state.peace||50) + book.stats.peace);
       if(book.stats.hope) state.hope = (state.hope||50) + book.stats.hope;
       if(book.stats.clarity) state.clarity = Math.min(100, (state.clarity||40) + book.stats.clarity);
       if(book.stats.selfRespect) state.selfRespect = Math.min(100, (state.selfRespect||45) + book.stats.selfRespect);
       if(book.stats.amyHp) state.amyHp = Math.min(state.amyMaxHp, state.amyHp + book.stats.amyHp);
       showMessage(tx('Reading','読書'), tx(`Amy read a ${label.toLowerCase()} book. (${statDesc})`, `エイミーは${label}の本を読んだ。(${statDesc})`),
-        [{label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:() => showMap({goBattle, showCloset, showPhoto})}]);
+        [{label:tx('Back','戻る'), className:'primary', onClick:() => showLibraryReadMenu({goBattle, showCloset, showPhoto})}]);
     }));
   });
-  // Friend/NPC encounter (Min can appear, Xavier is green-flag NPC)
-  g.append(button(tx('Look Around','周りを見る'), () => visitSafeArea('library', () => showMap({goBattle, showCloset, showPhoto}))));
-  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  g.append(button(tx('Back to Library','図書館へ戻る'), () => showLibraryMenu({goBattle, showCloset, showPhoto})));
   renderHud();
 }
 
 // === BAR ===
-// Purchases + friend/NPC encounters. Open 24/7.
+// Hierarchical: Order → drink/snack menu, Socialize, Return to Map
 function showBarMenu({goBattle, showCloset, showPhoto}={}){
   state.screen = 'bar';
   clearStage();
@@ -280,24 +294,39 @@ function showBarMenu({goBattle, showCloset, showPhoto}={}){
     <div id="barActions" class="menu-grid"></div>
   </section></div>`;
   const g = document.getElementById('barActions');
-  // Bar menu purchases
+  // Order → opens drink/snack submenu
+  g.append(button(tx('Order','注文'), () => showBarOrderMenu({goBattle, showCloset, showPhoto}), 'primary'));
+  // Socialize
+  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('bar', () => showBarMenu({goBattle, showCloset, showPhoto}))));
+  g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  renderHud();
+}
+
+// === BAR ORDER SUBMENU ===
+function showBarOrderMenu({goBattle, showCloset, showPhoto}={}){
+  clearStage();
+  setLocationBg('bar');
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Order','注文')}</h2>
+    <p class="muted">${tx('What can I get you?','何にする？')}</p>
+    <div id="barOrderActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('barOrderActions');
   BAR_MENU.forEach(item => {
     const label = tx(item.label.en, item.label.ja);
     g.append(button(`${label} (${item.price})`, () => {
       if(state.funds < item.price){
         showMessage(tx('Not Enough Funds','資金不足'), tx('Amy can\'t afford that right now.','今はそれを買う余裕がない。'),
-          [{label:tx('Back','戻る'), className:'primary', onClick:() => showBarMenu({goBattle, showCloset, showPhoto})}]);
+          [{label:tx('Back','戻る'), className:'primary', onClick:() => showBarOrderMenu({goBattle, showCloset, showPhoto})}]);
         return;
       }
       state.funds -= item.price;
       renderHud();
       showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。`),
-        [{label:tx('Back','戻る'), className:'primary', onClick:() => showBarMenu({goBattle, showCloset, showPhoto})}]);
+        [{label:tx('Back','戻る'), className:'primary', onClick:() => showBarOrderMenu({goBattle, showCloset, showPhoto})}]);
     }));
   });
-  // Friend/NPC encounter (Jade, Val, James)
-  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('bar', () => showBarMenu({goBattle, showCloset, showPhoto}))));
-  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  g.append(button(tx('Back to Bar','バーへ戻る'), () => showBarMenu({goBattle, showCloset, showPhoto})));
   renderHud();
 }
 
@@ -313,7 +342,17 @@ function showBeachMenu({goBattle, showCloset, showPhoto}={}){
     <div id="beachActions" class="menu-grid"></div>
   </section></div>`;
   const g = document.getElementById('beachActions');
-  // Beachside Cafe — nested sublocation (NOT a map pin)
+  // Beach activity
+  g.append(button(tx('Relax on the Beach','海辺でリラックス'), () => {
+    state.peace = Math.min(100, (state.peace||50) + 15);
+    state.amyHp = Math.min(state.amyMaxHp, state.amyHp + 10);
+    renderHud();
+    showMessage(tx('Relaxing','リラックス'), tx('Amy soaked up the sun. Peace +15, HP +10.','エイミーは日差しを浴びた。ピース+15、HP+10。'),
+      [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachMenu({goBattle, showCloset, showPhoto})}]);
+  }, 'primary'));
+  // Socialize
+  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('beach', () => showBeachMenu({goBattle, showCloset, showPhoto}))));
+  // Beachside Cafe — nested sublocation
   const cafeOpen = isLocationOpen('beachsideCafe', state.time);
   g.append(button(tx('Visit Beachside Cafe','海辺のカフェに行く'), () => {
     if(!cafeOpen){
@@ -321,14 +360,13 @@ function showBeachMenu({goBattle, showCloset, showPhoto}={}){
       return;
     }
     showBeachsideCafeMenu({goBattle, showCloset, showPhoto});
-  }, cafeOpen ? 'primary' : ''));
-  // Friend/NPC encounter (Malik, Chloe)
-  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('beach', () => showBeachMenu({goBattle, showCloset, showPhoto}))));
-  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  }, cafeOpen ? '' : ''));
+  g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }
 
 // === BEACHSIDE CAFE (sublocation of Beach) ===
+// Hierarchical: Order Drink → drink menu, Order Food → food menu, etc.
 function showBeachsideCafeMenu({goBattle, showCloset, showPhoto}={}){
   state.screen = 'beachsideCafe';
   clearStage();
@@ -339,31 +377,91 @@ function showBeachsideCafeMenu({goBattle, showCloset, showPhoto}={}){
     <div id="cafeActions" class="menu-grid"></div>
   </section></div>`;
   const g = document.getElementById('cafeActions');
-  // Cafe menu purchases
-  CAFE_MENU.forEach(item => {
-    const label = tx(item.label.en, item.label.ja);
-    g.append(button(`${label} (${item.price})`, () => {
-      if(state.funds < item.price){
-        showMessage(tx('Not Enough Funds','資金不足'), tx('Amy can\'t afford that right now.','今はそれを買う余裕がない。'),
-          [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
-        return;
-      }
-      state.funds -= item.price;
-      renderHud();
-      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。`),
-        [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
-    }));
-  });
-  // Friend/NPC encounter (Mia, Chloe, Sabrina, Christy)
-  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('beachsideCafe', () => showBeachsideCafeMenu({goBattle, showCloset, showPhoto}))));
+  // Order Drink → opens drink submenu
+  g.append(button(tx('Order Drink','ドリンクを注文'), () => showCafeDrinkMenu({goBattle, showCloset, showPhoto}), 'primary'));
+  // Order Food → opens food submenu
+  g.append(button(tx('Order Food','フードを注文'), () => showCafeFoodMenu({goBattle, showCloset, showPhoto}), 'primary'));
+  // Open Laptop
+  g.append(button(tx('Open Laptop','ノートパソコンを開く'), () => {
+    state.peace = Math.min(100, (state.peace||50) + 5);
+    state.clarity = Math.min(100, (state.clarity||40) + 8);
+    renderHud();
+    showMessage(tx('Laptop Time','パソコン時間'), tx('Amy opened her laptop and caught up on things. Peace +5, Clarity +8.','エイミーはノートパソコンを開いて色々確認した。ピース+5、クラリティ+8。'),
+      [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
+  }));
+  // Relax by the Window
+  g.append(button(tx('Relax by the Window','窓際でリラックス'), () => {
+    state.peace = Math.min(100, (state.peace||50) + 20);
+    state.amyHp = Math.min(state.amyMaxHp, state.amyHp + 15);
+    renderHud();
+    showMessage(tx('Relaxing','リラックス'), tx('Amy watched the waves through the window. Peace +20, HP +15.','エイミーは窓から波を眺めた。ピース+20、HP+15。'),
+      [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
+  }));
+  // Socialize (context-sensitive: Mia/Chloe, Sabrina, Christy)
+  g.append(button(tx('Chat','おしゃべり'), () => visitSafeArea('beachsideCafe', () => showBeachsideCafeMenu({goBattle, showCloset, showPhoto}))));
   // Return to parent location (Beach), NOT directly to map
   g.append(button(tx('Back to Beach','海辺へ戻る'), () => showBeachMenu({goBattle, showCloset, showPhoto})));
   renderHud();
 }
 
+// === CAFE DRINK SUBMENU ===
+function showCafeDrinkMenu({goBattle, showCloset, showPhoto}={}){
+  clearStage();
+  setLocationBg('beachsideCafe');
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Order Drink','ドリンクを注文')}</h2>
+    <p class="muted">${tx('What would Amy like to drink?','エイミーは何を飲みたい？')}</p>
+    <div id="cafeDrinkActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('cafeDrinkActions');
+  CAFE_DRINKS.forEach(item => {
+    const label = tx(item.label.en, item.label.ja);
+    g.append(button(`${label} (${item.price})`, () => {
+      if(state.funds < item.price){
+        showMessage(tx('Not Enough Funds','資金不足'), tx('Amy can\'t afford that right now.','今はそれを買う余裕がない。'),
+          [{label:tx('Back','戻る'), className:'primary', onClick:() => showCafeDrinkMenu({goBattle, showCloset, showPhoto})}]);
+        return;
+      }
+      state.funds -= item.price;
+      renderHud();
+      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。`),
+        [{label:tx('Back','戻る'), className:'primary', onClick:() => showCafeDrinkMenu({goBattle, showCloset, showPhoto})}]);
+    }));
+  });
+  g.append(button(tx('Back to Cafe','カフェへ戻る'), () => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})));
+  renderHud();
+}
+
+// === CAFE FOOD SUBMENU ===
+function showCafeFoodMenu({goBattle, showCloset, showPhoto}={}){
+  clearStage();
+  setLocationBg('beachsideCafe');
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Order Food','フードを注文')}</h2>
+    <p class="muted">${tx('What would Amy like to eat?','エイミーは何を食べたい？')}</p>
+    <div id="cafeFoodActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('cafeFoodActions');
+  CAFE_FOOD.forEach(item => {
+    const label = tx(item.label.en, item.label.ja);
+    g.append(button(`${label} (${item.price})`, () => {
+      if(state.funds < item.price){
+        showMessage(tx('Not Enough Funds','資金不足'), tx('Amy can\'t afford that right now.','今はそれを買う余裕がない。'),
+          [{label:tx('Back','戻る'), className:'primary', onClick:() => showCafeFoodMenu({goBattle, showCloset, showPhoto})}]);
+        return;
+      }
+      state.funds -= item.price;
+      renderHud();
+      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。`),
+        [{label:tx('Back','戻る'), className:'primary', onClick:() => showCafeFoodMenu({goBattle, showCloset, showPhoto})}]);
+    }));
+  });
+  g.append(button(tx('Back to Cafe','カフェへ戻る'), () => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})));
+  renderHud();
+}
+
 // === MALL ===
-// Top-level map pin. Spa is nested inside Mall, NOT a map pin.
-// Boutique, Spa, Food Court are sublocations.
+// Hierarchical: Shop / Closet, Visit Spa, Return to Map
 function showMallMenu({goBattle, showCloset, showPhoto}={}){
   if(!isLocationOpen('mall', state.time)){
     showClosedOverlay(tx('Mall','モール'), formatHours('mall'), () => showMap({goBattle, showCloset, showPhoto}));
@@ -378,19 +476,26 @@ function showMallMenu({goBattle, showCloset, showPhoto}={}){
     <div id="mallActions" class="menu-grid"></div>
   </section></div>`;
   const g = document.getElementById('mallActions');
-  // Boutique — opens closet/dressup
+  // Shop / Closet
   g.append(button(tx('Boutique','ブティック'), showCloset, 'primary'));
-  // Spa — nested sublocation (NOT a map pin)
+  // Visit Spa — nested sublocation
   const spaOpen = isLocationOpen('spa', state.time);
-  g.append(button(tx('Spa','スパ'), () => showSpaMenu({goBattle, showCloset, showPhoto}), spaOpen ? '' : ''));
-  // Food Court — friend encounter
+  g.append(button(tx('Visit Spa','スパに行く'), () => {
+    if(!spaOpen){
+      showClosedOverlay(tx('Spa','スパ'), formatHours('spa'), () => showMallMenu({goBattle, showCloset, showPhoto}));
+      return;
+    }
+    showSpaMenu({goBattle, showCloset, showPhoto});
+  }));
+  // Food Court
   g.append(button(tx('Food Court','フードコート'), () => visitSafeArea('restaurant', () => showMallMenu({goBattle, showCloset, showPhoto}))));
-  // Return to parent (map)
-  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  // Return to Map
+  g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }
 
 // === SPA (sublocation of Mall) ===
+// Hierarchical: Book Treatment → treatment menu, Back to Mall
 function showSpaMenu({goBattle, showCloset, showPhoto}={}){
   if(!isLocationOpen('spa', state.time)){
     showClosedOverlay(tx('Spa','スパ'), formatHours('spa'), () => showMallMenu({goBattle, showCloset, showPhoto}));
@@ -405,16 +510,32 @@ function showSpaMenu({goBattle, showCloset, showPhoto}={}){
     <div id="spaActions" class="menu-grid"></div>
   </section></div>`;
   const g = document.getElementById('spaActions');
+  // Book Treatment → opens treatment submenu
+  g.append(button(tx('Book Treatment','トリートメントを予約'), () => showSpaTreatmentMenu({goBattle, showCloset, showPhoto}), 'primary'));
+  // Back to Mall
+  g.append(button(tx('Back to Mall','モールへ戻る'), () => showMallMenu({goBattle, showCloset, showPhoto})));
+  renderHud();
+}
+
+// === SPA TREATMENT SUBMENU ===
+function showSpaTreatmentMenu({goBattle, showCloset, showPhoto}={}){
+  clearStage();
+  setLocationBg('spa');
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Book Treatment','トリートメントを予約')}</h2>
+    <p class="muted">${tx('Treat yourself. You earned it.','自分を労わって。頑張ったんだから。')}</p>
+    <div id="spaTreatmentActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('spaTreatmentActions');
   SPA_PACKAGES.forEach(pkg => {
     const label = tx(pkg.label.en, pkg.label.ja);
     g.append(button(`${label} (${pkg.price})`, () => {
       if(state.funds < pkg.price){
         showMessage(tx('Not Enough Funds','資金不足'), tx('Amy needs more Soft Life Funds for the spa.','スパに行くにはソフトライフファンドが足りない。'),
-          [{label:tx('Back','戻る'), className:'primary', onClick:() => showSpaMenu({goBattle, showCloset, showPhoto})}]);
+          [{label:tx('Back','戻る'), className:'primary', onClick:() => showSpaTreatmentMenu({goBattle, showCloset, showPhoto})}]);
         return;
       }
       state.funds -= pkg.price;
-      // Apply effects
       if(pkg.effects.fullRestore){
         state.amyHp = state.amyMaxHp;
         state.peace = 100;
@@ -427,11 +548,10 @@ function showSpaMenu({goBattle, showCloset, showPhoto}={}){
       if(pkg.effects.selfRespect) state.selfRespect = Math.min(100, (state.selfRespect||45) + pkg.effects.selfRespect);
       renderHud();
       showMessage(tx('Spa Treatment','スパトリートメント'), tx(`Amy enjoyed ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を楽しんだ。ソフトライフファンド: ${state.funds}。`),
-        [{label:tx('Back to Spa','スパへ戻る'), className:'primary', onClick:() => showSpaMenu({goBattle, showCloset, showPhoto})}]);
+        [{label:tx('Back','戻る'), className:'primary', onClick:() => showSpaTreatmentMenu({goBattle, showCloset, showPhoto})}]);
     }));
   });
-  // Return to parent location (Mall), NOT directly to map
-  g.append(button(tx('Back to Mall','モールへ戻る'), () => showMallMenu({goBattle, showCloset, showPhoto})));
+  g.append(button(tx('Back to Spa','スパへ戻る'), () => showSpaMenu({goBattle, showCloset, showPhoto})));
   renderHud();
 }
 

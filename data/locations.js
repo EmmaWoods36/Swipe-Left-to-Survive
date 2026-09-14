@@ -258,16 +258,25 @@ export const BAR_MENU = [
 ];
 
 // --- Beachside Cafe Menu ---
-export const CAFE_MENU = [
+export const CAFE_DRINKS = [
   { id: 'passion_tea',   label: { en: 'Passion Fruit Iced Tea', ja: 'パッションフルーツアイスティー' }, price: 120 },
   { id: 'matcha',        label: { en: 'Iced Matcha', ja: 'アイス抹茶' },                                price: 150 },
   { id: 'classic_tea',   label: { en: 'Classic Iced Tea', ja: 'クラシックアイスティー' },              price: 80 },
   { id: 'boba',          label: { en: 'Boba', ja: 'タピオカ' },                                         price: 180 },
-  { id: 'coconut',       label: { en: 'Coconut Drink', ja: 'ココナッツドリンク' },                      price: 220 },
+  { id: 'coconut',       label: { en: 'Coconut Drink', ja: 'ココナッツドリンク' },                      price: 220 }
+];
+
+export const CAFE_FOOD = [
   { id: 'fruit_tart',    label: { en: 'Fruit Tart', ja: 'フルーツタルト' },                             price: 250 },
   { id: 'croissant',     label: { en: 'Croissant Sandwich', ja: 'クロワッサンサンド' },                  price: 300 },
-  { id: 'mango_cake',    label: { en: 'Mango Cheesecake', ja: 'マンゴーチーズケーキ' },                  price: 280 }
+  { id: 'coconut_shrimp',label: { en: 'Coconut Shrimp', ja: 'ココナッツシュリンプ' },                   price: 320 },
+  { id: 'avocado_toast', label: { en: 'Avocado Toast', ja: 'アボカドトースト' },                         price: 280 },
+  { id: 'mango_cake',    label: { en: 'Mango Cheesecake', ja: 'マンゴーチーズケーキ' },                  price: 280 },
+  { id: 'sea_salt_fries',label: { en: 'Sea Salt Fries', ja: 'シーソルトフライドポテト' },                price: 220 }
 ];
+
+// Keep CAFE_MENU for backward compat (merged drinks + food)
+export const CAFE_MENU = [...CAFE_DRINKS, ...CAFE_FOOD];
 
 // --- Spa Packages (nested in Mall) ---
 export const SPA_PACKAGES = [
