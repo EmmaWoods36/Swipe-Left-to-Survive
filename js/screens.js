@@ -81,16 +81,16 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
   AudioManager.playSceneMusic('city_map');
   // Location pins positioned on the city map
   const locations = [
-    { id:'apartment',  name:tx('Amy\'s Apartment','エイミーの部屋'),     x:15, y:72, icon:'🏠', type:'home' },
-    { id:'closet',     name:tx('Closet / Boutique','クローゼット'),       x:30, y:45, icon:'👗', type:'shop' },
-    { id:'battle',     name:tx('LoveLoop','LoveLoop'),                 x:50, y:25, icon:'❤️', type:'battle' },
-    { id:'photo',      name:tx('Date Fit Studio','スタジオ'),            x:72, y:38, icon:'📸', type:'studio' },
-    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:82, y:60, icon:'🍽️', type:'social' },
-    { id:'park',       name:tx('Park','公園'),                           x:40, y:62, icon:'🌳', type:'social' },
-    { id:'beach',      name:tx('Beach','ビーチ'),                        x:65, y:82, icon:'🏖️', type:'social' },
-    { id:'bar',        name:tx('Bar','バー'),                             x:55, y:50, icon:'🍸', type:'social' },
-    { id:'library',    name:tx('Library','図書館'),                      x:25, y:30, icon:'📚', type:'social' },
-    { id:'cafe',       name:tx('Beachside Cafe','海辺のカフェ'),           x:75, y:75, icon:'☕', type:'social' }
+    { id:'apartment',  name:tx('Amy\'s Apartment','エイミーの部屋'),     x:15, y:72 },
+    { id:'closet',     name:tx('Closet / Boutique','クローゼット'),       x:30, y:45 },
+    { id:'battle',     name:tx('LoveLoop','LoveLoop'),                 x:50, y:25 },
+    { id:'photo',      name:tx('Date Fit Studio','スタジオ'),            x:72, y:38 },
+    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:82, y:60 },
+    { id:'park',       name:tx('Park','公園'),                           x:40, y:62 },
+    { id:'beach',      name:tx('Beach','ビーチ'),                        x:65, y:82 },
+    { id:'bar',        name:tx('Bar','バー'),                             x:55, y:50 },
+    { id:'library',    name:tx('Library','図書館'),                      x:25, y:30 },
+    { id:'cafe',       name:tx('Beachside Cafe','海辺のカフェ'),           x:75, y:75 }
   ];
   const mapWrap = document.createElement('div');
   mapWrap.className = 'city-map-pins';
@@ -106,11 +106,11 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
     else if(isSafeArea) action = () => visitSafeArea(loc.id, () => showMap({goBattle, showCloset, showPhoto}));
     else action = () => showMap({goBattle, showCloset, showPhoto});
     const pin = document.createElement('button');
-    pin.className = `map-pin pin-${loc.type}`;
+    pin.className = `map-pin${isBattle ? ' map-pin-danger' : ''}`;
     pin.type = 'button';
     pin.style.left = loc.x + '%';
     pin.style.top = loc.y + '%';
-    pin.innerHTML = `<span class="pin-icon">${loc.icon}</span><span class="pin-label">${loc.name}</span>`;
+    pin.innerHTML = `<span class="pin-dot"></span><span class="pin-label">${loc.name}</span>`;
     pin.onclick = action;
     mapWrap.append(pin);
   });
