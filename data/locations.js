@@ -185,15 +185,15 @@ export function formatHours(locationId) {
 // --- 9 Main Map Pins ---
 // Coordinates are semantic anchors: pin TIP touches building entrance/frontage
 export const MAP_PINS = [
-  { id: 'apartment',    label: { en: "Amy's Apartment", ja: 'エイミーの部屋' },     x: 33.5, y: 46.5, labelPos: 'left' },
-  { id: 'office',       label: { en: 'Office', ja: 'オフィス' },                     x: 70.5, y: 36.5, labelPos: 'right' },
-  { id: 'library',      label: { en: 'Library', ja: '図書館' },                      x: 53.5, y: 50.5, labelPos: 'left' },
-  { id: 'bar',          label: { en: 'Bar', ja: 'バー' },                             x: 73.0, y: 56.0, labelPos: 'right' },
-  { id: 'park',         label: { en: 'Park', ja: '公園' },                           x: 28.5, y: 71.5, labelPos: 'left' },
-  { id: 'restaurant',   label: { en: 'Restaurant', ja: 'レストラン' },               x: 51.5, y: 76.5, labelPos: 'right' },
-  { id: 'mall',         label: { en: 'Mall', ja: 'モール' },                          x: 77.0, y: 83.5, labelPos: 'right' },
-  { id: 'villainApt',   label: { en: 'Villain Apt', ja: 'ヴィランの部屋' },           x: 93.5, y: 61.0, labelPos: 'left' },
-  { id: 'beach',        label: { en: 'Beach', ja: '海辺' },                          x: 21.5, y: 70.5, labelPos: 'left' }
+  { id: 'apartment',    label: { en: "Amy's Apartment", ja: 'エイミーの部屋' },     x: 35, y: 38, labelPos: 'left' },
+  { id: 'office',       label: { en: 'Office', ja: 'オフィス' },                     x: 72, y: 27, labelPos: 'right' },
+  { id: 'library',      label: { en: 'Library', ja: '図書館' },                      x: 56, y: 43, labelPos: 'left' },
+  { id: 'bar',          label: { en: 'Bar', ja: 'バー' },                             x: 76, y: 48, labelPos: 'right' },
+  { id: 'park',         label: { en: 'Park', ja: '公園' },                           x: 28, y: 64, labelPos: 'left' },
+  { id: 'restaurant',   label: { en: 'Restaurant', ja: 'レストラン' },               x: 54, y: 70, labelPos: 'right' },
+  { id: 'mall',         label: { en: 'Mall', ja: 'モール' },                          x: 83, y: 76, labelPos: 'right' },
+  { id: 'villainApt',   label: { en: 'Villain Apt', ja: 'ヴィランの部屋' },           x: 97, y: 45, labelPos: 'left' },
+  { id: 'beach',        label: { en: 'Beach', ja: '海辺' },                          x: 20, y: 85, labelPos: 'left' }
 ];
 
 // --- Office Work Events (15 rotating outcomes) ---
