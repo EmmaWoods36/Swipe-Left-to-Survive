@@ -247,6 +247,16 @@ function winBattle(){
   if(id === 'normal_fake') state.unlocked.algorithm = true;
   if(id === 'algorithm') state.unlocked.pattern = true;
   if(id === 'pattern') state.unlocked.postPattern = true;
+  // Coworker canon event: mark battle completed, return to normal Office Things
+  if(id === 'coworker'){
+    if(!state.coworkerEvent) state.coworkerEvent = {};
+    state.coworkerEvent.battleCompleted = true;
+  }
+  // Unlock coworker event after 3 battles defeated
+  if(!state.coworkerEvent) state.coworkerEvent = {};
+  if(!state.coworkerEvent.battleCompleted && state.defeated.size >= 3 && !state.coworkerEvent.unlocked){
+    state.coworkerEvent.unlocked = true;
+  }
   autosave();
   syncAmyHp({healOnWin:true});
   AudioManager.playSceneMusic('victory');

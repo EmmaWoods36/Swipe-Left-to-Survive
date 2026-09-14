@@ -35,5 +35,7 @@ export const RED_FLAGS = {
   pattern:{id:'pattern',name:'THE PATTERN',jaName:'パターン',className:'Inner Loop',jaClassName:'内なるループ',bars:4,bg:'pattern',gender:'boss',sprite:['assets/characters/bosses/pattern_headshot.png'],quote:'You know me.',moves:[{name:'Familiar Ache',damage:24,delusion:26,type:'normal',text:'The old ache pretended to be love because Amy recognized it.'},{name:'Choose the Old Wound',damage:38,delusion:34,type:'special',text:'The Pattern offered the familiar wound. Amy said no.'}]}
 };
 
-export const STORY_ORDER = ['two_am','preference','coworker','house_date','demon','broke_dreamer','millionaire','body_bag','dark_humor','old_young','lucien_reservation_mirage','roman_industry_mystery','nico_boundary_pusher','blake_disruptor','julian_softboi_savior','love_bomber','normal_fake','algorithm','pattern'];
+export const STORY_ORDER = ['two_am','preference','house_date','demon','broke_dreamer','millionaire','body_bag','dark_humor','old_young','lucien_reservation_mirage','roman_industry_mystery','nico_boundary_pusher','blake_disruptor','julian_softboi_savior','love_bomber','normal_fake','algorithm','pattern'];
+// Coworker is NOT in STORY_ORDER — he's triggered by the Office canon event after Battle 3.
+// See showOfficeMenu() in screens.js and state.coworkerEvent.
 export const GIRL_RED_FLAGS = ['ivy_mercer','simone_brooks','camila_reyes'];

@@ -34,6 +34,11 @@ export const state = {
     accessories: []
   },
   ownedClothes: [], // Track purchased/owned clothing items by id
+  coworkerEvent: {
+    unlocked: false,   // true when 3 battles are defeated
+    triggered: false,  // true when the office story event fires
+    battleCompleted: false  // true after coworker battle is resolved
+  },
   gallery: [],
   battle: null,
   amyBars: 1,

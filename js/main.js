@@ -2,7 +2,7 @@ import {state,setLanguage,hasSaveData,loadGame,saveGame,autosave} from './state.
 import {updateStaticText,tx} from './localization.js';
 import {showTitle,showMap,renderHud,clearStage,screenLayer} from './screens.js';
 import {startOpening} from './scenes/opening.js';
-import {startNextBattle,configureBattleRoutes,startGreenFlagBattle} from './battle/battleEngine.js';
+import {startNextBattle,configureBattleRoutes,startGreenFlagBattle,startBattle} from './battle/battleEngine.js';
 import {showCloset,configureCloset} from './closet/closetEngine.js';
 import {showDateFitStudio,configurePhoto} from './photo/dateFitStudio.js';
 import {AudioManager} from './audioManager.js';
@@ -10,12 +10,13 @@ import {AudioManager} from './audioManager.js';
 function routes(){
   return {
     startGame: startOpening,
-    continueGame: () => { loadGame(); showMap({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio}); },
-    showMap: () => showMap({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio}),
+    continueGame: () => { loadGame(); showMap({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio, startBattle}); },
+    showMap: () => showMap({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio, startBattle}),
     showCloset,
     showPhoto: showDateFitStudio,
     goBattle: startNextBattle,
-    startGreenFlagBattle
+    startGreenFlagBattle,
+    startBattle
   };
 }
 

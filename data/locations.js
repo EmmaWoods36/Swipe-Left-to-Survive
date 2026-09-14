@@ -213,7 +213,20 @@ export const OFFICE_EVENTS = [
   { id: 'status_update', text: { en: 'Gave a neutral status update. Nobody asked follow-ups. Victory.', ja: '中立な状況報告をした。質問なし。勝利。' },     reward: 700 },
   { id: 'screen_share',  text: { en: 'Lost the screen-share file. Found it. Lost it again.', ja: '画面共有ファイルを失くした。見つけた。また失くした。' },  reward: 600 },
   { id: 'dashboard',     text: { en: 'Built a dashboard in Excel. It\'s ugly but it works.', ja: 'Excelでダッシュボードを作った。醜いが動く。' },          reward: 850 },
-  { id: 'finish',        text: { en: 'Finished actual work. Proved you exist.', ja: '実際の仕事を終わらせた。存在を証明した。' },                       reward: 900 }
+  { id: 'finish',        text: { en: 'Finished actual work. Proved you exist.', ja: '実際の仕事を終わらせた。存在を証明した。' },                       reward: 900 },
+  // Expanded absurd corporate BS pool — these are randomly selected, NOT a menu
+  { id: 'meeting_about_meetings', text: { en: 'Amy spent three hours in a meeting about why there are too many meetings.', ja: '会議が多すぎる理由についての会議に3時間費やした。' }, reward: 750 },
+  { id: 'socialize_offline', text: { en: 'Someone said "let\'s socialize this offline" and nobody knew what that meant.', ja: '「オフラインで共有しよう」と誰かが言った。誰も意味がわからなかった。' }, reward: 650 },
+  { id: 'urgent_457', text: { en: 'Amy received an "URGENT" email at 4:57 PM asking for something nobody had mentioned for six weeks.', ja: '午後4時57分に「緊急」メールを受け取った。6週間誰も言及してなかったことについて。' }, reward: 900 },
+  { id: 'tracker_tracker', text: { en: 'Amy updated a tracker whose only purpose was tracking whether everyone had updated the other tracker.', ja: 'トラッカーを更新した。そのトラッカーの唯一の目的は、全員がもう一つのトラッカーを更新したか追跡することだった。' }, reward: 600 },
+  { id: 'stakeholder_alignment', text: { en: 'Stakeholder alignment meeting about stakeholder alignment. Everyone aligned on needing more alignment.', ja: 'ステークホルダーのすり合わせについてのステークホルダーすり合わせ会議。全員がもっとすり合わせが必要で合意した。' }, reward: 700 },
+  { id: 'deck_nobody_reads', text: { en: 'Amy made a beautiful deck. Nobody will read it. She knows this. She made it beautiful anyway.', ja: '美しいデッキを作った。誰も読まない。わかっている。それでも美しく作った。' }, reward: 800 },
+  { id: 'synergy', text: { en: 'Someone used "synergy" unironically. Amy did not flinch. She has evolved.', ja: '誰かが皮肉抜きで「シナジー」を使った。エイミーは動じなかった。進化したのだ。' }, reward: 650 },
+  { id: 'parking_lot', text: { en: '"Let\'s take this offline." They did not take it offline. It died in the parking lot of good intentions.', ja: '「オフラインで話そう。」話さなかった。善意の駐車場で死んだ。' }, reward: 550 },
+  { id: 'cc_everyone', text: { en: 'Someone CC\'d the entire company on a reply-all chain. Amy watched it burn.', ja: '誰かが全社員をCCに入れた。エイミーは燃え盛るのを見守った。' }, reward: 750 },
+  { id: 'quick_call', text: { en: '"Can we hop on a quick call?" The call was 47 minutes. Nothing was quick.', ja: '「ちょっと電話できる？」電話は47分だった。何も早くなかった。' }, reward: 700 },
+  { id: 'asap_subjective', text: { en: 'ASAP was used without a deadline. Amy interpreted ASAP as "eventually."', ja: 'ASAPが期限なしで使われた。エイミーはASAPを「いずれ」と解釈した。' }, reward: 600 },
+  { id: 'spreadsheet_archaeology', text: { en: 'Amy dug through a spreadsheet from 2019. Found a comment from someone who left the company. Felt haunted.', ja: '2019年のスプレッドシートを掘り起こした。退職した誰かのコメントを見つけた。呪われた気分。' }, reward: 850 }
 ];
 
 // --- Library Reading Choices ---

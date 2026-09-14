@@ -1,4 +1,4 @@
-import {state,hasSaveData} from './state.js';
+import {state,hasSaveData,autosave} from './state.js';
 import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
@@ -71,7 +71,7 @@ export function showTitle({startGame, showMap, showCloset, showPhoto, continueGa
   renderHud();
 }
 
-export function showMap({goBattle, showCloset, showPhoto}={}){
+export function showMap({goBattle, showCloset, showPhoto, startBattle}={}){
   state.screen = 'map';
   clearStage();
   // Use data-driven map background based on game time
@@ -99,7 +99,7 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
     else if(pin.id==='beach') action = () => showBeachMenu({goBattle, showCloset, showPhoto});
     else if(pin.id==='bar') action = () => showBarMenu({goBattle, showCloset, showPhoto});
     else if(pin.id==='library') action = () => showLibraryMenu({goBattle, showCloset, showPhoto});
-    else if(pin.id==='office') action = () => showOfficeMenu({goBattle, showCloset, showPhoto});
+    else if(pin.id==='office') action = () => showOfficeMenu({goBattle, showCloset, showPhoto, startBattle});
     else if(pin.id==='villainApt') action = () => showMap({goBattle, showCloset, showPhoto});
     else action = () => showMap({goBattle, showCloset, showPhoto});
     const pinEl = document.createElement('button');
@@ -170,32 +170,64 @@ function showApartmentMenu({goBattle, showCloset, showPhoto}={}){
 }
 
 // === OFFICE ===
-// 15 rotating work events with exact rewards per ChatGPT spec
-function showOfficeMenu({goBattle, showCloset, showPhoto}={}){
+// One button: "Do Office Things" → random unhinged corporate BS → 500-1000 SLF → advance time
+// Canon event: after 3 battles defeated, next office visit triggers the creepy coworker (Battle 4)
+function showOfficeMenu({goBattle, showCloset, showPhoto, startBattle}={}){
   // Office is not available at night
   if(!isLocationOpen('office', state.time)){
-    showClosedOverlay(tx('Office','オフィス'), formatHours('office'), () => showMap({goBattle, showCloset, showPhoto}));
+    showClosedOverlay(tx('Office','オフィス'), formatHours('office'), () => showMap({goBattle, showCloset, showPhoto, startBattle}));
     return;
   }
   state.screen = 'office';
   clearStage();
   setLocationBg('office');
+
+  // === CANON EVENT: Coworker introduction after Battle 3 ===
+  if(!state.coworkerEvent) state.coworkerEvent = {};
+  const ce = state.coworkerEvent;
+  if(ce.unlocked && !ce.triggered){
+    // This is the scripted creepy coworker encounter
+    ce.triggered = true;
+    autosave();
+    AudioManager.playSceneMusic('cutscene');
+    screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+      <h2>${tx('Office','オフィス')}</h2>
+      <p class="muted">${tx('Amy walked into the office expecting another day of corporate absurdity. Instead, she found him waiting by her desk.','エイミーはまた日常の企業の不条理を期待してオフィスに入った。代わりに、彼女のデスクの隣で彼が待っていた。')}</p>
+      <div class="menu-grid">
+        <button class="btn primary" onclick="this.disabled=true">${tx('A coworker approaches...','同僚が近づいてくる...')}</button>
+      </div>
+    </section></div>`;
+    // After a beat, trigger the pre-battle scene → coworker battle
+    setTimeout(() => {
+      if(startBattle){
+        startBattle('coworker');
+      } else {
+        showMap({goBattle, showCloset, showPhoto, startBattle});
+      }
+    }, 3000);
+    renderHud();
+    return;
+  }
+
+  // === NORMAL: Do Office Things (random corporate BS) ===
   screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
     <h2>${tx('Office','オフィス')}</h2>
     <p class="muted">${tx('Amy\'s day job. It pays the bills and funds the wardrobe.','エイミーの日常の仕事。請求書とワードローブの資金になる。')}</p>
     <div id="officeActions" class="menu-grid"></div>
   </section></div>`;
   const g = document.getElementById('officeActions');
-  // Pick a random work event from the 15-event rotation
-  const event = OFFICE_EVENTS[Math.floor(Math.random() * OFFICE_EVENTS.length)];
-  const eventText = tx(event.text.en, event.text.ja);
   g.append(button(tx('Do Office Things','仕事をする'), () => {
-    state.funds += event.reward;
-    showMessage(tx('Work Done','仕事完了'),
-      tx(`${eventText} Earned ${event.reward} Soft Life Funds.`, `${eventText} ${event.reward}ソフトライフファンドを稼いだ。`),
-      [{label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:() => showMap({goBattle, showCloset, showPhoto})}]);
+    // Pick a random corporate BS event each click
+    const event = OFFICE_EVENTS[Math.floor(Math.random() * OFFICE_EVENTS.length)];
+    const reward = event.reward;
+    const eventText = tx(event.text.en, event.text.ja);
+    state.funds += reward;
+    renderHud();
+    showMessage(tx('Office Things','仕事'),
+      tx(`${eventText}\n\n+${reward} Soft Life Funds.`, `${eventText}\n\n+${reward}ソフトライフファンド。`),
+      [{label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:() => showMap({goBattle, showCloset, showPhoto, startBattle})}]);
   }, 'primary'));
-  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto, startBattle})));
   renderHud();
 }
 
