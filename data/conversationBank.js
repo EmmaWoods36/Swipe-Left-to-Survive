@@ -129,50 +129,6 @@ export const NPC_CONVERSATIONS = {
   ]
 };
 
-// Sabrina Boutique conversations — used when Amy enters the Boutique store
-// Sabrina is the stylish, polished, upbeat fashion-savvy boutique sales associate.
-// She has excited reactions for cute picks and politely-concealed dislike for questionable ones.
-export const BOUTIQUE_CONVERSATIONS = {
-  greeting: [
-    [
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'Welcome to the Boutique! Oh my god, Amy, I love that you\'re here. Let me show you what just came in.',ja:'ブティックへようこそ！あもう、エイミー、来てくれて嬉しい。新作見せたかったの。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Everything looks expensive.',ja:'全部高そう。'}},
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'Honey, that\'s because it is. But you deserve nice things. Browse around — try anything on.',ja:'ハニー、その通り。でもあなたはいいものを着る価値があるの。ゆっくり見て — 何でも試着してね。'}}
-    ]
-  ],
-  excited: [
-    [
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'Oh. My. God. Amy, that is SO you. Like, I\'m getting chills. Buy it. Buy it right now.',ja:'うわ。エイミー、それ最高に似合ってる。鳥肌立った。買って。今すぐ買って。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You\'re really good at your job.',ja:'仕事めっちゃ上手いね。'}},
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'I\'m not lying, I promise. That piece was made for you. I\'m actually a little jealous.',ja:'嘘じゃないよ、約束する。それあなたのために作られたようなやつ。ちょっと嫉妬してる。'}}
-    ],
-    [
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'STOP. No. Stop it. That is stunning. Turn around. I need to see the back. Amy, please.',ja:'ストップ。嘘。やめて。それ最高。回って。後ろ見せて。エイミー、お願い。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You want me to spin?',ja:'回れって？'}},
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'I need the full experience. This is fashion, Amy. We commit.',ja:'フル体験が必要なの。これはファッションだよ、エイミー。本気でやって。'}}
-    ]
-  ],
-  unsure: [
-    [
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'Mmm. That\'s... a choice. I mean, if you love it, I love it.',ja:'うーん。それは…選択だね。えっと、あなたが好きなら私も好きだよ。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You hate it.',ja:'嫌いなんでしょ。'}},
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'I don\'t hate anything! I just... think you have other pieces that flatter you more. But it\'s your call. Always your call.',ja:'嫌いなものなんてないよ！ただ…もっと似合うやつがあるかなって。でもあなたの決断だよ。いつもあなたの決断。'}}
-    ],
-    [
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'Okay so that\'s... definitely a look. You know what, if it speaks to you, who am I to judge?',ja:'これは…間違いなくルックだね。えっと、これがあなたに語りかけるなら、私が誰に文句言うの？'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Your face is doing a thing.',ja:'顔がなんかやってるよ。'}},
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'My face is always doing a thing. Ignore my face. How do YOU feel in it?',ja:'私の顔はいつもやってるの。顔は無視して。あなたはどう感じてる？'}}
-    ]
-  ],
-  purchase: [
-    [
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'Great pick! Let me ring that up for you. Soft Life Funds only — we don\'t take awkward first-date energy here.',ja:'いいチョイス！レジ打つね。ソフトライフファンド限定 — 初デートの気まずいエネルギーは受け付けてないから。'}},
-      {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You should put that on the door.',ja:'ドアに貼った方がいいよ。'}},
-      {character:'sabrina', speaker:{en:'Sabrina',ja:'サブリナ'}, text:{en:'I\'ve considered it. Anyway — it\'s yours now! Want to keep browsing?',ja:'考えたことある。とにかく — あなたのものになったよ！まだ見る？'}}
-    ]
-  ]
-};
-
 // Green flag pre-unlock conversations (before they become official green flags)
 // These characters appear as nice NPCs in their respective areas
 export const GREEN_FLAG_NPC_CONVERSATIONS = {
