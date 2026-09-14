@@ -5,7 +5,7 @@ const UI = {
   tagline:{en:'A turn-based dating survival RPG',ja:'恋の地雷サバイバルRPG'},
   start:{en:'Start',ja:'始める'},
   map:{en:'Map',ja:'マップ'},
-  closet:{en:'Closet / Boutique',ja:'クローゼット / ブティック'},
+  closet:{en:'Closet',ja:'クローゼット'},
   gallery:{en:'Gallery',ja:'ギャラリー'},
   dateFit:{en:'Date Fit Studio',ja:'デートコーデスタジオ'},
   continue:{en:'Continue',ja:'続ける'},

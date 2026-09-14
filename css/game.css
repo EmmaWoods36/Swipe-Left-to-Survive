@@ -229,3 +229,9 @@
 .hud-period{color:var(--gold);font-size:11px;text-transform:uppercase;letter-spacing:1px}
 .map-clock-chip{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(18,8,27,.8);border:1px solid rgba(255,124,199,.4);border-radius:999px;padding:8px 18px;font-size:14px;color:var(--cream);backdrop-filter:blur(6px);pointer-events:none}
 .map-clock-chip b{color:var(--pink)}
+
+/* === Boutique NPC greeting === */
+.npc-greeting{display:flex;align-items:center;gap:14px;margin:12px 0;padding:12px;border-radius:16px;background:rgba(255,124,199,.08);border:1px solid rgba(255,124,199,.25)}
+.npc-portrait{width:72px;height:72px;border-radius:12px;object-fit:cover;object-position:top;flex-shrink:0;border:2px solid rgba(255,124,199,.4)}
+.npc-dialogue{margin:0;font-size:14px;line-height:1.5;color:var(--cream)}
+.npc-dialogue b{color:var(--pink)}

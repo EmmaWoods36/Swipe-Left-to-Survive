@@ -73,7 +73,7 @@ export function showTitle({startGame, showMap, showCloset, showPhoto, continueGa
   renderHud();
 }
 
-export function showMap({goBattle, showCloset, showPhoto, startBattle}={}){
+export function showMap({goBattle, showCloset, showPhoto, startBattle, showBoutique}={}){
   state.screen = 'map';
   clearStage();
   // Use clockMinutes for authoritative time → derive daypart for background
@@ -101,7 +101,7 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle}={}){
     let action;
     // Wire each pin to its proper game function
     if(pin.id==='apartment') action = () => showApartmentMenu({goBattle, showCloset, showPhoto});
-    else if(pin.id==='mall') action = () => showMallMenu({goBattle, showCloset, showPhoto});
+    else if(pin.id==='mall') action = () => showMallMenu({goBattle, showCloset, showPhoto, showBoutique});
     else if(pin.id==='restaurant') action = () => visitSafeArea('restaurant', () => showMap({goBattle, showCloset, showPhoto}));
     else if(pin.id==='park') action = () => visitSafeArea('park', () => showMap({goBattle, showCloset, showPhoto}));
     else if(pin.id==='beach') action = () => showBeachMenu({goBattle, showCloset, showPhoto});
@@ -151,7 +151,7 @@ function showClosedOverlay(locationName, hoursStr, onBack){
 // === APARTMENT ===
 // Amy's home hub — nested choices, NOT a single action
 // Closet, LoveLoop, Date Fit Studio are NOT map pins — they're apartment actions
-function showApartmentMenu({goBattle, showCloset, showPhoto}={}){
+export function showApartmentMenu({goBattle, showCloset, showPhoto}={}){
   state.screen = 'apartment';
   clearStage();
   setLocationBg('apartment');
@@ -477,7 +477,7 @@ function showCafeFoodMenu({goBattle, showCloset, showPhoto}={}){
 
 // === MALL ===
 // Hierarchical: Shop / Closet, Visit Spa, Return to Map
-function showMallMenu({goBattle, showCloset, showPhoto}={}){
+export function showMallMenu({goBattle, showCloset, showPhoto, showBoutique}={}){
   if(!isLocationOpen('mall', state.clockMinutes)){
     showClosedOverlay(tx('Mall','モール'), formatHours('mall'), () => showMap({goBattle, showCloset, showPhoto}));
     return;
@@ -491,8 +491,8 @@ function showMallMenu({goBattle, showCloset, showPhoto}={}){
     <div id="mallActions" class="menu-grid"></div>
   </section></div>`;
   const g = document.getElementById('mallActions');
-  // Shop / Closet
-  g.append(button(tx('Boutique','ブティック'), showCloset, 'primary'));
+  // Shop / Boutique — opens the Boutique store (NOT Amy's Closet)
+  g.append(button(tx('Boutique','ブティック'), showBoutique || showCloset, 'primary'));
   // Visit Spa — nested sublocation
   const spaOpen = isLocationOpen('spa', state.clockMinutes);
   g.append(button(tx('Visit Spa','スパに行く'), () => {

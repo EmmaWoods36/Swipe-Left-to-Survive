@@ -1,15 +1,21 @@
 import {state,clamp} from '../state.js';
 import {tx} from '../localization.js';
-import {clearStage,button,renderHud} from '../screens.js';
+import {clearStage,button,renderHud,screenLayer} from '../screens.js';
 import {setBackground,imageWithFallback} from '../assets.js';
 import {CLOSET_CATEGORIES,CLOSET_ITEMS} from '../../data/closetManifest.js';
 import {renderPaperDoll} from './paperDoll.js';
 import {AudioManager} from '../audioManager.js';
 
 let currentCategory = 'hair';
+let currentPage = 0;
 let routes = {};
 export function configureCloset(handlers){ routes = handlers || {}; }
 
+const ITEMS_PER_PAGE = 8;
+
+// === AMY'S CLOSET (Apartment) ===
+// Wardrobe only — shows items Amy ALREADY OWNS. No purchasing.
+// Back button returns to Apartment.
 export function showCloset(){
   clearStage(); setBackground('closet'); AudioManager.playSceneMusic('mall'); renderHud();
   // Equip Amy's default/canon outfit on first visit if nothing is equipped
@@ -23,16 +29,17 @@ export function showCloset(){
       else if(item.category === 'full_outfits') state.outfit.full = item;
     }
   }
-  const layer = document.getElementById('screenLayer');
+  const layer = screenLayer();
   layer.innerHTML = `
     <div class="center-screen"><section class="panel">
-      <h2>${tx('Closet / Boutique','クローゼット / ブティック')}</h2>
-      <p class="subtitle">${tx('Dress Amy on the paper doll first. The Polaroid comes later.','先に紙人形のエイミーを着せ替える。ポラロイドはその後。')}</p>
+      <h2>${tx("Amy's Closet",'エイミーのクローゼット')}</h2>
+      <p class="subtitle">${tx('Dress Amy on the paper doll. Only items you own appear here.','紙人形のエイミーを着せ替える。持っている服のみ表示。')}</p>
       <div class="closet-layout">
         <div id="paperDollStage" class="paper-doll-stage"></div>
         <div>
           <div id="closetCats" class="mode-tabs"></div>
           <div id="closetThumbs" class="thumb-grid"></div>
+          <div id="closetPager" class="pager"></div>
           <div id="closetActions" class="choice-grid"></div>
         </div>
       </div>
@@ -40,7 +47,142 @@ export function showCloset(){
   renderCategories(); renderItems(); renderPaperDoll(document.getElementById('paperDollStage'));
   const actions = document.getElementById('closetActions');
   actions.append(button(tx('Open Date Fit Studio','デートコーデスタジオへ'), routes.showPhoto || (()=>{}), 'primary'));
-  actions.append(button(tx('Back to Map','マップへ戻る'), routes.showMap || (()=>{})));
+  // Back to Apartment (NOT to map)
+  actions.append(button(tx('Back to Apartment','部屋へ戻る'), routes.showApartment || (()=>{})));
+}
+
+// === BOUTIQUE (Mall sublocation) ===
+// Store — shows ALL items with prices. Sabrina is the sales associate NPC.
+// Purchasing deducts funds and marks item as owned. Amy stays in Boutique.
+// Back button returns to Mall.
+let boutiquePage = 0;
+export function showBoutique(){
+  clearStage(); setBackground('closet'); AudioManager.playSceneMusic('mall'); renderHud();
+  const layer = screenLayer();
+  // Sabrina greeting dialogue
+  const sabrinaGreetings = [
+    tx("Welcome to the Boutique! I'm Sabrina. Let's find something that screams 'you', shall we?", 'ブティックへようこそ！サブリナよ。あなたらしく輝く服を見つけましょ。'),
+    tx("Amy! Back already? You have excellent timing — we just got new stock in.", 'エイミー！もう戻ってきたの？タイミングばっちりね。新入荷したばかりなの。'),
+    tx("Oh honey, you look like you need a wardrobe refresh. I've got ideas. Follow me.", 'ハニー、ワードローブの刷新が必要ね。アイデアがあるの。ついてきて。'),
+    tx("Welcome back! I set aside some pieces I thought you'd love. Want to see?", 'お帰りなさい！あなたに似合いそうな服を取っておいたの。見てみる？')
+  ];
+  const greeting = sabrinaGreetings[Math.floor(Math.random() * sabrinaGreetings.length)];
+  layer.innerHTML = `
+    <div class="center-screen"><section class="panel">
+      <h2>${tx('Boutique','ブティック')}</h2>
+      <div class="npc-greeting">
+        <img src="assets/sprites/scenes/npcs/sabrina/sabrina_scene_01.png" alt="Sabrina" class="npc-portrait" />
+        <p class="npc-dialogue"><b>Sabrina:</b> ${greeting}</p>
+      </div>
+      <p class="subtitle">${tx('Browse merchandise. Try things on. Buy what you love.','商品を見る。試着する。好きなものを買う。')}</p>
+      <div class="closet-layout">
+        <div id="paperDollStage" class="paper-doll-stage"></div>
+        <div>
+          <div id="boutiqueCats" class="mode-tabs"></div>
+          <div id="boutiqueThumbs" class="thumb-grid"></div>
+          <div id="boutiquePager" class="pager"></div>
+          <div id="boutiqueActions" class="choice-grid"></div>
+        </div>
+      </div>
+    </section></div>`;
+  renderBoutiqueCategories(); renderBoutiqueItems(); renderPaperDoll(document.getElementById('paperDollStage'));
+  const actions = document.getElementById('boutiqueActions');
+  actions.append(button(tx('Back to Mall','モールへ戻る'), routes.showMall || (()=>{})));
+}
+
+function renderBoutiqueCategories(){
+  const box = document.getElementById('boutiqueCats'); if(!box) return; box.innerHTML='';
+  CLOSET_CATEGORIES.forEach(c=>{
+    const b = button(state.lang==='ja'?c.ja:c.label, ()=>{currentCategory=c.id; boutiquePage=0; renderBoutiqueCategories(); renderBoutiqueItems();}, currentCategory===c.id?'selected':'');
+    box.append(b);
+  });
+}
+
+function renderBoutiqueItems(){
+  const grid = document.getElementById('boutiqueThumbs'); if(!grid) return; grid.innerHTML='';
+  const pager = document.getElementById('boutiquePager'); if(pager) pager.innerHTML='';
+  const items = CLOSET_ITEMS.filter(i=>i.category===currentCategory);
+  if(!items.length){
+    grid.innerHTML = `<div class="thumb-card locked"><div class="asset-missing">${tx('Coming soon. No blob placeholder.','準備中。ブロブ代替なし。')}</div></div>`;
+    return;
+  }
+  const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+  if(boutiquePage >= totalPages) boutiquePage = totalPages - 1;
+  if(boutiquePage < 0) boutiquePage = 0;
+  const start = boutiquePage * ITEMS_PER_PAGE;
+  const pageItems = items.slice(start, start + ITEMS_PER_PAGE);
+  pageItems.forEach(item=>{
+    const isOwned = item.ownedByDefault || isItemOwned(item.id);
+    const canAfford = state.funds >= item.price;
+    const card = document.createElement('button'); card.className='thumb-card'; card.type='button';
+    if(!isOwned && !canAfford) card.classList.add('locked');
+    let label = state.lang==='ja'?item.ja:item.name;
+    let priceText = isOwned ? tx('Owned','所有済み') : `${item.price} SLF`;
+    card.innerHTML = `<div class="thumb-img"></div><b>${label}</b><small>${priceText}</small>`;
+    card.querySelector('.thumb-img').append(imageWithFallback([item.thumb,item.overlay], item.name));
+    if(isOwned){
+      // Already owned — can equip/try on
+      card.onclick=()=>selectItem(item);
+    } else {
+      // Not owned — purchase
+      card.querySelector('b').textContent += ' \uD83D\uDD12';
+      card.onclick=()=>tryPurchaseBoutique(item);
+    }
+    grid.append(card);
+  });
+  // Render pager
+  if(totalPages > 1 && pager){
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'btn pager-btn'; prevBtn.type = 'button';
+    prevBtn.textContent = '\u2039';
+    prevBtn.disabled = boutiquePage === 0;
+    prevBtn.onclick = ()=>{ boutiquePage--; renderBoutiqueItems(); };
+    pager.append(prevBtn);
+    const pageLabel = document.createElement('span');
+    pageLabel.className = 'pager-label';
+    pageLabel.textContent = `${boutiquePage + 1} / ${totalPages}`;
+    pager.append(pageLabel);
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn pager-btn'; nextBtn.type = 'button';
+    nextBtn.textContent = '\u203A';
+    nextBtn.disabled = boutiquePage >= totalPages - 1;
+    nextBtn.onclick = ()=>{ boutiquePage++; renderBoutiqueItems(); };
+    pager.append(nextBtn);
+  }
+}
+
+function tryPurchaseBoutique(item){
+  if(state.funds < item.price){
+    // Sabrina's polite "can't afford" reaction
+    const grid = document.getElementById('boutiqueThumbs');
+    const msg = document.createElement('div');
+    msg.className = 'toast';
+    msg.textContent = tx("Sabrina: Oh, that one's a bit out of budget right now. But don't worry — it'll be here when you're ready.", 'サブリナ：あら、今は予算外ね。でも大丈夫、準備できたらまたあるから。');
+    msg.style.cssText = 'color:#ff6b6b;padding:8px;font-size:14px;';
+    grid.prepend(msg);
+    setTimeout(()=>msg.remove(), 3000);
+    return;
+  }
+  state.funds -= item.price;
+  if(!state.ownedClothes) state.ownedClothes = [];
+  if(!state.ownedClothes.includes(item.id)) state.ownedClothes.push(item.id);
+  selectItem(item);
+  renderHud();
+  renderBoutiqueItems();
+  // Sabrina's excited reaction when Amy buys something cute
+  const reactions = [
+    tx("Sabrina: Oh my god, YES. That is SO you. Amazing choice!", 'サブリナ：ちょっと、イエス！それ、めっちゃエイミーっぽい！最高のチョイス！'),
+    tx("Sabrina: You have incredible taste. That's going to look stunning on you.", 'サブリナ：センスいいね。それ、すごく似合うよ。'),
+    tx("Sabrina: Yes yes yes! I was hoping you'd pick that one. It's perfect.", 'サブリナ：イエスイエスイエス！それ選んでくれると思ってたの。完璧だよ。')
+  ];
+  const reaction = reactions[Math.floor(Math.random() * reactions.length)];
+  const grid = document.getElementById('boutiqueThumbs');
+  const msg = document.createElement('div');
+  msg.className = 'toast';
+  msg.textContent = reaction;
+  msg.style.cssText = 'color:#7ee083;padding:8px;font-size:14px;';
+  grid.prepend(msg);
+  setTimeout(()=>msg.remove(), 3000);
 }
 
 function renderCategories(){
@@ -54,9 +196,11 @@ function renderCategories(){
 function renderItems(){
   const grid = document.getElementById('closetThumbs'); grid.innerHTML='';
   const pager = document.getElementById('closetPager'); if(pager) pager.innerHTML='';
-  const items = CLOSET_ITEMS.filter(i=>i.category===currentCategory);
+  // CLOSET: Only show items Amy already owns — no purchasing in the closet
+  const items = CLOSET_ITEMS.filter(i=>i.category===currentCategory && (i.ownedByDefault || isItemOwned(i.id)));
   if(!items.length){
-    grid.innerHTML = `<div class="thumb-card locked"><div class="asset-missing">${tx('Coming soon. No blob placeholder.','準備中。ブロブ代替なし。')}</div></div>`; return;
+    grid.innerHTML = `<div class="thumb-card locked"><div class="asset-missing">${tx('Nothing here yet. Visit the Boutique in the Mall to buy clothes.','\u307e\u3060\u4f55\u3082\u306a\u3044\u3002\u30e2\u30fc\u30eb\u306e\u30d6\u30c1\u30c3\u30af\u3067\u670d\u3092\u8cb7\u304a\u3046\u3002')}</div></div>`;
+    return;
   }
   // Pagination
   const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
@@ -65,25 +209,17 @@ function renderItems(){
   const start = currentPage * ITEMS_PER_PAGE;
   const pageItems = items.slice(start, start + ITEMS_PER_PAGE);
   pageItems.forEach(item=>{
-    const isOwned = item.ownedByDefault || isItemOwned(item.id);
-    const canAfford = state.funds >= item.price;
     const card = document.createElement('button'); card.className='thumb-card'; card.type='button';
-    if(!isOwned && !canAfford) card.classList.add('locked');
-    card.innerHTML = `<div class="thumb-img"></div><b>${state.lang==='ja'?item.ja:item.name}</b><small>${item.price} SLF</small>`;
+    card.innerHTML = `<div class="thumb-img"></div><b>${state.lang==='ja'?item.ja:item.name}</b><small>${tx('Owned','\u6240\u6709\u6e08\u307f')}</small>`;
     card.querySelector('.thumb-img').append(imageWithFallback([item.thumb,item.overlay], item.name));
     card.onclick=()=>selectItem(item);
-    if(!isOwned){
-      card.querySelector('b').textContent += ' 🔒';
-      card.onclick=()=>tryPurchase(item);
-    }
     grid.append(card);
   });
   // Render pager controls
   if(totalPages > 1 && pager){
     const prevBtn = document.createElement('button');
-    prevBtn.className = 'btn pager-btn';
-    prevBtn.type = 'button';
-    prevBtn.textContent = '‹';
+    prevBtn.className = 'btn pager-btn'; prevBtn.type = 'button';
+    prevBtn.textContent = '\u2039';
     prevBtn.disabled = currentPage === 0;
     prevBtn.onclick = ()=>{ currentPage--; renderItems(); };
     pager.append(prevBtn);
@@ -92,9 +228,8 @@ function renderItems(){
     pageLabel.textContent = `${currentPage + 1} / ${totalPages}`;
     pager.append(pageLabel);
     const nextBtn = document.createElement('button');
-    nextBtn.className = 'btn pager-btn';
-    nextBtn.type = 'button';
-    nextBtn.textContent = '›';
+    nextBtn.className = 'btn pager-btn'; nextBtn.type = 'button';
+    nextBtn.textContent = '\u203a';
     nextBtn.disabled = currentPage >= totalPages - 1;
     nextBtn.onclick = ()=>{ currentPage++; renderItems(); };
     pager.append(nextBtn);
@@ -114,26 +249,6 @@ function isItemOwned(itemId){
   // Check if item was purchased (persisted in ownedClothes)
   if(state.ownedClothes && state.ownedClothes.includes(itemId)) return true;
   return false;
-}
-
-function tryPurchase(item){
-  if(state.funds < item.price){
-    const grid = document.getElementById('closetThumbs');
-    const msg = document.createElement('div');
-    msg.className = 'toast';
-    msg.textContent = tx('Not enough Soft Life Funds.','ソフトライフファンドが足りない。');
-    msg.style.cssText = 'color:#ff6b6b;padding:8px;font-size:14px;';
-    grid.prepend(msg);
-    setTimeout(()=>msg.remove(), 2000);
-    return;
-  }
-  state.funds -= item.price;
-  // Persist ownership
-  if(!state.ownedClothes) state.ownedClothes = [];
-  if(!state.ownedClothes.includes(item.id)) state.ownedClothes.push(item.id);
-  selectItem(item);
-  renderHud();
-  renderItems();
 }
 
 function selectItem(item){
