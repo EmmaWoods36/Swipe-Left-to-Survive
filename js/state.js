@@ -142,20 +142,28 @@ export function getClockMinuteOfHour() {
 
 // Passive clock: 1 real-world second = N game minutes (default: 0.5 = 30 game min per 60 real sec)
 // Pauses during battle, cutscene, title, closet, shop
-const PASSIVE_CLOCK_INTERVAL_MS = 1000;  // tick every 1 real second
-const PASSIVE_GAME_MINUTES_PER_TICK = 0.5;  // 30 game minutes per 60 real seconds
+const PASSIVE_CLOCK_INTERVAL_MS = 60000;  // tick every 60 real seconds
+const PASSIVE_GAME_MINUTES_PER_TICK = 10;  // 10 game minutes per real minute
 
 let _passiveClockTimer = null;
 let _passiveClockActive = false;
 
 export function isPassiveClockPaused() {
   const s = state.screen;
-  if (s === 'title' || s === 'splash') return true;
+  // Title/splash/cheat screens
+  if (s === 'title' || s === 'splash' || s === 'cheat') return true;
+  // Battle active
   if (state.battle) return true;
-  if (state.scene) return true;  // cutscene active
+  // Cutscene active
+  if (state.scene) return true;
+  // Dialogue active (conversation in progress)
+  if (state.dialogueActive) return true;
+  // Any submenu/modal open (choosing food, drinks, books, spa, etc.)
+  if (state.submenu) return true;
+  // Shopping / trying on clothes / closet / boutique
   if (s === 'closet' || s === 'boutique' || s === 'shop') return true;
-  if (s === 'cheat') return true;
-  if (document.hidden) return true;  // browser tab not visible
+  // Browser tab not visible
+  if (document.hidden) return true;
   return false;
 }
 
