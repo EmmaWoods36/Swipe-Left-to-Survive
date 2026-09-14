@@ -1,4 +1,4 @@
-import {state,hasSaveData,autosave,advanceGameMinutes,advanceTime,sleepUntilMorning,getClockPeriod,formatClockTime,getClockHour,getDaypartFromClock,startPassiveClock,stopPassiveClock} from './state.js';
+import {state,hasSaveData,autosave,advanceGameMinutes,advanceTime,TIME_COSTS,sleepUntilMorning,getClockPeriod,formatClockTime,getClockHour,getDaypartFromClock,startPassiveClock,stopPassiveClock} from './state.js';
 import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
@@ -103,17 +103,18 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
     const isClosed = !isLocationOpen(pin.id, state.clockMinutes);
     const hoursStr = formatHours(pin.id);
     let action;
-    // Wire each pin to its proper game function
-    if(pin.id==='apartment') action = () => showApartmentMenu({goBattle, showCloset, showPhoto});
-    else if(pin.id==='mall') action = () => showMallMenu({goBattle, showCloset, showPhoto, showBoutique});
-    else if(pin.id==='restaurant') action = () => visitSafeArea('restaurant', () => showMap({goBattle, showCloset, showPhoto}));
-    else if(pin.id==='park') action = () => visitSafeArea('park', () => showMap({goBattle, showCloset, showPhoto}));
-    else if(pin.id==='beach') action = () => showBeachMenu({goBattle, showCloset, showPhoto});
-    else if(pin.id==='bar') action = () => showBarMenu({goBattle, showCloset, showPhoto});
-    else if(pin.id==='library') action = () => showLibraryMenu({goBattle, showCloset, showPhoto});
-    else if(pin.id==='office') action = () => showOfficeMenu({goBattle, showCloset, showPhoto, startBattle});
-    else if(pin.id==='villainApt') action = () => showMap({goBattle, showCloset, showPhoto});
-    else action = () => showMap({goBattle, showCloset, showPhoto});
+    // Wire each pin to its proper game function (+30 min travel time)
+    const travel = (fn) => () => { advanceGameMinutes(TIME_COSTS.travel); renderHud(); fn(); };
+    if(pin.id==='apartment') action = travel(() => showApartmentMenu({goBattle, showCloset, showPhoto}));
+    else if(pin.id==='mall') action = travel(() => showMallMenu({goBattle, showCloset, showPhoto, showBoutique}));
+    else if(pin.id==='restaurant') action = travel(() => visitSafeArea('restaurant', () => showMap({goBattle, showCloset, showPhoto})));
+    else if(pin.id==='park') action = travel(() => visitSafeArea('park', () => showMap({goBattle, showCloset, showPhoto})));
+    else if(pin.id==='beach') action = travel(() => showBeachMenu({goBattle, showCloset, showPhoto}));
+    else if(pin.id==='bar') action = travel(() => showBarMenu({goBattle, showCloset, showPhoto}));
+    else if(pin.id==='library') action = travel(() => showLibraryMenu({goBattle, showCloset, showPhoto}));
+    else if(pin.id==='office') action = travel(() => showOfficeMenu({goBattle, showCloset, showPhoto, startBattle}));
+    else if(pin.id==='villainApt') action = travel(() => showMap({goBattle, showCloset, showPhoto}));
+    else action = travel(() => showMap({goBattle, showCloset, showPhoto}));
     const pinEl = document.createElement('button');
     pinEl.className = `map-pin label-${pin.labelPos || 'below'}`;
     pinEl.type = 'button';
@@ -235,8 +236,8 @@ function showOfficeMenu({goBattle, showCloset, showPhoto, startBattle}={}){
     const reward = event.reward;
     const eventText = tx(event.text.en, event.text.ja);
     state.funds += reward;
-    // Advance time by 4 hours (v1.34)
-    advanceTime();
+    // Office Things = 4 hours (the big half-day action)
+    advanceGameMinutes(TIME_COSTS.officeWork);
     renderHud();
     showMessage(tx('Office Things','仕事'),
       tx(`${eventText}\n\n+${reward} Soft Life Funds.\nTime advanced to ${formatClockTime()}.`, `${eventText}\n\n+${reward}ソフトライフファンド。\n時間が${formatClockTime()}に進んだ。`),
@@ -289,8 +290,8 @@ function showLibraryReadMenu({goBattle, showCloset, showPhoto}={}){
       if(book.stats.clarity) state.clarity = Math.min(100, (state.clarity||40) + book.stats.clarity);
       if(book.stats.selfRespect) state.selfRespect = Math.min(100, (state.selfRespect||45) + book.stats.selfRespect);
       if(book.stats.amyHp) state.amyHp = Math.min(state.amyMaxHp, state.amyHp + book.stats.amyHp);
-      // Reading is free, but it eats time (4 hours)
-      advanceTime();
+      // Reading = 2 hours
+      advanceGameMinutes(TIME_COSTS.reading);
       showMessage(tx('Reading','読書'), tx(`Amy read a ${label.toLowerCase()} book. (${statDesc})\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}の本を読んだ。(${statDesc})\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showLibraryReadMenu({goBattle, showCloset, showPhoto})}]);
     }));
@@ -338,8 +339,10 @@ function showBarOrderMenu({goBattle, showCloset, showPhoto}={}){
         return;
       }
       state.funds -= item.price;
+      // Bar meal/drink = 2 hours
+      advanceGameMinutes(TIME_COSTS.meal);
       renderHud();
-      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。`),
+      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showBarOrderMenu({goBattle, showCloset, showPhoto})}]);
     }));
   });
@@ -363,6 +366,8 @@ function showBeachMenu({goBattle, showCloset, showPhoto}={}){
   g.append(button(tx('Relax on the Beach','海辺でリラックス'), () => {
     state.peace = Math.min(100, (state.peace||50) + 15);
     state.amyHp = Math.min(state.amyMaxHp, state.amyHp + 10);
+    // Relax = 1 hour
+    advanceGameMinutes(TIME_COSTS.relax);
     renderHud();
     showMessage(tx('Relaxing','リラックス'), tx('Amy soaked up the sun. Peace +15, HP +10.','エイミーは日差しを浴びた。ピース+15、HP+10。'),
       [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachMenu({goBattle, showCloset, showPhoto})}]);
@@ -402,8 +407,8 @@ function showBeachsideCafeMenu({goBattle, showCloset, showPhoto}={}){
   g.append(button(tx('Open Laptop','ノートパソコンを開く'), () => {
     state.peace = Math.min(100, (state.peace||50) + 5);
     state.clarity = Math.min(100, (state.clarity||40) + 8);
-    // Working on laptop eats time (4 hours)
-    advanceTime();
+    // Laptop = 2 hours (meaningful sit-down work)
+    advanceGameMinutes(TIME_COSTS.laptop);
     renderHud();
     showMessage(tx('Laptop Time','パソコン時間'), tx(`Amy opened her laptop and caught up on things. Peace +5, Clarity +8.\nTime advanced to ${formatClockTime()}.`, `エイミーはノートパソコンを開いて色々確認した。ピース+5、クラリティ+8。\n時間が${formatClockTime()}に進んだ。`),
       [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
@@ -412,6 +417,8 @@ function showBeachsideCafeMenu({goBattle, showCloset, showPhoto}={}){
   g.append(button(tx('Relax by the Window','窓際でリラックス'), () => {
     state.peace = Math.min(100, (state.peace||50) + 20);
     state.amyHp = Math.min(state.amyMaxHp, state.amyHp + 15);
+    // Relax = 1 hour
+    advanceGameMinutes(TIME_COSTS.relax);
     renderHud();
     showMessage(tx('Relaxing','リラックス'), tx('Amy watched the waves through the window. Peace +20, HP +15.','エイミーは窓から波を眺めた。ピース+20、HP+15。'),
       [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
@@ -442,8 +449,10 @@ function showCafeDrinkMenu({goBattle, showCloset, showPhoto}={}){
         return;
       }
       state.funds -= item.price;
+      // Cafe drink = 2 hours (sit-down activity)
+      advanceGameMinutes(TIME_COSTS.meal);
       renderHud();
-      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。`),
+      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showCafeDrinkMenu({goBattle, showCloset, showPhoto})}]);
     }));
   });
@@ -470,8 +479,10 @@ function showCafeFoodMenu({goBattle, showCloset, showPhoto}={}){
         return;
       }
       state.funds -= item.price;
+      // Cafe food = 2 hours
+      advanceGameMinutes(TIME_COSTS.meal);
       renderHud();
-      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。`),
+      showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showCafeFoodMenu({goBattle, showCloset, showPhoto})}]);
     }));
   });
@@ -565,8 +576,10 @@ function showSpaTreatmentMenu({goBattle, showCloset, showPhoto}={}){
       if(pkg.effects.amyHp) state.amyHp = Math.min(state.amyMaxHp, state.amyHp + pkg.effects.amyHp);
       if(pkg.effects.stamina) state.stamina = Math.min(100, (state.stamina||50) + pkg.effects.stamina);
       if(pkg.effects.selfRespect) state.selfRespect = Math.min(100, (state.selfRespect||45) + pkg.effects.selfRespect);
+      // Spa treatment = 2 hours
+      advanceGameMinutes(TIME_COSTS.spa);
       renderHud();
-      showMessage(tx('Spa Treatment','スパトリートメント'), tx(`Amy enjoyed ${label}. Soft Life Funds: ${state.funds}.`, `エイミーは${label}を楽しんだ。ソフトライフファンド: ${state.funds}。`),
+      showMessage(tx('Spa Treatment','スパトリートメント'), tx(`Amy enjoyed ${label}. Soft Life Funds: ${state.funds}.\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}を楽しんだ。ソフトライフファンド: ${state.funds}。\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showSpaTreatmentMenu({goBattle, showCloset, showPhoto})}]);
     }));
   });

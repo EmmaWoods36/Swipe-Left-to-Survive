@@ -1,4 +1,4 @@
-import {state,clamp} from '../state.js';
+import {state,clamp,advanceGameMinutes} from '../state.js';
 import {tx} from '../localization.js';
 import {clearStage,button,renderHud,screenLayer} from '../screens.js';
 import {setBackground,imageWithFallback} from '../assets.js';
@@ -166,6 +166,8 @@ function tryPurchaseBoutique(item){
   state.funds -= item.price;
   if(!state.ownedClothes) state.ownedClothes = [];
   if(!state.ownedClothes.includes(item.id)) state.ownedClothes.push(item.id);
+  // Shopping = 2 hours
+  advanceGameMinutes(120);
   selectItem(item);
   renderHud();
   renderBoutiqueItems();

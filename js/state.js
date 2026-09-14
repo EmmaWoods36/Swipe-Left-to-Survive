@@ -67,10 +67,25 @@ export function advanceGameMinutes(minutes) {
   state.time = getClockPeriod();
 }
 
-// Standard action time cost: 4 in-game hours (240 minutes)
+// Standard action time cost: 4 in-game hours (240 minutes) — DEPRECATED, use TIME_COSTS
 export function advanceTime() {
   advanceGameMinutes(240);
 }
+
+// === Activity-specific time costs (per agreed design) ===
+export const TIME_COSTS = {
+  travel: 30,          // 30 min — moving between locations
+  reading: 120,        // 2 hr — reading a book at the library
+  officeWork: 240,     // 4 hr — the big half-day action
+  spa: 120,            // 2 hr — spa treatment
+  shopping: 120,       // 2 hr — boutique shopping
+  meal: 120,           // 2 hr baseline — ordering food/drinks
+  longMealOrDate: 180, // 3 hr — proper date activity
+  battle: 60,          // 1 hr baseline — battle/date-battle sequence
+  longDateBattle: 120, // 2 hr — longer date battles
+  laptop: 120,         // 2 hr — meaningful sit-down work at cafe
+  relax: 60            // 1 hr — relaxing activities (beach, window, etc.)
+};
 
 // Sleep: advance to next day at 8:00 AM, restore stats
 export function sleepUntilMorning() {
