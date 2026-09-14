@@ -100,13 +100,17 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
   const mapWrap = document.createElement('div');
   mapWrap.className = 'city-map-pins';
   locations.forEach(loc => {
-    const isMall = loc.id==='mall';
-    const isApartment = loc.id==='apartment';
-    const isSafeArea = SAFE_AREAS[loc.id];
     let action;
-    if(isMall) action = showCloset;
-    else if(isApartment) action = () => showMap({goBattle, showCloset, showPhoto});
-    else if(isSafeArea) action = () => visitSafeArea(loc.id, () => showMap({goBattle, showCloset, showPhoto}));
+    // Wire each pin to its proper game function
+    if(loc.id==='apartment') action = () => showApartmentMenu({goBattle, showCloset, showPhoto});
+    else if(loc.id==='mall') action = showCloset;
+    else if(loc.id==='restaurant') action = () => visitSafeArea('restaurant', () => showMap({goBattle, showCloset, showPhoto}));
+    else if(loc.id==='park') action = () => visitSafeArea('park', () => showMap({goBattle, showCloset, showPhoto}));
+    else if(loc.id==='beach') action = () => visitSafeArea('beach', () => showMap({goBattle, showCloset, showPhoto}));
+    else if(loc.id==='bar') action = () => visitSafeArea('bar', () => showMap({goBattle, showCloset, showPhoto}));
+    else if(loc.id==='library') action = () => visitSafeArea('library', () => showMap({goBattle, showCloset, showPhoto}));
+    else if(loc.id==='office') action = () => showOfficeMenu({goBattle, showCloset, showPhoto});
+    else if(loc.id==='villain_apt') action = () => showMap({goBattle, showCloset, showPhoto});
     else action = () => showMap({goBattle, showCloset, showPhoto});
     const pin = document.createElement('button');
     pin.className = `map-pin label-${loc.labelPos || 'below'}`;
@@ -118,6 +122,50 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
     mapWrap.append(pin);
   });
   screenLayer().append(mapWrap);
+  renderHud();
+}
+
+// Apartment menu — rest, check LoveLoop, open closet, go to battle
+function showApartmentMenu({goBattle, showCloset, showPhoto}={}){
+  state.screen = 'apartment';
+  clearStage();
+  setBackground('apartmentEvening');
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Amy\'s Apartment','エイミーの部屋')}</h2>
+    <p class="muted">${tx('Home base. Rest, check your phone, or get ready.','ホームベース。休む、携帯を見る、準備する。')}</p>
+    <div id="aptActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('aptActions');
+  g.append(button(tx('Open LoveLoop','LoveLoopを開く'), () => { if(goBattle) goBattle(); }, 'primary'));
+  g.append(button(tx('Open Closet','クローゼットを開く'), showCloset));
+  g.append(button(tx('Date Fit Studio','デートコーデスタジオ'), showPhoto));
+  g.append(button(tx('Rest','休む'), () => {
+    state.amyHp = state.amyMaxHp;
+    showMessage(tx('Rested','休んだ'), tx('Amy took a nap. HP restored to full.','エイミーは昼寝をした。HPが全回復した。'),
+      [{label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:() => showMap({goBattle, showCloset, showPhoto})}]);
+  }));
+  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  renderHud();
+}
+
+// Office menu — work to earn Soft Life Funds
+function showOfficeMenu({goBattle, showCloset, showPhoto}={}){
+  state.screen = 'office';
+  clearStage();
+  setBackground('apartmentDay');
+  const earnings = 50 + Math.floor(Math.random() * 100);
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Office','オフィス')}</h2>
+    <p class="muted">${tx('Amy\'s day job. It pays the bills and funds the wardrobe.','エイミーの日常の仕事。請求書とワードローブの資金になる。')}</p>
+    <div id="officeActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('officeActions');
+  g.append(button(tx('Do Office Things','仕事をする'), () => {
+    state.funds += earnings;
+    showMessage(tx('Work Done','仕事完了'), tx(`Amy did office things. Earned ${earnings} Soft Life Funds.`,`エイミーは仕事をした。${earnings}ソフトライフファンドを稼いだ。`),
+      [{label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:() => showMap({goBattle, showCloset, showPhoto})}]);
+  }, 'primary'));
+  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }
 
