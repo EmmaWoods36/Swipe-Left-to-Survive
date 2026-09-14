@@ -7,7 +7,7 @@ export const state = {
   screen: 'title',
   scene: null,
   day: 1,
-  clockMinutes: 9 * 60,  // 9:00 AM — authoritative time source (v1.34)
+  clockMinutes: 18 * 60,  // 6:00 PM — game starts in the evening (Sunset)
   funds: 800,
   peace: 50,
   clarity: 40,
@@ -174,8 +174,8 @@ export function hydrateState(saved){
   if(!saved) return;
   Object.assign(state, saved);
   state.defeated = new Set(saved.defeated || []);
-  // Restore clock — if missing from old saves, default to 9:00 AM Day 1
-  if (typeof state.clockMinutes !== 'number') state.clockMinutes = 540;
+  // Restore clock — if missing from old saves, default to 6:00 PM Day 1
+  if (typeof state.clockMinutes !== 'number') state.clockMinutes = 1080; // 6:00 PM
   if (typeof state.day !== 'number') state.day = 1;
   if (typeof state.stamina !== 'number') state.stamina = 50;
   state.time = getClockPeriod();

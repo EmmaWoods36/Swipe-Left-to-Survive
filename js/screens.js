@@ -52,7 +52,11 @@ export function button(label, onClick, classes=''){
 export function showTitle({startGame, showMap, showCloset, showPhoto, continueGame}={}){
   state.screen = 'title';
   clearStage();
-  setBackground('apartmentEvening');
+  // Use clock-derived background — matches the time the game starts at
+  const daypart = getDaypartFromClock(state.clockMinutes);
+  const aptBg = getLocationBg('apartment', daypart) || 'assets/backgrounds/bg_apartment_day.png';
+  const sceneBg = document.querySelector('.scene-bg');
+  if(sceneBg){ sceneBg.style.backgroundImage = `url("${aptBg}")`; }
   AudioManager.playSceneMusic('title');
   screenLayer().innerHTML = `
     <div class="center-screen"><section class="panel">
