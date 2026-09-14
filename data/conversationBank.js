@@ -245,5 +245,12 @@ export const SAFE_AREAS = {
     friends: ['mia', 'chloe'],
     npc: 'sabrina',
     greenFlagNpc: 'christy'
+  },
+  beachsideCafe: {
+    name: {en:'Beachside Cafe',ja:'海辺のカフェ'},
+    bg: 'cafe',
+    friends: ['mia', 'chloe'],
+    npc: 'sabrina',
+    greenFlagNpc: 'christy'
   }
 };
