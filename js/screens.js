@@ -68,45 +68,47 @@ export function showTitle({startGame, showMap, showCloset, showPhoto, continueGa
 export function showMap({goBattle, showCloset, showPhoto}={}){
   state.screen = 'map';
   clearStage();
-  // Pick map background based on game time
+  // Pick map background based on game time per canon:
+  // Sunrise/Day → day map, Sunset → afternoon map, Night → night map
   const timeMap = {
+    'Sunrise': 'mapMorning',
     'Morning': 'mapMorning',
+    'Day': 'mapMorning',
     'Afternoon': 'mapAfternoon',
-    'Evening': 'mapEvening',
-    'Dusk': 'mapDusk',
+    'Evening': 'mapAfternoon',
+    'Sunset': 'mapAfternoon',
+    'Dusk': 'mapNight',
     'Night': 'mapNight'
   };
   const mapBg = timeMap[state.time] || 'mapEvening';
   setBackground(mapBg);
   AudioManager.playSceneMusic('city_map');
-  // Location pins positioned on the city map
+  // Location pins positioned on the city map — fixed world map per canon
   const locations = [
     { id:'apartment',  name:tx('Amy\'s Apartment','エイミーの部屋'),     x:15, y:72 },
-    { id:'closet',     name:tx('Closet / Boutique','クローゼット'),       x:30, y:45 },
-    { id:'battle',     name:tx('LoveLoop','LoveLoop'),                 x:50, y:25 },
-    { id:'photo',      name:tx('Date Fit Studio','スタジオ'),            x:72, y:38 },
-    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:82, y:60 },
-    { id:'park',       name:tx('Park','公園'),                           x:40, y:62 },
-    { id:'beach',      name:tx('Beach','ビーチ'),                        x:65, y:82 },
-    { id:'bar',        name:tx('Bar','バー'),                             x:55, y:50 },
+    { id:'office',     name:tx('Office','オフィス'),                     x:80, y:35 },
     { id:'library',    name:tx('Library','図書館'),                      x:25, y:30 },
-    { id:'cafe',       name:tx('Beachside Cafe','海辺のカフェ'),           x:75, y:75 }
+    { id:'bar',        name:tx('Bar','バー'),                             x:55, y:50 },
+    { id:'park',       name:tx('Park','公園'),                           x:40, y:62 },
+    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:82, y:60 },
+    { id:'mall',       name:tx('Mall','モール'),                          x:30, y:45 },
+    { id:'villain_apt',name:tx('Villain Apt','ヴィランの部屋'),           x:72, y:25 },
+    { id:'beach',      name:tx('Beach','ビーチ'),                        x:65, y:82 }
   ];
   const mapWrap = document.createElement('div');
   mapWrap.className = 'city-map-pins';
   locations.forEach(loc => {
-    const isBattle = loc.id==='battle';
-    const isCloset = loc.id==='closet';
-    const isPhoto = loc.id==='photo';
+    const isApartment = loc.id==='apartment';
+    const isMall = loc.id==='mall';
+    const isBeach = loc.id==='beach';
     const isSafeArea = SAFE_AREAS[loc.id];
     let action;
-    if(isBattle) action = goBattle;
-    else if(isCloset) action = showCloset;
-    else if(isPhoto) action = showPhoto;
+    if(isMall) action = showCloset;
+    else if(isApartment) action = () => showMap({goBattle, showCloset, showPhoto});
     else if(isSafeArea) action = () => visitSafeArea(loc.id, () => showMap({goBattle, showCloset, showPhoto}));
     else action = () => showMap({goBattle, showCloset, showPhoto});
     const pin = document.createElement('button');
-    pin.className = `map-pin${isBattle ? ' map-pin-danger' : ''}`;
+    pin.className = 'map-pin';
     pin.type = 'button';
     pin.style.left = loc.x + '%';
     pin.style.top = loc.y + '%';
