@@ -21,36 +21,24 @@ function routes(){
 
 function showSplash(onComplete){
   state.screen = 'splash';
-  clearStage();
+  // Full-screen fixed overlay — matches Calamity War / Long Goodbye splash
   const splash = document.createElement('div');
-  splash.className = 'splash-screen';
-  splash.innerHTML = `
-    <img src="assets/splash/emma_woods_studio_splash.png" alt="Emma Woods Studio" />
-    <div class="splash-hint">${tx('Click to continue','クリックして続行')}</div>
-  `;
-  screenLayer().append(splash);
-  // Hide the entire top bar and HUD for a true full-screen splash
-  const topBar = document.querySelector('.top-bar');
-  const hud = document.getElementById('hud');
-  const stage = document.querySelector('.stage');
-  if(topBar) topBar.style.display = 'none';
-  if(hud) hud.style.display = 'none';
-  if(stage) stage.style.top = '0';
+  splash.id = 'emma-woods-splash';
+  splash.innerHTML = '<img src="assets/splash/emma_woods_studio_splash.jpeg" alt="Emma Woods Studio" />';
+  document.body.prepend(splash);
   AudioManager.playSceneMusic('cutscene');
   let dismissed = false;
   const dismiss = () => {
     if(dismissed) return;
     dismissed = true;
-    splash.classList.add('fade-out');
+    splash.classList.add('hidden');
     setTimeout(() => {
-      if(topBar) topBar.style.display = '';
-      if(hud) hud.style.display = '';
-      if(stage) stage.style.top = '';
+      splash.remove();
+      clearStage();
       if(onComplete) onComplete();
-    }, 600);
+    }, 700);
   };
-  splash.addEventListener('click', dismiss);
-  setTimeout(dismiss, 5000);
+  setTimeout(dismiss, 3000);
 }
 
 function boot(){

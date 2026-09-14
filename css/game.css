@@ -1,4 +1,4 @@
-:root{
+#emma-woods-splash{position:fixed;inset:0;z-index:999999;background:#0b0807;display:flex;align-items:center;justify-content:center;overflow:hidden}#emma-woods-splash.hidden{opacity:0;pointer-events:none;transition:opacity 700ms ease}#emma-woods-splash img{width:100%;height:100%;object-fit:cover}:root{
   --pink:#ff7cc7;--hot:#ff2fa8;--deep:#150915;--purple:#8b5cf6;--cream:#fff4e9;--gold:#f7c76b;--blue:#6ee7ff;--green:#7ee083;--red:#ff4c66;--line:rgba(255,220,240,.5);--shadow:0 18px 60px rgba(0,0,0,.45)
 }
 *{box-sizing:border-box}html,body{margin:0;height:100%;font-family:"Trebuchet MS",system-ui,sans-serif;background:#130713;color:var(--cream);overflow:hidden}button,input,select{font:inherit}.hidden{display:none!important}
@@ -212,10 +212,10 @@
 }
 
 /* Splash Screen */
-.splash-screen{position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#0a0408;cursor:pointer;animation:splashIn .8s ease forwards}
-.splash-screen img{max-width:min(90vw,820px);max-height:80vh;object-fit:contain;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-.splash-hint{color:rgba(255,230,244,.6);font-size:14px;letter-spacing:.1em;text-transform:uppercase;animation:pulse 2s ease infinite}
-.splash-screen.fade-out{animation:splashOut .6s ease forwards}
+
+
+
+
 @keyframes splashIn{from{opacity:0}to{opacity:1}}
 @keyframes splashOut{from{opacity:1}to{opacity:0;pointer-events:none}}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.8}}
