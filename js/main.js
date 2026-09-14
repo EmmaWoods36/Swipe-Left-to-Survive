@@ -29,7 +29,13 @@ function showSplash(onComplete){
     <div class="splash-hint">${tx('Click to continue','クリックして続行')}</div>
   `;
   screenLayer().append(splash);
-  document.getElementById('hud').style.display = 'none';
+  // Hide the entire top bar and HUD for a true full-screen splash
+  const topBar = document.querySelector('.top-bar');
+  const hud = document.getElementById('hud');
+  const stage = document.querySelector('.stage');
+  if(topBar) topBar.style.display = 'none';
+  if(hud) hud.style.display = 'none';
+  if(stage) stage.style.top = '0';
   AudioManager.playSceneMusic('cutscene');
   let dismissed = false;
   const dismiss = () => {
@@ -37,7 +43,9 @@ function showSplash(onComplete){
     dismissed = true;
     splash.classList.add('fade-out');
     setTimeout(() => {
-      document.getElementById('hud').style.display = '';
+      if(topBar) topBar.style.display = '';
+      if(hud) hud.style.display = '';
+      if(stage) stage.style.top = '';
       if(onComplete) onComplete();
     }, 600);
   };
