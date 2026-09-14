@@ -84,16 +84,17 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
   setBackground(mapBg);
   AudioManager.playSceneMusic('city_map');
   // Location pins positioned on the city map — fixed world map per canon
+  // Coordinates matched to actual buildings/features on bg_city_map images
   const locations = [
-    { id:'apartment',  name:tx('Amy\'s Apartment','エイミーの部屋'),     x:15, y:72 },
-    { id:'office',     name:tx('Office','オフィス'),                     x:80, y:35 },
-    { id:'library',    name:tx('Library','図書館'),                      x:25, y:30 },
-    { id:'bar',        name:tx('Bar','バー'),                             x:55, y:50 },
-    { id:'park',       name:tx('Park','公園'),                           x:40, y:62 },
-    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:82, y:60 },
-    { id:'mall',       name:tx('Mall','モール'),                          x:30, y:45 },
-    { id:'villain_apt',name:tx('Villain Apt','ヴィランの部屋'),           x:72, y:25 },
-    { id:'beach',      name:tx('Beach','ビーチ'),                        x:65, y:82 }
+    { id:'apartment',  name:tx('Amy\'s Apartment','エイミーの部屋'),     x:35, y:38 },
+    { id:'office',     name:tx('Office','オフィス'),                     x:72, y:27 },
+    { id:'library',    name:tx('Library','図書館'),                      x:56, y:43 },
+    { id:'bar',        name:tx('Bar','バー'),                             x:76, y:48 },
+    { id:'park',       name:tx('Park','公園'),                           x:28, y:64 },
+    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:54, y:70 },
+    { id:'mall',       name:tx('Mall','モール'),                          x:83, y:76 },
+    { id:'villain_apt',name:tx('Villain Apt','ヴィランの部屋'),           x:95, y:44 },
+    { id:'beach',      name:tx('Beach','ビーチ'),                        x:20, y:85 }
   ];
   const mapWrap = document.createElement('div');
   mapWrap.className = 'city-map-pins';
