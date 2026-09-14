@@ -106,7 +106,7 @@ export function getDaypartFromClock() {
 
 // Format clockMinutes as H:MM AM/PM
 export function formatClockTime() {
-  const total = state.clockMinutes % 1440;
+  const total = Math.floor(state.clockMinutes % 1440);
   const h24 = Math.floor(total / 60);
   const m = total % 60;
   const ampm = h24 >= 12 ? 'PM' : 'AM';
