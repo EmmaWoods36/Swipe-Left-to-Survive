@@ -83,25 +83,25 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
   const mapBg = timeMap[state.time] || 'mapEvening';
   setBackground(mapBg);
   AudioManager.playSceneMusic('city_map');
-  // Location pins positioned on the city map — fixed world map per canon
-  // Coordinates matched to actual buildings/features on bg_city_map images
+  // Location pins — 9 fixed world-map pins per canon
+  // Coordinates are semantic anchors: pin TIP touches building entrance/frontage
+  // labelPos: individual label offset direction to avoid covering art
   const locations = [
-    { id:'apartment',  name:tx('Amy\'s Apartment','エイミーの部屋'),     x:35, y:38 },
-    { id:'office',     name:tx('Office','オフィス'),                     x:72, y:27 },
-    { id:'library',    name:tx('Library','図書館'),                      x:56, y:43 },
-    { id:'bar',        name:tx('Bar','バー'),                             x:76, y:48 },
-    { id:'park',       name:tx('Park','公園'),                           x:28, y:64 },
-    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:54, y:70 },
-    { id:'mall',       name:tx('Mall','モール'),                          x:83, y:76 },
-    { id:'villain_apt',name:tx('Villain Apt','ヴィランの部屋'),           x:95, y:44 },
-    { id:'beach',      name:tx('Beach','ビーチ'),                        x:20, y:85 }
+    { id:'apartment',  name:tx('Amy\'s Apartment','エイミーの部屋'),     x:33.5, y:46.5, labelPos:'left' },
+    { id:'office',     name:tx('Office','オフィス'),                     x:70.5, y:36.5, labelPos:'right' },
+    { id:'library',    name:tx('Library','図書館'),                      x:53.5, y:50.5, labelPos:'left' },
+    { id:'bar',        name:tx('Bar','バー'),                             x:73.0, y:56.0, labelPos:'right' },
+    { id:'park',       name:tx('Park','公園'),                           x:28.5, y:71.5, labelPos:'left' },
+    { id:'restaurant', name:tx('Restaurant','レストラン'),               x:51.5, y:76.5, labelPos:'right' },
+    { id:'mall',       name:tx('Mall','モール'),                          x:77.0, y:83.5, labelPos:'right' },
+    { id:'villain_apt',name:tx('Villain Apt','ヴィランの部屋'),           x:93.5, y:61.0, labelPos:'left' },
+    { id:'beach',      name:tx('Beach','ビーチ'),                        x:21.5, y:70.5, labelPos:'left' }
   ];
   const mapWrap = document.createElement('div');
   mapWrap.className = 'city-map-pins';
   locations.forEach(loc => {
-    const isApartment = loc.id==='apartment';
     const isMall = loc.id==='mall';
-    const isBeach = loc.id==='beach';
+    const isApartment = loc.id==='apartment';
     const isSafeArea = SAFE_AREAS[loc.id];
     let action;
     if(isMall) action = showCloset;
@@ -109,11 +109,11 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
     else if(isSafeArea) action = () => visitSafeArea(loc.id, () => showMap({goBattle, showCloset, showPhoto}));
     else action = () => showMap({goBattle, showCloset, showPhoto});
     const pin = document.createElement('button');
-    pin.className = 'map-pin';
+    pin.className = `map-pin label-${loc.labelPos || 'below'}`;
     pin.type = 'button';
     pin.style.left = loc.x + '%';
     pin.style.top = loc.y + '%';
-    pin.innerHTML = `<span class="pin-dot"></span><span class="pin-label">${loc.name}</span>`;
+    pin.innerHTML = `<span class="pin-teardrop"><svg width="24" height="32" viewBox="0 0 24 32"><path d="M12 0C5.37 0 0 5.37 0 12c0 8.2 12 20 12 20s12-11.8 12-20C24 5.37 18.63 0 12 0z" fill="#ff1493" stroke="#fff" stroke-width="2.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg></span><span class="pin-label">${loc.name}</span>`;
     pin.onclick = action;
     mapWrap.append(pin);
   });
