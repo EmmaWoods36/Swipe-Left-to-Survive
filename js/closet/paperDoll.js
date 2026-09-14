@@ -2,17 +2,19 @@ import {state} from '../state.js';
 import {imageWithFallback,Asset} from '../assets.js';
 
 // Correct render order — sorted from bottom to top.
-// The manifest's renderLayer values are wrong (e.g. hair=10 means it renders
-// UNDER clothes). This is the authoritative layer order for the paper doll.
+// Hair goes FIRST (behind the base body) so it doesn't cover Amy's face.
+// The afro and other hairstyles are solid shapes that would cover the face
+// if rendered on top. By putting hair behind the base, only the parts of
+// the hair that extend beyond Amy's body are visible (correct paper doll behavior).
 const LAYER_ORDER = [
-  'bottom',      // pants, skirts — go on before tops
+  'hair',        // Hair goes BEHIND the body (so face is visible)
+  'bottom',      // pants, skirts
   'top',         // shirts
   'full',        // full outfits (hide incompatible top/bottom)
   'dress',       // dresses (hide incompatible top/bottom)
   'swim',        // swimwear
   'outerwear',   // jackets, coats
   'shoes',       // boots, heels
-  'hair',        // hair goes ON TOP of clothes
   'earrings',    // earrings
   'necklace',    // necklaces
   'bracelet',    // bracelets
@@ -67,7 +69,20 @@ export function renderPaperDoll(target) {
   stage.className = 'paper-doll';
   target.append(stage);
 
-  // Layer 0: Amy's base body — ALWAYS rendered first, ALWAYS present
+  const outfit = state.outfit || {};
+
+  // Render hair FIRST (behind everything) so it doesn't cover Amy's face.
+  // The base body goes on top of the hair, so only the parts of the hair
+  // that extend beyond Amy's body are visible.
+  const hairItem = outfit.hair;
+  if (hairItem && hairItem.overlay) {
+    const hairImg = imageWithFallback(hairItem.overlay, hairItem.name || 'hair');
+    hairImg.className = 'paper-doll-layer';
+    hairImg.dataset.slot = 'hair';
+    stage.append(hairImg);
+  }
+
+  // Layer 1: Amy's base body — ALWAYS rendered on top of hair, ALWAYS present
   const base = imageWithFallback(Asset.paperDoll?.base, 'Amy base');
   base.className = 'paper-doll-layer';
   base.onerror = () => {
@@ -75,10 +90,9 @@ export function renderPaperDoll(target) {
   };
   stage.append(base);
 
-  const outfit = state.outfit || {};
-
-  // Render each layer in the correct order
+  // Render remaining layers in the correct order (skip hair, already rendered)
   for (const slot of LAYER_ORDER) {
+    if (slot === 'hair') continue; // Already rendered above
     // Skip if a full outfit or dress hides this slot
     if (shouldHideSlot(outfit, slot)) continue;
 
