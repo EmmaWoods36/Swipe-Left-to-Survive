@@ -4,12 +4,43 @@ import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
 import {SAFE_AREAS} from '../data/conversationBank.js';
 import {AudioManager} from './audioManager.js';
+import {GREEN_FLAGS} from '../data/greenFlags.js';
 import {
   MAP_PINS, LOCATION_BACKGROUNDS, getLocationBg, getMapDaypart,
   isLocationOpen, formatHours, LOCATION_HOURS,
   OFFICE_EVENTS, LIBRARY_BOOKS, RESTAURANT_MENU, BAR_MENU, CAFE_DRINKS, CAFE_FOOD, SPA_PACKAGES,
   LOCATION_PEOPLE, APARTMENT_ACTIONS, BEACH_SUBLOCATIONS, MALL_SUBLOCATIONS
 } from '../data/locations.js';
+
+// Name lookup for characters used in location socialize buttons
+const NPC_NAMES = {
+  malik: { en: 'Malik', ja: 'マリク' },
+  min: { en: 'Min', ja: 'ミン' },
+  jade: { en: 'Jade', ja: 'ジェイド' },
+  chloe: { en: 'Chloe', ja: 'クロエ' },
+  mia: { en: 'Mia', ja: 'ミア' },
+  eli: { en: 'Eli', ja: 'エリ' },
+  sabrina: { en: 'Sabrina', ja: 'サブリナ' },
+  val: { en: 'Val', ja: 'ヴァル' },
+};
+
+// Build a localized "Talk to [name]" label for a location's socialize button
+function socializeLabel(locationKey) {
+  const people = LOCATION_PEOPLE[locationKey];
+  if (!people) return tx('Socialize','交流する');
+  // Priority: green flag NPC (sleeper) > regular NPC > friends
+  let nameEntry = null;
+  if (people.greenFlagNpc) {
+    const gf = GREEN_FLAGS[people.greenFlagNpc];
+    nameEntry = { en: gf?.name || NPC_NAMES[people.greenFlagNpc]?.en, ja: gf?.jaName || NPC_NAMES[people.greenFlagNpc]?.ja };
+  } else if (people.npc) {
+    nameEntry = NPC_NAMES[people.npc];
+  }
+  if (nameEntry) {
+    return tx(`Talk to ${nameEntry.en}`, `${nameEntry.ja}と話す`);
+  }
+  return tx('Talk to friends','友達と話す');
+}
 
 export const screenLayer = () => document.getElementById('screenLayer');
 const hud = () => document.getElementById('hud');
@@ -265,8 +296,8 @@ function showLibraryMenu({goBattle, showCloset, showPhoto}={}){
   const g = document.getElementById('libActions');
   // Read → opens book genre submenu
   g.append(button(tx('Read','読む'), () => showLibraryReadMenu({goBattle, showCloset, showPhoto}), 'primary'));
-  // Socialize
-  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('library', () => showMap({goBattle, showCloset, showPhoto}))));
+  // Talk to [location person]
+  g.append(button(socializeLabel('library'), () => visitSafeArea('library', () => showMap({goBattle, showCloset, showPhoto}))));
   g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }
@@ -314,8 +345,8 @@ function showBarMenu({goBattle, showCloset, showPhoto}={}){
   const g = document.getElementById('barActions');
   // Order → opens drink/snack submenu
   g.append(button(tx('Order','注文'), () => showBarOrderMenu({goBattle, showCloset, showPhoto}), 'primary'));
-  // Socialize
-  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('bar', () => showBarMenu({goBattle, showCloset, showPhoto}))));
+  // Talk to [location person]
+  g.append(button(socializeLabel('bar'), () => visitSafeArea('bar', () => showBarMenu({goBattle, showCloset, showPhoto}))));
   g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }
@@ -372,8 +403,8 @@ function showBeachMenu({goBattle, showCloset, showPhoto}={}){
     showMessage(tx('Relaxing','リラックス'), tx('Amy soaked up the sun. Peace +15, HP +10.','エイミーは日差しを浴びた。ピース+15、HP+10。'),
       [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachMenu({goBattle, showCloset, showPhoto})}]);
   }, 'primary'));
-  // Socialize
-  g.append(button(tx('Socialize','交流する'), () => visitSafeArea('beach', () => showBeachMenu({goBattle, showCloset, showPhoto}))));
+  // Talk to [location person]
+  g.append(button(socializeLabel('beach'), () => visitSafeArea('beach', () => showBeachMenu({goBattle, showCloset, showPhoto}))));
   // Beachside Cafe — nested sublocation
   const cafeOpen = isLocationOpen('beachsideCafe', state.clockMinutes);
   g.append(button(tx('Visit Beachside Cafe','海辺のカフェに行く'), () => {
@@ -423,8 +454,8 @@ function showBeachsideCafeMenu({goBattle, showCloset, showPhoto}={}){
     showMessage(tx('Relaxing','リラックス'), tx('Amy watched the waves through the window. Peace +20, HP +15.','エイミーは窓から波を眺めた。ピース+20、HP+15。'),
       [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
   }));
-  // Socialize (context-sensitive: Mia/Chloe, Sabrina, Christy)
-  g.append(button(tx('Chat','おしゃべり'), () => visitSafeArea('beachsideCafe', () => showBeachsideCafeMenu({goBattle, showCloset, showPhoto}))));
+  // Talk to [location person] (context-sensitive: Mia/Chloe, Sabrina, Christy)
+  g.append(button(socializeLabel('beachsideCafe'), () => visitSafeArea('beachsideCafe', () => showBeachsideCafeMenu({goBattle, showCloset, showPhoto}))));
   // Return to parent location (Beach), NOT directly to map
   g.append(button(tx('Back to Beach','海辺へ戻る'), () => showBeachMenu({goBattle, showCloset, showPhoto})));
   renderHud();
