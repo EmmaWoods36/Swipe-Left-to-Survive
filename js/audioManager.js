@@ -17,6 +17,7 @@ const AudioManager = {
   // Music track definitions
   TRACKS: {
     chill: 'assets/audio/music/chill_ambient.mp3',
+    title: 'assets/audio/music/title_theme.mp3',
     mall: 'assets/audio/music/mall.mp3',
     restaurant: 'assets/audio/music/restaurant.mp3',
     bar: 'assets/audio/music/bar.mp3',
@@ -57,6 +58,7 @@ const AudioManager = {
     bar: 'bar',
     nightclub: 'bar',
     cutscene: 'cutscene',
+    title: 'title',
     battle: 'battle',
     victory: 'victory',
     defeat: 'defeat',

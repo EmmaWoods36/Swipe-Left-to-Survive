@@ -26,7 +26,7 @@ function showSplash(onComplete){
   splash.id = 'emma-woods-splash';
   splash.innerHTML = '<img src="assets/splash/emma_woods_studio_splash.jpeg" alt="Emma Woods Studio" />';
   document.body.prepend(splash);
-  AudioManager.playSceneMusic('cutscene');
+  AudioManager.playSceneMusic('title');
   let dismissed = false;
   const dismiss = () => {
     if(dismissed) return;

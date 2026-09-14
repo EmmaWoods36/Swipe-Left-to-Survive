@@ -45,7 +45,7 @@ export function showTitle({startGame, showMap, showCloset, showPhoto, continueGa
   state.screen = 'title';
   clearStage();
   setBackground('apartmentEvening');
-  AudioManager.playSceneMusic('cutscene');
+  AudioManager.playSceneMusic('title');
   screenLayer().innerHTML = `
     <div class="center-screen"><section class="panel">
       <h2>${tx('Swipe Left to Survive','マッチング地獄サバイバル')}</h2>
