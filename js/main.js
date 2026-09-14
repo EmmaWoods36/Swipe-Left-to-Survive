@@ -1,4 +1,4 @@
-import {state,setLanguage,hasSaveData,loadGame,saveGame,autosave} from './state.js';
+import {state,setLanguage,hasSaveData,loadGame,saveGame,autosave,startPassiveClock,getClockPeriod} from './state.js';
 import {updateStaticText,tx} from './localization.js';
 import {showTitle,showMap,renderHud,clearStage,screenLayer} from './screens.js';
 import {startOpening} from './scenes/opening.js';
@@ -58,6 +58,15 @@ function boot(){
   configureCloset({showMap:r.showMap, showPhoto:showDateFitStudio});
   configurePhoto({showMap:r.showMap, showCloset});
   if(hasSaveData()) loadGame();
+  startPassiveClock();
+  // Refresh HUD when clock ticks passively
+  window.addEventListener('slts:clockTick', () => {
+    if(state.screen !== 'title' && state.screen !== 'splash') renderHud();
+  });
+  // When day/night period changes, refresh current screen for backgrounds/availability
+  window.addEventListener('slts:periodChanged', () => {
+    if(state.screen === 'map') routes().showMap();
+  });
   showSplash(() => { showTitle(r); renderHud(); });
   setInterval(()=>{ if(state.screen !== 'title' && state.screen !== 'splash') autosave(); }, 30000);
 }

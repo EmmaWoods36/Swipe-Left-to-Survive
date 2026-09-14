@@ -7,7 +7,7 @@ export const state = {
   screen: 'title',
   scene: null,
   day: 1,
-  time: 'Evening',
+  clockMinutes: 9 * 60,  // 9:00 AM — authoritative time source (v1.34)
   funds: 800,
   peace: 50,
   clarity: 40,
@@ -43,17 +43,142 @@ export const state = {
   battle: null,
   amyBars: 1,
   amyHp: 50,
-  amyMaxHp: 50
+  amyMaxHp: 50,
+  stamina: 50
 };
 
 export function serializeState(){
   return {...state, defeated:[...state.defeated]};
 }
 
+// === v1.34 CLOCK SYSTEM — RESTORED ===
+// state.clockMinutes is the authoritative time source (0-1439)
+// Periods: Sunrise 5:30-6:59, Day 7:00-17:59, Sunset 18:00-19:59, Night 20:00-5:29
+// Map: Sunrise→afternoon bg, Day→day bg, Sunset→afternoon bg, Night→night bg
+
+// Advance the game clock by N minutes. Midnight rollover increments day.
+export function advanceGameMinutes(minutes) {
+  state.clockMinutes += minutes;
+  while (state.clockMinutes >= 1440) {
+    state.clockMinutes -= 1440;
+    state.day += 1;
+  }
+  // Update derived state.time string for backward compat
+  state.time = getClockPeriod();
+}
+
+// Standard action time cost: 4 in-game hours (240 minutes)
+export function advanceTime() {
+  advanceGameMinutes(240);
+}
+
+// Sleep: advance to next day at 8:00 AM, restore stats
+export function sleepUntilMorning() {
+  state.day += 1;
+  state.clockMinutes = 8 * 60;  // 8:00 AM
+  state.amyHp = state.amyMaxHp;
+  state.stamina = 100;
+  state.peace = Math.min(100, (state.peace || 50) + 20);
+  state.time = getClockPeriod();
+}
+
+// Derive period label from clockMinutes
+export function getClockPeriod() {
+  const h = state.clockMinutes;
+  // Sunrise: 5:30 AM - 6:59 AM (330 - 419)
+  if (h >= 330 && h <= 419) return 'Sunrise';
+  // Day: 7:00 AM - 5:59 PM (420 - 1079)
+  if (h >= 420 && h <= 1079) return 'Day';
+  // Sunset: 6:00 PM - 7:59 PM (1080 - 1199)
+  if (h >= 1080 && h <= 1199) return 'Sunset';
+  // Night: 8:00 PM - 5:29 AM (1200 - 329)
+  return 'Night';
+}
+
+// Map period to background daypart key
+export function getDaypartFromClock() {
+  const period = getClockPeriod();
+  if (period === 'Sunrise') return 'afternoon';
+  if (period === 'Day') return 'day';
+  if (period === 'Sunset') return 'afternoon';
+  return 'night';  // Night
+}
+
+// Format clockMinutes as H:MM AM/PM
+export function formatClockTime() {
+  const total = state.clockMinutes % 1440;
+  const h24 = Math.floor(total / 60);
+  const m = total % 60;
+  const ampm = h24 >= 12 ? 'PM' : 'AM';
+  let h12 = h24 % 12;
+  if (h12 === 0) h12 = 12;
+  return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
+}
+
+// Get current hour as integer (0-23) for location open/closed checks
+export function getClockHour() {
+  return Math.floor((state.clockMinutes % 1440) / 60);
+}
+
+// Get current minutes within the hour (0-59)
+export function getClockMinuteOfHour() {
+  return (state.clockMinutes % 1440) % 60;
+}
+
+// Passive clock: 1 real-world second = N game minutes (default: 0.5 = 30 game min per 60 real sec)
+// Pauses during battle, cutscene, title, closet, shop
+const PASSIVE_CLOCK_INTERVAL_MS = 1000;  // tick every 1 real second
+const PASSIVE_GAME_MINUTES_PER_TICK = 0.5;  // 30 game minutes per 60 real seconds
+
+let _passiveClockTimer = null;
+let _passiveClockActive = false;
+
+export function isPassiveClockPaused() {
+  const s = state.screen;
+  if (s === 'title' || s === 'splash') return true;
+  if (state.battle) return true;
+  if (state.scene) return true;  // cutscene active
+  if (s === 'closet' || s === 'boutique' || s === 'shop') return true;
+  if (s === 'cheat') return true;
+  if (document.hidden) return true;  // browser tab not visible
+  return false;
+}
+
+export function startPassiveClock() {
+  if (_passiveClockTimer) clearInterval(_passiveClockTimer);
+  _passiveClockActive = true;
+  _passiveClockTimer = setInterval(() => {
+    if (!_passiveClockActive) return;
+    if (isPassiveClockPaused()) return;
+    const oldPeriod = getClockPeriod();
+    advanceGameMinutes(PASSIVE_GAME_MINUTES_PER_TICK);
+    const newPeriod = getClockPeriod();
+    // If period changed, dispatch event so screens can refresh backgrounds/availability
+    if (oldPeriod !== newPeriod) {
+      window.dispatchEvent(new CustomEvent('slts:periodChanged', { detail: { oldPeriod, newPeriod } }));
+    }
+    // Always dispatch a tick event for HUD refresh
+    window.dispatchEvent(new CustomEvent('slts:clockTick'));
+  }, PASSIVE_CLOCK_INTERVAL_MS);
+}
+
+export function stopPassiveClock() {
+  _passiveClockActive = false;
+  if (_passiveClockTimer) {
+    clearInterval(_passiveClockTimer);
+    _passiveClockTimer = null;
+  }
+}
+
 export function hydrateState(saved){
   if(!saved) return;
   Object.assign(state, saved);
   state.defeated = new Set(saved.defeated || []);
+  // Restore clock — if missing from old saves, default to 9:00 AM Day 1
+  if (typeof state.clockMinutes !== 'number') state.clockMinutes = 540;
+  if (typeof state.day !== 'number') state.day = 1;
+  if (typeof state.stamina !== 'number') state.stamina = 50;
+  state.time = getClockPeriod();
 }
 
 export function setLanguage(lang){

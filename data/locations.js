@@ -8,18 +8,42 @@
 // ============================================================
 
 // --- Time-to-daypart mapping ---
-// Sunrise (5:30AM-6:59AM), Day (7AM-5:59PM), Sunset (6PM-7:59PM), Night (8PM-5:29AM)
+// Uses clockMinutes (0-1439) from state for authoritative time.
+// Periods: Sunrise 5:30-6:59, Day 7:00-17:59, Sunset 18:00-19:59, Night 20:00-5:29
+// Map backgrounds: Sunrise->afternoon, Day->day, Sunset->afternoon, Night->night
+
+// Derive clock period from clockMinutes
+export function getClockPeriodFromMinutes(clockMinutes) {
+  const h = typeof clockMinutes === 'number' ? clockMinutes : 540;
+  if (h >= 330 && h <= 419) return 'Sunrise';
+  if (h >= 420 && h <= 1079) return 'Day';
+  if (h >= 1080 && h <= 1199) return 'Sunset';
+  return 'Night';
+}
+
+// Map period to background daypart key
+export function getDaypartFromClock(clockMinutes) {
+  const period = getClockPeriodFromMinutes(clockMinutes);
+  if (period === 'Sunrise') return 'afternoon';
+  if (period === 'Day') return 'day';
+  if (period === 'Sunset') return 'afternoon';
+  return 'night';
+}
+
+// Legacy: accept time string or clockMinutes
 export function getDaypart(timeStr) {
+  if (typeof timeStr === 'number') return getDaypartFromClock(timeStr);
   const t = (timeStr || '').toLowerCase();
   if (t.includes('sunrise') || t.includes('morning')) return 'day';
   if (t.includes('day')) return 'day';
   if (t.includes('afternoon') || t.includes('evening') || t.includes('sunset')) return 'afternoon';
   if (t.includes('dusk') || t.includes('night')) return 'night';
-  return 'day'; // fallback
+  return 'day';
 }
 
-// --- Map time string to daypart for background selection ---
+// Map time string/clockMinutes to daypart for background selection
 export function getMapDaypart(timeStr) {
+  if (typeof timeStr === 'number') return getDaypartFromClock(timeStr);
   const t = (timeStr || '').toLowerCase();
   if (t.includes('sunrise') || t.includes('morning') || t.includes('day')) return 'day';
   if (t.includes('afternoon') || t.includes('evening') || t.includes('sunset')) return 'afternoon';
@@ -144,22 +168,28 @@ export const SUBLOCATION_HOURS = {
 };
 
 // --- Check if a location is currently open ---
-export function isLocationOpen(locationId, currentTimeStr) {
+// Accepts clockMinutes (number) or legacy time string
+export function isLocationOpen(locationId, currentTime) {
   const hours = LOCATION_HOURS[locationId] || SUBLOCATION_HOURS[locationId];
   if (!hours) return true; // null = always open
 
-  // Parse approximate hour from time string
-  const t = (currentTimeStr || '').toLowerCase();
+  // If numeric, use exact hour from clockMinutes
   let hour;
-  if (t.includes('sunrise')) hour = 6;
-  else if (t.includes('morning')) hour = 8;
-  else if (t.includes('day') && !t.includes('evening')) hour = 12;
-  else if (t.includes('afternoon')) hour = 14;
-  else if (t.includes('evening')) hour = 18;
-  else if (t.includes('sunset')) hour = 19;
-  else if (t.includes('dusk')) hour = 20;
-  else if (t.includes('night')) hour = 22;
-  else hour = 12;
+  if (typeof currentTime === 'number') {
+    hour = Math.floor((currentTime % 1440) / 60);
+  } else {
+    // Legacy string-based fallback
+    const t = (currentTime || '').toLowerCase();
+    if (t.includes('sunrise')) hour = 6;
+    else if (t.includes('morning')) hour = 8;
+    else if (t.includes('day') && !t.includes('evening')) hour = 12;
+    else if (t.includes('afternoon')) hour = 14;
+    else if (t.includes('evening')) hour = 18;
+    else if (t.includes('sunset')) hour = 19;
+    else if (t.includes('dusk')) hour = 20;
+    else if (t.includes('night')) hour = 22;
+    else hour = 12;
+  }
 
   if (hours.open <= hours.close) {
     return hour >= hours.open && hour < hours.close;

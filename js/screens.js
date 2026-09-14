@@ -1,4 +1,4 @@
-import {state,hasSaveData,autosave} from './state.js';
+import {state,hasSaveData,autosave,advanceGameMinutes,advanceTime,sleepUntilMorning,getClockPeriod,formatClockTime,getClockHour,getDaypartFromClock,startPassiveClock,stopPassiveClock} from './state.js';
 import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
@@ -26,9 +26,11 @@ export function clearStage(){
 
 export function renderHud(){
   const muted = AudioManager._isMuted;
+  const period = getClockPeriod();
+  const clockStr = formatClockTime();
   hud().innerHTML = `
     <span class="hud-chip">${t('day')} <b>${state.day}</b></span>
-    <span class="hud-chip">${t('time')} <b>${state.time}</b></span>
+    <span class="hud-chip hud-clock"><b>${clockStr}</b> <span class="hud-period">${period}</span></span>
     <span class="hud-chip">${t('hp')} <b>${state.amyHp}/${state.amyMaxHp}</b></span>
     <span class="hud-chip">${t('funds')} <b>${state.funds}</b></span>
     <button id="langToggle" class="lang-toggle" type="button"><b>${state.lang==='ja'?'和':'EN'}</b> / ${state.lang==='ja'?'EN':'和'}</button>
@@ -74,21 +76,27 @@ export function showTitle({startGame, showMap, showCloset, showPhoto, continueGa
 export function showMap({goBattle, showCloset, showPhoto, startBattle}={}){
   state.screen = 'map';
   clearStage();
-  // Use data-driven map background based on game time
-  const mapDaypart = getMapDaypart(state.time);
+  // Use clockMinutes for authoritative time → derive daypart for background
+  const mapDaypart = getDaypartFromClock(state.clockMinutes);
   const mapBg = getLocationBg('cityMap', mapDaypart) || 'assets/backgrounds/bg_city_map_day.png';
-  // Set background directly via the scene-bg element
   const sceneBg = document.querySelector('.scene-bg');
   if(sceneBg){
     sceneBg.style.backgroundImage = `url("${mapBg}")`;
   }
   AudioManager.playSceneMusic('city_map');
+  // Clock chip overlay on the map
+  const clockStr = formatClockTime();
+  const period = getClockPeriod();
+  const clockChip = document.createElement('div');
+  clockChip.className = 'map-clock-chip';
+  clockChip.innerHTML = `<b>${clockStr}</b> • ${period}`;
+  screenLayer().append(clockChip);
   // 9 canonical pins from data/locations.js MAP_PINS
   const mapWrap = document.createElement('div');
   mapWrap.className = 'city-map-pins';
   MAP_PINS.forEach(pin => {
     const name = tx(pin.label.en, pin.label.ja);
-    const isClosed = !isLocationOpen(pin.id, state.time);
+    const isClosed = !isLocationOpen(pin.id, state.clockMinutes);
     const hoursStr = formatHours(pin.id);
     let action;
     // Wire each pin to its proper game function
@@ -121,7 +129,7 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle}={}){
 
 // Helper: set location background from LOCATION_BACKGROUNDS
 function setLocationBg(locationKey){
-  const daypart = getMapDaypart(state.time);
+  const daypart = getDaypartFromClock(state.clockMinutes);
   const bgPath = getLocationBg(locationKey, daypart);
   if(bgPath){
     const sceneBg = document.querySelector('.scene-bg');
@@ -159,12 +167,13 @@ function showApartmentMenu({goBattle, showCloset, showPhoto}={}){
   g.append(button(tx('Open Closet','クローゼットを開く'), showCloset));
   // Date Fit Studio
   g.append(button(tx('Date Fit Studio','デートコーデスタジオ'), showPhoto));
-  // Rest — restore HP
-  g.append(button(tx('Rest','休む'), () => {
-    state.amyHp = state.amyMaxHp;
-    showMessage(tx('Rested','休んだ'), tx('Amy took a nap. HP restored to full.','エイミーは昼寝をした。HPが全回復した。'),
+  // Sleep — advance to next day at 8:00 AM, restore stats (v1.34)
+  g.append(button(tx('Sleep','寝る'), () => {
+    sleepUntilMorning();
+    renderHud();
+    showMessage(tx('Slept','寝た'), tx(`Amy slept through the night. Day ${state.day}, ${formatClockTime()}.\nHP restored. Stamina restored. Peace +20.`, `エイミーは一晩寝た。Day ${state.day}、${formatClockTime()}。\nHP全回復。スタミナ全回復。ピース+20。`),
       [{label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:() => showMap({goBattle, showCloset, showPhoto})}]);
-  }));
+  }, 'primary'));
   g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }
@@ -174,7 +183,7 @@ function showApartmentMenu({goBattle, showCloset, showPhoto}={}){
 // Canon event: after 3 battles defeated, next office visit triggers the creepy coworker (Battle 4)
 function showOfficeMenu({goBattle, showCloset, showPhoto, startBattle}={}){
   // Office is not available at night
-  if(!isLocationOpen('office', state.time)){
+  if(!isLocationOpen('office', state.clockMinutes)){
     showClosedOverlay(tx('Office','オフィス'), formatHours('office'), () => showMap({goBattle, showCloset, showPhoto, startBattle}));
     return;
   }
@@ -222,9 +231,11 @@ function showOfficeMenu({goBattle, showCloset, showPhoto, startBattle}={}){
     const reward = event.reward;
     const eventText = tx(event.text.en, event.text.ja);
     state.funds += reward;
+    // Advance time by 4 hours (v1.34)
+    advanceTime();
     renderHud();
     showMessage(tx('Office Things','仕事'),
-      tx(`${eventText}\n\n+${reward} Soft Life Funds.`, `${eventText}\n\n+${reward}ソフトライフファンド。`),
+      tx(`${eventText}\n\n+${reward} Soft Life Funds.\nTime advanced to ${formatClockTime()}.`, `${eventText}\n\n+${reward}ソフトライフファンド。\n時間が${formatClockTime()}に進んだ。`),
       [{label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:() => showMap({goBattle, showCloset, showPhoto, startBattle})}]);
   }, 'primary'));
   g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto, startBattle})));
@@ -234,7 +245,7 @@ function showOfficeMenu({goBattle, showCloset, showPhoto, startBattle}={}){
 // === LIBRARY ===
 // Hierarchical: Read → book menu, Socialize, Return to Map
 function showLibraryMenu({goBattle, showCloset, showPhoto}={}){
-  if(!isLocationOpen('library', state.time)){
+  if(!isLocationOpen('library', state.clockMinutes)){
     showClosedOverlay(tx('Library','図書館'), formatHours('library'), () => showMap({goBattle, showCloset, showPhoto}));
     return;
   }
@@ -274,7 +285,9 @@ function showLibraryReadMenu({goBattle, showCloset, showPhoto}={}){
       if(book.stats.clarity) state.clarity = Math.min(100, (state.clarity||40) + book.stats.clarity);
       if(book.stats.selfRespect) state.selfRespect = Math.min(100, (state.selfRespect||45) + book.stats.selfRespect);
       if(book.stats.amyHp) state.amyHp = Math.min(state.amyMaxHp, state.amyHp + book.stats.amyHp);
-      showMessage(tx('Reading','読書'), tx(`Amy read a ${label.toLowerCase()} book. (${statDesc})`, `エイミーは${label}の本を読んだ。(${statDesc})`),
+      // Reading is free, but it eats time (4 hours)
+      advanceTime();
+      showMessage(tx('Reading','読書'), tx(`Amy read a ${label.toLowerCase()} book. (${statDesc})\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}の本を読んだ。(${statDesc})\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showLibraryReadMenu({goBattle, showCloset, showPhoto})}]);
     }));
   });
@@ -353,7 +366,7 @@ function showBeachMenu({goBattle, showCloset, showPhoto}={}){
   // Socialize
   g.append(button(tx('Socialize','交流する'), () => visitSafeArea('beach', () => showBeachMenu({goBattle, showCloset, showPhoto}))));
   // Beachside Cafe — nested sublocation
-  const cafeOpen = isLocationOpen('beachsideCafe', state.time);
+  const cafeOpen = isLocationOpen('beachsideCafe', state.clockMinutes);
   g.append(button(tx('Visit Beachside Cafe','海辺のカフェに行く'), () => {
     if(!cafeOpen){
       showClosedOverlay(tx('Beachside Cafe','海辺のカフェ'), formatHours('beachsideCafe'), () => showBeachMenu({goBattle, showCloset, showPhoto}));
@@ -385,8 +398,10 @@ function showBeachsideCafeMenu({goBattle, showCloset, showPhoto}={}){
   g.append(button(tx('Open Laptop','ノートパソコンを開く'), () => {
     state.peace = Math.min(100, (state.peace||50) + 5);
     state.clarity = Math.min(100, (state.clarity||40) + 8);
+    // Working on laptop eats time (4 hours)
+    advanceTime();
     renderHud();
-    showMessage(tx('Laptop Time','パソコン時間'), tx('Amy opened her laptop and caught up on things. Peace +5, Clarity +8.','エイミーはノートパソコンを開いて色々確認した。ピース+5、クラリティ+8。'),
+    showMessage(tx('Laptop Time','パソコン時間'), tx(`Amy opened her laptop and caught up on things. Peace +5, Clarity +8.\nTime advanced to ${formatClockTime()}.`, `エイミーはノートパソコンを開いて色々確認した。ピース+5、クラリティ+8。\n時間が${formatClockTime()}に進んだ。`),
       [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
   }));
   // Relax by the Window
@@ -463,7 +478,7 @@ function showCafeFoodMenu({goBattle, showCloset, showPhoto}={}){
 // === MALL ===
 // Hierarchical: Shop / Closet, Visit Spa, Return to Map
 function showMallMenu({goBattle, showCloset, showPhoto}={}){
-  if(!isLocationOpen('mall', state.time)){
+  if(!isLocationOpen('mall', state.clockMinutes)){
     showClosedOverlay(tx('Mall','モール'), formatHours('mall'), () => showMap({goBattle, showCloset, showPhoto}));
     return;
   }
@@ -479,7 +494,7 @@ function showMallMenu({goBattle, showCloset, showPhoto}={}){
   // Shop / Closet
   g.append(button(tx('Boutique','ブティック'), showCloset, 'primary'));
   // Visit Spa — nested sublocation
-  const spaOpen = isLocationOpen('spa', state.time);
+  const spaOpen = isLocationOpen('spa', state.clockMinutes);
   g.append(button(tx('Visit Spa','スパに行く'), () => {
     if(!spaOpen){
       showClosedOverlay(tx('Spa','スパ'), formatHours('spa'), () => showMallMenu({goBattle, showCloset, showPhoto}));
@@ -497,7 +512,7 @@ function showMallMenu({goBattle, showCloset, showPhoto}={}){
 // === SPA (sublocation of Mall) ===
 // Hierarchical: Book Treatment → treatment menu, Back to Mall
 function showSpaMenu({goBattle, showCloset, showPhoto}={}){
-  if(!isLocationOpen('spa', state.time)){
+  if(!isLocationOpen('spa', state.clockMinutes)){
     showClosedOverlay(tx('Spa','スパ'), formatHours('spa'), () => showMallMenu({goBattle, showCloset, showPhoto}));
     return;
   }
