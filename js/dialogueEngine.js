@@ -81,9 +81,7 @@ function resolveSceneSprite(characterId, lineIndex){
     return gf?.portrait || gf?.sprite || null;
   }
   // Amy does NOT get a conversation sprite — only battle sprites and CGs
-  // if(characterId === 'amy' || characterId === 'goddess_amy'){
-  //   return Asset.sprites?.amy?.idle || Asset.portraits.amy || null;
-  // }
+  if(characterId === 'amy' || characterId === 'goddess_amy') return null;
   return Asset.portraits[characterId] || null;
 }
 
