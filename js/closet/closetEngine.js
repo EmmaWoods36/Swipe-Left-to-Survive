@@ -3,6 +3,7 @@ import {tx} from '../localization.js';
 import {clearStage,button,renderHud,screenLayer} from '../screens.js';
 import {setBackground,imageWithFallback} from '../assets.js';
 import {CLOSET_CATEGORIES,CLOSET_ITEMS} from '../../data/closetManifest.js';
+import {BOUTIQUE_CONVERSATIONS} from '../../data/conversationBank.js';
 import {renderPaperDoll} from './paperDoll.js';
 import {AudioManager} from '../audioManager.js';
 
@@ -153,14 +154,17 @@ function renderBoutiqueItems(){
 
 function tryPurchaseBoutique(item){
   if(state.funds < item.price){
-    // Sabrina's polite "can't afford" reaction
-    const grid = document.getElementById('boutiqueThumbs');
-    const msg = document.createElement('div');
-    msg.className = 'toast';
-    msg.textContent = tx("Sabrina: Oh, that one's a bit out of budget right now. But don't worry — it'll be here when you're ready.", 'サブリナ：あら、今は予算外ね。でも大丈夫、準備できたらまたあるから。');
-    msg.style.cssText = 'color:#ff6b6b;padding:8px;font-size:14px;';
-    grid.prepend(msg);
-    setTimeout(()=>msg.remove(), 3000);
+    // Sabrina's polite "can't afford" reaction via NPC portrait
+    showSabrinaReaction('unsure');
+    const npcBox = document.querySelector('.npc-greeting');
+    if(npcBox){
+      const msg = document.createElement('div');
+      msg.className = 'toast';
+      msg.textContent = tx("Sabrina: Oh, that one's a bit out of budget right now. But don't worry — it'll be here when you're ready.", 'サブリナ：あら、今は予算外ね。でも大丈夫、準備できたらまたあるから。');
+      msg.style.cssText = 'color:#ff6b6b;padding:8px;font-size:14px;';
+      npcBox.append(msg);
+      setTimeout(()=>msg.remove(), 3000);
+    }
     return;
   }
   state.funds -= item.price;
@@ -170,19 +174,23 @@ function tryPurchaseBoutique(item){
   renderHud();
   renderBoutiqueItems();
   // Sabrina's excited reaction when Amy buys something cute
-  const reactions = [
-    tx("Sabrina: Oh my god, YES. That is SO you. Amazing choice!", 'サブリナ：ちょっと、イエス！それ、めっちゃエイミーっぽい！最高のチョイス！'),
-    tx("Sabrina: You have incredible taste. That's going to look stunning on you.", 'サブリナ：センスいいね。それ、すごく似合うよ。'),
-    tx("Sabrina: Yes yes yes! I was hoping you'd pick that one. It's perfect.", 'サブリナ：イエスイエスイエス！それ選んでくれると思ってたの。完璧だよ。')
-  ];
-  const reaction = reactions[Math.floor(Math.random() * reactions.length)];
-  const grid = document.getElementById('boutiqueThumbs');
-  const msg = document.createElement('div');
-  msg.className = 'toast';
-  msg.textContent = reaction;
-  msg.style.cssText = 'color:#7ee083;padding:8px;font-size:14px;';
-  grid.prepend(msg);
-  setTimeout(()=>msg.remove(), 3000);
+  showSabrinaReaction('purchase');
+}
+
+// Show Sabrina's reaction (excited, unsure, or purchase) as NPC portrait + dialogue
+function showSabrinaReaction(type){
+  const npcBox = document.querySelector('.npc-greeting');
+  if(!npcBox) return;
+
+  const convos = BOUTIQUE_CONVERSATIONS[type] || [];
+  if(!convos.length) return;
+  const convo = convos[Math.floor(Math.random() * convos.length)];
+  const firstLine = convo[0];
+  const sabrinaImg = 'assets/sprites/scenes/npcs/sabrina/sabrina_scene_0' + (Math.floor(Math.random()*9)+1) + '.png';
+
+  npcBox.innerHTML = `
+    <img src="${sabrinaImg}" alt="Sabrina" class="npc-portrait" onerror="this.style.display='none'"/>
+    <p class="npc-dialogue"><b>${tx(firstLine.speaker.en, firstLine.speaker.ja)}:</b> ${tx(firstLine.text.en, firstLine.text.ja)}</p>`;
 }
 
 function renderCategories(){
