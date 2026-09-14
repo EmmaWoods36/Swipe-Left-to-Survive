@@ -135,13 +135,13 @@ export function setBackground(key){
   const el = document.getElementById('sceneBg');
   if(!el) return;
   const candidates = Asset.backgrounds[key] || Asset.backgrounds.apartmentEvening;
-  el.style.backgroundImage = 'radial-gradient(circle at 50% 40%,rgba(255,124,199,.18),transparent 40%),linear-gradient(135deg,#3f1644,#170918 70%)';
+  // No gradient overlay — backgrounds must be fully visible
   let i = 0;
   function tryNext(){
     if(i >= candidates.length) return;
     const src = candidates[i++];
     const img = new Image();
-    img.onload = () => { el.style.backgroundImage = `linear-gradient(180deg,rgba(14,4,16,.08),rgba(14,4,16,.42)), url('${src}')`; };
+    img.onload = () => { el.style.backgroundImage = `url('${src}')`; };
     img.onerror = tryNext;
     img.src = src;
   }

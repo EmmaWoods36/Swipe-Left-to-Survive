@@ -49,20 +49,27 @@ function speakerName(characterId){
 }
 
 // Get full-body scene sprite for a character
-function resolveSceneSprite(characterId){
+function resolveSceneSprite(characterId, lineIndex){
   if(!characterId) return null;
-  // Use scene sprites for friends/NPCs
-  const sceneSpriteMap = {
-    malik: 'assets/sprites/scenes/friends/malik/malik_scene_01.png',
-    min: 'assets/sprites/scenes/friends/min/min_scene_01.png',
-    jade: 'assets/sprites/scenes/friends/jade/jade_scene_01.png',
-    chloe: 'assets/sprites/scenes/friends/chloe/chloe_scene_01.png',
-    mia: 'assets/sprites/scenes/friends/mia/mia_scene_01.png',
-    eli: 'assets/sprites/scenes/npcs/eli/eli_scene_01.png',
-    sabrina: 'assets/sprites/scenes/npcs/sabrina/sabrina_scene_01.png',
-    val: 'assets/sprites/scenes/npcs/val/val_scene_01.png',
+  // Use scene sprites for friends/NPCs — cycle through ALL available expressions
+  const sceneSpriteBases = {
+    malik: 'assets/sprites/scenes/friends/malik/malik_scene_',
+    min: 'assets/sprites/scenes/friends/min/min_scene_',
+    jade: 'assets/sprites/scenes/friends/jade/jade_scene_',
+    chloe: 'assets/sprites/scenes/friends/chloe/chloe_scene_',
+    mia: 'assets/sprites/scenes/friends/mia/mia_scene_',
+    eli: 'assets/sprites/scenes/npcs/eli/eli_scene_',
+    sabrina: 'assets/sprites/scenes/npcs/sabrina/sabrina_scene_',
+    val: 'assets/sprites/scenes/npcs/val/val_scene_',
   };
-  if(sceneSpriteMap[characterId]) return sceneSpriteMap[characterId];
+  const friendSpriteCounts = { malik: 10, min: 15, jade: 26, chloe: 26, mia: 30 };
+  if(sceneSpriteBases[characterId]){
+    const count = friendSpriteCounts[characterId] || 1;
+    const startNum = characterId === 'min' ? 31 : 1;
+    const spriteNum = startNum + ((lineIndex || 0) % count);
+    const padded = String(spriteNum).padStart(2, '0');
+    return `${sceneSpriteBases[characterId]}${padded}.png`;
+  }
   // Use battle sprites for villains
   if(RED_FLAGS[characterId]){
     const rf = RED_FLAGS[characterId];
@@ -90,7 +97,7 @@ function buildSpeakerRegistry(lines){
         name: speakerName(line.character),
         color: speakerColor(line.character),
         portrait: Asset.portraits[line.character] || line.portrait || null,
-        sceneSprite: resolveSceneSprite(line.character),
+        sceneSprite: resolveSceneSprite(line.character, lines.indexOf(line)),
         isBoss: isBoss(line.character)
       };
     }
@@ -119,21 +126,27 @@ function renderDialogueBox(){
   const speakers = current.speakers;
 
   // Build speaker tabs HTML — Amy always left, all others right
-  const tabsHtml = speakers.map(s => {
-    const portraitSrc = s.portrait ? (Array.isArray(s.portrait) ? s.portrait[0] : s.portrait) : null;
-    let portraitHtml = '';
-    if(s.isBoss){
-      portraitHtml = `<div class="vn-tab-img vn-tab-obscured"><span class="vn-tab-unknown">?</span></div>`;
-    } else if(portraitSrc){
-      portraitHtml = `<img src="${portraitSrc}" alt="${s.name}" class="vn-tab-img" onerror="this.style.display='none'">`;
-    } else {
-      portraitHtml = `<div class="vn-tab-img vn-tab-placeholder"></div>`;
-    }
-    return `<div class="vn-tab vn-tab-${s.color}" data-speaker="${s.id}">
-      ${portraitHtml}
-      <span class="vn-tab-name">${s.name}</span>
-    </div>`;
-  }).join('');
+  const amySpeakers = speakers.filter(s => s.id === 'amy' || s.id === 'goddess_amy');
+  const otherSpeakers = speakers.filter(s => s.id !== 'amy' && s.id !== 'goddess_amy');
+  function buildTabs(arr) {
+    return arr.map(s => {
+      const portraitSrc = s.portrait ? (Array.isArray(s.portrait) ? s.portrait[0] : s.portrait) : null;
+      let portraitHtml = '';
+      if(s.isBoss){
+        portraitHtml = `<div class="vn-tab-img vn-tab-obscured"><span class="vn-tab-unknown">?</span></div>`;
+      } else if(portraitSrc){
+        portraitHtml = `<img src="${portraitSrc}" alt="${s.name}" class="vn-tab-img" onerror="this.style.display='none'">`;
+      } else {
+        portraitHtml = `<div class="vn-tab-img vn-tab-placeholder"></div>`;
+      }
+      return `<div class="vn-tab vn-tab-${s.color}" data-speaker="${s.id}">
+        ${portraitHtml}
+        <span class="vn-tab-name">${s.name}</span>
+      </div>`;
+    }).join('');
+  }
+  const amyTabsHtml = buildTabs(amySpeakers);
+  const otherTabsHtml = buildTabs(otherSpeakers);
 
   // Build nested colored outlines for all participants
   const nestedBorders = speakers.map(s =>
@@ -144,7 +157,7 @@ function renderDialogueBox(){
     <div class="vn-overlay-bg"></div>
     <div id="vnSceneSprite" class="vn-scene-sprite"></div>
     <div class="vn-wrap ${speakers.length > 1 ? 'multi-speaker' : ''}">
-      <div id="vnSpeakerTabs" class="vn-tabs-row">${tabsHtml}</div>
+      <div id="vnSpeakerTabs" class="vn-tabs-row"><div class="vn-tabs-left">${amyTabsHtml}</div><div class="vn-tabs-right">${otherTabsHtml}</div></div>
       <div id="vnNestedBorders" class="vn-nested-stack">
         ${nestedBorders}
         <div id="vnActiveBox" class="vn-box vn-box-blue">
@@ -235,7 +248,7 @@ function renderLine(){
       spriteEl.innerHTML = '<div class="vn-scene-obscured"><span>?</span></div>';
     } else {
       const speaker = current.speakers.find(s => s.id === speakerId);
-      const spritePath = speaker?.sceneSprite || resolveSceneSprite(speakerId);
+      const spritePath = speaker?.sceneSprite || resolveSceneSprite(speakerId, current.index);
       if(spritePath){
         spriteEl.append(imageWithFallback(spritePath, lineSpeaker(line), 'vn-scene-sprite-img'));
       }
