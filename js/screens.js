@@ -103,7 +103,7 @@ export function showMap({goBattle, showCloset, showPhoto}={}){
     let action;
     // Wire each pin to its proper game function
     if(loc.id==='apartment') action = () => showApartmentMenu({goBattle, showCloset, showPhoto});
-    else if(loc.id==='mall') action = showCloset;
+    else if(loc.id==='mall') action = () => showMallMenu({goBattle, showCloset, showPhoto});
     else if(loc.id==='restaurant') action = () => visitSafeArea('restaurant', () => showMap({goBattle, showCloset, showPhoto}));
     else if(loc.id==='park') action = () => visitSafeArea('park', () => showMap({goBattle, showCloset, showPhoto}));
     else if(loc.id==='beach') action = () => visitSafeArea('beach', () => showMap({goBattle, showCloset, showPhoto}));
@@ -165,6 +165,37 @@ function showOfficeMenu({goBattle, showCloset, showPhoto}={}){
     showMessage(tx('Work Done','仕事完了'), tx(`Amy did office things. Earned ${earnings} Soft Life Funds.`,`エイミーは仕事をした。${earnings}ソフトライフファンドを稼いだ。`),
       [{label:tx('Back to Map','マップへ戻る'), className:'primary', onClick:() => showMap({goBattle, showCloset, showPhoto})}]);
   }, 'primary'));
+  g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  renderHud();
+}
+
+// Mall menu — shopping ecosystem (boutique, spa, food court, social)
+function showMallMenu({goBattle, showCloset, showPhoto}={}){
+  state.screen = 'mall';
+  clearStage();
+  setBackground('cafe');
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Mall','モール')}</h2>
+    <p class="muted">${tx('The mall. Shopping, spa, food court, and people-watching.','モール。ショッピング、スパ、フードコート、人間観察。')}</p>
+    <div id="mallActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('mallActions');
+  g.append(button(tx('Boutique','ブティック'), showCloset, 'primary'));
+  g.append(button(tx('Spa','スパ'), () => {
+    const cost = 100;
+    if(state.funds < cost){
+      showMessage(tx('Not Enough Funds','資金不足'), tx('Amy needs more Soft Life Funds for the spa.','スパに行くにはソフトライフファンドが足りない。'),
+        [{label:tx('Back','戻る'), className:'primary', onClick:() => showMallMenu({goBattle, showCloset, showPhoto})}]);
+      return;
+    }
+    state.funds -= cost;
+    state.amyHp = state.amyMaxHp;
+    state.peace = Math.min(100, (state.peace||50) + 10);
+    showMessage(tx('Spa Day','スパデー'), tx('Amy relaxed at the spa. HP restored, peace increased.','エイミーはスパでリラックスした。HP回復、安心度アップ。'),
+      [{label:tx('Back to Mall','モールへ戻る'), className:'primary', onClick:() => showMallMenu({goBattle, showCloset, showPhoto})}]);
+  }));
+  g.append(button(tx('Food Court','フードコート'), () => visitSafeArea('restaurant', () => showMallMenu({goBattle, showCloset, showPhoto}))));
+  g.append(button(tx('Date Fit Studio','デートコーデスタジオ'), showPhoto));
   g.append(button(tx('Back to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }

@@ -142,12 +142,12 @@ function renderDialogueBox(){
 
   layer().innerHTML = `
     <div class="vn-overlay-bg"></div>
+    <div id="vnSceneSprite" class="vn-scene-sprite"></div>
     <div class="vn-wrap ${speakers.length > 1 ? 'multi-speaker' : ''}">
       <div id="vnSpeakerTabs" class="vn-tabs-row">${tabsHtml}</div>
       <div id="vnNestedBorders" class="vn-nested-stack">
         ${nestedBorders}
         <div id="vnActiveBox" class="vn-box vn-box-blue">
-          <div id="vnSceneSprite" class="vn-scene-sprite"></div>
           <div class="vn-content">
             <div id="vnSpeaker" class="vn-speaker"></div>
             <div id="vnText" class="vn-text"></div>
