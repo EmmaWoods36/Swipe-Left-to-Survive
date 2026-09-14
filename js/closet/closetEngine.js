@@ -12,6 +12,17 @@ export function configureCloset(handlers){ routes = handlers || {}; }
 
 export function showCloset(){
   clearStage(); setBackground('closet'); AudioManager.playSceneMusic('mall'); renderHud();
+  // Equip Amy's default/canon outfit on first visit if nothing is equipped
+  if(!state.outfit.hair){
+    const defaults = CLOSET_ITEMS.filter(i => i.ownedByDefault);
+    for(const item of defaults){
+      if(item.category === 'hair') state.outfit.hair = item;
+      else if(item.category === 'tops') state.outfit.top = item;
+      else if(item.category === 'bottoms') state.outfit.bottom = item;
+      else if(item.category === 'shoes') state.outfit.shoes = item;
+      else if(item.category === 'full_outfits') state.outfit.full = item;
+    }
+  }
   const layer = document.getElementById('screenLayer');
   layer.innerHTML = `
     <div class="center-screen"><section class="panel">
@@ -100,6 +111,8 @@ function isItemOwned(itemId){
       if(acc.id === itemId) return true;
     }
   }
+  // Check if item was purchased (persisted in ownedClothes)
+  if(state.ownedClothes && state.ownedClothes.includes(itemId)) return true;
   return false;
 }
 
@@ -115,6 +128,9 @@ function tryPurchase(item){
     return;
   }
   state.funds -= item.price;
+  // Persist ownership
+  if(!state.ownedClothes) state.ownedClothes = [];
+  if(!state.ownedClothes.includes(item.id)) state.ownedClothes.push(item.id);
   selectItem(item);
   renderHud();
   renderItems();

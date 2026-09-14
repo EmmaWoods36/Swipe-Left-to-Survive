@@ -92,11 +92,11 @@ export const CLOSET_ITEMS = [
     "category": "hair",
     "name": "Curly Afro Hairpiece on Transparent Background",
     "ja": "Curly Afro Hairpiece on Transparent Background",
-    "price": 4800,
+    "price": 0,
     "thumb": "assets/dressup/01_hair/001_curly_afro_hairpiece_on_transparent_background.png",
     "overlay": "assets/dressup/01_hair/001_curly_afro_hairpiece_on_transparent_background.png",
     "renderLayer": 10,
-    "ownedByDefault": false,
+    "ownedByDefault": true,
     "shopVisible": true
   },
   {
@@ -812,11 +812,11 @@ export const CLOSET_ITEMS = [
     "category": "tops",
     "name": "Pink Blouse Fashion Design Asset",
     "ja": "Pink Blouse Fashion Design Asset",
-    "price": 7200,
+    "price": 0,
     "thumb": "assets/dressup/09_tops/009_pink_blouse_fashion_design_asset.png",
     "overlay": "assets/dressup/09_tops/009_pink_blouse_fashion_design_asset.png",
     "renderLayer": 30,
-    "ownedByDefault": false,
+    "ownedByDefault": true,
     "shopVisible": true
   },
   {
@@ -1196,11 +1196,11 @@ export const CLOSET_ITEMS = [
     "category": "full_outfits",
     "name": "Romantic Off Shoulder Blouse & Floral Skirt",
     "ja": "Romantic Off Shoulder Blouse & Floral Skirt",
-    "price": 15800,
+    "price": 0,
     "thumb": "assets/dressup/13_full_outfits/001_romantic_off_shoulder_blouse_floral_skirt.png",
     "overlay": "assets/dressup/13_full_outfits/001_romantic_off_shoulder_blouse_floral_skirt.png",
     "renderLayer": 34,
-    "ownedByDefault": false,
+    "ownedByDefault": true,
     "shopVisible": true
   },
   {
@@ -1364,11 +1364,11 @@ export const CLOSET_ITEMS = [
     "category": "bottoms",
     "name": "Dark Blue Skinny Jeans on Transparent Background",
     "ja": "Dark Blue Skinny Jeans on Transparent Background",
-    "price": 8200,
+    "price": 0,
     "thumb": "assets/dressup/11_bottoms/001_dark_blue_skinny_jeans_on_transparent_background.png",
     "overlay": "assets/dressup/11_bottoms/001_dark_blue_skinny_jeans_on_transparent_background.png",
     "renderLayer": 40,
-    "ownedByDefault": false,
+    "ownedByDefault": true,
     "shopVisible": true
   },
   {
@@ -1652,11 +1652,11 @@ export const CLOSET_ITEMS = [
     "category": "shoes",
     "name": "Glossy Pink Ankle Boots with Heart Buckles",
     "ja": "Glossy Pink Ankle Boots with Heart Buckles",
-    "price": 8600,
+    "price": 0,
     "thumb": "assets/dressup/15_shoes/011_glossy_pink_ankle_boots_with_heart_buckles.png",
     "overlay": "assets/dressup/15_shoes/011_glossy_pink_ankle_boots_with_heart_buckles.png",
     "renderLayer": 45,
-    "ownedByDefault": false,
+    "ownedByDefault": true,
     "shopVisible": true
   },
   {

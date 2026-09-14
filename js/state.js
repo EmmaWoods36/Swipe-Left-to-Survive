@@ -23,7 +23,7 @@ export const state = {
     pattern: false
   },
   outfit: {
-    hair: null,
+    hair: null,  // Set on game start by closetEngine init
     full: null,
     top: null,
     bottom: null,
@@ -33,6 +33,7 @@ export const state = {
     shoes: null,
     accessories: []
   },
+  ownedClothes: [], // Track purchased/owned clothing items by id
   gallery: [],
   battle: null,
   amyBars: 1,
