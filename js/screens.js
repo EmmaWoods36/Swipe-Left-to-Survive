@@ -49,6 +49,18 @@ const spriteLayer = () => document.getElementById('spriteLayer');
 const dialogueLayer = () => document.getElementById('dialogueLayer');
 
 export function clearStage(){
+  // Remove any leftover map resize listener before wiping the screen
+  if(state._mapResizeHandler){
+    window.removeEventListener('resize', state._mapResizeHandler);
+    state._mapResizeHandler = null;
+  }
+  // Reset scene-bg sizing so non-map screens don't inherit contain/letterbox styling
+  const sceneBg = document.querySelector('.scene-bg');
+  if(sceneBg){
+    sceneBg.style.backgroundSize = 'cover';
+    sceneBg.style.backgroundPosition = 'center';
+    sceneBg.style.backgroundRepeat = '';
+  }
   screenLayer().innerHTML = '';
   spriteLayer().innerHTML = '';
   document.getElementById('fxLayer').innerHTML = '';
@@ -115,9 +127,14 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
   // Use clockMinutes for authoritative time → derive daypart for background
   const mapDaypart = getDaypartFromClock(state.clockMinutes);
   const mapBg = getLocationBg('cityMap', mapDaypart) || 'assets/backgrounds/bg_city_map_day.png';
+  // Map uses contain (not cover) so the full 16:9 map is always visible
+  // Pins are positioned relative to the displayed map rectangle, not the viewport
   const sceneBg = document.querySelector('.scene-bg');
   if(sceneBg){
     sceneBg.style.backgroundImage = `url("${mapBg}")`;
+    sceneBg.style.backgroundSize = 'contain';
+    sceneBg.style.backgroundPosition = 'center';
+    sceneBg.style.backgroundRepeat = 'no-repeat';
   }
   AudioManager.playSceneMusic('city_map');
   // Clock chip overlay on the map
@@ -129,7 +146,41 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
   screenLayer().append(clockChip);
   // 9 canonical pins from data/locations.js MAP_PINS
   const mapWrap = document.createElement('div');
-  mapWrap.className = 'city-map-pins';
+  mapWrap.className = 'city-map-pins map-overlay';
+  // Position the pin overlay to match the displayed map image bounds
+  function fitPinOverlay() {
+    const stage = document.querySelector('.stage');
+    if (!stage) return;
+    const sw = stage.clientWidth;
+    const sh = stage.clientHeight;
+    const imgRatio = 16 / 9; // map images are 1536x864 (16:9)
+    const stageRatio = sw / sh;
+    let mapW, mapH, mapX, mapY;
+    if (stageRatio > imgRatio) {
+      // Stage is wider than image; image is height-limited
+      mapH = sh;
+      mapW = sh * imgRatio;
+      mapX = (sw - mapW) / 2;
+      mapY = 0;
+    } else {
+      // Stage is taller than image; image is width-limited
+      mapW = sw;
+      mapH = sw / imgRatio;
+      mapX = 0;
+      mapY = (sh - mapH) / 2;
+    }
+    mapWrap.style.left = mapX + 'px';
+    mapWrap.style.top = mapY + 'px';
+    mapWrap.style.right = 'auto';
+    mapWrap.style.bottom = 'auto';
+    mapWrap.style.width = mapW + 'px';
+    mapWrap.style.height = mapH + 'px';
+  }
+  fitPinOverlay();
+  // Recalculate on resize
+  window.addEventListener('resize', fitPinOverlay);
+  // Clean up listener when leaving the map (checked on next clearStage)
+  state._mapResizeHandler = fitPinOverlay;
   MAP_PINS.forEach(pin => {
     const name = tx(pin.label.en, pin.label.ja);
     const isClosed = !isLocationOpen(pin.id, state.clockMinutes);
