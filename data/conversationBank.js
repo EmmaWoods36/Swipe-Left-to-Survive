@@ -199,10 +199,10 @@ export const ANDREW_NAME_EXCHANGE = [
 ];
 
 // Pick an Andrew conversation based on encounter stage
-// Stage 0 = never met, 1-2 = stranger (???), 3 = name exchange, 4+ = post-name
+// Stage 1 = first stranger meeting, 2 = second stranger meeting, 3 = name exchange, 4+ = post-name
 export function pickAndrewConversation(stage){
-  if(stage <= 0){
-    // First encounter
+  if(stage <= 1){
+    // First encounter (stage 0 or 1)
     return ANDREW_PRE_UNLOCK_CONVERSATIONS[0];
   } else if(stage === 2){
     // Second encounter
