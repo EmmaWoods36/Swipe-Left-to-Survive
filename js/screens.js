@@ -2,7 +2,8 @@ import {state,hasSaveData,autosave,advanceGameMinutes,TIME_COSTS,sleepUntilMorni
 import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
-import {SAFE_AREAS} from '../data/conversationBank.js';
+import {SAFE_AREAS, pickAndrewConversation} from '../data/conversationBank.js';
+import {playScene} from './dialogueEngine.js';
 import {AudioManager} from './audioManager.js';
 import {GREEN_FLAGS} from '../data/greenFlags.js';
 import {
@@ -139,7 +140,7 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
     if(pin.id==='apartment') action = travel(() => showApartmentMenu({goBattle, showCloset, showPhoto}));
     else if(pin.id==='mall') action = travel(() => showMallMenu({goBattle, showCloset, showPhoto, showBoutique}));
     else if(pin.id==='restaurant') action = travel(() => visitSafeArea('restaurant', () => showMap({goBattle, showCloset, showPhoto})));
-    else if(pin.id==='park') action = travel(() => visitSafeArea('park', () => showMap({goBattle, showCloset, showPhoto})));
+    else if(pin.id==='park') action = travel(() => showParkMenu({goBattle, showCloset, showPhoto}));
     else if(pin.id==='beach') action = travel(() => showBeachMenu({goBattle, showCloset, showPhoto}));
     else if(pin.id==='bar') action = travel(() => showBarMenu({goBattle, showCloset, showPhoto}));
     else if(pin.id==='library') action = travel(() => showLibraryMenu({goBattle, showCloset, showPhoto}));
@@ -383,6 +384,70 @@ function showBarOrderMenu({goBattle, showCloset, showPhoto}={}){
 
 // === BEACH ===
 // Main map location with nested Beachside Cafe sublocation
+// === PARK ===
+function showParkMenu({goBattle, showCloset, showPhoto}={}){
+  state.screen = 'park';
+  clearStage();
+  setLocationBg('park');
+  screenLayer().innerHTML = `<div class="center-screen"><section class="panel">
+    <h2>${tx('Park','公園')}</h2>
+    <p class="muted">${tx('Quiet paths, green grass, and fresh air.','静かな道、緑の芝生、新鮮な空気。')}</p>
+    <div id="parkActions" class="menu-grid"></div>
+  </section></div>`;
+  const g = document.getElementById('parkActions');
+  // Take a Walk
+  g.append(button(tx('Take a Walk','散歩する'), () => {
+    state.peace = Math.min(100, (state.peace||50) + 10);
+    advanceGameMinutes(TIME_COSTS.relax);
+    renderHud();
+    showMessage(tx('Walking','散歩'), tx('Amy took a peaceful walk through the park. Peace +10.','エイミーは公園を穏やかに散歩した。ピース+10。'),
+      [{label:tx('Back','戻る'), className:'primary', onClick:() => showParkMenu({goBattle, showCloset, showPhoto})}]);
+  }, 'primary'));
+  // Relax in Park
+  g.append(button(tx('Relax in Park','公園でリラックス'), () => {
+    state.peace = Math.min(100, (state.peace||50) + 15);
+    state.amyHp = Math.min(state.amyMaxHp, state.amyHp + 5);
+    advanceGameMinutes(TIME_COSTS.relax);
+    renderHud();
+    showMessage(tx('Relaxing','リラックス'), tx('Amy sat on a bench and watched the clouds. Peace +15, HP +5.','エイミーはベンチに座って雲を眺めた。ピース+15、HP+5。'),
+      [{label:tx('Back','戻る'), className:'primary', onClick:() => showParkMenu({goBattle, showCloset, showPhoto})}]);
+  }));
+  // Talk to Friends (Min, Mia)
+  g.append(button(tx('Talk to Friends','友達と話す'), () => visitSafeArea('park', () => showParkMenu({goBattle, showCloset, showPhoto}))));
+  // Andrew / Cute Stranger encounter
+  const stage = state.andrewEncounterStage || 0;
+  const andrewLabel = stage >= 3
+    ? tx('Talk to Andrew','アンドリューと話す')
+    : tx('Notice the Cute Stranger','可愛い見知らぬ人に気づく');
+  g.append(button(andrewLabel, () => visitAndrewEncounter(() => showParkMenu({goBattle, showCloset, showPhoto}))));
+  // Back to Map
+  g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
+  renderHud();
+}
+
+// Andrew encounter: staged progression (??? → name exchange → Andrew)
+function visitAndrewEncounter(onReturn){
+  clearStage();
+  setLocationBg('park');
+  const stage = state.andrewEncounterStage || 0;
+  const nextStage = stage + 1;
+  // Pick conversation based on the NEXT stage (what's about to happen)
+  const lines = pickAndrewConversation(nextStage);
+  if(lines){
+    // Advance stage after conversation starts
+    state.andrewEncounterStage = nextStage;
+    if(nextStage >= 3) state.andrewNameKnown = true;
+    playScene(lines, {onComplete:onReturn, skippable:true});
+  } else {
+    showMessage(
+      tx('Park','公園'),
+      tx('Nobody here right now.', '今は誰もいない。'),
+      [{label:tx('Back to Park','公園へ戻る'), className:'primary', onClick:onReturn}]
+    );
+  }
+  renderHud();
+}
+
 function showBeachMenu({goBattle, showCloset, showPhoto}={}){
   state.screen = 'beach';
   clearStage();

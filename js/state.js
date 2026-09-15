@@ -34,6 +34,9 @@ export const state = {
     accessories: []
   },
   ownedClothes: [], // Track purchased/owned clothing items by id
+  // Andrew encounter progression: 0=never met, 1-2=stranger, 3=names exchanged, 4+=Andrew
+  andrewEncounterStage: 0,
+  andrewNameKnown: false,
   coworkerEvent: {
     unlocked: false,   // true when 3 battles are defeated
     triggered: false,  // true when the office story event fires

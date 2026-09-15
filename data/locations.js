@@ -319,7 +319,7 @@ export const SPA_PACKAGES = [
 // From historical conversationBank.js + ChatGPT spec
 export const LOCATION_PEOPLE = {
   restaurant: { friends: ['malik', 'jade', 'chloe'], npc: 'eli', greenFlagNpc: null },
-  park:       { friends: ['min', 'mia'],              npc: null,  greenFlagNpc: 'andrew' },
+  park:       { friends: ['min', 'mia'],              npc: null,  greenFlagNpc: null },   // Andrew handled by dedicated Park menu button
   beach:      { friends: ['malik', 'chloe'],          npc: null,  greenFlagNpc: null },
   bar:        { friends: ['jade'],                    npc: 'val', greenFlagNpc: 'james' },
   library:    { friends: ['min'],                     npc: null,  greenFlagNpc: 'xavier' },

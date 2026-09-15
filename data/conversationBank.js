@@ -170,6 +170,54 @@ export const GREEN_FLAG_NPC_CONVERSATIONS = {
   ]
 };
 
+// === Andrew pre-unlock conversations (encounters 1-2, speaker = ???) ===
+export const ANDREW_PRE_UNLOCK_CONVERSATIONS = [
+  // Encounter 1
+  [
+    {character:'andrew', speaker:{en:'???',ja:'???'}, text:{en:'Oh — sorry. Didn\'t mean to startle you. Just walking the dog.',ja:'あ——ごめん。驚かせるつもりじゃなかったんだ。犬の散歩してただけで。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'No, it\'s fine. He\'s cute. What\'s his name?',ja:'ううん、大丈夫。可愛いね。名前は？'}},
+    {character:'andrew', speaker:{en:'???',ja:'???'}, text:{en:'Biscuit. Found him at the shelter last year. He\'s the reason I\'m out here this early.',ja:'ビスケット。去年シェルターで見つけたんだ。この時間にここにいる理由だよ。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'A man who rescues dogs. That\'s... actually really nice.',ja:'犬を保護する人。それは……本当に素敵だね。'}}
+  ],
+  // Encounter 2
+  [
+    {character:'andrew', speaker:{en:'???',ja:'???'}, text:{en:'Hey again. Biscuit remembered you. He doesn\'t remember most people.',ja:'また会ったね。ビスケットが君のこと覚えてたよ。あんまり人を覚えない子なんだけど。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Well, I\'m flattered. You walk him here every day?',ja:'光栄だな。毎日ここで散歩してるの？'}},
+    {character:'andrew', speaker:{en:'???',ja:'???'}, text:{en:'Most days. It\'s quiet in the morning. Good place to think.',ja:'だいたいね。朝は静かだし、考えるのにいい場所なんだ。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You know, I don\'t even know your name. You just keep showing up with a dog.',ja:'名前も知らないんだよね。犬連れて現れ続ける人。'}},
+    {character:'andrew', speaker:{en:'???',ja:'???'}, text:{en:'Maybe next time. I\'m bad at introductions.',ja:'今度ね。自己紹介苦手なんだ。'}}
+  ]
+];
+
+// === Andrew name exchange (encounter 3) ===
+export const ANDREW_NAME_EXCHANGE = [
+  {character:'andrew', speaker:{en:'???',ja:'???'}, text:{en:'You\'re here again. I\'m starting to think you come here just for Biscuit.',ja:'また来たね。ビスケットに会いに来てるのかな。'}},
+  {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Maybe. Or maybe the company is growing on me. I\'m Amy, by the way.',ja:'かもね。それか、一緒にいる人に慣れてきたとか。エイミーだよ、ちなみに。'}},
+  {character:'andrew', speaker:{en:'???',ja:'???'}, text:{en:'Andrew. I\'m Andrew. Sorry it took three meetings to say that.',ja:'アンドリュー。僕はアンドリュー。3回も会ってから言ってごめん。'}},
+  {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Nice to finally meet you, Andrew. Biscuit, you already knew.',ja:'やっと会えたね、アンドリュー。ビスケットはもう知ってたけど。'}},
+  {character:'andrew', speaker:{en:'Andrew',ja:'アンドリュー'}, text:{en:'He\'s smarter than me, honestly. See you tomorrow, Amy?',ja:'彼の方が僕より賢いんだ、正直。また明日会える？エイミー。'}}
+];
+
+// Pick an Andrew conversation based on encounter stage
+// Stage 0 = never met, 1-2 = stranger (???), 3 = name exchange, 4+ = post-name
+export function pickAndrewConversation(stage){
+  if(stage <= 0){
+    // First encounter
+    return ANDREW_PRE_UNLOCK_CONVERSATIONS[0];
+  } else if(stage === 2){
+    // Second encounter
+    return ANDREW_PRE_UNLOCK_CONVERSATIONS[1] || ANDREW_PRE_UNLOCK_CONVERSATIONS[0];
+  } else if(stage === 3){
+    // Name exchange moment
+    return ANDREW_NAME_EXCHANGE;
+  } else {
+    // Post-name: use regular green flag conversations
+    const bank = GREEN_FLAG_NPC_CONVERSATIONS.andrew;
+    if(!bank || !bank.length) return null;
+    return bank[Math.floor(Math.random() * bank.length)];
+  }
+}
+
 // Pick a random conversation from a friend's bank
 export function pickFriendConversation(friendId){
   const bank = FRIEND_CONVERSATIONS[friendId];
@@ -197,6 +245,12 @@ export function pickNpcConversation(npcId){
 
 // Pick a green flag NPC conversation (pre-unlock)
 export function pickGreenFlagNpcConversation(gfId){
+  if(gfId === 'andrew'){
+    // Andrew uses stage-aware conversations — handled by caller via pickAndrewConversation
+    const bank = GREEN_FLAG_NPC_CONVERSATIONS[gfId];
+    if(!bank || !bank.length) return null;
+    return bank[Math.floor(Math.random() * bank.length)];
+  }
   const bank = GREEN_FLAG_NPC_CONVERSATIONS[gfId];
   if(!bank || !bank.length) return null;
   return bank[Math.floor(Math.random() * bank.length)];
@@ -216,7 +270,7 @@ export const SAFE_AREAS = {
     bg: 'park',
     friends: ['min', 'mia'],
     npc: null,
-    greenFlagNpc: 'andrew'
+    greenFlagNpc: null   // Andrew handled by dedicated Park menu button
   },
   beach: {
     name: {en:'Beach',ja:'ビーチ'},
