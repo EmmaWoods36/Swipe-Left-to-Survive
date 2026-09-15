@@ -1,4 +1,4 @@
-import {state,hasSaveData,autosave,advanceGameMinutes,advanceTime,TIME_COSTS,sleepUntilMorning,getClockPeriod,formatClockTime,getClockHour,getDaypartFromClock,startPassiveClock,stopPassiveClock} from './state.js';
+import {state,hasSaveData,autosave,advanceGameMinutes,TIME_COSTS,sleepUntilMorning,getClockPeriod,formatClockTime,getClockHour,getDaypartFromClock,startPassiveClock,stopPassiveClock} from './state.js';
 import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
@@ -370,8 +370,8 @@ function showBarOrderMenu({goBattle, showCloset, showPhoto}={}){
         return;
       }
       state.funds -= item.price;
-      // Bar meal/drink = 2 hours
-      advanceGameMinutes(TIME_COSTS.meal);
+      // Use per-item time cost (snacks/drinks are short, not 2 hours)
+      advanceGameMinutes(item.timeCostMinutes || 30);
       renderHud();
       showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showBarOrderMenu({goBattle, showCloset, showPhoto})}]);
@@ -480,8 +480,8 @@ function showCafeDrinkMenu({goBattle, showCloset, showPhoto}={}){
         return;
       }
       state.funds -= item.price;
-      // Cafe drink = 2 hours (sit-down activity)
-      advanceGameMinutes(TIME_COSTS.meal);
+      // Use per-item time cost (drinks are quick, not 2 hours)
+      advanceGameMinutes(item.timeCostMinutes || 20);
       renderHud();
       showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showCafeDrinkMenu({goBattle, showCloset, showPhoto})}]);
@@ -510,8 +510,8 @@ function showCafeFoodMenu({goBattle, showCloset, showPhoto}={}){
         return;
       }
       state.funds -= item.price;
-      // Cafe food = 2 hours
-      advanceGameMinutes(TIME_COSTS.meal);
+      // Use per-item time cost (snacks are quick, not 2 hours)
+      advanceGameMinutes(item.timeCostMinutes || 30);
       renderHud();
       showMessage(tx('Ordered','注文'), tx(`Amy ordered ${label}. Soft Life Funds: ${state.funds}.\nTime advanced to ${formatClockTime()}.`, `エイミーは${label}を注文した。ソフトライフファンド: ${state.funds}。\n時間が${formatClockTime()}に進んだ。`),
         [{label:tx('Back','戻る'), className:'primary', onClick:() => showCafeFoodMenu({goBattle, showCloset, showPhoto})}]);

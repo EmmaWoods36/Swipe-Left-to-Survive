@@ -271,38 +271,38 @@ export const LIBRARY_BOOKS = [
 
 // --- Restaurant Menu ---
 export const RESTAURANT_MENU = [
-  { id: 'pasta',    label: { en: 'Solo Pasta', ja: 'パスタ' },           price: 350 },
-  { id: 'salad',    label: { en: 'Fancy Salad', ja: 'サラダ' },          price: 280 },
-  { id: 'steak',    label: { en: 'Steak Dinner', ja: 'ステーキ' },       price: 700 },
-  { id: 'seafood',  label: { en: 'Seafood Plate', ja: 'シーフード' },     price: 600 },
-  { id: 'dessert',  label: { en: 'Dessert Sampler', ja: 'デザート盛合' }, price: 450 }
+  { id: 'pasta',    label: { en: 'Solo Pasta', ja: 'パスタ' },           price: 350, timeCostMinutes: 90 },
+  { id: 'salad',    label: { en: 'Fancy Salad', ja: 'サラダ' },          price: 280, timeCostMinutes: 60 },
+  { id: 'steak',    label: { en: 'Steak Dinner', ja: 'ステーキ' },       price: 700, timeCostMinutes: 120 },
+  { id: 'seafood',  label: { en: 'Seafood Plate', ja: 'シーフード' },     price: 600, timeCostMinutes: 90 },
+  { id: 'dessert',  label: { en: 'Dessert Sampler', ja: 'デザート盛合' }, price: 450, timeCostMinutes: 30 }
 ];
 
 // --- Bar Menu ---
 export const BAR_MENU = [
-  { id: 'fries',     label: { en: 'Parmesan Fries', ja: 'パルメザンフライ' },     price: 250 },
-  { id: 'mocktail',  label: { en: 'Mocktail', ja: 'モックテール' },              price: 180 },
-  { id: 'water',     label: { en: 'Sparkling Water', ja: 'スパークリングウォーター' }, price: 80 },
-  { id: 'cocktail',  label: { en: 'Pink Cocktail', ja: 'ピンクカクテル' },        price: 300 },
-  { id: 'sliders',  label: { en: 'Late-Night Sliders', ja: '深夜スライダー' },   price: 400 }
+  { id: 'fries',     label: { en: 'Parmesan Fries', ja: 'パルメザンフライ' },     price: 250, timeCostMinutes: 30 },
+  { id: 'mocktail',  label: { en: 'Mocktail', ja: 'モックテール' },              price: 180, timeCostMinutes: 20 },
+  { id: 'water',     label: { en: 'Sparkling Water', ja: 'スパークリングウォーター' }, price: 80, timeCostMinutes: 10 },
+  { id: 'cocktail',  label: { en: 'Pink Cocktail', ja: 'ピンクカクテル' },        price: 300, timeCostMinutes: 30 },
+  { id: 'sliders',  label: { en: 'Late-Night Sliders', ja: '深夜スライダー' },   price: 400, timeCostMinutes: 45 }
 ];
 
 // --- Beachside Cafe Menu ---
 export const CAFE_DRINKS = [
-  { id: 'passion_tea',   label: { en: 'Passion Fruit Iced Tea', ja: 'パッションフルーツアイスティー' }, price: 120 },
-  { id: 'matcha',        label: { en: 'Iced Matcha', ja: 'アイス抹茶' },                                price: 150 },
-  { id: 'classic_tea',   label: { en: 'Classic Iced Tea', ja: 'クラシックアイスティー' },              price: 80 },
-  { id: 'boba',          label: { en: 'Boba', ja: 'タピオカ' },                                         price: 180 },
-  { id: 'coconut',       label: { en: 'Coconut Drink', ja: 'ココナッツドリンク' },                      price: 220 }
+  { id: 'passion_tea',   label: { en: 'Passion Fruit Iced Tea', ja: 'パッションフルーツアイスティー' }, price: 120, timeCostMinutes: 20 },
+  { id: 'matcha',        label: { en: 'Iced Matcha', ja: 'アイス抹茶' },                                price: 150, timeCostMinutes: 20 },
+  { id: 'classic_tea',   label: { en: 'Classic Iced Tea', ja: 'クラシックアイスティー' },              price: 80, timeCostMinutes: 15 },
+  { id: 'boba',          label: { en: 'Boba', ja: 'タピオカ' },                                         price: 180, timeCostMinutes: 25 },
+  { id: 'coconut',       label: { en: 'Coconut Drink', ja: 'ココナッツドリンク' },                      price: 220, timeCostMinutes: 20 }
 ];
 
 export const CAFE_FOOD = [
-  { id: 'fruit_tart',    label: { en: 'Fruit Tart', ja: 'フルーツタルト' },                             price: 250 },
-  { id: 'croissant',     label: { en: 'Croissant Sandwich', ja: 'クロワッサンサンド' },                  price: 300 },
-  { id: 'coconut_shrimp',label: { en: 'Coconut Shrimp', ja: 'ココナッツシュリンプ' },                   price: 320 },
-  { id: 'avocado_toast', label: { en: 'Avocado Toast', ja: 'アボカドトースト' },                         price: 280 },
-  { id: 'mango_cake',    label: { en: 'Mango Cheesecake', ja: 'マンゴーチーズケーキ' },                  price: 280 },
-  { id: 'sea_salt_fries',label: { en: 'Sea Salt Fries', ja: 'シーソルトフライドポテト' },                price: 220 }
+  { id: 'fruit_tart',    label: { en: 'Fruit Tart', ja: 'フルーツタルト' },                             price: 250, timeCostMinutes: 30 },
+  { id: 'croissant',     label: { en: 'Croissant Sandwich', ja: 'クロワッサンサンド' },                  price: 300, timeCostMinutes: 30 },
+  { id: 'coconut_shrimp',label: { en: 'Coconut Shrimp', ja: 'ココナッツシュリンプ' },                   price: 320, timeCostMinutes: 45 },
+  { id: 'avocado_toast', label: { en: 'Avocado Toast', ja: 'アボカドトースト' },                         price: 280, timeCostMinutes: 30 },
+  { id: 'mango_cake',    label: { en: 'Mango Cheesecake', ja: 'マンゴーチーズケーキ' },                  price: 280, timeCostMinutes: 30 },
+  { id: 'sea_salt_fries',label: { en: 'Sea Salt Fries', ja: 'シーソルトフライドポテト' },                price: 220, timeCostMinutes: 30 }
 ];
 
 // Keep CAFE_MENU for backward compat (merged drinks + food)
