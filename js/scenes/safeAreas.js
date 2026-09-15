@@ -16,6 +16,17 @@ import {setBackground,Asset} from '../assets.js';
 import {playScene} from '../dialogueEngine.js';
 import {showMessage,clearStage,renderHud,button} from '../screens.js';
 import {AudioManager} from '../audioManager.js';
+import {getDaypartFromClock, getLocationBg} from '../../data/locations.js';
+
+// Map SAFE_AREAS bg keys to LOCATION_BACKGROUNDS keys for clock-based resolution
+const BG_KEY_MAP = {
+  cafe: 'beachsideCafe',   // 'cafe' in SAFE_AREAS = Beachside Cafe
+  park: 'park',
+  beach: 'beach',
+  bar: 'bar',
+  library: 'library',
+  restaurant: 'restaurant'
+};
 
 // Check if green flags are officially unlocked (after beating Algorithm and Pattern)
 function greenFlagsUnlocked(){
@@ -30,9 +41,22 @@ export function visitSafeArea(areaId, onReturn){
     return;
   }
 
-  // Clear the map UI first — show the location's scene background
+  // Clear the map UI first — show the location's clock-resolved background
   clearStage();
-  setBackground(area.bg);
+  // Resolve background from clock, not hardcoded area.bg
+  const locationKey = BG_KEY_MAP[areaId] || BG_KEY_MAP[area.bg] || area.bg;
+  const daypart = getDaypartFromClock(state.clockMinutes);
+  const bgPath = getLocationBg(locationKey, daypart);
+  if(bgPath){
+    // Set background directly via DOM (like setLocationBg in screens.js)
+    const sceneBg = document.querySelector('.scene-bg');
+    if(sceneBg){
+      sceneBg.style.backgroundImage = `url("${bgPath}")`;
+    }
+  } else {
+    // Fallback to static background
+    setBackground(area.bg);
+  }
   // Play location-specific music
   AudioManager.playSceneMusic(area.musicTrack || area.bg);
 
