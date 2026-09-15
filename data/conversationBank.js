@@ -260,7 +260,7 @@ export function pickGreenFlagNpcConversation(gfId){
 export const SAFE_AREAS = {
   restaurant: {
     name: {en:'Restaurant',ja:'レストラン'},
-    bg: 'cafe',
+    bg: 'restaurant',
     friends: ['malik', 'jade', 'chloe'],
     npc: 'eli',
     greenFlagNpc: null

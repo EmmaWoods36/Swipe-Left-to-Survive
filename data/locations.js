@@ -98,7 +98,9 @@ export const LOCATION_BACKGROUNDS = {
   },
   restaurant: {
     day: 'assets/backgrounds/bg_restaurant_day.png',
-    night: 'assets/backgrounds/bg_restaurant_night.png'
+    sunset: 'assets/backgrounds/bg_restaurant_sunset.png',
+    night: 'assets/backgrounds/bg_restaurant_night.png',
+    closed: 'assets/backgrounds/bg_restaurant_closed.png'
   },
   mall: {
     day: 'assets/backgrounds/bg_mall_day.png'
