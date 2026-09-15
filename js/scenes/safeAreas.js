@@ -9,9 +9,18 @@ import {
   pickRandomFriends,
   pickNpcConversation,
   pickGreenFlagNpcConversation,
+  pickStagedGreenFlagConversation,
   FRIEND_CONVERSATIONS,
   GREEN_FLAG_NPC_CONVERSATIONS
 } from '../../data/conversationBank.js';
+
+// Green flag NPCs that use staged "stranger -> name exchange -> known person" dialogue
+// (Andrew is staged separately through the dedicated Park menu button, not here)
+const STAGED_GF_STATE_KEYS = {
+  xavier: {stage: 'xavierEncounterStage', nameKnown: 'xavierNameKnown'},
+  james: {stage: 'jamesEncounterStage', nameKnown: 'jamesNameKnown'},
+  christy: {stage: 'christyEncounterStage', nameKnown: 'christyNameKnown'}
+};
 import {setBackground,Asset} from '../assets.js';
 import {playScene} from '../dialogueEngine.js';
 import {showMessage,clearStage,renderHud,button} from '../screens.js';
@@ -129,7 +138,24 @@ export function visitSafeArea(areaId, onReturn){
       );
     }
   } else if(encounter.type === 'greenFlagNpc'){
-    const lines = pickGreenFlagNpcConversation(encounter.id);
+    // Staged green flag NPCs (Xavier, James, Christy) progress from "??? stranger"
+    // to "name exchange" to "known person" over multiple visits, matching the
+    // Andrew Park-button flow but triggered through the random safe-area spawn.
+    const stagedKeys = STAGED_GF_STATE_KEYS[encounter.id];
+    let lines;
+    if(stagedKeys){
+      const currentStage = state[stagedKeys.stage] || 0;
+      const nextStage = currentStage + 1;
+      lines = pickStagedGreenFlagConversation(encounter.id, nextStage);
+      if(lines){
+        state[stagedKeys.stage] = nextStage;
+        if(nextStage >= 3){
+          state[stagedKeys.nameKnown] = true;
+        }
+      }
+    } else {
+      lines = pickGreenFlagNpcConversation(encounter.id);
+    }
     if(lines){
       playScene(lines, {onComplete:onReturn, skippable:true});
     } else {

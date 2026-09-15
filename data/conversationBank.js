@@ -198,6 +198,90 @@ export const ANDREW_NAME_EXCHANGE = [
   {character:'andrew', speaker:{en:'Andrew',ja:'アンドリュー'}, text:{en:'He\'s smarter than me, honestly. See you tomorrow, Amy?',ja:'彼の方が僕より賢いんだ、正直。また明日会える？エイミー。'}}
 ];
 
+// === Xavier pre-unlock conversations (encounters 1-2, speaker = ???) ===
+export const XAVIER_PRE_UNLOCK_CONVERSATIONS = [
+  // Encounter 1
+  [
+    {character:'xavier', speaker:{en:'???',ja:'???'}, text:{en:'You\'re here early. The library doesn\'t get busy until after ten.',ja:'早いね。図書館が賑わうのは10時過ぎてからだよ。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Oh. Sorry, I didn\'t realize anyone was here.',ja:'あ。ごめん、誰もいないと思ってた。'}},
+    {character:'xavier', speaker:{en:'???',ja:'???'}, text:{en:'No, it\'s fine. I like the quiet. You picked a good section, too. Most people don\'t wander this far back.',ja:'いや、大丈夫。静かなのが好きなんだ。君の選ぶ棚もいいよ。こんな奥まで来る人は少ないから。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'I like the obscure stuff. The display table is always picked over.',ja:'マニアックなのが好きなの。展示台のはいつも売れ残りだし。'}}
+  ],
+  // Encounter 2
+  [
+    {character:'xavier', speaker:{en:'???',ja:'???'}, text:{en:'Back again? You\'re becoming a regular. I noticed you finished that Murakami you checked out last week.',ja:'また来たの？もう常連さんだね。先週借りた村上、読み終わった？'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You noticed what I checked out?',ja:'私が借りた本、覚えてたの？'}},
+    {character:'xavier', speaker:{en:'???',ja:'???'}, text:{en:'Hard not to. You have good taste. Most people just grab whatever\'s on the display table.',ja:'気づくよ。センスいいから。ほとんどの人は展示台のやつを適当に持っていくけど。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'I don\'t even know your name. You just... appear in the stacks.',ja:'名前も知らないんだよね。君はただ……棚に現れる人。'}},
+    {character:'xavier', speaker:{en:'???',ja:'???'}, text:{en:'Maybe next time. I\'m better with books than introductions.',ja:'今度ね。自己紹介より本の方が得意なんだ。'}}
+  ]
+];
+
+// === Xavier name exchange (encounter 3) ===
+export const XAVIER_NAME_EXCHANGE = [
+  {character:'xavier', speaker:{en:'???',ja:'???'}, text:{en:'You\'re here again. I\'m starting to think you come here for the company, not the books.',ja:'また来たね。本じゃなくて、一緒にいる人のために来てるのかな。'}},
+  {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Maybe a little of both. I\'m Amy, by the way.',ja:'かもね。両方かな、ちなみにエイミーだよ。'}},
+  {character:'xavier', speaker:{en:'???',ja:'???'}, text:{en:'Xavier. Sorry it took three meetings to say that.',ja:'ザビエル。3回も会ってから言ってごめん。'}},
+  {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Nice to finally meet you, Xavier.',ja:'やっと会えたね、ザビエル。'}},
+  {character:'xavier', speaker:{en:'Xavier',ja:'ザビエル'}, text:{en:'You too. Same shelf, same taste. That\'s practically destiny. See you around, Amy.',ja:'僕も。同じ棚、同じセンス。それはほぼ運命だよ。またね、エイミー。'}}
+];
+
+// === James pre-unlock conversations (encounters 1-2, speaker = ???) ===
+export const JAMES_PRE_UNLOCK_CONVERSATIONS = [
+  // Encounter 1
+  [
+    {character:'james', speaker:{en:'???',ja:'???'}, text:{en:'Hey. Is this seat taken? Bar\'s getting packed.',ja:'や。ここ空いてる？バーが混んできたよ。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'No, go ahead. I\'m just nursing a drink.',ja:'ううん、どうぞ。ちょっと飲んでるだけ。'}},
+    {character:'james', speaker:{en:'???',ja:'???'}, text:{en:'Smart. It\'s that kind of night. I\'m just here for the fries, honestly.',ja:'賢いね。そういう夜だよ。俺は正直、ポテト目当て。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You came to a bar just for fries?',ja:'バーにポテト目当てで来たの？'}}
+  ],
+  // Encounter 2
+  [
+    {character:'james', speaker:{en:'???',ja:'???'}, text:{en:'Back again? You always sit at the bar. I figured I\'d save you a seat this time.',ja:'また来たね？いつもバーに座るから、今日は席取っておいたよ。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You saved me a seat? We\'ve talked once.',ja:'席取っておいたの？1回しか話してないのに。'}},
+    {character:'james', speaker:{en:'???',ja:'???'}, text:{en:'Twice, actually. And you always order the same thing. I notice things.',ja:'2回だよ。それにいつも同じもの頼むよね。気づくタイプなんだ。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'I don\'t even know your name. You just keep showing up with fries.',ja:'名前も知らないんだよね。君はポテト持って現れ続ける人。'}},
+    {character:'james', speaker:{en:'???',ja:'???'}, text:{en:'Maybe next time. I\'m better with fries than names.',ja:'今度ね。名前よりポテトの方が得意なんだ。'}}
+  ]
+];
+
+// === James name exchange (encounter 3) ===
+export const JAMES_NAME_EXCHANGE = [
+  {character:'james', speaker:{en:'???',ja:'???'}, text:{en:'You\'re here again. I\'m starting to think you come here just for the fries.',ja:'また来たね。ポテト目当てで来てるのかな。'}},
+  {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Maybe. Or maybe the company is growing on me. I\'m Amy, by the way.',ja:'かもね。それか、一緒にいる人に慣れてきたとか。エイミーだよ、ちなみに。'}},
+  {character:'james', speaker:{en:'???',ja:'???'}, text:{en:'James. I\'m James. Sorry it took three meetings to say that. Fries are on me tonight.',ja:'ジェームズ。俺はジェームズ。3回も会ってから言ってごめん。今夜のポテトは俺のおごり。'}},
+  {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Nice to finally meet you, James.',ja:'やっと会えたね、ジェームズ。'}},
+  {character:'james', speaker:{en:'James',ja:'ジェームズ'}, text:{en:'You too. Let\'s go with sweet, not concerning. See you tomorrow, Amy?',ja:'僕も。優しいってことにしよう、心配じゃなく。また明日会える？エイミー。'}}
+];
+
+// === Christy pre-unlock conversations (encounters 1-2, speaker = ???) ===
+export const CHRISTY_PRE_UNLOCK_CONVERSATIONS = [
+  // Encounter 1
+  [
+    {character:'christy', speaker:{en:'???',ja:'???'}, text:{en:'Welcome to Beachside Cafe. First time? You look like you\'re trying to find somewhere quiet.',ja:'ビーチサイドカフェへようこそ。初めて？静かな場所を探してるみたいね。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Is it that obvious?',ja:'そんなにわかる？'}},
+    {character:'christy', speaker:{en:'???',ja:'???'}, text:{en:'Honey, I own this place. I can spot a regular in the making from across the room. Sit wherever you like.',ja:'ハニー、ここは私のお店なの。常連になりそうな人とは部屋の向こうからでもわかるのよ。どこでも座っていいわ。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'You own this place? It\'s lovely.',ja:'このお店のオーナー？素敵なところだね。'}}
+  ],
+  // Encounter 2
+  [
+    {character:'christy', speaker:{en:'???',ja:'???'}, text:{en:'Back again? I thought so. You have the look of someone who found their spot.',ja:'また来たの？そう思ったわ。自分の場所を見つけた人の顔をしてたから。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'The tea was really good last time. I had to come back.',ja:'前回のお茶すごく美味しかったの。また来なきゃと思って。'}},
+    {character:'christy', speaker:{en:'???',ja:'???'}, text:{en:'I\'ll make you something special this time. You have good taste, I can tell. That\'s rare.',ja:'今回は特別なものを淹れてあげる。いいセンスしてるわ、わかるの。珍しいのよ。'}},
+    {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'I don\'t even know your name. You just keep appearing with tea.',ja:'名前も知らないんだよね。君はお茶持って現れ続ける人。'}},
+    {character:'christy', speaker:{en:'???',ja:'???'}, text:{en:'Maybe next time. I\'m better with tea than introductions.',ja:'今度ね。自己紹介よりお茶の方が得意なの。'}}
+  ]
+];
+
+// === Christy name exchange (encounter 3) ===
+export const CHRISTY_NAME_EXCHANGE = [
+  {character:'christy', speaker:{en:'???',ja:'???'}, text:{en:'You\'re here again. I\'m starting to think you come here just for my tea.',ja:'また来たの？私のお茶目当てで来てるのかしら。'}},
+  {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Maybe. Or maybe the company is growing on me. I\'m Amy, by the way.',ja:'かもね。それか、一緒にいる人に慣れてきたとか。エイミーだよ、ちなみに。'}},
+  {character:'christy', speaker:{en:'???',ja:'???'}, text:{en:'Christy. I\'m Christy. I own this place. Sorry it took three visits to say that.',ja:'クリスティ。私はクリスティ。このお店のオーナーよ。3回も来てから言ってごめんなさい。'}},
+  {character:'amy', speaker:{en:'Amy',ja:'エイミー'}, text:{en:'Nice to finally meet you, Christy. The cafe is wonderful.',ja:'やっと会えたね、クリスティ。カフェ素敵だよ。'}},
+  {character:'christy', speaker:{en:'Christy',ja:'クリスティ'}, text:{en:'That\'s because you\'ve been dating the wrong people, sweetie. Stick around. I\'ll show you what "normal" looks like. See you tomorrow, Amy?',ja:'それは間違った人たちとデートしてるからよ、ハニー。ここにいて。「普通」がどういうものか見せてあげる。また明日会える？エイミー。'}}
+];
+
 // Pick an Andrew conversation based on encounter stage
 // Stage 1 = first stranger meeting, 2 = second stranger meeting, 3 = name exchange, 4+ = post-name
 export function pickAndrewConversation(stage){
@@ -241,6 +325,37 @@ export function pickNpcConversation(npcId){
   const bank = NPC_CONVERSATIONS[npcId];
   if(!bank || !bank.length) return null;
   return bank[Math.floor(Math.random() * bank.length)];
+}
+
+// Staged pre-unlock conversation data for green flag NPCs that use the
+// "recurring stranger -> name exchange -> known person" progression.
+// Andrew uses its own dedicated pickAndrewConversation (Park menu button flow);
+// this table covers the other three so they share the same staging logic.
+const STAGED_GREEN_FLAG_DATA = {
+  xavier: { preUnlock: XAVIER_PRE_UNLOCK_CONVERSATIONS, nameExchange: XAVIER_NAME_EXCHANGE },
+  james: { preUnlock: JAMES_PRE_UNLOCK_CONVERSATIONS, nameExchange: JAMES_NAME_EXCHANGE },
+  christy: { preUnlock: CHRISTY_PRE_UNLOCK_CONVERSATIONS, nameExchange: CHRISTY_NAME_EXCHANGE }
+};
+
+// Pick a staged conversation for Xavier, James, or Christy based on encounter stage.
+// Stage 1 = first stranger meeting, 2 = second stranger meeting, 3 = name exchange, 4+ = post-name
+export function pickStagedGreenFlagConversation(gfId, stage){
+  const staged = STAGED_GREEN_FLAG_DATA[gfId];
+  if(!staged){
+    // Not a staged character, fall back to the plain random picker
+    return pickGreenFlagNpcConversation(gfId);
+  }
+  if(stage <= 1){
+    return staged.preUnlock[0];
+  } else if(stage === 2){
+    return staged.preUnlock[1] || staged.preUnlock[0];
+  } else if(stage === 3){
+    return staged.nameExchange;
+  } else {
+    const bank = GREEN_FLAG_NPC_CONVERSATIONS[gfId];
+    if(!bank || !bank.length) return null;
+    return bank[Math.floor(Math.random() * bank.length)];
+  }
 }
 
 // Pick a green flag NPC conversation (pre-unlock)
