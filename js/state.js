@@ -38,11 +38,11 @@ export const state = {
   andrewEncounterStage: 0,
   andrewNameKnown: false,
   xavierEncounterStage: 0,
-  xavierNameKnown: false,
+  xavierNameKnown: true,
   jamesEncounterStage: 0,
-  jamesNameKnown: false,
+  jamesNameKnown: true,
   christyEncounterStage: 0,
-  christyNameKnown: false,
+  christyNameKnown: true,
   coworkerEvent: {
     unlocked: false,   // true when 3 battles are defeated
     triggered: false,  // true when the office story event fires
@@ -206,6 +206,10 @@ export function hydrateState(saved){
   if(!saved) return;
   Object.assign(state, saved);
   state.defeated = new Set(saved.defeated || []);
+  state.jamesNameKnown = state.xavierNameKnown = state.christyNameKnown = true;
+  state.andrewNameKnown = !!saved.andrewNameKnown || (saved.andrewEncounterStage || 0) >= 3;
+  state.dialogueActive = false;
+  state.submenu = false;
   // Restore clock — if missing from old saves, default to 6:00 PM Day 1
   if (typeof state.clockMinutes !== 'number') state.clockMinutes = 1080; // 6:00 PM
   if (typeof state.day !== 'number') state.day = 1;

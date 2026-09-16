@@ -134,7 +134,7 @@ export function getLocationBg(locationKey, daypart) {
   // Fallback chain: requested -> nearest valid -> default
   const fallbackOrder = {
     day: ['afternoon', 'sunset', 'default', 'day'],
-    afternoon: ['day', 'sunset', 'default', 'night'],
+    afternoon: ['sunset', 'day', 'default', 'night'],
     sunset: ['afternoon', 'day', 'default', 'night'],
     night: ['sunset', 'afternoon', 'default', 'day']
   };
@@ -320,12 +320,12 @@ export const SPA_PACKAGES = [
 // --- Friend/NPC Location Routing ---
 // From historical conversationBank.js + ChatGPT spec
 export const LOCATION_PEOPLE = {
-  restaurant: { friends: ['malik', 'jade', 'chloe'], npc: 'eli', greenFlagNpc: null },
+  restaurant: { friends: ['malik', 'jade', 'chloe'], npc: 'val', greenFlagNpc: null },
   park:       { friends: ['min', 'mia'],              npc: null,  greenFlagNpc: null },   // Andrew handled by dedicated Park menu button
   beach:      { friends: ['malik', 'chloe'],          npc: null,  greenFlagNpc: null },
-  bar:        { friends: ['jade'],                    npc: 'val', greenFlagNpc: 'james' },
+  bar:        { friends: ['jade'],                    npc: null, greenFlagNpc: 'james' },
   library:    { friends: ['min'],                     npc: null,  greenFlagNpc: 'xavier' },
-  beachsideCafe: { friends: ['mia', 'chloe'],         npc: 'sabrina', greenFlagNpc: 'christy' }
+  beachsideCafe: { friends: ['mia', 'chloe'],         npc: null, greenFlagNpc: 'christy' }
 };
 
 // --- Apartment Actions (nested, NOT map pins) ---

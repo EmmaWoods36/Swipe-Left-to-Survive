@@ -3,7 +3,8 @@ import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
 import {SAFE_AREAS, pickAndrewConversation} from '../data/conversationBank.js';
-import {playScene} from './dialogueEngine.js';
+import {playScene,stopDialogue} from './dialogueEngine.js';
+import {showBoutique as openBoutique} from './closet/closetEngine.js';
 import {AudioManager} from './audioManager.js';
 import {GREEN_FLAGS} from '../data/greenFlags.js';
 import {
@@ -12,6 +13,10 @@ import {
   OFFICE_EVENTS, LIBRARY_BOOKS, RESTAURANT_MENU, BAR_MENU, CAFE_DRINKS, CAFE_FOOD, SPA_PACKAGES,
   LOCATION_PEOPLE, APARTMENT_ACTIONS, BEACH_SUBLOCATIONS, MALL_SUBLOCATIONS
 } from '../data/locations.js';
+
+let worldRoutes = {};
+let parkVisit = null;
+export function configureScreens(handlers){ worldRoutes = handlers || {}; }
 
 // Name lookup for characters used in location socialize buttons
 const NPC_NAMES = {
@@ -49,6 +54,7 @@ const spriteLayer = () => document.getElementById('spriteLayer');
 const dialogueLayer = () => document.getElementById('dialogueLayer');
 
 export function clearStage(){
+  stopDialogue();
   // Remove any leftover map resize listener before wiping the screen
   if(state._mapResizeHandler){
     window.removeEventListener('resize', state._mapResizeHandler);
@@ -121,7 +127,8 @@ export function showTitle({startGame, showMap, showCloset, showPhoto, continueGa
   renderHud();
 }
 
-export function showMap({goBattle, showCloset, showPhoto, startBattle, showBoutique}={}){
+export function showMap(options={}){
+  const {goBattle,showCloset,showPhoto,startBattle,showBoutique} = {...worldRoutes,...Object.fromEntries(Object.entries(options).filter(([,v])=>v!==undefined))};
   state.screen = 'map';
   clearStage();
   // Use clockMinutes for authoritative time → derive daypart for background
@@ -131,7 +138,7 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
   // Pins are positioned relative to the displayed map rectangle, not the viewport
   const sceneBg = document.querySelector('.scene-bg');
   if(sceneBg){
-    sceneBg.style.backgroundImage = `url("${mapBg}")`;
+    sceneBg.style.backgroundImage = 'none';
     sceneBg.style.backgroundSize = 'contain';
     sceneBg.style.backgroundPosition = 'center';
     sceneBg.style.backgroundRepeat = 'no-repeat';
@@ -147,13 +154,18 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
   // 9 canonical pins from data/locations.js MAP_PINS
   const mapWrap = document.createElement('div');
   mapWrap.className = 'city-map-pins map-overlay';
+  const mapImage = document.createElement('img');
+  mapImage.className = 'city-map-art';
+  mapImage.alt = tx('City map','街のマップ');
+  mapImage.src = mapBg;
+  mapWrap.append(mapImage);
   // Position the pin overlay to match the displayed map image bounds
   function fitPinOverlay() {
     const stage = document.querySelector('.stage');
     if (!stage) return;
     const sw = stage.clientWidth;
     const sh = stage.clientHeight;
-    const imgRatio = 16 / 9; // map images are 1536x864 (16:9)
+    const imgRatio = mapImage.naturalWidth ? mapImage.naturalWidth / mapImage.naturalHeight : 16 / 9;
     const stageRatio = sw / sh;
     let mapW, mapH, mapX, mapY;
     if (stageRatio > imgRatio) {
@@ -176,6 +188,7 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
     mapWrap.style.width = mapW + 'px';
     mapWrap.style.height = mapH + 'px';
   }
+  mapImage.onload = fitPinOverlay;
   fitPinOverlay();
   // Recalculate on resize
   window.addEventListener('resize', fitPinOverlay);
@@ -190,8 +203,8 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
     const travel = (fn) => () => { advanceGameMinutes(TIME_COSTS.travel); renderHud(); fn(); };
     if(pin.id==='apartment') action = travel(() => showApartmentMenu({goBattle, showCloset, showPhoto}));
     else if(pin.id==='mall') action = travel(() => showMallMenu({goBattle, showCloset, showPhoto, showBoutique}));
-    else if(pin.id==='restaurant') action = travel(() => visitSafeArea('restaurant', () => showMap({goBattle, showCloset, showPhoto})));
-    else if(pin.id==='park') action = travel(() => showParkMenu({goBattle, showCloset, showPhoto}));
+    else if(pin.id==='restaurant') action = travel(() => showRestaurantMenu());
+    else if(pin.id==='park') action = travel(() => {parkVisit={andrewAvailable:Math.random()<0.75,completed:false};showParkMenu({goBattle, showCloset, showPhoto});});
     else if(pin.id==='beach') action = travel(() => showBeachMenu({goBattle, showCloset, showPhoto}));
     else if(pin.id==='bar') action = travel(() => showBarMenu({goBattle, showCloset, showPhoto}));
     else if(pin.id==='library') action = travel(() => showLibraryMenu({goBattle, showCloset, showPhoto}));
@@ -201,6 +214,8 @@ export function showMap({goBattle, showCloset, showPhoto, startBattle, showBouti
     const pinEl = document.createElement('button');
     pinEl.className = `map-pin label-${pin.labelPos || 'below'}`;
     pinEl.type = 'button';
+    pinEl.dataset.location = pin.id;
+    pinEl.setAttribute('aria-label',name);
     pinEl.style.left = pin.x + '%';
     pinEl.style.top = pin.y + '%';
     if(isClosed){
@@ -349,7 +364,8 @@ function showLibraryMenu({goBattle, showCloset, showPhoto}={}){
   // Read → opens book genre submenu
   g.append(button(tx('Read','読む'), () => showLibraryReadMenu({goBattle, showCloset, showPhoto}), 'primary'));
   // Talk to [location person]
-  g.append(button(socializeLabel('library'), () => visitSafeArea('library', () => showMap({goBattle, showCloset, showPhoto}))));
+  g.append(button(socializeLabel('library'), () => visitSafeArea('library', () => showLibraryMenu({goBattle, showCloset, showPhoto}), {characterId:'xavier'})));
+  g.append(button(tx('Talk to Friends','友達と話す'), () => visitSafeArea('library', () => showLibraryMenu({goBattle, showCloset, showPhoto}), {friendsOnly:true})));
   g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }
@@ -398,7 +414,8 @@ function showBarMenu({goBattle, showCloset, showPhoto}={}){
   // Order → opens drink/snack submenu
   g.append(button(tx('Order','注文'), () => showBarOrderMenu({goBattle, showCloset, showPhoto}), 'primary'));
   // Talk to [location person]
-  g.append(button(socializeLabel('bar'), () => visitSafeArea('bar', () => showBarMenu({goBattle, showCloset, showPhoto}))));
+  g.append(button(tx('Talk to Friends','友達と話す'), () => visitSafeArea('bar', () => showBarMenu({goBattle, showCloset, showPhoto}), {friendsOnly:true})));
+  g.append(button(socializeLabel('bar'), () => visitSafeArea('bar', () => showBarMenu({goBattle, showCloset, showPhoto}), {characterId:'james'})));
   g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
 }
@@ -464,13 +481,13 @@ function showParkMenu({goBattle, showCloset, showPhoto}={}){
       [{label:tx('Back','戻る'), className:'primary', onClick:() => showParkMenu({goBattle, showCloset, showPhoto})}]);
   }));
   // Talk to Friends (Min, Mia)
-  g.append(button(tx('Talk to Friends','友達と話す'), () => visitSafeArea('park', () => showParkMenu({goBattle, showCloset, showPhoto}))));
+  g.append(button(tx('Talk to Friends','友達と話す'), () => visitSafeArea('park', () => showParkMenu({goBattle, showCloset, showPhoto}), {friendsOnly:true})));
   // Andrew / Cute Stranger encounter
   const stage = state.andrewEncounterStage || 0;
-  const andrewLabel = stage >= 3
+  const andrewLabel = state.andrewNameKnown
     ? tx('Talk to Andrew','アンドリューと話す')
     : tx('Notice the Cute Stranger','可愛い見知らぬ人に気づく');
-  g.append(button(andrewLabel, () => visitAndrewEncounter(() => showParkMenu({goBattle, showCloset, showPhoto}))));
+  if(parkVisit?.andrewAvailable && !parkVisit.completed) g.append(button(andrewLabel, () => visitAndrewEncounter(() => showParkMenu({goBattle, showCloset, showPhoto}))));
   // Back to Map
   g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
@@ -485,10 +502,11 @@ function visitAndrewEncounter(onReturn){
   // Pick conversation based on the NEXT stage (what's about to happen)
   const lines = pickAndrewConversation(nextStage);
   if(lines){
-    // Advance stage after conversation starts
-    state.andrewEncounterStage = nextStage;
-    if(nextStage >= 3) state.andrewNameKnown = true;
-    playScene(lines, {onComplete:onReturn, skippable:true});
+    playScene(lines, {normalNpc:true, skippable:true,onComplete:()=>{
+      state.andrewEncounterStage = nextStage;
+      if(parkVisit) parkVisit.completed = true;
+      onReturn?.();
+    }});
   } else {
     showMessage(
       tx('Park','公園'),
@@ -571,6 +589,7 @@ function showBeachsideCafeMenu({goBattle, showCloset, showPhoto}={}){
       [{label:tx('Back','戻る'), className:'primary', onClick:() => showBeachsideCafeMenu({goBattle, showCloset, showPhoto})}]);
   }));
   // Talk to [location person] (context-sensitive: Mia/Chloe, Sabrina, Christy)
+  g.append(button(tx('Talk to Friends','友達と話す'), () => visitSafeArea('cafe', () => showBeachsideCafeMenu({goBattle, showCloset, showPhoto}), {friendsOnly:true})));
   g.append(button(socializeLabel('beachsideCafe'), () => visitSafeArea('beachsideCafe', () => showBeachsideCafeMenu({goBattle, showCloset, showPhoto}))));
   // Return to parent location (Beach), NOT directly to map
   g.append(button(tx('Back to Beach','海辺へ戻る'), () => showBeachMenu({goBattle, showCloset, showPhoto})));
@@ -654,7 +673,7 @@ export function showMallMenu({goBattle, showCloset, showPhoto, showBoutique}={})
   </section></div>`;
   const g = document.getElementById('mallActions');
   // Shop / Boutique — opens the Boutique store (NOT Amy's Closet)
-  g.append(button(tx('Boutique','ブティック'), showBoutique || showCloset, 'primary'));
+  g.append(button(tx('Heart & Hem Boutique','Heart & Hem ブティック'), showBoutique || worldRoutes.showBoutique || openBoutique, 'primary'));
   // Visit Spa — nested sublocation
   const spaOpen = isLocationOpen('spa', state.clockMinutes);
   g.append(button(tx('Visit Spa','スパに行く'), () => {
@@ -665,7 +684,7 @@ export function showMallMenu({goBattle, showCloset, showPhoto, showBoutique}={})
     showSpaMenu({goBattle, showCloset, showPhoto});
   }));
   // Food Court
-  g.append(button(tx('Food Court','フードコート'), () => visitSafeArea('restaurant', () => showMallMenu({goBattle, showCloset, showPhoto}))));
+  g.append(button(tx('Food Court','フードコート'), () => showRestaurantMenu({foodCourt:true,onReturn:() => showMallMenu({goBattle, showCloset, showPhoto,showBoutique})})));
   // Return to Map
   g.append(button(tx('Return to Map','マップへ戻る'), () => showMap({goBattle, showCloset, showPhoto})));
   renderHud();
@@ -734,9 +753,30 @@ function showSpaTreatmentMenu({goBattle, showCloset, showPhoto}={}){
   renderHud();
 }
 
-// === RESTAURANT (called from map pin, uses safe area for encounters) ===
-// The restaurant pin directly triggers the safe area encounter system,
-// which handles food purchases + friend/NPC routing
+// Restaurant and Food Court remain optional activity menus, not forced encounters.
+export function showRestaurantMenu({foodCourt=false,onReturn=()=>showMap()}={}){
+  if(!isLocationOpen('restaurant',state.clockMinutes)){
+    showClosedOverlay(tx('Restaurant','レストラン'),formatHours('restaurant'),onReturn);return;
+  }
+  state.screen='restaurant'; clearStage(); setLocationBg('restaurant');
+  const back=()=>showRestaurantMenu({foodCourt,onReturn});
+  screenLayer().innerHTML=`<div class="center-screen"><section class="panel"><h2>${foodCourt?tx('Food Court','フードコート'):tx('Restaurant','レストラン')}</h2><p>${tx('Good food. A little breathing room.','おいしいごはん。ひと息つける場所。')}</p><div id="restaurantActions" class="menu-grid"></div></section></div>`;
+  const g=document.getElementById('restaurantActions');
+  g.append(button(tx('Order Food','料理を注文'),()=>{
+    clearStage();setLocationBg('restaurant');
+    screenLayer().innerHTML=`<div class="center-screen"><section class="panel"><h2>${tx('Order Food','料理を注文')}</h2><div id="mealActions" class="menu-grid"></div></section></div>`;
+    const menu=document.getElementById('mealActions');
+    RESTAURANT_MENU.forEach(item=>menu.append(button(`${tx(item.label.en,item.label.ja)} (${item.price})`,()=>{
+      if(state.funds<item.price){showMessage(tx('Not Enough Funds','資金不足'),tx('Choose something within your budget.','予算に合うものを選ぼう。'),[{label:tx('Back','戻る'),onClick:back}]);return;}
+      state.funds-=item.price;advanceGameMinutes(item.timeCostMinutes);
+      showMessage(tx('Ordered','注文しました'),tx(`Amy ordered ${item.label.en}.`,`エイミーは${item.label.ja}を注文した。`),[{label:tx('Back','戻る'),onClick:back}]);
+    })));
+    menu.append(button(tx('Back','戻る'),back));renderHud();
+  },'primary'));
+  g.append(button(tx('Talk to Val','ヴァルと話す'),()=>visitSafeArea('restaurant',back,{characterId:'val'})));
+  g.append(button(tx('Talk to Friends','友達と話す'),()=>visitSafeArea('restaurant',back,{friendsOnly:true})));
+  g.append(button(foodCourt?tx('Back to Mall','モールへ戻る'):tx('Return to Map','マップへ戻る'),onReturn));renderHud();
+}
 
 export function setActions(actions){
   const box = document.getElementById('battleButtons');

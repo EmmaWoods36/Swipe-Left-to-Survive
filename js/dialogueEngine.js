@@ -3,6 +3,8 @@ import {t} from './localization.js';
 import {imageWithFallback,Asset} from './assets.js';
 import {RED_FLAGS} from '../data/redFlags.js';
 import {GREEN_FLAGS} from '../data/greenFlags.js';
+import {SCENE_SPRITES} from '../data/sceneSprites.js';
+import {FRIENDS} from '../data/characters.js';
 
 let current = null;
 let typingTimer = null;
@@ -22,7 +24,7 @@ function speakerColor(characterId){
   if(RED_FLAGS[characterId]) return 'red';
   if(GREEN_FLAGS[characterId]){
     // Green flags are blue-box NPCs until Amy clears the Pattern battle
-    if(state.defeated && state.defeated.has('pattern')) return 'green';
+    if(!current?.normalNpc && state.defeated && state.defeated.has('pattern')) return 'green';
     return 'blue';
   }
   return 'blue'; // friends and NPCs
@@ -37,6 +39,7 @@ function isBoss(characterId){
 // Get speaker display name
 function speakerName(characterId){
   if(!characterId) return '';
+  if(characterId === 'andrew' && !state.andrewNameKnown) return '???';
   if(characterId === 'amy') return 'Amy';
   if(characterId === 'goddess_amy') return 'Goddess Amy';
   if(characterId === 'algorithm') return state.lang === 'ja' ? 'アルゴリズム' : 'The Algorithm';
@@ -45,31 +48,16 @@ function speakerName(characterId){
   if(rf) return state.lang === 'ja' ? (rf.jaName || rf.name) : rf.name;
   const gf = GREEN_FLAGS[characterId];
   if(gf) return state.lang === 'ja' ? (gf.jaName || gf.name) : gf.name;
-  return characterId;
+  const friend = FRIENDS[characterId];
+  if(friend) return state.lang === 'ja' ? friend.jaName : friend.name;
+  return ({val: 'Val',sabrina: 'Sabrina',eli: 'Eli'})[characterId] || characterId;
 }
 
 // Get full-body scene sprite for a character
 function resolveSceneSprite(characterId, lineIndex){
   if(!characterId) return null;
-  // Use scene sprites for friends/NPCs — cycle through ALL available expressions
-  const sceneSpriteBases = {
-    malik: 'assets/sprites/scenes/friends/malik/malik_scene_',
-    min: 'assets/sprites/scenes/friends/min/min_scene_',
-    jade: 'assets/sprites/scenes/friends/jade/jade_scene_',
-    chloe: 'assets/sprites/scenes/friends/chloe/chloe_scene_',
-    mia: 'assets/sprites/scenes/friends/mia/mia_scene_',
-    eli: 'assets/sprites/scenes/npcs/eli/eli_scene_',
-    sabrina: 'assets/sprites/scenes/npcs/sabrina/sabrina_scene_',
-    val: 'assets/sprites/scenes/npcs/val/val_scene_',
-  };
-  const friendSpriteCounts = { malik: 10, min: 15, jade: 26, chloe: 26, mia: 30 };
-  if(sceneSpriteBases[characterId]){
-    const count = friendSpriteCounts[characterId] || 1;
-    const startNum = characterId === 'min' ? 31 : 1;
-    const spriteNum = startNum + ((lineIndex || 0) % count);
-    const padded = String(spriteNum).padStart(2, '0');
-    return `${sceneSpriteBases[characterId]}${padded}.png`;
-  }
+  const expressions = SCENE_SPRITES[characterId];
+  if(expressions?.length) return expressions[(lineIndex || 0) % expressions.length];
   // Use battle sprites for villains
   if(RED_FLAGS[characterId]){
     const rf = RED_FLAGS[characterId];
@@ -110,10 +98,11 @@ function buildSpeakerRegistry(lines){
   return speakers;
 }
 
-export function playScene(lines, {onComplete=null, skippable=true}={}){
+export function playScene(lines, {onComplete=null, skippable=true, normalNpc=false}={}){
   stopDialogue();
-  const speakers = buildSpeakerRegistry(lines);
-  current = {lines, index:0, onComplete, skippable, fullLine:'', speakers};
+  current = {lines, index:0, onComplete, skippable, normalNpc, fullLine:'', speakers:[]};
+  current.speakers = buildSpeakerRegistry(lines);
+  state.dialogueActive = true;
   layer().classList.remove('hidden');
   renderDialogueBox();
   window.addEventListener('slts:languageChanged', rerenderCurrentLine);
@@ -183,6 +172,7 @@ export function stopDialogue(){
   if(typingTimer) clearInterval(typingTimer);
   typingTimer = null;
   current = null;
+  state.dialogueActive = false;
   layer().classList.add('hidden');
   layer().innerHTML = '';
   window.removeEventListener('slts:languageChanged', rerenderCurrentLine);
@@ -195,6 +185,8 @@ function lineText(line){
 }
 function lineSpeaker(line){
   if(!line) return '';
+  if(line.character === 'andrew') return state.andrewNameKnown ? (state.lang==='ja'?'アンドリュー':'Andrew') : '???';
+  if(['james','xavier','christy'].includes(line.character)) return speakerName(line.character);
   if(typeof line.speaker === 'string') return line.speaker;
   return (line.speaker && (line.speaker[state.lang] || line.speaker.en)) || '';
 }
@@ -206,6 +198,7 @@ function renderLine(){
   if(typingTimer) clearInterval(typingTimer);
   charIndex = 0;
   renderedText = '';
+  if(line.revealsName && line.character==='andrew') state.andrewNameKnown = true;
   current.fullLine = lineText(line);
   document.getElementById('vnSpeaker').textContent = lineSpeaker(line);
   document.getElementById('vnText').textContent = '';
@@ -219,6 +212,10 @@ function renderLine(){
     const isActive = tab.dataset.speaker === speakerId;
     tab.classList.toggle('active', isActive);
     tab.classList.toggle('inactive', !isActive);
+    const name = speakerName(tab.dataset.speaker);
+    tab.querySelector('.vn-tab-name').textContent = name;
+    const portrait = tab.querySelector('img');
+    if(portrait) portrait.alt = name;
   });
 
   // Update nested borders — active speaker's border highlighted
@@ -245,10 +242,14 @@ function renderLine(){
     if(isBossSpeaker){
       spriteEl.innerHTML = '<div class="vn-scene-obscured"><span>?</span></div>';
     } else {
-      const speaker = current.speakers.find(s => s.id === speakerId);
-      const spritePath = speaker?.sceneSprite || resolveSceneSprite(speakerId, current.index);
+      // Resolve each speaking turn, never cache the first expression in the registry.
+      // Keep the other character present while Amy answers.
+      if(speakerId && speakerId!=='amy' && speakerId!=='goddess_amy') current.lastSceneCharacter = speakerId;
+      const sceneId = current.lastSceneCharacter;
+      const turn = current.lines.slice(0,current.index+1).filter(l=>l.character===sceneId).length-1;
+      const spritePath = line.sceneSprite || line.reactions?.[sceneId] || resolveSceneSprite(sceneId,Math.max(0,turn));
       if(spritePath){
-        spriteEl.append(imageWithFallback(spritePath, lineSpeaker(line), 'vn-scene-sprite-img'));
+        spriteEl.append(imageWithFallback(spritePath, speakerName(current.lastSceneCharacter), 'vn-scene-sprite-img'));
       }
     }
   }
@@ -277,6 +278,7 @@ function rerenderCurrentLine(){
   }else{
     document.getElementById('vnText').textContent = current.fullLine;
   }
+  document.querySelectorAll('.vn-tab').forEach(tab=>{tab.querySelector('.vn-tab-name').textContent=speakerName(tab.dataset.speaker);});
   const skip = document.getElementById('vnSkip'); if(skip) skip.textContent = t('skip');
   const cont = document.getElementById('vnContinue'); if(cont) cont.textContent = t('continue');
 }
@@ -294,6 +296,7 @@ export function advanceOrReveal(){
 }
 
 function finishScene(skipped){
+  if(skipped && current?.lines.some(l=>l.character==='andrew' && l.revealsName)) state.andrewNameKnown=true;
   const cb = current && current.onComplete;
   stopDialogue();
   if(cb) cb({skipped});

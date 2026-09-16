@@ -1,9 +1,9 @@
 import {state,setLanguage,hasSaveData,loadGame,saveGame,autosave,startPassiveClock,getClockPeriod} from './state.js';
 import {updateStaticText,tx} from './localization.js';
-import {showTitle,showMap,renderHud,clearStage,screenLayer,showApartmentMenu,showMallMenu} from './screens.js';
+import {showTitle,showMap,configureScreens,renderHud,clearStage,screenLayer,showApartmentMenu,showMallMenu} from './screens.js';
 import {startOpening} from './scenes/opening.js';
 import {startNextBattle,configureBattleRoutes,startGreenFlagBattle,startBattle} from './battle/battleEngine.js';
-import {showCloset,showBoutique,configureCloset} from './closet/closetEngine.js';
+import {showCloset,showBoutique,showFittingRoom,configureCloset} from './closet/closetEngine.js';
 import {showDateFitStudio,configurePhoto} from './photo/dateFitStudio.js';
 import {AudioManager} from './audioManager.js';
 
@@ -55,6 +55,7 @@ function boot(){
   document.addEventListener('click', _resumeAudio);
   document.addEventListener('keydown', _resumeAudio);
   const r = routes();
+  configureScreens(r);
   configureBattleRoutes({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio});
   configureCloset({showMap:r.showMap, showPhoto:showDateFitStudio, showApartment:()=>showApartmentMenu({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio}), showMall:()=>showMallMenu({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio, showBoutique})});
   configurePhoto({showMap:r.showMap, showCloset});
@@ -75,7 +76,11 @@ function boot(){
 window.addEventListener('slts:languageChanged', () => {
   updateStaticText();
   // Re-render the current major screen so buttons and labels update immediately.
-  if(state.screen === 'title') showTitle(routes());
+  if(state.dialogueActive) return;
+  if(state.screen === 'closet') showCloset();
+  else if(state.screen === 'boutique') showBoutique();
+  else if(state.screen === 'fittingRoom') showFittingRoom();
+  else if(state.screen === 'title') showTitle(routes());
   else if(state.screen === 'map') routes().showMap();
   else if(state.screen === 'apartment') showApartmentMenu({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio});
   else if(state.screen === 'mall') showMallMenu({goBattle:startNextBattle, showCloset, showPhoto:showDateFitStudio, showBoutique});

@@ -9,6 +9,8 @@ export const Asset = {
     mapEvening: ['assets/backgrounds/bg_city_map_afternoon.png'],
     mapDusk: ['assets/backgrounds/bg_city_map_night.png'],
     mapNight: ['assets/backgrounds/bg_city_map_night.png'],
+    boutique: ['assets/backgrounds/heart_and_hem_boutique.png'],
+    fittingRoom: ['assets/backgrounds/heart_and_hem_fitting_room.png'],
     closet: ['assets/backgrounds/closet.png','assets/backgrounds/bg_closet.png'],
     loveLoop: ['assets/backgrounds/apartment_sunset.png'],
     battle: ['assets/backgrounds/apartment_night.png'],
