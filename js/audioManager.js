@@ -42,6 +42,8 @@ const AudioManager = {
 
   // Scene to track mapping
   SCENE_TRACKS: {
+    // Keep the dating-app prologue relaxed; dramatic scenes have their own cue.
+    prologue: 'chill',
     city_map: 'chill',
     apartment: 'chill',
     bedroom: 'chill',
