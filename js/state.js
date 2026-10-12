@@ -6,7 +6,7 @@ export const state = {
   preference: 'guys',
   screen: 'title',
   scene: null,
-  day: 1,
+  day: 0,
   clockMinutes: 18 * 60,  // 6:00 PM — game starts in the evening (Sunset)
   funds: 800,
   peace: 50,
@@ -96,8 +96,20 @@ export const TIME_COSTS = {
   relax: 60            // 1 hr — relaxing activities (beach, window, etc.)
 };
 
+// Day 0 story gate check: true while Sleep must stay locked because the
+// mandatory 2AM Summoner prologue battle has not been won yet.
+export function isDayZeroSleepLocked() {
+  return state.day === 0 && !state.defeated.has('two_am');
+}
+
 // Sleep: advance to next day at 8:00 AM, restore stats
 export function sleepUntilMorning() {
+  // Day 0 story gate: Sleep is blocked until the 2AM Summoner prologue is won.
+  // The opening sequence auto-launches the battle, so this gate only blocks
+  // a player who returns to the apartment and clicks Sleep before finishing it.
+  if (isDayZeroSleepLocked()) {
+    return false;
+  }
   state.day += 1;
   state.clockMinutes = 8 * 60;  // 8:00 AM
   state.amyHp = state.amyMaxHp;
@@ -210,9 +222,9 @@ export function hydrateState(saved){
   state.andrewNameKnown = !!saved.andrewNameKnown || (saved.andrewEncounterStage || 0) >= 3;
   state.dialogueActive = false;
   state.submenu = false;
-  // Restore clock — if missing from old saves, default to 6:00 PM Day 1
+  // Restore clock — if missing from old saves, default to 6:00 PM Day 0
   if (typeof state.clockMinutes !== 'number') state.clockMinutes = 1080; // 6:00 PM
-  if (typeof state.day !== 'number') state.day = 1;
+  if (typeof state.day !== 'number') state.day = 0;
   if (typeof state.stamina !== 'number') state.stamina = 50;
   state.time = getClockPeriod();
 }

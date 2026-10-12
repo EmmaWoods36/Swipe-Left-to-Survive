@@ -1,4 +1,4 @@
-import {state,hasSaveData,autosave,advanceGameMinutes,TIME_COSTS,sleepUntilMorning,getClockPeriod,formatClockTime,getClockHour,getDaypartFromClock,startPassiveClock,stopPassiveClock} from './state.js';
+import {state,hasSaveData,autosave,advanceGameMinutes,TIME_COSTS,sleepUntilMorning,isDayZeroSleepLocked,getClockPeriod,formatClockTime,getClockHour,getDaypartFromClock,startPassiveClock,stopPassiveClock} from './state.js';
 import {t,tx,toggleLanguage} from './localization.js';
 import {setBackground} from './assets.js';
 import {visitSafeArea} from './scenes/safeAreas.js';
@@ -271,7 +271,14 @@ export function showApartmentMenu({goBattle, showCloset, showPhoto}={}){
   // Date Fit Studio
   g.append(button(tx('Date Fit Studio','デートコーデスタジオ'), showPhoto));
   // Sleep — advance to next day at 8:00 AM, restore stats (v1.34)
+  // Day 0 story gate: Sleep is locked until the mandatory 2AM Summoner prologue is won.
   g.append(button(tx('Sleep','寝る'), () => {
+    if(isDayZeroSleepLocked()){
+      showMessage(tx('Not Yet','まだ早い'), tx('Amy is too wired to sleep. Something needs to be dealt with first tonight.', 'エイミーは眠るには気が張りすぎている。今夜、まず片付けないといけないことがある。'),
+        [{label:tx('Open LoveLoop','LoveLoopを開く'), className:'primary', onClick:() => { if(goBattle) goBattle(); }},
+         {label:tx('Back to Map','マップへ戻る'), onClick:() => showMap({goBattle, showCloset, showPhoto})}]);
+      return;
+    }
     sleepUntilMorning();
     renderHud();
     showMessage(tx('Slept','寝た'), tx(`Amy slept through the night. Day ${state.day}, ${formatClockTime()}.\nHP restored. Stamina restored. Peace +20.`, `エイミーは一晩寝た。Day ${state.day}、${formatClockTime()}。\nHP全回復。スタミナ全回復。ピース+20。`),

@@ -154,6 +154,10 @@ function updateBattleUi(){
 }
 
 function setAmyActions(){
+  const b = state.battle;
+  // The 2AM Summoner is the mandatory Day 0 prologue — Amy cannot Block/Leave
+  // her way out of it, since Sleep is gated on actually resolving this fight.
+  const isMandatoryPrologue = b && b.enemy && b.enemy.id === 'two_am' && state.day === 0;
   const actions = [
     {label:tx('Boundary Slash','境界線スラッシュ'), onClick:()=>amyAttack({name:'Boundary Slash',damage:18,type:'normal'})},
     {label:tx('Phone Punch','スマホパンチ'), onClick:()=>amyAttack({name:'Phone Punch',damage:13+Math.floor(state.clarity/12),type:'normal'})},
@@ -161,7 +165,7 @@ function setAmyActions(){
     {label:tx('Check Receipts','証拠確認'), onClick:()=>amyAttack({name:'Check Receipts',damage:14+state.redFlagData*3,type:'normal'})},
     {label:tx('Call Friend','友だちを呼ぶ'), onClick:setSupportActions},
     {label:tx('Girl, Stand Up!','立ち上がれ！'), className:'primary', onClick:()=>amyAttack({name:'Girl, Stand Up!',damage:28+Math.floor(state.selfRespect/8),type:'special'})},
-    {label:tx('Block / Leave','ブロックして離れる'), className:'danger wide', onClick:escapeBattle}
+    ...(isMandatoryPrologue ? [] : [{label:tx('Block / Leave','ブロックして離れる'), className:'danger wide', onClick:escapeBattle}])
   ];
   setActions(actions);
 }
