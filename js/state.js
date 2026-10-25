@@ -117,6 +117,16 @@ export function sleepUntilMorning() {
   state.stamina = 100;
   state.peace = Math.min(100, (state.peace || 50) + 20);
   state.time = getClockPeriod();
+  return true;
+}
+
+// Once the mandatory Summoner is actually defeated, close Day 0 immediately.
+// winBattle() calls autosave synchronously after adding the defeated id, so this
+// transition occurs before the victory screen can hand the player back to the map.
+export function finalizeDayZeroPrologue() {
+  if (state.day !== 0 || !state.defeated.has('two_am')) return false;
+  state.prologueResolved = true;
+  return sleepUntilMorning();
 }
 
 // Derive period label from clockMinutes
@@ -234,6 +244,9 @@ export function hydrateState(saved){
   if (typeof state.clockMinutes !== 'number') state.clockMinutes = 1080; // 6:00 PM
   if (typeof state.day !== 'number') state.day = 0;
   if (isDayZeroSleepLocked()) state.day = 0;
+  // Repair any save made in the short-lived state where Jay was defeated but
+  // the generic victory screen left Amy on Day 0 at 2:00 AM.
+  if (state.day === 0 && state.defeated.has('two_am')) finalizeDayZeroPrologue();
   if (typeof state.stamina !== 'number') state.stamina = 50;
   state.time = getClockPeriod();
 }
@@ -280,6 +293,9 @@ export function countDefeatedRedFlags(){
 // Auto-save whenever key state changes (battle results, screen transitions)
 let saveDebounce = null;
 export function autosave(){
+  // Battle victory calls autosave synchronously after recording the defeated id.
+  // Finish the mandatory prologue before any victory action can enter the city.
+  finalizeDayZeroPrologue();
   if(saveDebounce) clearTimeout(saveDebounce);
   saveDebounce = setTimeout(()=>{ saveGame(); saveDebounce = null; }, 2000);
 }
