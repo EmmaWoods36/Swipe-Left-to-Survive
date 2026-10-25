@@ -8,6 +8,7 @@ export const state = {
   scene: null,
   day: 0,
   clockMinutes: 18 * 60,  // 6:00 PM — game starts in the evening (Sunset)
+  prologueResolved: false,
   funds: 800,
   peace: 50,
   clarity: 40,
@@ -57,7 +58,7 @@ export const state = {
 };
 
 export function serializeState(){
-  return {...state, defeated:[...state.defeated]};
+  return {...state, prologueResolved: !isDayZeroSleepLocked(), defeated:[...state.defeated]};
 }
 
 // === v1.34 CLOCK SYSTEM — RESTORED ===
@@ -65,12 +66,14 @@ export function serializeState(){
 // Periods: Sunrise 5:30-6:59, Day 7:00-17:59, Sunset 18:00-19:59, Night 20:00-5:29
 // Map: Sunrise→afternoon bg, Day→day bg, Sunset→afternoon bg, Night→night bg
 
-// Advance the game clock by N minutes. Midnight rollover increments day.
+// Advance the game clock by N minutes. During the mandatory Day 0 prologue,
+// midnight wraps the clock without advancing to Day 1. Day 1 begins only after
+// the 2 A.M. Summoner has been resolved and Amy sleeps.
 export function advanceGameMinutes(minutes) {
   state.clockMinutes += minutes;
   while (state.clockMinutes >= 1440) {
     state.clockMinutes -= 1440;
-    state.day += 1;
+    if (!isDayZeroSleepLocked()) state.day += 1;
   }
   // Update derived state.time string for backward compat
   state.time = getClockPeriod();
@@ -96,17 +99,15 @@ export const TIME_COSTS = {
   relax: 60            // 1 hr — relaxing activities (beach, window, etc.)
 };
 
-// Day 0 story gate check: true while Sleep must stay locked because the
-// mandatory 2AM Summoner prologue battle has not been won yet.
+// Story gate check: true until the mandatory 2 A.M. Summoner prologue has
+// actually been resolved. Do not tie this to state.day; that created a midnight bypass.
 export function isDayZeroSleepLocked() {
-  return state.day === 0 && !state.defeated.has('two_am');
+  return !state.prologueResolved && !state.defeated.has('two_am');
 }
 
 // Sleep: advance to next day at 8:00 AM, restore stats
 export function sleepUntilMorning() {
   // Day 0 story gate: Sleep is blocked until the 2AM Summoner prologue is won.
-  // The opening sequence auto-launches the battle, so this gate only blocks
-  // a player who returns to the apartment and clicks Sleep before finishing it.
   if (isDayZeroSleepLocked()) {
     return false;
   }
@@ -218,6 +219,13 @@ export function hydrateState(saved){
   if(!saved) return;
   Object.assign(state, saved);
   state.defeated = new Set(saved.defeated || []);
+  // Backward compatibility: saves created before the explicit prologue flag
+  // are treated as resolved if they had already reached Day 1+ or beat the Summoner.
+  if (typeof saved.prologueResolved === 'boolean') {
+    state.prologueResolved = saved.prologueResolved;
+  } else {
+    state.prologueResolved = state.defeated.has('two_am') || (typeof saved.day === 'number' && saved.day > 0);
+  }
   state.jamesNameKnown = state.xavierNameKnown = state.christyNameKnown = true;
   state.andrewNameKnown = !!saved.andrewNameKnown || (saved.andrewEncounterStage || 0) >= 3;
   state.dialogueActive = false;
@@ -225,6 +233,7 @@ export function hydrateState(saved){
   // Restore clock — if missing from old saves, default to 6:00 PM Day 0
   if (typeof state.clockMinutes !== 'number') state.clockMinutes = 1080; // 6:00 PM
   if (typeof state.day !== 'number') state.day = 0;
+  if (isDayZeroSleepLocked()) state.day = 0;
   if (typeof state.stamina !== 'number') state.stamina = 50;
   state.time = getClockPeriod();
 }
